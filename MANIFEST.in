@@ -1,0 +1,8 @@
+# Include licence file
+include LICENCE.txt
+
+# Include example parameter file
+include examples/MADE/made.ini
+
+# Include readme
+include README.rst
