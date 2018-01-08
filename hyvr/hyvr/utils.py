@@ -23,38 +23,30 @@ import errno
 from pyevtk.hl import gridToVTK
 import flopy
 import scipy.stats as st
-import grid as gr
+import hyvr.hyvr.grid as gr
 
 
 ''' File I/O and wrangling'''
 
 
-def to_vtk(data_dict, file_name, grid=None, sc_name=None):
-    """
-    Save a numpy array into a ``VTK`` ``STRUCTURED_POINTS`` file.
-    Only 2D or 3D data are handled.
+def to_vtk(data, file_name, grid=None, sc_name=None):
+    """ Save a numpy array into a VTK STRUCTURED_POINTS file.
 
     Parameters:
-        data: numpy array
-             The numpy array containing the data, `int` or `float` or
-            `uint`. The dimensions should be between 1 and 3.
-        file_name: string
-            Name of the file for the output.
-        grid: class Grid, optional (None)
-            The information about the grid can be also provided as a
-            Grid object.
-        sc_name: string
-            Name of the scalar quantities
+        data (numpy array):		Numpy array containing the data, `int` or `float` or `uint`. 
+                                The dimensions should be between 1 and 3
+        file_name (string):		Name of the file for the output, optional (None)
+        grid (class Grid):		Information about the grid can be also provided as a Grid object            
+        sc_name (string):		Name of the scalar quantities
 
     Returns:
-        A VTK ``STRUCTURED_POINTS`` dataset file containing the input
-        numpy data.
+        A VTK 'STRUCTURED_POINTS' dataset file containing the input numpy data.
 
-    .. note::
-        * Only ``STRUCTURED_POINTS`` output allowed.
-        * The type of the data is extracted from the input array.
-        * Only 3D of 2D input data allowed.
-        * The default output is set to ``POINT_DATA``.
+        .. note:
+            * Only 'STRUCTURED_POINTS' output allowed.
+            * The type of the data is extracted from the input array.
+            * Only 3D or 2D input data allowed.
+            * The default output is set to 'POINT_DATA'.
 
     """
 
@@ -131,26 +123,21 @@ def to_vtk(data_dict, file_name, grid=None, sc_name=None):
 
 def to_vtr(data_dict, file_name, grid):
     """
-    Save a numpy array into a *.vtr rectilinear grid of voxels usin pyevtk
+    Save a numpy array into a ``.vtr`` rectilinear grid of voxels using pyevtk
 
     Parameters:
-        data: numpy array
-             e.g. {'fac': fac, 'mat': mat}
-        file_name: string
-            Name of the file for the output.
-        grid: class Grid
-            The information about the grid can be also provided as a
-            Grid object.
+        data_dict (numpy array):		e.g. {'fac': fac, 'mat': mat}
+        file_name (string):		        Name of the file for the output.
+        grid (class Grid):		        The information about the grid can be also provided as a grid object.
 
     Returns:
-        A VTK ``STRUCTURED_POINTS`` dataset file containing the input
-        numpy data.
+        A VTK STRUCTURED_POINTS dataset file containing the input numpy data.
 
-    .. note::
-        * Only ``STRUCTURED_POINTS`` output allowed.
-        * The type of the data is extracted from the input array.
-        * Only 3D of 2D input data allowed.
-        * The default output is set to ``POINT_DATA``.
+        .. note:
+            * Only 'STRUCTURED_POINTS' output allowed.
+            * The type of the data is extracted from the input array.
+            * Only 3D of 2D input data allowed.
+            * The default output is set to 'POINT_DATA'.
 
     """
     gvec = grid.vec_node()
@@ -160,19 +147,16 @@ def to_vtr(data_dict, file_name, grid):
 
 def vtk_mask(data, out_name, mask_val=-15, grid=None):
     """
-    Prepare a mask file from a *.vtk input. All values should be 0 or 1 after this operation
+    Prepare a mask file from a ``vtk`` input. All values should be 0 or 1 after this operation
 
     Parameters:
-        data: numpy array
-            Data to replace
-        out_name: string
-            Name of the file for the output.
-        mask_val: int
-            Value of the facies which should be masked
-        grid: grid class
+        data (numpy array):		Data to replace
+        out_name (string):		Name of the file for the output.
+        mask_val (int):			Value of the facies which should be masked
+        grid:					Grid class
 
     Returns:
-        A VTK 'STRUCTURED_POINTS' dataset file containing the mask data.
+        A VTK 'STRUCTURED_POINTS' dataset file containing the mask data
 
     """
 
@@ -203,14 +187,14 @@ def vtk_mask(data, out_name, mask_val=-15, grid=None):
 
 def vtk_read(file_in):
     """
-    Reads a *.vtk file into a numpy array
+    Reads a ``.vtk`` file into a numpy array
 
-    Args:
-        file_in (str): name and filepath to read
+    Parameters:
+        file_in (str): 				Name and filepath to read
 
     Returns:
-        gegrid (hyvr.grid class): Grid class
-        props (numpy array): grid properties
+        gegrid (hyvr.grid class): 	Grid class
+        props (numpy array): 		Grid properties
 
 
     """
@@ -248,23 +232,23 @@ def vtk_read(file_in):
 
 
 def vtk_trim(file_in, dims, file_out=None):
-    """Trims a vtk file to the desired dimensions.
+    """
+    Trims a vtk file to the desired dimensions.
+    Removes the effort of working out the indexing in a .grdecl file
+    Saves as a .vtk file with everything the same except the dimensions
 
-    Removes the effort of working out the indexing in a ``.grdecl`` file
-    Saves as a ``.vtk`` file with everything the same except the dimensions
-
-    Args:
-        file_in: ``.vtk`` file to trim
-        dims: 3-tuple of dimensions
-        file_out: output file
+    Parameters:
+        file_in: 	.vtk file to trim
+        dims: 		3-tuple of dimensions
+        file_out: 	Output file
 
     Returns:
-        gegrid: grid class of the data
-        props: the data as a nx x ny x nz array
+        gegrid: 	Grid class of the data
+        props: 		The data as a nx x ny x nz array
 
-    .. notes:
-        * Number of cells (nx, ny, nz) is changed
-        * Spacing (dx, dy, dz) is NOT changed
+        ...notes:
+            * Number of cells (nx, ny, nz) is changed
+            * Spacing (dx, dy, dz) is NOT changed
 
     """
 
@@ -291,14 +275,15 @@ def vtk_trim(file_in, dims, file_out=None):
 
 
 def dem_load(fn):
-    """ Load data from ESRI-style ASCII-file.
+    """ 
+    Load data from ESRI-style ASCII-file.
 
-    Args:
-        fn (str): directory and file name for save
+    Parameters:
+        fn (str): 				Directory and file name for save
 
     Returns:
-        data (numpy array):     data
-        meta (dict):            dict with grid metadata
+        data (numpy array):     Data from ERSI-style ASCII-file
+        meta (dict):            Dict with grid metadata
 
     """
 
@@ -319,13 +304,16 @@ def dem_load(fn):
 
 
 def dem_save(fn, data, gro):
-    """ Save DEM data to ESRI-style ASCII-file
+    """ 
+    Save DEM data to ESRI-style ASCII-file
 
-    Args:
-        fn (str):               directory and file name for save
+    Parameters:
+        fn (str):               Directory and file name for save
         data (numpy array):     DEM data
         gr (object class):      grid.Grid() object class
 
+    Returns:
+        Save DEM data to ESRI-style ASCII-file
 
     """
 
@@ -346,11 +334,16 @@ def dem_save(fn, data, gro):
 
 
 def matlab_save(fn, data):
-    """ Save numpy array to ``.mat`` file for use in matlab.
+    """ 
+    Save numpy array to .mat file for use in matlab.
 
-    Args:
-        fn (str):               file name (ending with ``.mat``)
-        data (numpy array):     data to save
+    Parameters:
+        fn (str):               File name (ending with .mat)
+        data (numpy array):     Data to save
+
+    Returns:
+        Save a dictionary of names and arrays into a MATLAB-style .mat file.
+        This saves the array objects in the given dictionary to a MATLAB- style .mat file.
 
     """
 
@@ -358,14 +351,13 @@ def matlab_save(fn, data):
 
 
 def load_gslib(fn):
-    """ Load ``.gslib`` files.
+    """ 
+    Load .gslib files. This has been appropriated from the HPGL library
+    https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py
+    commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa
 
-    This has been appropriated from the HPGL library
-        https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py
-        commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa
-
-    Args:
-        fn (str): ``.gslib`` file path and name
+    Parameters:
+        fn (str): 			.gslib file path and name
 
     Returns:
         gslib_dict (dict):  properties
@@ -409,15 +401,15 @@ def load_gslib(fn):
 
 def load_pickle(pickfile):
     """
+    Pickle input file
 
-    Args:
-        pickfile:
+    Parameters:
+        pickfile:		Input file
 
     Return:
-        data (dict):
+        data (dict):	Pickled data of input file 
 
     """
-
     with open(pickfile, 'rb') as f:
         data = pickle.load(f)
 
@@ -428,18 +420,19 @@ def load_pickle(pickfile):
 
 
 def parameters(file_in):
-    """ Get parameters for hierarchical facies modelling
+    """ 
+    Get parameters for hierarchical facies modelling
 
-    Args:
-        file_in (str):  parameter file path
+    Parameters:
+        file_in (str):  		Parameter file path
 
     Returns:
-        run (dict):             model run parameters
-        model (dict):           model domain parameters
-        sequences (dict):       sequence parameters
-        hydraulics (dict):      hydraulic properties parameters
-        flowtrans (dict):       flow & transport simulation parameters
-        elements (dict):        architectural elements and parameters
+        run (dict):             Model run parameters
+        model (dict):           Model domain parameters
+        sequences (dict):       Sequence parameters
+        hydraulics (dict):      Hydraulic properties parameters
+        flowtrans (dict):       Flow & transport simulation parameters
+        elements (dict):        Architectural elements and parameters
 
     """
 
@@ -447,7 +440,6 @@ def parameters(file_in):
     p.read(file_in)
     if len(p.sections()) == 0:
         sys.exit('Parameter file not found')
-
 
     elements = {}
     str_values = 'geometry', 'structure', 'runname', 'contact', 'contact_file', 'modeldir', 'hetlev', 'ae_table',\
@@ -497,6 +489,12 @@ def parameters(file_in):
     if 'modeldir' not in run:
         # Use same directory as parameter file
         run['modeldir'] = os.path.abspath('/'.join(file_in.split('/')[0:-1]))
+    elif run['modeldir'] == 'select':
+        # User input for save location
+        run['modeldir'] = input('Please input the model directory save path, or press <enter> to save in default directory:\n')
+        if len(run['modeldir']) == 0:
+             run['modeldir'] = os.path.abspath(os.path.join(os.path.dirname(__file__)[0:-5], 'tests\\made_example\\'))
+        try_makefolder(run['modeldir'])
     else:
         try_makefolder(run['modeldir'])
 
@@ -515,22 +513,22 @@ def parameters(file_in):
 
 
 def model_setup(pf):
-    """ Set up model using grid.Grid() class and assign parameters
+    """ 
+    Set up model using grid.Grid() class and assign parameters
 
-    Args:
-        pf (str):   parameter file path
+    Parameters:
+        pf (str):   					Parameter file path
 
     Returns:
-        run (dict):                     model run parameters
-        mod (dict):                     model domain parameters
-        sequences (dict):               sequence parameters
-        hydraulics (dict):              hydraulic properties parameters
-        flowtrans (dict):               flow & transport simulation parameters
-        elements (dict):                architectural elements and parameters
-        model_grid (object class):      grid object class
+        run (dict):                     Model run parameters
+        mod (dict):                     Model domain parameters
+        sequences (dict):               Sequence parameters
+        hydraulics (dict):              Hydraulic properties parameters
+        flowtrans (dict):               Flow & transport simulation parameters
+        elements (dict):                Architectural elements and parameters
+        model_grid (object class):      Grid object class
 
     """
-
     run, mod, sequences, hydraulics, flowtrans, elements = parameters(pf)
     model_grid = gr.Grid(dx=mod['dx'],
                          dy=mod['dy'],
@@ -544,6 +542,17 @@ def model_setup(pf):
 
 
 def read_lu(sq_fp):
+    """
+    Load user-defined sequences (architectural element lookup table),
+    split the data based on a delimiter and return it as a new list
+
+    Parameters:
+        sq_fp:			Load user-defined sequences (architectural element lookup table)
+
+    Returns:
+        seq_lu (list):	Values of architectural element lookup table
+
+    """
     # Load user-defined sequences / architectural element lookup table
     print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Reading sequence data from ' + sq_fp)
     with open(sq_fp) as f:
@@ -558,22 +567,23 @@ def read_lu(sq_fp):
 
 
 def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
-    """ Convert HYVR outputs to MODFLOW inputs
+    """ 
+    Convert HYVR outputs to MODFLOW inputs
 
-    Args:
-        mg:
-        run:
-        flowtrans:
-        k_iso:
-        anirat:
+    Parameters:
+        mfdir:				Directory of MODFLOW model object
+        mg:					Mesh grid object class
+        flowtrans (dict):   Flow & transport simulation parameters
+        k_iso:				Hydraulic conductivity of HYVR
+        anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)
 
     Returns:
-        mf:
-        dis:
-        bas:
-        lpf:
-        oc:
-        pcg:
+        mf:					MODFLOW model object
+        dis:				Discretization of modflow object
+        bas:				BAS package of modflow model
+        lpf:				LPF package of modflow model
+        oc:					OC package of modflow model
+        pcg:				pcg package of modflow model
 
     """
 
@@ -615,18 +625,125 @@ def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
     return mf, dis, bas, lpf, oc, pcg
 
 
-def to_hgs(hgspath, mg, flowtrans, ktensors, poros):
-    """ Convert HYVR outputs to HydroGeoSphere inputs
+def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
+    """
+    .. note:
 
-    Args:
-        writepath   (str):
-        mg          (str):
-        run:
-        flowtrans:
-        k_iso:
-        anirat:
+        UNDER CONSTRUCTION
+        https://github.com/modflowpy/flopy/blob/develop/examples/Notebooks/flopy3_mf6_tutorial.ipynb
+
+    Convert HYVR outputs to MODFLOW6 inputs
+
+    Parameters:
+        mfdir:				Directory of MODFLOW model object
+        runname:            Run name
+        mg:					Mesh grid object class
+        flowtrans (dict):   Flow & transport simulation parameters
+        k_iso:				Hydraulic conductivity of HYVR
+        anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)
 
     Returns:
+        mf:					MODFLOW model object
+        dis:				Discretization of modflow object
+        bas:				BAS package of modflow model
+        lpf:				LPF package of modflow model
+        oc:					OC package of modflow model
+        pcg:				pcg package of modflow model
+
+    """
+
+    # Transpose HyVR arrays for MF6 input
+    transpose_order = (2, 1, 0)
+    k_iso = np.transpose(k_iso, transpose_order)
+    anirat = np.transpose(anirat, transpose_order)
+    dip = np.transpose(dip, transpose_order)
+    azim = np.transpose(azim, transpose_order)
+
+    # Create the Flopy simulation object
+    sim = flopy.mf6.MFSimulation(sim_name=runname, sim_ws=mfdir)
+
+    # Create the Flopy temporal discretization object
+    tdis = flopy.mf6.ModflowTdis(sim, time_units='DAYS', nper=1,
+                                 tdisrecarray=[(1.0, 1, 1.0)])
+
+    # Create the Flopy groundwater flow (gwf) model object
+    gwf_name = runname
+    gwf = flopy.mf6.MFModel(sim, model_type='gwf6',
+                            model_name=gwf_name,
+                            model_nam_file='{}.nam'.format(gwf_name),
+                            sms_file_name='{}.sms'.format(gwf_name))
+
+    # Create the Flopy iterative model solver Package object (taken from ex15-whirlsxt3d from MF6)
+    # ims = flopy.mf6.ModflowIms(sim, print_option='SUMMARY', complexity='SIMPLE',
+    #                            outer_hclose=1.e-8, outer_maximum=500,
+    #                            under_relaxation='NONE', inner_maximum=100,
+    #                            inner_hclose=1.e-8, rcloserecord=0.001,
+    #                            linear_acceleration='BICGSTAB', scaling_method='NONE',
+    #                            reordering_method='NONE', relaxation_factor=0.97)
+    # sim.register_ims_package(ims, [gwf_name])
+
+    # Create discretisation object
+    ztop = mg.oz + mg.lz
+    zbot = mg.oz
+    botm = np.linspace(ztop, zbot, mg.nz + 1)
+    dis = flopy.mf6.ModflowGwfdis(gwf, length_units='METERS',
+                                  nlay=mg.nz, nrow=mg.ny, ncol=mg.nx,
+                                  delr=mg.dy, delc=mg.dx,
+                                  top=ztop, botm=botm[1:],
+                                  fname='{}.dis'.format(gwf_name))
+
+    # Create the initial conditions package
+    # start = np.zeros((mg.nz, mg.ny, mg.nx))
+    # ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=start)
+
+    # Create Node Property Flow package object
+    npf_package = flopy.mf6.ModflowGwfnpf(gwf, save_flows=True, icelltype=0, xt3doptions='',
+                                          k=k_iso,                                  # within-bedding hydraulic conductivity
+                                          k33=k_iso/anirat,                         # across-bedding hydraulic conductivity
+                                          angle1=azim,                              # azimuth
+                                          angle2=dip,                               # dip
+                                          angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
+
+    # Create the constant head package.
+    # chd_rec = []
+    # for layer in range(0, mg.nz):
+    #     for row in range(0, mg.ny):
+    #         chd_rec.append(((layer, row, 0),  flowtrans['hin'][0]))         # Apply at model inlet
+    #         chd_rec.append(((layer, row, mg.nx-1), flowtrans['hout'][0]))   # Apply at model outlet
+    # chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
+    #                                                periodrecarray=chd_rec, save_flows=True)
+
+    # Create the output control package
+    # headfile = '{}.hds'.format(gwf_name)
+    # head_filerecord = [headfile]
+    # budgetfile = '{}.cbb'.format(gwf_name)
+    # budget_filerecord = [budgetfile]
+    # saverecord = [('HEAD', 'ALL'),
+    #               ('BUDGET', 'ALL')]
+    # printrecord = [('HEAD', 'LAST')]
+    # oc = flopy.mf6.modflow.mfgwfoc.ModflowGwfoc(gwf, saverecord=saverecord,
+    #                                             head_filerecord=head_filerecord,
+    #                                             budget_filerecord=budget_filerecord,
+    #                                             printrecord=printrecord)
+
+    # write simulation to new location
+    sim.write_simulation()
+    # success, buff = sim.run_simulation()
+    # print('\nSuccess is: ', success)
+
+
+def to_hgs(hgspath, mg, flowtrans, ktensors, poros):
+    """ 
+    Convert HYVR outputs to HydroGeoSphere inputs
+
+    Parameters:
+        hgspath (str):		Path where to save HGS output file
+        ktensors:			Array with tensor values of K
+        poros:				Array with values of porosity
+
+    Returns:
+        val_fmts (dict):	Dictionary with values of K tensor and porosity
+        val_filepath:		file name of HGS output file
 
     """
 
@@ -650,24 +767,35 @@ def to_hgs(hgspath, mg, flowtrans, ktensors, poros):
 
 
 def round_x(x, base=1, prec=2):
-    """Round to the nearest z-increment
-    (Refer to http://stackoverflow.com/questions/2272149/round-to-5-or-other-number-in-python)
+    """
+    Round to the nearest z-increment (Refer to http://stackoverflow.com/questions/2272149/round-to-5-or-other-number-in-python)
+
+    Parameters:
+        x (float):		Input parameter
+        base (int):		Base parameter for avoiding floating-point values
+        prec:			Precision of rounding
+
+    Returns:	
+        Rounded value of nearest z-increment
+
     """
     return np.round(base * np.round(x/base), prec)
 
 
 def rotate_ktensor(count, aniso, azimuth, dip, k_in):
     """
+    Create a rotated K tensor
 
-    Args:
-        count:
-        aniso:
-        azimuth:
-        dip:
-        K:
+    Parameters:
+        count (int): 	Material number and/or identifier
+        aniso:			Anisotropy
+        azimuth:		Azimuth angles
+        dip:			Dipping angles
+        k_in:			-
 
     Returns:
-
+        k_rotate:		Rotated K tensor
+    
     """
 
     # convert dip and azimuth to radians
@@ -691,17 +819,21 @@ def rotate_ktensor(count, aniso, azimuth, dip, k_in):
 
 
 def get_boreholes(bh_loc, fin, fout=None):
-    """Get virtual borehole data.
+    """
+    Get virtual borehole data
+    Returns values at centroids - this might not match the borehole inputs
 
-    Returns values at centroics - this might not match the borehole inputs
-
-    Args:
-        bh_loc: location of boreholes
-        fin: filepath of properties input
-        fout: filepath to save borehole information
+    Parameters:
+        bh_loc: 	Location of boreholes
+        fin: 		Filepath of properties input
+        fout: 		Filepath to save borehole information
 
     Returns:
-        bh_data:
+        bhdf:	X, Y values at centroids
+
+    .. note:
+
+        UNDER CONSTRUCTION!
 
     """
 
@@ -721,16 +853,29 @@ def get_boreholes(bh_loc, fin, fout=None):
         np.savetxt(fout, np.column_stack((np.arange(1, len(fe_zones)+1), centroids_pm, fe_facies, fe_K, fe_poros)),
                    fmt='%i %f %f %f %i %1.2e %.2f')
 
-    return bh_data
+    return bhdf
 
 
 def calc_norm(x):
-    """ Calculate norm """
+    """ 
+    Calculate norm (compute the complex conjugate from 'x')
+
+    Parameters:
+        x:	Input parameter
+
+    Returns:	
+        Complex conjugate of x
+
+    """
     s = (x.conj() * x).real
     return np.sqrt(np.add.reduce(s, axis=0))
 
 
 def try_makefolder(makedir):
+    """ 
+    Create modflow output folder
+
+    """
     # Create modflow output folder
 
     try:
@@ -744,18 +889,18 @@ def specsim(gr, var, corl, twod=False, covmod='gau'):
     """
     Generate random variables stationary covariance function using spectral techniques of Dietrich & Newsam (1993)
 
-    Args:
-        gr:     Grid class object
-        var:    variance
-        corl:   Tuple of correlation length of random variable
-        twod:   Flag for two-dimensional simulation
-        covmod: Which covariance model to use
-                    'gau': Gaussian
-                    'exp': Exponential
+    Parameters:
+        gr:     	Grid class object
+        var:    	Variance
+        corl:   	Tuple of correlation length of random variable
+        twod:   	Flag for two-dimensional simulation
+        covmod: 	Which covariance model to use
+                        'gau': Gaussian
+                        'exp': Exponential
 
     Returns:
-        bigy:   Random gaussian variable
-
+        bigy:   	Random gaussian variable
+                    Real part of a complex array, created via inverse discrete Fourier Transform
 
     """
 
@@ -804,38 +949,3 @@ def specsim(gr, var, corl, twod=False, covmod='gau'):
 if __name__ == '__main__':
     """ Testing functions"""
 
-    testing = 'gslib'
-
-    if testing == 'lp3d':
-        file_in = 'X:/Reynold/Steinlach loop/Modelling/impala/imp002/zones_noPC.csv'
-        file_out = 'X:/Reynold/Steinlach loop/Modelling/impala/imp002/mask.vtk'
-
-        lp = hc.lp3d_in(file_in)
-        vtk_mask(lp[1], file_out, mask_val=[-1, 1], grid=lp[0])
-
-    elif testing == 'sbed':
-        file_in = 'X:/Reynold/Steinlach loop/Modelling/impala/fluvial12test.vtk'
-        file_out = 'X:/Reynold/Steinlach loop/Modelling/impala/fluvial12test__.vtk'
-
-        gr, props = vtk_read(file_in)
-        to_vtk(props, file_out, grid=gr)
-
-    elif testing == 'para':
-        fn = 'parameters.ini'
-        test = parameters(fn)
-
-    elif testing == 'dem':
-        fn = "D:\Jeremy\IRTG\Software\CAESAR-lisflood\Waimak\demtest.txt"
-        test = dem_load(fn)
-
-    elif testing == 'round':
-        tt = np.random.random(18).reshape(2, 3, 3)
-        tr = round_x(tt, base=0.1)
-        print(tt)
-        print(tr)
-
-    elif testing == 'gslib':
-        data_fp = 'E:/Repositories/Brahms/waimakaririRiver-2-processed-data/waimak2000_02_2901x1201_relEl.gslib'
-        gsdat = load_gslib(data_fp)
-
-        tdata = np.squeeze(gsdat['topostatio'])

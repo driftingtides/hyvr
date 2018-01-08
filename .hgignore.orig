@@ -1,0 +1,13 @@
+syntax: glob
+hyvr/*
+docs/make.bat
+docs/_*
+venv/*
+.idea*
+.git*
+<<<<<<< working copy
+hyvr.egg-info/*
+dist/*
+=======
+hyvr.egg-info/*
+>>>>>>> destination

@@ -1,8 +1,3 @@
-"""
-setup.py file taken from https://github.com/pypa/sampleproject/blob/master/setup.py
-"""
-
-# Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
@@ -16,39 +11,40 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='hyvr',
-    version='0.1.dev1',
+    version='0.1.dev9',
     description='A python package for simulating hydrogeological virtual realities',
     long_description=long_description,
-    url='http://jeremypaulbennett.weebly.com/',
+    url='https://github.com/driftingtides/hyvr',
     author='Jeremy Bennett',
     author_email='hyvr.sim@gmail.com',
     license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
-		'Intended Audience :: End Users/Desktop',
-		'Intended Audience :: Education',
+        'Intended Audience :: End Users/Desktop',
+        'Intended Audience :: Education',
         'Topic :: Scientific/Engineering',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
     ],
     keywords=['hydrogeology', 'sediment', 'simulator'],
-    packages=find_packages(exclude=['contrib', 'docs', 'tests', 'venv']),
-	python_requires='>=3',
+    packages=find_packages(),
+    python_requires='>=3.4',
     install_requires=[
-		'numpy',
-		'scipy',
-		'matplotlib',
-		'pandas',
-		'pyevtk',
-		'flopy',
-		],
+        'numpy',
+        'scipy',
+        'matplotlib',
+        'pandas',
+        'pyevtk',
+        'flopy',
+        ],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    #package_data={
-    #    'sample': ['package_data.dat'],
-    #},
+	include_package_data = True,
+    package_data={
+        '': ['*.ini'],
+    },
 
 )

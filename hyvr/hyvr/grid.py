@@ -26,15 +26,16 @@ class Grid:
     """ Grid class
 
     A simple class that contains the *Origin*, *Delta* and *Size* of a
-    simulation.  It can also be used as container for some information
+    simulation. It can also be used as container for some information
     contained in a VTK structured grid file.
 
-
     Notes:
-        * By default, the size of the grid is considered in term of points.
+        * By default, the size of the grid is considered as points.
 
-    .. seealso::
-        :py:mod:`vtknumpy`
+        .. seealso::
+
+            :py:mod:`vtknumpy`
+
     """
 
     def __init__(self,
@@ -43,35 +44,23 @@ class Grid:
                  nx=200, ny=200, nz=10,
                  gtype='points', gname='image',
                  periodicity=False):
+
         """
         Define a structured grid, with some default values.
 
         Parameters:
 
-            ox, oy, oz: float, optional
+            ox, oy, oz (float): 	Coordinates of the origin [optional]
+            dx, dy, dz (float): 	Distance between points of the structured grid or side of the cells [optional]
+            nx, ny, nz (int): 		Number of points. The number of cells is nx-1, ny-1 and nz-1
+            gtype (string): 		'points' or 'cells'. Define the grid type, for grids made of points or grids made of cells
+            gname (string): 		Give the grid a name. This is intended for vtk outputs
 
-                Coordinates of the origin.
-
-            dx, dy, dz: float, optional
-
-                Distance between points of the structured grid or side
-                of the cells.
-
-            nx, ny, nz: int, optional
-
-                Number of points. The number of cells is nx-1, ny-1
-                and nz-1.
-
-            gtype: string in ('points', 'cells')
-
-                Define the grid type, for grids made of points or
-                grids made of cells.
-
-            gname: string
-
-                Give the grid a name. This is intended for vtk outputs
+        Returns:
+            Size of the grid with _lx, _ly and _lz
 
         """
+
         self.ox = ox
         self.oy = oy
         self.oz = oz
@@ -98,6 +87,13 @@ class Grid:
     def __str__(self):
         """
         Print some of the informations provided in the class.
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            out:	Grid dimensions containing origin, delta, size, etc.
+
         """
         out = (
             '    *** Grid dimensions ***\n'
@@ -115,8 +111,7 @@ class Grid:
 
     def print_intervals(self, axis='xyz'):
         """
-        Print the intervals that constitute the simulation domain in a format
-        like::
+        Print the intervals that constitute the simulation domain in a format like:
 
             [ ox, ox+nx*dx] [ oy, oy+ny*dy] [ oz, oz+nz*dz]
 
@@ -124,9 +119,11 @@ class Grid:
         is the delta between points (*idem* for *y* and *z*).
 
         Parameters:
-            axis: string containing ['x','y','z'], optional
-                If the default value "xyz" is used, then all the intevals
-                are printed.
+            axis (string):  containing ['x','y','z'], [optional]
+                            If the default value "xyz" is used, then all the intevals are printed.
+
+        Returns:
+            print intervals that constitute the simulation domain
 
         """
 
@@ -148,11 +145,13 @@ class Grid:
         To print out the spacing of the grid as a tuple
 
         Parameters:
-            self : an instance of the Grid class
+            self:	An instance of the Grid class
 
         Returns:
-            A tuple  containing the spacing defined in the grid.
+            A tuple containing the spacing defined in the grid
+
         """
+
         return self.dx, self.dy, self.dz
 
     def origin(self):
@@ -160,11 +159,13 @@ class Grid:
         To print out the origin of the grid as a tuple
 
         Parameters:
-            self : an instance of the Grid class
+            self:	An instance of the Grid class
 
         Returns:
-            A tuple containing the origin defined in the grid.
+            A tuple containing the origin defined in the grid
+
         """
+
         return self.ox, self.oy, self.oz
 
     def shape(self):
@@ -172,19 +173,14 @@ class Grid:
         To print out the shape of the grid as a tuple
 
         Parameters:
-
-            self:
-
-                an instance of the Grid class
-
-            gtype: string in ('points', 'cells')
-
-                String to decide to print the shape in terms of points
-                or in terms of cells.
+            self:			An instance of the Grid class
+            gtype(string):  'points' or 'cells'. String to decide to print the shape in terms of points or in terms of cells.
 
         Returns:
-            A tuple containing the shape defined in the grid.
+            A tuple containing the shape defined in the grid
+
         """
+
         if self.gtype == 'points':
             out = (self.nx, self.ny, self.nz)
         elif self.gtype == 'cells':
@@ -201,10 +197,10 @@ class Grid:
         Create vectors of spatial coordinates
 
         Parameters:
-            self : an instance of the Grid class
+            self:		An instance of the Grid class
 
         Returns:
-
+            xv, yv, zv: Vectors of spatial coordinates
 
         """
 
@@ -224,10 +220,10 @@ class Grid:
         Create vectors of spatial coordinates of bounding nodes
 
         Parameters:
-            self : an instance of the Grid class
+            self:	An instance of the Grid class
 
         Returns:
-
+            xv, yv, zv: Vectors of spatial coordinates of bounding nodes
 
         """
 
@@ -238,6 +234,16 @@ class Grid:
         return xv, yv, zv
 
     def vec_x(self):
+        """
+        Create vector of spatial x-coordinate
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            xv: 	Vector of spatial x-coordinate
+
+        """	
         if self.ox != 0:
             ov = self.ox
             lv = self.self.lx + self.ox
@@ -252,6 +258,16 @@ class Grid:
         return xv
 
     def vec_y(self):
+        """
+        Create vector of spatial y-coordinate
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            yv: 	Vector of spatial y-coordinate
+
+        """		
         if self.oy != 0:
             ov = self.oy
             lv = self.self.ly + self.oy
@@ -267,6 +283,16 @@ class Grid:
 
 
     def vec_z(self):
+        """
+        Create vector of spatial z-coordinate
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            zv: 	Vector of spatial z-coordinate
+
+        """			
         if self.oz != 0:
             ov = self.oz
             lv = self.self.lz + self.oz
@@ -285,12 +311,12 @@ class Grid:
         Create a meshgrid representation of the grid
 
         Parameters:
-            self : an instance of the Grid class
+            self: 	An instance of the Grid class
 
         Returns:
-            A tuple containing the x,y,z-coordinates of the grid.
-        """
+            A tuple containing the x,y,z-coordinates of the grid
 
+        """
         xv, yv, zv = self.vec()
         x_reg, y_reg, z_reg = np.meshgrid(xv, yv, zv, indexing=ind)
 
@@ -301,10 +327,11 @@ class Grid:
         Create a 2D meshgrid representation of the grid
 
         Parameters:
-            self : an instance of the Grid class
+            self:	An instance of the Grid class
 
         Returns:
-            A tuple containing the x,y-coordinates of the grid.
+            A tuple containing the x,y-coordinates of the grid
+
         """
 
         xv, yv, _ = self.vec()
@@ -315,6 +342,12 @@ class Grid:
     def cart_coords(self):
         """
         Get x,y,z coordinates in a tuple
+
+        Parameters:
+
+        Returns:
+            A Tuple containing the x,y and z-coordinates of the grid
+
         """
 
         mgx, mgy, mgz = self.meshup()
@@ -325,6 +358,13 @@ class Grid:
     def cart_coords2d(self):
         """
         Get x,y coordinates in a tuple
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            A tuple containing the x,y-coordinates of the grid
+
         """
 
         mgx, mgy = self.meshup2d()
@@ -335,6 +375,13 @@ class Grid:
     def compute_max(self):
         """
         Compute the max values for *x*, *y* and *z* of the grid.
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Max values of x,y and z
+
         """
         self.x_max = self.ox + self.dx*self.nx
         self.y_max = self.oy + self.dy*self.ny
@@ -342,41 +389,122 @@ class Grid:
 
     def get_lx(self):
         """
-        Provide as output a tuple containing the size of a
-        grid. Useful for the implementation of ``property``.
+        Provide as output a tuple containing the x-size of a
+        grid. Useful for the implementation of 'property'.
+
+        Parameters:
+            self:	An instance of the Grid class			
+
+        Returns:
+            Tuple containing the size of a grid in x-direction
+
         """
         return int(self.dx * self.nx - self.ox)
 
     def get_ly(self):
         """
-        Provide as output a tuple containing the size of a
-        grid. Useful for the implementation of ``property``.
+        Provide as output a tuple containing the y-size of a
+        grid. Useful for the implementation of 'property'.
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in y-direction
+
         """
         return self.dy * self.ny - self.oy
 
     def get_lz(self):
         """
-        Provide as output a tuple containing the size of a
-        grid. Useful for the implementation of ``property``.
+        Provide as output a tuple containing the z-size of a
+        grid. Useful for the implementation of 'property'.
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in z-direction
+
         """
         return self.dz * self.nz - self.oz
 
     def set_lx(self, val=None):
+        """
+        Set the x-size of a grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in x-direction
+
+        """
         self._lx = self.dx * self.nx - self.ox
 
     def set_ly(self):
+        """
+        Set the y-size of a grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in y-direction
+
+        """
         self._ly = self.dy * self.ny - self.oy
 
     def set_lz(self):
+        """
+        Set the z-size of a grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in z-direction
+
+        """
         self._lz = self.dz * self.nz - self.oz
 
     def del_lx(self):
+        """
+        Delete the x-dimension of a grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in x-direction
+
+        """
         del self._lx
 
     def del_ly(self):
+        """
+        Delete the y-dimension of a grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in y-direction
+
+        """
         del self._ly
 
     def del_lz(self):
+        """
+        Delete the z-dimension of a grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Tuple containing the size of a grid in z-direction
+
+        """
         del self._lz
 
     lx = property(get_lx, set_lx, del_lx, "'size' along *x* of the grid.")
@@ -386,13 +514,39 @@ class Grid:
     def get_points(self):
         """
         Update the number of points for a points grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Number of points for a points grid
+
         """
         return self.nx*self.ny*self.nz
 
     def set_points(self, val=None):
+        """
+        Set the number of points for a points grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Number of points for a points grid
+
+        """
         self._points = self.nx*self.ny*self.nz
 
     def del_points(self):
+        """
+        Delete the points of a points grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+
+        """
         del self._points
 
     points = property(get_points, set_points, del_points, "Number of points")
@@ -400,6 +554,13 @@ class Grid:
     def get_cells(self):
         """
         Update the number of cells for a cells grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Number of cells for x, y and z
+
         """
         return \
             (self.nx-1 if self.nx>1 else 1)* \
@@ -407,17 +568,46 @@ class Grid:
             (self.nz-1 if self.nz>1 else 1)
 
     def set_cells(self, val=None):
+        """
+        Set the number of cells for a cells grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Number of cells for x, y and z
+
+        """	
         self._cells = \
             (self.nx-1 if self.nx>1 else 1)* \
             (self.ny-1 if self.ny>1 else 1)* \
             (self.nz-1 if self.nz>1 else 1)
 
     def del_cells(self):
+        """
+        Delete the cells for a cells grid
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+
+        """	
         del self._cells
 
     cells = property(get_cells, set_cells, del_cells, "Number of cells")
 
     def cellsize_2d(self):
+        """
+        Compute the cell size in 2D
+
+        Parameters:
+            self:	An instance of the Grid class
+
+        Returns:
+            Cell size in 2D
+
+        """	
         return self.dx * self.dy
 
     cs2 = property(cellsize_2d, "Cell size in 2D")
@@ -428,10 +618,11 @@ class Grid:
         """
         Return the index of an elevation for the k-dimension of a 3D array
 
-        Args:
-            zval:
+        Parameter:
+            zval:		Elevation value	
 
         Returns:
+            iz (int):	Index of elevation
 
         """
         iz = np.around((zval - self.oz) / self.dz)

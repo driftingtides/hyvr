@@ -8,24 +8,29 @@
 
 """
 import os
+import sys
 import numpy as np
 import pickle
 import math
 import time
 import random
 import scipy.io as sio
-import utils as hu
 import matplotlib.pyplot as plt
-import grid as gr
+
+import hyvr.hyvr.grid as gr
+import hyvr.hyvr.utils as hu
 
 
 def main(param_file):
-    """ Main function for HYVR generation
+    """ 
+    Main function for HYVR generation
 
-    Args:
-        param_file (str): Parameter file location
+    Parameters:
+        param_file (str): 	Parameter file location
 
     Returns:
+
+        Save data outputs as parameter file
 
     """
 
@@ -36,8 +41,9 @@ def main(param_file):
         # Generate facies
         props, params = facies(run, model, sequences, hydraulics, flowtrans, elements, mg)
 
-        # Generate internal heterogeneity
-        props, params = heterogeneity(props, params)
+        if hydraulics['flag_gen'] is True:
+            # Generate internal heterogeneity
+            props, params = heterogeneity(props, params)
 
         # Save data
         if run['numsim'] > 1:
@@ -50,22 +56,61 @@ def main(param_file):
         hu.try_makefolder(realdir)
 
         if 'l_dataoutputs' in run:
-            outdict = {'fac': props['fac'], 'mat': props['mat'], 'azim': props['azim'], 'dip': props['dip'],
-                       'k_iso': props['k_iso'], 'poros': props['poros'], 'ae': props['ae_arr'],
-                       'seq': props['seq_arr'], 'anirat': props['anirat'], 'ktensors': props['ktensors']}
+            if hydraulics['flag_gen'] is True:
+                outdict = {'fac': props['fac'], 'mat': props['mat'], 'azim': props['azim'], 'dip': props['dip'],
+                           'k_iso': props['k_iso'], 'poros': props['poros'], 'ae': props['ae_arr'],
+                           'seq': props['seq_arr'], 'anirat': props['anirat'], 'ktensors': props['ktensors']}
+            else:
+                outdict = {'fac': props['fac'], 'mat': props['mat'], 'azim': props['azim'], 'dip': props['dip'],
+                           'ae': props['ae_arr'], 'seq': props['seq_arr']}
             save_outputs(realdir, realname, run['l_dataoutputs'], mg, outdict)
 
         if 'l_modeloutputs' in run:
-            save_models(realdir, realname, mg, run['l_modeloutputs'], flowtrans, props['k_iso'], props['ktensors'], props['poros'], props['anirat'])
+            if hydraulics['flag_gen'] is False:
+                print('No hydraulic parameters generated. No model outputs saved')
+            else:
+                save_models(realdir, realname, mg, run['l_modeloutputs'], flowtrans,
+                            props['k_iso'],
+                            props['ktensors'],
+                            props['poros'],
+                            props['anirat'],
+                            props['dip'],
+                            props['azim'])
 
 
 def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
-    """ Generate hydrofacies fields
+    """  Generate hydrofacies fields
 
-    Args:
-        param_file (str):   Parameter file location
+    Parameters:
+        run:					Model run parameters like ``runname``, ``rundir``, ``l_dataoutputs``, ``l_modeloutputs``, etc.
+        model:					Model domain parameters
+        sequences:				Details about the sequences
+        hydraulics:				Details about the hydraulics
+        flowtrans:				Flow & transport simulation parameters
+        elements:				Architectural elements and parametersX
+        mg:						Mesh grid object class
 
     Returns:
+        (tuple): Tuple containing:
+
+            - **probs** (dict): Contains data of architectural element units and associated hydrofacies
+                - ae_arr: Array with architectural element unit details
+                - seq_arr: Array with sequence details
+                - mat: Material values
+                - fac: Hydrofacies values
+                - dip: Dipping angles (if model parameter 'flag_anisotropy')
+                - azim: Azimuth angles (if model parameter 'flag_anisotropy')
+
+            - **params** (tuple): Contains parameters of model domain, sequence, hydraulics, etc.
+
+                                run (dict) =			Model run parameters
+                                model (dict) = 			Model domain parameters
+                                sequences (dict) = 		Sequence parameters
+                                hydraulics (dict) =		Hydraulic properties parameters
+                                flowtrans (dict) = 		Flow & transport simulation parameters
+                                elements (dict) = 		Architectural elements and parameters
+                                mg = 					Mesh grid object class
+                                ae_lu =					Architectural element lookup table
 
     """
 
@@ -251,9 +296,9 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
 
     # Wrap storage arrays in a dictionary
     if run['flag_anisotropy']:
-        props = [azim, mat, dip, fac, ae_arr, seq_arr]
+        props = {'azim': azim, 'mat': mat, 'dip': dip, 'fac': fac, 'ae_arr': ae_arr, 'seq_arr': seq_arr}
     else:
-        props = [mat, fac]
+        props = {'mat': mat, 'fac': fac, 'ae_arr': ae_arr, 'seq_arr': seq_arr}
     params = [run, model, sequences, hydraulics, flowtrans, elements, mg, ae_lu]
 
     # Renumber material values from zero to remove eroded values
@@ -263,18 +308,27 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
 
 
 def heterogeneity(props, params):
-    """ Generate internal heterogeneity
+    """ 
+    Generate internal heterogeneity
 
-    Args:
-        props:
-        params:
-
+    Parameters:
+        probs (list):			Data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)
+        params (list):			Parameters of model domain, sequence, hydraulics, etc.
+    
     Returns:
+        probs (list):			Data of architectural element units and associated hydrofacies
+        params (list):			Input parameters, assigned with heterogenity
 
     """
+
     print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': generating hydraulic parameters')
     run, model, sequences, hydraulics, flowtrans, elements, mg, ae_lu = params
-    azim, mat, dip, fac, ae_arr, seq_arr = props
+    azim = props['azim']
+    mat = props['mat']
+    dip = props['dip']
+    fac = props['fac']
+    ae_arr = props['ae_arr']
+    seq_arr = props['seq_arr']
 
     # Initialise storage arrays
     k_iso = np.zeros((mg.nx, mg.ny, mg.nz), dtype=np.float32)       # Horizontal hydraulic conductivity array
@@ -358,44 +412,35 @@ def heterogeneity(props, params):
                 temp_n = temp_n + hydraulics['r_n'][aebackfac]
                 poros[aemask] = temp_n[aemask]
 
-                # Assign background anistropic ratio
+                # Assign background anisotropy ratio
                 anirat[aemask] = hydraulics['r_k_ratio'][aebackfac]
 
-        """ Assign trends to hydraulic parameters globally """
-        if 'r_k_ztrend' in elements[aei[3]] or 'r_k_xtrend' in elements[aei[3]]:
-            if 'k_trend' in hydraulics and hydraulics['k_trend'] == 'global':
-                if 'r_k_ztrend' in hydraulics:
-                    zf_vec = np.linspace(hydraulics['r_k_ztrend'][0], hydraulics['r_k_ztrend'][1], mg.nz)  # Z factor at each elevation
+                # Assign architectural element trends
+                if 'r_k_ztrend' in elements[aei[3]]:
+                    # Vertical trend
+                    zf_vec = np.linspace(elements[aei[3]]['r_k_ztrend'][0], elements[aei[3]]['r_k_ztrend'][1], mg.nz)  # Z factor at each elevation
                 else:
-                    zf_vec = np.ones((mg.nx, mg.ny, mg.nz))
-
-                if 'r_k_xtrend' in hydraulics:
-                    xf_vec = np.linspace(hydraulics['r_k_xtrend'][0], hydraulics['r_k_xtrend'][1], mg.nx)
+                    # Longitudinal trend
+                    zf_vec = np.ones((mg.nz,))
+                if 'r_k_xtrend' in elements[aei[3]]:
+                    xf_vec = np.linspace(elements[aei[3]]['r_k_xtrend'][0], elements[aei[3]]['r_k_xtrend'][1], mg.nx)
                 else:
-                    xf_vec = np.ones((mg.nx, mg.ny, mg.nz))
+                    xf_vec = np.ones((mg.nx,))
+                k_iso = np.transpose(k_iso.transpose() * xf_vec)
+                k_iso *= zf_vec
 
-                _, xfmg, zfmg = np.meshgrid(np.arange(0, mg.ny), xf_vec,  zf_vec)
-
-                k_iso *= xfmg * zfmg
+            """ Assign trends to hydraulic parameters globally """
+            if 'r_k_ztrend' in hydraulics:
+                zf_vec = np.linspace(hydraulics['r_k_ztrend'][0], hydraulics['r_k_ztrend'][1], mg.nz)  # Z factor at each elevation
             else:
-                # Loop over assigned sequence architecutral elements
-                for ei in elements:
-                    if 'r_k_ztrend' in elements[aei[3]]:
-                        zfactor_arr = np.ones((mg.nx, mg.ny, mg.nz)) * np.linspace(elements[aei[3]]['r_k_ztrend'][0], elements[aei[3]]['r_k_ztrend'][1], mg.nz)  # Z factor at each elevation
-                    else:
-                        zfactor_arr = np.ones((mg.nx, mg.ny, mg.nz))
-
-                    if 'r_k_xtrend' in elements[aei[3]]:
-                        xfactor_vec = np.linspace(elements[aei[3]]['r_k_xtrend'][0], elements[aei[3]]['r_k_xtrend'][1], mg.nx)  # X factor at each x-coordiante
-                        xfactor_arr = np.ones((mg.nx, mg.ny, mg.nz)) * xfactor_vec[:, None, None]
-                    else:
-                        xfactor_arr = np.ones((mg.nx, mg.ny, mg.nz))
-
-                    factor_arr = np.ones((mg.nx, mg.ny, mg.nz)) * zfactor_arr * xfactor_arr
-
-                    for si, aei in enumerate(ae_lu):
-                        if aei[3] == ei:
-                            k_iso[ae_arr == aei[0]] *= factor_arr[ae_arr == aei[0]]
+                # Longitudinal trend
+                zf_vec = np.ones((mg.nz,))
+            if 'r_k_xtrend' in hydraulics:
+                xf_vec = np.linspace(hydraulics['r_k_xtrend'][0], hydraulics['r_k_xtrend'][1], mg.nx)
+            else:
+                xf_vec = np.ones((mg.nx,))
+            k_iso = np.transpose(k_iso.transpose() * xf_vec)
+            k_iso *= zf_vec
 
     else:
         # Homogeneous case
@@ -456,14 +501,18 @@ def heterogeneity(props, params):
 
 
 def save_outputs(realdir, realname, outputs, mg, outdict):
-    """ Save data arrays to standard formats
+    """ 
+    Save data arrays to standard formats
 
-    Args:
-        realdir     (str):  File path to save to
-        realname    (str):  File name
-        run
-        mg
-        outdict
+    Parameters:
+        realdir (str):  	File path to save to
+        realname (str):  	File name
+        run (dict):			Model run parameters
+        mg:					Mesh grid object class
+        outdict:			Output directory
+
+    Returns:
+        Save data outputs as .vtk (Paraview), .mat (Matlab) or .dat (Python pickle output)
 
     """
 
@@ -483,17 +532,21 @@ def save_outputs(realdir, realname, outputs, mg, outdict):
                 pickle.dump(outdict, outfile, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poros, anirat):
-    """ Save HYVR outputs to standard modelling codes
+def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poros, anirat, dip, azim):
+    """ 
+    Save HYVR outputs to standard modelling codes
 
-    Args:
-        run:
-        mg:
-        flowtrans:
-        k_iso:
-        ktensors:
-        poros:
-        anirat:
+    Parameters:
+        run (dict):			Model run parameters
+        mg:					Mesh grid object class
+        flowtrans (dict):	Flow & transport simulation parameters
+        k_iso:				Horizontal hydraulic conductivity array
+        ktensors:			Array with tensor values of K
+        poros:				Porosity array
+        anirat:				Anistropic ratio ($K_h/K_v$)
+
+    Returns:
+        Save data outputs as .mf (MODFLOW) or .hgs (HydroGeoSphere)
 
     """
     for output in outputs:
@@ -505,6 +558,15 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
             mfname = mfdir + realname
             hu.try_makefolder(mfdir)
             hu.to_modflow(mfname, mg, flowtrans, k_iso, anirat)
+
+        if output == 'mf6':
+            # MODFLOW 6 output
+
+            # Create HGS output folder
+            mf6dir = realdir + 'MODFLOW6\\'
+            mf6name = mf6dir + realname
+            hu.try_makefolder(mf6dir)
+            hu.to_mf6(mf6name, realname, mg, flowtrans, k_iso, anirat, dip, azim)
 
         if output == 'hgs':
             # HydroGeoSphere output
@@ -525,20 +587,20 @@ Trough generators and utilities
 
 
 def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
-    """ Create trough shapes.
+    """ 
+    Create trough shapes
 
-    Args:
-        tr      (dict):         trough parameters
-        mg      (grid class):   model grid
-        ae      (list):         architectural element unit details
-        ae_arr  (ndarray):      3D array of sequeunce numbers
-        count   (int):          material number
-        ani     (bool):         Generate anisotropy?
+    Parameters:
+        tr (dict): 				Trough parameters
+        mg (grid class): 		Model grid 
+        ae (list): 				Architectural element unit details
+        ae_arr (ndarray): 		3D array of sequeunce numbers
+        count (int): 			Material number and/or identifier
+        ani (bool):         	Boolean if anisotropy is to be generated
 
     Returns:
-        lpgrid: grid class of grid information
-        lpdf:   leapfrog lithology as a pandas dataframe
-
+        probs (numpy array):	Grid properties
+        count (int): 			Material number and/or identifier
 
     """
 
@@ -562,10 +624,16 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
         tr_bot = ae[1]
     tr_top = max(ae[2], tr_bot) + tr['agg']
 
-    for znow in np.arange(tr_bot, tr_top, tr['agg']):
-        for elno in np.arange(0, tr['el_z'] * mg.lx * mg.ly):
+    trough_gen_range = np.arange(0, tr['el_z'] * mg.lx * mg.ly)         # Range of truncated ellipsoid to generate at each elevation
+    tr_xy_t = np.zeros((len(trough_gen_range), 2))                      # X,Y coordinates of truncated ellipsoid
+
+    for znow in np.arange(tr_bot, tr_top, tr['agg']):                   # Loop over aggradation elevations
+        for eli, elno in enumerate(trough_gen_range):                   # Loop over troughs
             # Reneration of trough parameters
             a, b, c = rand_trough(tr, mg=mg, ztr=znow)
+
+            xnow = tr_xy_t[eli][0]
+            ynow = tr_xy_t[eli][1]
 
             # center of trough
             if 'flag_display' in model and model['flag_display'] is True:
@@ -574,11 +642,14 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 ynow = 0
             elif 'r_migrate' in tr and znow > tr_bot:
                 # Migration of troughs
-                xnow += np.random.uniform(tr['r_migrate'][0], tr['r_migrate'][1])
-                ynow += np.random.uniform(tr['r_migrate'][2], tr['r_migrate'][3])
+                xnow += np.random.normal(tr['r_migrate'][0], tr['r_migrate'][1])
+                ynow += np.random.normal(tr['r_migrate'][2], tr['r_migrate'][3])
             else:
                 xnow = np.random.uniform(0, mg.lx)
                 ynow = np.random.uniform(mg.ly/-2, mg.ly/2)
+
+            tr_xy_t[eli][0] = xnow
+            tr_xy_t[eli][1] = ynow
 
             alpha = np.random.uniform(tr['r_paleoflow'][0], tr['r_paleoflow'][1])   # orientation angle of trough ('paleoflow')
             angnow = np.random.uniform(tr['r_azimuth'][0], tr['r_azimuth'][1])      # orientation of material
@@ -690,6 +761,11 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 if ani:
                     azim[select] = angnow    # Save angle
                     dip[select] = np.random.uniform(tr['r_dip'][0], tr['r_dip'][1])
+
+            if 'l_lag' in tr:
+                in_lag = (znow - tr['depth'] + float(tr['l_lag'][0])) > z3  # Is grid cell below top of lag surface
+                fac[np.logical_and(select, in_lag)] = int(tr['l_lag'][1])
+
             count += 1
             ae_arr_i[select] = ae[0]
 
@@ -705,19 +781,15 @@ def scale_rotate(x, y, z, alpha=0, a=1, b=1, c=1):
     """
     Scale and rotate three-dimensional trough
 
-    :Parameters:
-        x, y, z: float
-            spatial coordinates
-        alpha: float
-            rotation angle about the z-axis
-        a, b, c: float
-            axis lengths in x, y, z directions (ellipsoid length, width, depth)
-    :return:
-        select: grid cells within ellipsoid
-        R2:     grid of scaled and rotated values
+    Parameters:
+        x, y, z (float):	Spatial coordinates
+        alpha (float):		Rotation angle about the z-axis
+        a, b, c (float):	Axis lengths in x, y, z directions (ellipsoid length, width, depth)
+    
+    Returns:
+        select: 			Grid cells within ellipsoid
+        R2:     			Grid of scaled and rotated values
 
-    : Authors:
-        Jeremy Bennett
     """
 
     alpha = np.radians(alpha)
@@ -741,24 +813,30 @@ def ellipsoid_gradient(x, y, z, a, b, c, alpha, select, tr):
     """
     Calculate dip and strike values in rotated ellipsoids
 
-    Args:
-        x, y, z:    distances to centre of ellipsoid
-        a, b, c:    majox/minor axes of ellipsoid
-        alpha:      rotation of ellipsoid from mean flow direction
+    Parameters:
+        x, y, z:    	Distances to centre of ellipsoid
+        a, b, c:    	Majox/minor axes of ellipsoid
+        alpha:      	Rotation of ellipsoid from mean flow direction
 
     Returns:
-        dip:
-        strike:
+        dip_g:			Dipping in 3D
+        azimuth_g:		Azimuth in 3D
 
     """
 
-    alpha = np.radians(-alpha)
-    idx_z = np.where(np.abs(z) == np.min(np.abs(z)))[2].min()
+    alpha = np.radians(-alpha)  # Convert alpha to radians
 
-    # Calculate dip and strike for onion
+    # initialize arrays
     dip_g = np.zeros(np.shape(x))
     azimuth_g = np.zeros(np.shape(x))
 
+    try:
+        idx_z = np.where(select)[2].max()     # Find the 'surface cells' of the ellipsoid
+    except ValueError:
+        # Return if no values selected
+        return dip_g, azimuth_g
+
+    # Calcuate dip and strike for onion
     select_z_idx = np.where(select[:, :, idx_z])                    # Indices of grid cells in unit at top of unit
     ix = x[select_z_idx[0], select_z_idx[1], idx_z].flatten()
     iy = y[select_z_idx[0], select_z_idx[1], idx_z].flatten()
@@ -794,10 +872,13 @@ def rand_trough(tr, mg=False, ztr=[]):
     """
     Randomly generate ellipsoid geometry parameters:
 
-    Args:
-        tr:     ellipsoid parameters
-        mg:     Meshgrid object
-        ztr:    elevation of ellipsoid centre point
+    Parameters:
+        tr:     	Ellipsoid parameters
+        mg:     	Meshgrid object
+        ztr:    	Elevation of ellipsoid centre point
+
+    Returns:
+        a, b, c:	Length, width and depth of ellipsoid
 
     """
     if ztr and 'r_geo_ztrend' in tr:
@@ -822,15 +903,37 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
         - Flow regime is assumed to be reasonably constant so the major geometry of the channels doesn't change so much
         - 'Migration' of the channels according to a shift vector
 
-    Args:
-        ch_par:         channel parameters
-        mg:         model grid class
-        z_in:       starting depth
-        thickness:  thickness of architectural element
+    Parameters:
+        ch_par:         Channel parameters
+        mg:         	Mesh grid object class
+        model (dict):	Model domain parameters
+        seq (dict):		Sequence parameters
+        ae_array:		Array with architectural element unit details
+        count (int): 	Material number and/or identifier
+        ani (bool): 	Boolean if anisotropy is to be generated
+        (z_in:       	starting depth)
+        (thickness:  	Thickness of architectural element)
 
     Returns:
+        probs:			Contains data of architectural element units and associated hydrofacies
 
-    """
+                        if 'ani':
+
+                            mat = 			Material values
+                            azim = 			Azimuth angles
+                            dip = 			Dipping angles
+                            fac = 			Facies values
+                            ae_arr_i = 		Array with architectural element unit details
+
+                        else
+
+                            mat = 			Material values
+                            fac = 			Facies values
+                            ae_arr_i = 		Array with architectural element unit details
+
+        count (int): 	Material number and/or identifier
+
+    """	
 
     # Vectors of spatial coordinates
     xvec, yvec, zvec = mg.vec()
@@ -858,13 +961,15 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
         ystart = np.random.uniform(yvec[0], yvec[-1], total_channels)
 
     # loop over channel top depths
+    ch_bot = seq[1]
     if 'buffer' in ch_par:
-        ch_bot = seq[1] + ch_par['depth'] * ch_par['buffer']
-    else:
-        ch_bot = seq[1]
-    ch_top = seq[2] + ch_par['r_mig'][2]
+        ch_bot += ch_par['depth'] * ch_par['buffer']
 
-    for znow in np.arange(ch_bot, ch_top, ch_par['r_mig'][2]):
+    ch_top = seq[2]
+    ch_dz = ch_par['agg']
+    ch_top += ch_dz
+
+    for znow in np.arange(ch_bot, ch_top, ch_dz):
         print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ' z = ' + str(znow))
         # Assign linear trend to channel sizes
         if 'r_geo_ztrend' in ch_par:
@@ -933,8 +1038,11 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
                 # Get mask arrays for each condition
                 in_channel = D[:, :, None]**2 <= z_ch_width**2 / 4 - ((mg.idx_z(znow) - z3) * mg.dz * z_ch_width / (z_ch_depth*2)) ** 2     # is grid cell in channel
                 finite_v = ~np.isnan(vx_znow)            # Only assign if velocity is finite
-                below_top = ae_array <= seq[0]            # Don't assign values to locations higher than top contact surface
+                below_top = ae_array <= seq[0]          # Don't assign values to locations higher than top contact surface
                 chan_mask = in_channel * finite_v[:, :, None] * below_top
+                if mg.idx_z(znow) <= z3[:, :, -1].max():
+                    # Set mask above top of channel to False
+                    chan_mask[:, :, mg.idx_z(znow):-1] = False
 
                 # Assign properties
                 fac[chan_mask] = fd[chan_mask]
@@ -955,8 +1063,10 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
                 count += 1
 
         # Shift starting values with migration vector from parameter file
-        xstart += ch_par['r_mig'][0]
-        ystart += ch_par['r_mig'][1]
+        if 'r_mig' in ch_par:
+            xstart += np.random.uniform(-ch_par['r_mig'][0], ch_par['r_mig'][0])
+            ystart += np.random.uniform(-ch_par['r_mig'][1], ch_par['r_mig'][1])
+
     if ani:
         props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac, 'ae_arr_i': ae_arr_i}
     else:
@@ -970,16 +1080,17 @@ def ferguson_channel(mg, h, k, ds, eps_factor, dist=0, disp=False):
     Implementation of AR2 autoregressive model
     http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full
 
-    Args:
-        mg:
-        h:
-        k:
-        ds:
-        eps_factor:
-        dist (float): Distance to generate channels - defaults to mg.lx
-        disp (bool): Creating display channel - channel begins at (0,0)
+    Parameters:
+        mg (object class):			Mesh grid object class
+        h (float):					Height
+        k (float):					Wave number
+        ds(float):					Channel distance for calculations
+        eps_factor (float):			Random background noise
+        dist (float): 		        Distance to generate channels - defaults to mg.lx
+        disp (bool): 		        Creating display channel - channel begins at (0,0)
 
-    Return
+    Returns:
+        outputs (float array):		Simulated channel centerlines: storage array containing values for x coordinate, y coordinate, vx and vy
 
     """
     # Parameters
@@ -1044,13 +1155,21 @@ def ferguson_channel(mg, h, k, ds, eps_factor, dist=0, disp=False):
         starty = 0
     outputs[:, 1] = outputs[:, 1] - starty
 
-
     return outputs
 
 
 def ferguson_theta(s, eps_factor, k, h):
     """
     Calculate channel direction angle
+
+    Parameters:
+        s:				    Steps within generated channel distance
+        eps_factor:		    Random background noise
+        k:				    Wave number
+        h:				    Height
+
+    Returns:
+        th_store (array):	Channel direction angle
 
     """
     # Storage arrays
@@ -1080,8 +1199,16 @@ def thetaAR2(t1, t2, k, h, eps):
     Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)
     http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full
 
-    t1: theta(i-1)
-    t2: theta(i-2)
+    Parameters:
+        t1: 	theta(i-1)
+        t2: 	theta(i-2)
+        k:		Wavenumber
+        h:		Height
+        eps:	Random background noise
+
+    Returns:
+        2nd-order autoregression (AR2)
+
     """
     b1 = 2*np.exp(-k*h)*np.cos(k*np.arcsin(h))
     b2 = -np.exp(-2*k*h)
@@ -1094,15 +1221,20 @@ Sheet generators and utilities
 
 
 def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
-    """
+    """ 
     Generate gravel sheet with internal heterogeneity
-    Args:
-        sh:         sheet parameters
-        mg:         model grid class
-        ae_i:       architectural element lookup details [sequence number, z_bottom, z_top, architectural element, geometry]
-        ae_array:   architectural element array
+
+    Parameters:
+        sh:         	Sheet parameters
+        mg:         	Model grid class
+        ae_i:       	Architectural element lookup details [sequence number, z_bottom, z_top, architectural element, geometry]
+        ae_array:   	Architectural element array
+        count (int): 	Material number and/or identifier
+        ani (bool):		Boolean if anisotropy is to be generated
 
     Returns:
+        probs (dict):	Contains data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)
+        count (int): 	Material number and/or identifier
 
     """
     # Initialize storage arrays
@@ -1182,10 +1314,10 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
 
 
 def dip_sets(mg, aep, znow, channel=[], select=[], azimuth_z=0):
-    """
+    """ 
     Generate dip angles and assign to the dip matrix
 
-    Args:
+    Parameters:
         mg:         Mesh grid object class
         aep:        Architectural element parameters (dict)
         channel:    Tuple of x,y coordinates of channel (omitted for linear flows)
@@ -1262,14 +1394,14 @@ def curve_interp(xc, yc, spacing):
     Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by 'Unutbu' on
     http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values (retrieved 17/04/2017)
 
-    Args:
-        xc:
-        yc:
-        spacing:
+    Parameters:
+        xc:			x coordinates of curve
+        yc:			y coordinates of curve
+        spacing:	Spacing between points
 
     Returns:
-        xn:
-        yn:
+        xn:			x coordinates of interpolated points
+        yn:			y coordinates of interpolated points
 
     """
 
@@ -1303,9 +1435,12 @@ def dip_rotate(azimuth_in, dip_in):
     Rotate dip angle based on azimuth
     Note that inputs and outputs are in degrees
 
-    Args:
-        azimuth_in:
-        dip_in:
+    Parameters:
+        azimuth_in:		Azimuth input angle
+        dip_in:			Dipping input angle
+
+    Returns:
+        dip_out:		Azimuth output angle
     """
     azimuth_in = azimuth_in * np.pi / 180
     dip_in = dip_in * np.pi / 180
@@ -1328,12 +1463,14 @@ def save_arrays(arr_size, bg=False, mat_count=0, ani=True):
     """
     Generate arrays for material properties storage
 
-    Args:
+    Parameters:
         arr_size:       Size of array
         bg:             List of background values for each array
-        ani:            Boolean if anisotropy is to be generated
+        ani (bool):	    Boolean if anisotropy is to be generated
 
     Returns:
+        mat:			Material values
+        fac:			Facies values
 
     """
     if bg is False:
@@ -1351,6 +1488,17 @@ def save_arrays(arr_size, bg=False, mat_count=0, ani=True):
 
 
 def prob_choose(choices, probs):
+    """ 	
+    Get random values of an architectural element
+
+    Parameters:
+        choices:	Fixed number of choices
+        probs: 		Contains data of architectural element units and associated hydrofacies
+
+    Returns:
+        choice (int):		Random value of architectural elements
+    """
+
     ae_list = []
     for chi in range(0, len(choices)):
         ae_list += [choices[chi]] * int(probs[chi] * 1000)
@@ -1360,12 +1508,31 @@ def prob_choose(choices, probs):
 
 
 def angle(v1, v2):
-    """ Return angle between two vectors in [°] """
+    """ 
+    Return angle between two vectors in [°]
+
+    Parameters:
+        v1:		Vector 1
+        v2: 	Vector 2
+
+    Returns:
+        Angle between v1 and v2 (float)
+    """
     return np.arccos(np.abs(np.dot(v1, v2)) / (np.sqrt(np.sum(v1 ** 2, axis=1)) * np.sqrt(np.sum(v2 ** 2))))
 
 
 def reindex(inray):
-    """ Reindex array from 0 """
+    """ 
+    Reindex array from 0
+
+    Parameters:
+        inray:		Array with indices
+
+    Returns:
+        vecmat: 	Vectorized function of inray
+
+    """
+
     remat = dict(zip(np.unique(inray), np.arange(len(np.unique(inray)))))      # Dict of old & new indices
     vecmat = np.vectorize(remat.get)
     return vecmat(inray) + 1
@@ -1375,7 +1542,14 @@ def channel_checker(param_file, ae_name, no_channels=1, dist=0):
     """
     channel_checker function for quickly assessing the shape of channel inputs
 
+    Parameters:
+        param_file (str): 		Parameter file location			
+        ae_name (str):			Name of architectural element
+        no_channels (float):	Number of channels
+        dist (float): 			Distance to generate channels - defaults to mg.lx
+
     Returns:
+        Plots showing shape of Ferguson channels
 
     """
     run, model, sequences, hydraulics, flowtrans, elements, mg = hu.model_setup(param_file)
@@ -1391,19 +1565,21 @@ def channel_checker(param_file, ae_name, no_channels=1, dist=0):
 
 
 def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):
-    """ Get closest plane to points
+    """
+    Compute number of planes
 
-    Args:
-        dip_norm:
-        x_dip:
-        y_dip:
-        znow:
-        xtemp:
-        ytemp:
-        ztemp:
+    Parameters:
+        dip_norm:		
+        x_dip:			X coordinates of points on dip planes
+        y_dip:			Y coordinates of points on dip planes
+        znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes 		
+        xtemp:			X dimension of model grid nodes 
+        ytemp:			Y dimension of model grid nodes 
+        ztemp:			Z dimension of model grid nodes 
         select:         Model grid nodes to consider
 
     Returns:
+        set_no: 		Number of planes with selected model grid nodes
 
     """
     # Get closest plane to points
@@ -1444,5 +1620,9 @@ def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):
 Testing functions
 --------------------------------------------------------------------------------------------------------------"""
 if __name__ == '__main__':
-    param = '../../../hyvr/examples/made.ini'
-    main(param)
+    if len(sys.argv) > 1:
+        param_file = sys.argv[1]
+    else:
+        param_file = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'tests\\made.ini'))
+
+    main(param_file)
