@@ -1,0 +1,205 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &#8212; HYVR 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="HYVR 0.1 documentation" href="index.html" />
+    <link rel="next" title="HYVR Computational methods" href="methods.html" />
+    <link rel="prev" title="The Hydrogeological Virtual Reality (HyVR) simulation package" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methods.html" title="HYVR Computational methods"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="The Hydrogeological Virtual Reality (HyVR) simulation package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HYVR 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-hyvr-package-windows">Installing the HYVR package (Windows)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-conda">With conda</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#source">Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development">Development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">HYVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inout.html">HYVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">HYVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="more.html">Extending HYVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">hyvr</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">The Hydrogeological Virtual Reality (HyVR) simulation package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="methods.html"
+                        title="next chapter">HYVR Computational methods</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/intro.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p><strong>HyVR: Turning your geofantasy into reality!</strong></p>
+<p>The Hydrogeological Virtual Reality simulation package (HyVR) is a Python module that helps researchers and practitioners generate subsurface models with multiple scales of heterogeneity that are based on geological concepts. The simulation outputs can then be used to explore groundwater flow and solute transport behaviour. This is facilitated by HyVR outputs in common flow-and-transport simulation input formats. As each site is unique, HyVR has been designed that users can take the code and extend it to suit their particular simulation needs.</p>
+<p>The original motivation for HyVR was the lack of tools for modelling sedimentary deposits that include bedding structure model outputs (i.e. dip and azimuth). Such bedding parameters were required to approximate full hydraulic-conductivity tensors for groundwater flow and solute transport modelling. HyVR is able to simulate these bedding parameters and generate spatially distributed parameter fields, including full hydraulic-conductivity tensors.</p>
+<p>I hope you enjoy using HyVR much more than I enjoyed putting it together! I look forward to seeing what kind of funky fields you created in the course of your work.</p>
+<div class="section" id="installing-the-hyvr-package-windows">
+<h2>Installing the HYVR package (Windows)<a class="headerlink" href="#installing-the-hyvr-package-windows" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="with-conda">
+<h3>With conda<a class="headerlink" href="#with-conda" title="Permalink to this headline">¶</a></h3>
+<p>To install HyVR we recommend first installing the <a class="reference external" href="https://www.anaconda.com/download/">Anaconda distribution</a> of Python 3. This distribution has the majority of dependencies that HyVR requires.</p>
+<p>It is a good idea to install the HyVR package into a <a class="reference external" href="https://conda.io/docs/user-guide/tasks/manage-environments.html">virtual environment</a>. Do this by opening a command prompt window and typing the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">virtualenv</span> <span class="n">hyvr_env</span>
+</pre></div>
+</div>
+<p>You need to then activate this environment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">call</span> <span class="n">hyvr_env</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>Install the necessary python packages by downloading the <code class="docutils literal"><span class="pre">requirements.txt</span></code> file in the HyVR repository and then running:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span><span class="o">&gt;</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Once this is completed install HyVR using pip:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">hyvr_env</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">working</span> <span class="n">directory</span><span class="o">&gt;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">hyvr</span>
+</pre></div>
+</div>
+<p>You can test whether HyVR is working by running the default parameters in the Python console:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hyvr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hyvr</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A number of messages should then be displayed in the console, including the location where the simulation outputs have been saved.</p>
+</div>
+</div>
+<div class="section" id="source">
+<h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
+<p>The most current version of HyVR will be available at the <a class="reference external" href="https://github.com/driftingtides/hyvr/">github repository</a>; a version will also be available on the <a class="reference external" href="https://pypi.python.org/pypi/hyvr/">PyPI index</a> which can be installed using <code class="docutils literal"><span class="pre">pip</span></code>.</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="python">
+<h3>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
+<p>HyVR was developed for use with Python 3.4 or greater. It may be possible to use with earlier versions of Python 3, however this has not been tested.</p>
+</div>
+<div class="section" id="modules">
+<h3>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>scipy</li>
+<li>pandas</li>
+<li>numpy</li>
+<li>matplotlib</li>
+<li><a class="reference external" href="https://github.com/modflowpy/flopy">flopy</a></li>
+<li><a class="reference external" href="https://pypi.python.org/pypi/PyEVTK">pyevtk</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<p>You can contact the developer(s) of HyVR by <a class="reference external" href="mailto:hyvr&#46;sim&#37;&#52;&#48;gmail&#46;com">email</a>.  HyVR is currently being developed by Jeremy Bennett (<a class="reference external" href="https://jeremypaulbennett.weebly.com">website</a>) as part of his doctoral research at the University of Tübingen.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methods.html" title="HYVR Computational methods"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="The Hydrogeological Virtual Reality (HyVR) simulation package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HYVR 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>
