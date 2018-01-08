@@ -42,7 +42,6 @@ Source
 ------
 The most current version of HyVR will be available at the 'github repository <https://github.com/driftingtides/hyvr/>`_; a version will also be available on the 'PyPI index <https://pypi.python.org/pypi/hyvr/>'_ which can be installed using ``pip``.
 
-
 Requirements
 ------------
 
@@ -59,4 +58,3 @@ Modules
 * numpy
 * matplotlib
 * `flopy <https://github.com/modflowpy/flopy>`_
-
