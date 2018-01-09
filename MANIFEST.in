@@ -1,9 +1,0 @@
-# Include licence file
-include LICENCE.txt
-
-# Include example parameter file
-include hyvr/tests/made.ini
-include hyvr/tests/test_channel.ini
-
-# Include readme
-include README.rst
