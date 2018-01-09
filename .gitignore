@@ -1,0 +1,15 @@
+.eggs/*
+.hg/*
+.idea/*
+venv/*
+dist/*
+docs/_templates/*
+.pypirc
+hyvr.egg-info/*
+pypi_instructions.txt
+*__pycache__*
+*.ipynb
+.hgignore
+MANIFEST.in
+build/*
+hyvr/tests/made/*
