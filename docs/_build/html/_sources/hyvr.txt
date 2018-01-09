@@ -1,0 +1,38 @@
+hyvr package
+============
+
+Submodules
+----------
+
+hyvr.hyvr.grid module
+----------------------
+
+.. automodule:: hyvr.hyvr.grid
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hyvr.hyvr.sim module
+--------------------
+
+.. automodule:: hyvr.hyvr.sim
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hyvr.hyvr.utils module
+----------------------
+
+.. automodule:: hyvr.hyvr.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: hyvr.hyvr
+    :members:
+    :undoc-members:
+    :show-inheritance:

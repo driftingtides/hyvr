@@ -1,0 +1,87 @@
+\indexentry{hyvr.hyvr.grid (module)|hyperpage}{29}
+\indexentry{Grid (class in hyvr.hyvr.grid)|hyperpage}{29}
+\indexentry{cart\_coords() (hyvr.hyvr.grid.Grid method)|hyperpage}{29}
+\indexentry{cart\_coords2d() (hyvr.hyvr.grid.Grid method)|hyperpage}{29}
+\indexentry{cells (hyvr.hyvr.grid.Grid attribute)|hyperpage}{30}
+\indexentry{cellsize\_2d() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{compute\_max() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{cs2 (hyvr.hyvr.grid.Grid attribute)|hyperpage}{30}
+\indexentry{del\_cells() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{del\_lx() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{del\_ly() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{del\_lz() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{del\_points() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{get\_cells() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{get\_lx() (hyvr.hyvr.grid.Grid method)|hyperpage}{30}
+\indexentry{get\_ly() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{get\_lz() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{get\_points() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{idx\_z() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{lx (hyvr.hyvr.grid.Grid attribute)|hyperpage}{31}
+\indexentry{ly (hyvr.hyvr.grid.Grid attribute)|hyperpage}{31}
+\indexentry{lz (hyvr.hyvr.grid.Grid attribute)|hyperpage}{31}
+\indexentry{meshup() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{meshup2d() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{origin() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{points (hyvr.hyvr.grid.Grid attribute)|hyperpage}{31}
+\indexentry{print\_intervals() (hyvr.hyvr.grid.Grid method)|hyperpage}{31}
+\indexentry{set\_cells() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{set\_lx() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{set\_ly() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{set\_lz() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{set\_points() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{shape() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{spacing() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{vec() (hyvr.hyvr.grid.Grid method)|hyperpage}{32}
+\indexentry{vec\_node() (hyvr.hyvr.grid.Grid method)|hyperpage}{33}
+\indexentry{vec\_x() (hyvr.hyvr.grid.Grid method)|hyperpage}{33}
+\indexentry{vec\_y() (hyvr.hyvr.grid.Grid method)|hyperpage}{33}
+\indexentry{vec\_z() (hyvr.hyvr.grid.Grid method)|hyperpage}{33}
+\indexentry{hyvr.hyvr.sim (module)|hyperpage}{33}
+\indexentry{angle() (in module hyvr.hyvr.sim)|hyperpage}{33}
+\indexentry{channel\_checker() (in module hyvr.hyvr.sim)|hyperpage}{33}
+\indexentry{curve\_interp() (in module hyvr.hyvr.sim)|hyperpage}{34}
+\indexentry{dip\_rotate() (in module hyvr.hyvr.sim)|hyperpage}{34}
+\indexentry{dip\_sets() (in module hyvr.hyvr.sim)|hyperpage}{34}
+\indexentry{ellipsoid\_gradient() (in module hyvr.hyvr.sim)|hyperpage}{34}
+\indexentry{facies() (in module hyvr.hyvr.sim)|hyperpage}{35}
+\indexentry{ferguson\_channel() (in module hyvr.hyvr.sim)|hyperpage}{35}
+\indexentry{ferguson\_theta() (in module hyvr.hyvr.sim)|hyperpage}{36}
+\indexentry{gen\_channel() (in module hyvr.hyvr.sim)|hyperpage}{36}
+\indexentry{gen\_sheet() (in module hyvr.hyvr.sim)|hyperpage}{37}
+\indexentry{gen\_trough() (in module hyvr.hyvr.sim)|hyperpage}{37}
+\indexentry{heterogeneity() (in module hyvr.hyvr.sim)|hyperpage}{37}
+\indexentry{main() (in module hyvr.hyvr.sim)|hyperpage}{37}
+\indexentry{planepoint() (in module hyvr.hyvr.sim)|hyperpage}{37}
+\indexentry{prob\_choose() (in module hyvr.hyvr.sim)|hyperpage}{38}
+\indexentry{rand\_trough() (in module hyvr.hyvr.sim)|hyperpage}{38}
+\indexentry{reindex() (in module hyvr.hyvr.sim)|hyperpage}{38}
+\indexentry{save\_arrays() (in module hyvr.hyvr.sim)|hyperpage}{38}
+\indexentry{save\_models() (in module hyvr.hyvr.sim)|hyperpage}{39}
+\indexentry{save\_outputs() (in module hyvr.hyvr.sim)|hyperpage}{39}
+\indexentry{scale\_rotate() (in module hyvr.hyvr.sim)|hyperpage}{39}
+\indexentry{thetaAR2() (in module hyvr.hyvr.sim)|hyperpage}{39}
+\indexentry{hyvr.hyvr.utils (module)|hyperpage}{40}
+\indexentry{calc\_norm() (in module hyvr.hyvr.utils)|hyperpage}{40}
+\indexentry{dem\_load() (in module hyvr.hyvr.utils)|hyperpage}{40}
+\indexentry{dem\_save() (in module hyvr.hyvr.utils)|hyperpage}{40}
+\indexentry{get\_boreholes() (in module hyvr.hyvr.utils)|hyperpage}{40}
+\indexentry{load\_gslib() (in module hyvr.hyvr.utils)|hyperpage}{40}
+\indexentry{load\_pickle() (in module hyvr.hyvr.utils)|hyperpage}{41}
+\indexentry{matlab\_save() (in module hyvr.hyvr.utils)|hyperpage}{41}
+\indexentry{model\_setup() (in module hyvr.hyvr.utils)|hyperpage}{41}
+\indexentry{parameters() (in module hyvr.hyvr.utils)|hyperpage}{41}
+\indexentry{read\_lu() (in module hyvr.hyvr.utils)|hyperpage}{41}
+\indexentry{rotate\_ktensor() (in module hyvr.hyvr.utils)|hyperpage}{41}
+\indexentry{round\_x() (in module hyvr.hyvr.utils)|hyperpage}{42}
+\indexentry{specsim() (in module hyvr.hyvr.utils)|hyperpage}{42}
+\indexentry{to\_hgs() (in module hyvr.hyvr.utils)|hyperpage}{42}
+\indexentry{to\_mf6() (in module hyvr.hyvr.utils)|hyperpage}{42}
+\indexentry{to\_modflow() (in module hyvr.hyvr.utils)|hyperpage}{43}
+\indexentry{to\_vtk() (in module hyvr.hyvr.utils)|hyperpage}{43}
+\indexentry{to\_vtr() (in module hyvr.hyvr.utils)|hyperpage}{43}
+\indexentry{try\_makefolder() (in module hyvr.hyvr.utils)|hyperpage}{44}
+\indexentry{vtk\_mask() (in module hyvr.hyvr.utils)|hyperpage}{44}
+\indexentry{vtk\_read() (in module hyvr.hyvr.utils)|hyperpage}{44}
+\indexentry{vtk\_trim() (in module hyvr.hyvr.utils)|hyperpage}{44}
+\indexentry{hyvr.hyvr (module)|hyperpage}{44}
