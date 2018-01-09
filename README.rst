@@ -4,7 +4,7 @@ The Hydrogeological Virtual Reality simulation package
 
 **HyVR: Turning your geofantasy into reality!** 
 
-Welcome to the Hydrogeological Virtual Reality simulation package (HYVR). This is an *alpha* release of the package and has not been thoroughly tested.
+Welcome to the Hydrogeological Virtual Reality simulation package (HYVR). This is an *alpha* release of the package and has not been thoroughly tested. Check out the `Technical documentation <https://driftingtides.github.io/hyvr/index.html>`_
 
 HyVR is a Python module that helps researchers and practitioners generate subsurface models with multiple scales of heterogeneity that are based on geological concepts. The simulation outputs can then be used to explore groundwater flow and solute transport behaviour. This is facilitated by HyVR outputs in common flow-and-transport simulation input formats. As each site is unique, HyVR has been designed that users can take the code and extend it to suit their particular simulation needs.
 
