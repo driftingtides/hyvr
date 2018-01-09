@@ -1,5 +1,5 @@
 # Include licence file
-include LICENCE.txt
+include LICENCE
 
 # Include example parameter file
 include hyvr/tests/made.ini

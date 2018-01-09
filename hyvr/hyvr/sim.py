@@ -34,6 +34,9 @@ def main(param_file):
 
     """
 
+    if param_file == 0:
+        param_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), os.pardir, 'tests\\made.ini'))
+
     # Load parameter file
     run, model, sequences, hydraulics, flowtrans, elements, mg = hu.model_setup(param_file)
 
@@ -1623,6 +1626,6 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         param_file = sys.argv[1]
     else:
-        param_file = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'tests\\made.ini'))
+        param_file = 0
 
     main(param_file)

@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='hyvr',
-    version='0.1.dev9',
+    version='0.1.dev11',
     description='A python package for simulating hydrogeological virtual realities',
     long_description=long_description,
     url='https://github.com/driftingtides/hyvr',
@@ -44,7 +44,7 @@ setup(
     # have to be included in MANIFEST.in as well.
 	include_package_data = True,
     package_data={
-        '': ['*.ini'],
+        'tests': ['*.ini'],
     }
 
 

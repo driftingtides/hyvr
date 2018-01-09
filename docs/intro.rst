@@ -28,11 +28,11 @@ You need to then activate this environment::
 	
 Install the necessary python packages by downloading the ``requirements.txt`` file in the HyVR repository and then running::
 	
-	pip install -r <path to>requirements.txt
+	pip install -r https://raw.githubusercontent.com/driftingtides/hyvr/master/requirements.txt
     
 Once this is completed install HyVR using pip::
 
-    (hyvr_env) <working directory> pip install hyvr
+    (hyvr_env) pip install hyvr
 	
 You can test whether HyVR is working by running the default parameters in the Python console::
 	
