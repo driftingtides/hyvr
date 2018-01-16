@@ -13,4 +13,5 @@ pypi_instructions.txt
 *.ipynb
 .hgignore
 build/*
-hyvr/tests/made/*
+hyvr/tests/made*
+*herten*
