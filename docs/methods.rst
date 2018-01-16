@@ -39,7 +39,7 @@ The generation of architectural elements and internal hydrofacies occurs sequenc
 	
 	*Geometries implemented in HyVR.*
 
-Four properties are assigned to each model grid cell during this simulation step: material, facies, azimuth, and dip. The material property is a unique identifier for each individual architectural element generated. The facies property denotes which hydrofacies has been assigned to a model grid cell. The azimuth :math:`\kappa` and dip :math:`\psi` properties are associated with the bedding structure at each model grid cell and denote the angle of the bedding plane from the mean direction of flow and horizontal, respectively.
+Four properties are assigned to each model grid cell during this simulation step: *ae*, *material*, *facies*, *azimuth*, and *dip*. The *ae* property denotes which architectural element (from ``sequence.l_ae``) has been assigned to a model grid cell. The *material* property is a unique identifier for each individual architectural element generated. The *facies* property denotes which hydrofacies has been assigned to a model grid cell. The *azimuth* :math:`\kappa` and *dip* :math:`\psi` properties are associated with the bedding structure at each model grid cell and denote the angle of the bedding plane from the mean direction of flow and horizontal, respectively.
 
 .. _temethod:
 

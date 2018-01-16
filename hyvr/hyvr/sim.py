@@ -61,11 +61,12 @@ def main(param_file):
         if 'l_dataoutputs' in run:
             if hydraulics['flag_gen'] is True:
                 outdict = {'fac': props['fac'], 'mat': props['mat'], 'azim': props['azim'], 'dip': props['dip'],
-                           'k_iso': props['k_iso'], 'poros': props['poros'], 'ae': props['ae_arr'],
-                           'seq': props['seq_arr'], 'anirat': props['anirat'], 'ktensors': props['ktensors']}
+                           'k_iso': props['k_iso'], 'poros': props['poros'], 'aeu': props['aeu_arr'],
+                           'ae': props['ae_arr'], 'seq': props['seq_arr'], 'anirat': props['anirat'],
+                           'ktensors': props['ktensors']}
             else:
                 outdict = {'fac': props['fac'], 'mat': props['mat'], 'azim': props['azim'], 'dip': props['dip'],
-                           'ae': props['ae_arr'], 'seq': props['seq_arr']}
+                           'aeu': props['aeu_arr'], 'ae': props['ae_arr'], 'seq': props['seq_arr']}
             save_outputs(realdir, realname, run['l_dataoutputs'], mg, outdict)
 
         if 'l_modeloutputs' in run:
@@ -97,7 +98,7 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
         (tuple): Tuple containing:
 
             - **probs** (dict): Contains data of architectural element units and associated hydrofacies
-                - ae_arr: Array with architectural element unit details
+                - aeu_arr: Array with architectural element unit details
                 - seq_arr: Array with sequence details
                 - mat: Material values
                 - fac: Hydrofacies values
@@ -168,7 +169,7 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
     elif len(sequences['ll_ae_z_mean']) < 0:
         """ Uniform Model """
         ae_lu = [[0, 0, mg.lz, sequences['ll_seq_ae'][si]]]
-        ae_arr = np.ones((mg.nx, mg.ny, mg.nz), dtype=np.int32)  # Initialise sequence storage array
+        aeu_arr = np.ones((mg.nx, mg.ny, mg.nz), dtype=np.int32)  # Initialise sequence storage array
 
     else:
         """ Assign architectural element units """
@@ -208,7 +209,7 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
 
     """ Create contact surfaces """
     z_bot = np.zeros((mg.nx, mg.ny))
-    ae_arr = np.zeros((mg.nx, mg.ny, mg.nz), dtype=np.int32)  # Initialise sequence storage array
+    aeu_arr = np.zeros((mg.nx, mg.ny, mg.nz), dtype=np.int32)  # Initialise sequence storage array
     _, _, zzz = mg.meshup()
 
     for ae_i, ae_z in enumerate(ae_lu):
@@ -219,7 +220,7 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
         elif ae_lu[ae_i+1][-1] != ae_z[-1]:
             # Use the sequence top contact if the AE unit is the top-most in the sequence
             z_top = seq_top_z[:, :, ae_z[-1]]
-        elif ae_dict['contact'] == 'random':
+        elif 'contact' in ae_dict and ae_dict['contact'] == 'random':
             # Generate random top contact
             sp = ae_dict['r_contact_model']
             z_top = hu.specsim(mg, sp[0], [sp[1], sp[2]], twod=True, covmod='gau') + ae_z[2]
@@ -235,7 +236,7 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
         z_top_arr = np.tile(z_top[..., np.newaxis], [1, 1, mg.nz])
         zae = np.logical_and(zzz >= z_bot_arr, zzz < z_top_arr)
         zae = np.logical_and(zae, seq_arr == ae_z[-1])
-        ae_arr[zae] = ae_z[0]
+        aeu_arr[zae] = ae_z[0]
 
         # Hack to make sure erosive elements aren't simulated in sequences below
         if ae_dict['geometry'] in ['trunc_ellip', 'channel']:
@@ -259,7 +260,7 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
     --------------------------------------------------------------------------------------------------------------"""
     # Initialise storage arrays
     count = 1
-    mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz), bg=sequences['r_bg'], mat_count=count)
+    ae_arr, mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz), bg=sequences['r_bg'], mat_count=count)
 
     """ Create architectural elements and associated hydrofacies fields """
     # Loop over AE units rather than elevations
@@ -272,26 +273,27 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
         #     aebg = int(ae_dict['r_bg'][0])
         # else:
         #     aebg = int(sequences['r_bg'][ae_i[4]])
-        # fac[ae_arr == ae_i[0]] = aebg
+        # fac[aeu_arr == ae_i[0]] = aebg
 
         if ae_dict['geometry'] == 'trunc_ellip':
             # Generate truncated ellipsoid
-            props_n, count = gen_trough(ae_dict, mg, model, ae_i, ae_arr, count)
-            ae_mask = props_n['ae_arr_i'] == ae_i[0]
+            props_n, count = gen_trough(ae_dict, mg, model, ae_i, aeu_arr, count)
+            ae_mask = props_n['aeu_arr_i'] == ae_i[0]
 
         elif ae_dict['geometry'] == 'channel':
             # Generate channel
-            props_n, count = gen_channel(ae_dict, mg, model, ae_i, ae_arr, count)
-            ae_mask = props_n['ae_arr_i'] == ae_i[0]
+            props_n, count = gen_channel(ae_dict, mg, model, ae_i, aeu_arr, count)
+            ae_mask = props_n['aeu_arr_i'] == ae_i[0]
 
         elif ae_dict['geometry'] == 'sheet':
             # Generate sheet
-            props_n, count = gen_sheet(ae_dict, mg, ae_i, ae_arr, count)
-            ae_mask = ae_arr == ae_i[0]
+            props_n, count = gen_sheet(ae_dict, mg, ae_i, aeu_arr, count)
+            ae_mask = aeu_arr == ae_i[0]
 
         # Assign simulated values to storage arrays
-        ae_arr[ae_mask] = ae_i[0]
+        aeu_arr[ae_mask] = ae_i[0]
         seq_arr[ae_mask] = ae_i[4]
+        ae_arr[ae_mask] = props_n['ae_arr'][ae_mask]
         mat[ae_mask] = props_n['mat'][ae_mask]
         fac[ae_mask] = props_n['fac'][ae_mask]
         azim[ae_mask] = props_n['azim'][ae_mask]
@@ -299,9 +301,9 @@ def facies(run, model, sequences, hydraulics, flowtrans, elements, mg):
 
     # Wrap storage arrays in a dictionary
     if run['flag_anisotropy']:
-        props = {'azim': azim, 'mat': mat, 'dip': dip, 'fac': fac, 'ae_arr': ae_arr, 'seq_arr': seq_arr}
+        props = {'azim': azim, 'mat': mat, 'ae_arr': ae_arr, 'dip': dip, 'fac': fac, 'aeu_arr': aeu_arr, 'seq_arr': seq_arr}
     else:
-        props = {'mat': mat, 'fac': fac, 'ae_arr': ae_arr, 'seq_arr': seq_arr}
+        props = {'mat': mat, 'fac': fac, 'ae_arr': ae_arr, 'aeu_arr': aeu_arr, 'seq_arr': seq_arr}
     params = [run, model, sequences, hydraulics, flowtrans, elements, mg, ae_lu]
 
     # Renumber material values from zero to remove eroded values
@@ -330,6 +332,7 @@ def heterogeneity(props, params):
     mat = props['mat']
     dip = props['dip']
     fac = props['fac']
+    aeu_arr = props['aeu_arr']
     ae_arr = props['ae_arr']
     seq_arr = props['seq_arr']
 
@@ -398,7 +401,7 @@ def heterogeneity(props, params):
         if model['hetlev'] == 'internal':
             for si, aei in enumerate(ae_lu):
                 m0 = mat == 0
-                ms = ae_arr == int(aei[0])
+                ms = aeu_arr == int(aei[0])
                 aemask = m0 & ms     # Get material that equals zero within in architectural element
                 if 'r_bg' in elements[aei[3]]:
                     aebackfac = int(elements[aei[3]]['r_bg'][0])   # architectural element background facies
@@ -494,8 +497,8 @@ def heterogeneity(props, params):
     azim = azim * 180/np.pi
     dip = dip * 180/np.pi
 
-    props = {'azim': azim, 'mat': mat, 'dip': dip, 'fac': fac, 'ae_arr': ae_arr, 'seq_arr': seq_arr,
-             'k_iso': k_iso, 'ktensors': ktensors, 'poros': poros, 'anirat': anirat}
+    props = {'azim': azim, 'mat': mat, 'dip': dip, 'fac': fac, 'aeu_arr': aeu_arr, 'seq_arr': seq_arr,
+             'k_iso': k_iso, 'ktensors': ktensors, 'poros': poros, 'anirat': anirat, 'ae_arr': ae_arr}
 
     if hydraulics:
         return props, params
@@ -520,6 +523,7 @@ def save_outputs(realdir, realname, outputs, mg, outdict):
     """
 
     print('Saving files in {}'.format(realdir))
+    realname = realname + '_hyvr'
     for output in outputs:
         if output == 'vtk':
             # VTK output for visualisation in ParaView
@@ -527,7 +531,7 @@ def save_outputs(realdir, realname, outputs, mg, outdict):
 
         if output == 'mat':
             # MATLAB output
-            sio.savemat(realdir + realname + '.mat', outdict)
+            sio.savemat(realdir + realname, outdict)
 
         if output == 'py':
             # Python pickle output
@@ -552,6 +556,7 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
         Save data outputs as .mf (MODFLOW) or .hgs (HydroGeoSphere)
 
     """
+    realname = realname + '_hyvr'
     for output in outputs:
         if output == 'mf':
             # MODFLOW output
@@ -566,10 +571,9 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
             # MODFLOW 6 output
 
             # Create HGS output folder
-            mf6dir = realdir + 'MODFLOW6\\'
-            mf6name = mf6dir + realname
-            hu.try_makefolder(mf6dir)
-            hu.to_mf6(mf6name, realname, mg, flowtrans, k_iso, anirat, dip, azim)
+            mf6dir = realdir
+            mf6name = realname
+            hu.to_mf6(mf6dir, realname, mg, flowtrans, k_iso, anirat, dip, azim)
 
         if output == 'hgs':
             # HydroGeoSphere output
@@ -589,7 +593,7 @@ Trough generators and utilities
 --------------------------------------------------------------------------------------------------------------"""
 
 
-def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
+def gen_trough(tr, mg, model, ae, aeu_arr, count, ani=True):
     """ 
     Create trough shapes
 
@@ -597,7 +601,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
         tr (dict): 				Trough parameters
         mg (grid class): 		Model grid 
         ae (list): 				Architectural element unit details
-        ae_arr (ndarray): 		3D array of sequeunce numbers
+        aeu_arr (ndarray): 		3D array of sequeunce numbers
         count (int): 			Material number and/or identifier
         ani (bool):         	Boolean if anisotropy is to be generated
 
@@ -610,15 +614,15 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
     x3, y3, z3 = mg.meshup()    # 3-D grid
 
     if ani:
-        mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz), mat_count=count, bg=tr['r_bg'])
+        ae_arr, mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz), mat_count=count, bg=tr['r_bg'])
     else:
-        mat, fac = save_arrays((mg.nx, mg.ny, mg.nz), mat_count=count, bg=tr['r_bg'], ani=False)
+        ae_arr, mat, fac = save_arrays((mg.nx, mg.ny, mg.nz), mat_count=count, bg=tr['r_bg'], ani=False)
     count += 1
 
-    ae_arr_i = np.zeros((mg.nx, mg.ny, mg.nz), dtype=int)
+    aeu_arr_i = np.zeros((mg.nx, mg.ny, mg.nz), dtype=int)
 
     # Assign background values
-    ae_arr_i[ae_arr == ae[0]] = ae[0]
+    aeu_arr_i[aeu_arr == ae[0]] = ae[0]
 
     # loop over trough top depths
     if 'buffer' in tr:
@@ -673,8 +677,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
 
             # scaled and rotated distance squared
             select, R2 = scale_rotate(xd, yd, zd, alpha, a, b, c)
-            select = np.logical_and(select, ae_arr <= ae[0])                # Restrict selection to AE units equal or below current
-
+            select = np.logical_and(select, aeu_arr <= ae[0])                # Restrict selection to AE units equal or below current
 
             """" Assign internal structure """
             tr_struct = tr['structure']
@@ -693,6 +696,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 fac_now = random.choice(tr['l_facies'])
                 fac[select] = fac_now
                 mat[select] = count
+                ae_arr[select] = tr['ae_id']
                 if ani:
                     azim[select] = angnow    # Save angle
                     dip[select] = np.random.uniform(tr['r_dip'][0], tr['r_dip'][1])                    # Assignment of architectural elements only
@@ -709,6 +713,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 fac_now = random.choice(tr['l_facies'])
                 fac[select] = fac_now
                 mat[select] = count
+                ae_arr[select] = tr['ae_id']
                 if ani:
                     dip[select] = dip_tr[select]
                     azim[select] = azim_tr[select]
@@ -741,6 +746,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
 
                     fac[bulb_select] = fac_now                                      # Alternating facies
                     mat[bulb_select] = count
+                    ae_arr[bulb_select] = tr['ae_id']
 
                     if ani:
                         dip[bulb_select] = dip_bulb[bulb_select]
@@ -753,6 +759,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 # Assign generated values to grid cells
                 fac[select] = fd[select]
                 mat[select] = count
+                ae_arr[select] = tr['ae_id']
                 if ani:
                     dip[select] = dv
                     azim[select] = av
@@ -761,6 +768,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 # Add 'dip layers' into trough
                 fac[select] = random.choice(tr['l_facies'])
                 mat[select] = count
+                ae_arr[select] = tr['ae_id']
                 if ani:
                     azim[select] = angnow    # Save angle
                     dip[select] = np.random.uniform(tr['r_dip'][0], tr['r_dip'][1])
@@ -770,12 +778,12 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 fac[np.logical_and(select, in_lag)] = int(tr['l_lag'][1])
 
             count += 1
-            ae_arr_i[select] = ae[0]
+            aeu_arr_i[select] = ae[0]
 
     if ani:
-        props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac, 'ae_arr_i': ae_arr_i}
+        props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac, 'aeu_arr_i': aeu_arr_i, 'ae_arr': ae_arr}
     else:
-        props = {'mat': mat, 'fac': fac, 'ae_arr_i': ae_arr_i}
+        props = {'mat': mat, 'fac': fac, 'aeu_arr_i': aeu_arr_i, 'ae_arr': ae_arr}
 
     return props, count
 
@@ -900,7 +908,7 @@ Channel generators and utilities
 --------------------------------------------------------------------------------------------------------------"""
 
 
-def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
+def gen_channel(ch_par, mg, model, seq, aeu_array, count, ani=True):
     """
     Generate channels architectural element:
         - Flow regime is assumed to be reasonably constant so the major geometry of the channels doesn't change so much
@@ -911,7 +919,7 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
         mg:         	Mesh grid object class
         model (dict):	Model domain parameters
         seq (dict):		Sequence parameters
-        ae_array:		Array with architectural element unit details
+        aeu_array:		Array with architectural element unit details
         count (int): 	Material number and/or identifier
         ani (bool): 	Boolean if anisotropy is to be generated
         (z_in:       	starting depth)
@@ -926,13 +934,13 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
                             azim = 			Azimuth angles
                             dip = 			Dipping angles
                             fac = 			Facies values
-                            ae_arr_i = 		Array with architectural element unit details
+                            aeu_arr_i = 		Array with architectural element unit details
 
                         else
 
                             mat = 			Material values
                             fac = 			Facies values
-                            ae_arr_i = 		Array with architectural element unit details
+                            aeu_arr_i = 		Array with architectural element unit details
 
         count (int): 	Material number and/or identifier
 
@@ -945,12 +953,12 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
 
     # Initialize storage arrays
     if ani:
-         mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz), bg=ch_par['r_bg'], mat_count=count)
+         ae_arr, mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz), bg=ch_par['r_bg'], mat_count=count)
     else:
-        mat, fac = save_arrays((mg.nx, mg.ny, mg.nz), bg=ch_par['r_bg'], mat_count=count, ani=False)
+        ae_arr, mat, fac = save_arrays((mg.nx, mg.ny, mg.nz), bg=ch_par['r_bg'], mat_count=count, ani=False)
 
-    ae_arr_i = np.zeros(np.shape(ae_array), dtype=int)
-    ae_arr_i[ae_array == seq[0]] = seq[0]
+    aeu_arr_i = np.zeros(np.shape(aeu_array), dtype=int)
+    aeu_arr_i[aeu_array == seq[0]] = seq[0]
 
     # start location
     total_channels = int(ch_par['channel_no'])
@@ -1041,7 +1049,7 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
                 # Get mask arrays for each condition
                 in_channel = D[:, :, None]**2 <= z_ch_width**2 / 4 - ((mg.idx_z(znow) - z3) * mg.dz * z_ch_width / (z_ch_depth*2)) ** 2     # is grid cell in channel
                 finite_v = ~np.isnan(vx_znow)            # Only assign if velocity is finite
-                below_top = ae_array <= seq[0]          # Don't assign values to locations higher than top contact surface
+                below_top = aeu_array <= seq[0]          # Don't assign values to locations higher than top contact surface
                 chan_mask = in_channel * finite_v[:, :, None] * below_top
                 if mg.idx_z(znow) <= z3[:, :, -1].max():
                     # Set mask above top of channel to False
@@ -1050,7 +1058,8 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
                 # Assign properties
                 fac[chan_mask] = fd[chan_mask]
                 mat[chan_mask] = count
-                ae_arr_i[chan_mask] = seq[0]
+                ae_arr[chan_mask] = ch_par['ae_id']
+                aeu_arr_i[chan_mask] = seq[0]
 
                 if 'l_lag' in ch_par:
                     in_lag = (znow - z_ch_depth + float(ch_par['l_lag'][0])) > z3 * mg.dz   # Is grid cell in channel
@@ -1071,9 +1080,9 @@ def gen_channel(ch_par, mg, model, seq, ae_array, count, ani=True):
             ystart += np.random.uniform(-ch_par['r_mig'][1], ch_par['r_mig'][1])
 
     if ani:
-        props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac, 'ae_arr_i': ae_arr_i}
+        props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac, 'aeu_arr_i': aeu_arr_i, 'ae_arr': ae_arr}
     else:
-        props = {'mat': mat, 'fac': fac, 'ae_arr_i': ae_arr_i}
+        props = {'mat': mat, 'fac': fac, 'aeu_arr_i': aeu_arr_i, 'ae_arr': ae_arr}
     return props, count
 
 
@@ -1223,7 +1232,7 @@ Sheet generators and utilities
 --------------------------------------------------------------------------------------------------------------"""
 
 
-def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
+def gen_sheet(sh, mg, ae_i, aeu_array, count, ani=True):
     """ 
     Generate gravel sheet with internal heterogeneity
 
@@ -1231,7 +1240,7 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
         sh:         	Sheet parameters
         mg:         	Model grid class
         ae_i:       	Architectural element lookup details [sequence number, z_bottom, z_top, architectural element, geometry]
-        ae_array:   	Architectural element array
+        aeu_array:   	Architectural element array
         count (int): 	Material number and/or identifier
         ani (bool):		Boolean if anisotropy is to be generated
 
@@ -1242,34 +1251,41 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
     """
     # Initialize storage arrays
     if ani:
-         mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz))
+        ae_arr, mat, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz))
     else:
-        mat, fac = save_arrays((mg.nx, mg.ny, mg.nz), ani=False)
+        ae_arr, mat, fac = save_arrays((mg.nx, mg.ny, mg.nz), ani=False)
+    ae_arr[aeu_array == ae_i[0]] = sh['ae_id']
 
     # Massive bedding -----------------------------------
     if sh['lens_thickness'] == -1:
         count += 1
-
         # Generate dip
-        if 'r_dip' in sh and np.diff(sh['r_dip']) != 0:
-            do, fd, dv, av = dip_sets(mg, sh, ae_i[1])               # Generate facies sets
-            fac[ae_array == ae_i[0]] = fd[ae_array == ae_i[0]]
-            mat[ae_array == ae_i[0]] = do[ae_array == ae_i[0]] + count
-            count += len(do)
-            if ani:
-                azim[ae_array == ae_i[0]] = 0
-                dip[ae_array == ae_i[0]] = dv
+        if 'r_dip' in sh and max(sh['r_dip']) != 0:
+            if len(sh['l_facies']) > 1:
+                do, fd, dv, av = dip_sets(mg, sh, ae_i[1])               # Generate facies sets
+                fac[aeu_array == ae_i[0]] = fd[aeu_array == ae_i[0]]
+                mat[aeu_array == ae_i[0]] = do[aeu_array == ae_i[0]] + count
+                count += len(do)
+                if ani:
+                    azim[aeu_array == ae_i[0]] = 0
+                    dip[aeu_array == ae_i[0]] = dv
+            else:
+                fac[aeu_array == ae_i[0]] = sh['l_facies'][0]
+                mat[aeu_array == ae_i[0]] =  count
+                count += 1
+                if ani:
+                    azim[aeu_array == ae_i[0]] = np.random.uniform(sh['r_azimuth'][0], sh['r_azimuth'][1])
+                    dip[aeu_array == ae_i[0]] = np.random.uniform(sh['r_dip'][0], sh['r_dip'][1])
         else:
             # No dip
-            mat[ae_array == ae_i[0]] = count
-            fac[ae_array == ae_i[0]] = random.choice(sh['l_facies'])
+            mat[aeu_array == ae_i[0]] = count
+            fac[aeu_array == ae_i[0]] = random.choice(sh['l_facies'])
             if ani:
-                azim[ae_array == ae_i[0]] = 0
-                dip[ae_array == ae_i[0]] = 0
+                azim[aeu_array == ae_i[0]] = 0
+                dip[aeu_array == ae_i[0]] = 0
 
     # Create lenses over depths ------------------------------
     else:
-
         # Assign lens thickness for sequence
         if 'r_geo_ztrend' in sh:
             zfactor = np.interp(np.mean(ae_i[1:3]), [mg.oz, mg.oz + mg.lz], [sh['r_geo_ztrend'][0], sh['r_geo_ztrend'][1]])
@@ -1290,9 +1306,9 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
                 do, fd, dv, av = dip_sets(mg, sh, znow)               # Generate facies sets
 
                 # Iterate over all nodes - Brute force approach :(
-                it = np.nditer(ae_array, flags=['multi_index'])
+                it = np.nditer(aeu_array, flags=['multi_index'])
                 while not it.finished:
-                    if it.multi_index[2] in z_range and ae_array[it.multi_index] == ae_i[0]:
+                    if it.multi_index[2] in z_range and aeu_array[it.multi_index] == ae_i[0]:
                         fac[it.multi_index] = fd[it.multi_index]
                         mat[it.multi_index] = do[it.multi_index] + count
 
@@ -1310,9 +1326,9 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
                     dip[:, :, z_range] = 0
 
     if ani:
-        props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac}
+        props = {'mat': mat, 'azim': azim, 'dip': dip, 'fac': fac, 'ae_arr': ae_arr}
     else:
-        props = {'mat': mat, 'fac': fac}
+        props = {'mat': mat, 'fac': fac, 'ae_arr': ae_arr}
     return props, count
 
 
@@ -1479,15 +1495,16 @@ def save_arrays(arr_size, bg=False, mat_count=0, ani=True):
     if bg is False:
         bg = np.zeros((3,))
 
+    ae_arr = np.ones(arr_size, dtype=np.int32) * -1                 # initialize architectural elements
     mat = np.ones(arr_size, dtype=np.int32) * mat_count             # initialize material
-    fac = np.ones(arr_size, dtype=np.int16) * int(bg[0])              # initialize hydrofacies
+    fac = np.ones(arr_size, dtype=np.int16) * int(bg[0])            # initialize hydrofacies
 
     if ani is True:
         azim = np.ones(arr_size, dtype=np.float32) * bg[1]     # initialize azimuth angle
         dip = np.ones(arr_size, dtype=np.float32) * bg[2]       # initialize dip angle
-        return mat, fac, azim, dip
+        return ae_arr, mat, fac, azim, dip
     else:
-        return mat, fac
+        return ae_arr, mat, fac
 
 
 def prob_choose(choices, probs):

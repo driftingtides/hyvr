@@ -538,6 +538,10 @@ def model_setup(pf):
                          nz=int(mod['lz'] / mod['dz']),
                          gtype='cells', periodicity=mod['flag_periodic'])
 
+    # Assign architectural element identifiers
+    for element in elements.keys():
+        elements[element]['ae_id'] = sequences['l_ae'].index(element)
+
     return run, mod, sequences, hydraulics, flowtrans, elements, model_grid
 
 
@@ -805,7 +809,7 @@ def rotate_ktensor(count, aniso, azimuth, dip, k_in):
     kplane = np.ones(1, count) * np.sqrt(aniso)  # relative value
     kperp = np.ones(1, count) / np.sqrt(aniso)    # relative value
 
-    k_rotate = np.empty((3,3,count), dtype=np.float16)
+    k_rotate = np.empty((3, 3, count), dtype=np.float16)
     for ii in np.arange(0, count):
         R = np.array([[np.cos(azimuth[ii]), np.sin(azimuth[ii]), 0],
                       [-np.sin(azimuth[ii]), np.cos(azimuth[ii]), 0],
