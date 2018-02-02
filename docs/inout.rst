@@ -8,16 +8,17 @@ Parameter inputs and model outputs
 
 Model outputs include three-dimensional fields with values at each model grid cell for the following parameters:
 
-- **Sequence** - sequence identifier
-- **Architectural element unit** - architectural element unit identifier
-- **Material** - Unique identifiers for each architectural element generated
-- **Hydrofacies** - Type of hydrofacies
-- **Isotropic hydraulic conductivity**
-- **Dip** - bedding parameter
-- **Azimuth** - bedding parameter
-- **Anisotropy ratio** 
-- **Full hydraulic-conductivity tensor** - based on isotropic hydraulic conductivity, dip, azimuth and anisotropy ratio (:ref:`methods <tensorgen>`)
-- **Porosity**
+- **Strata**, ``ssm`` - strata identifier
+- **Architectural element** ``ae`` - architectural element identifier
+- **Hydrofacies assemblage** ``ha`` - Unique identifiers for each hydrofacies assemblage generated
+- **Hydrofacies assemblage type** ``hat`` - Type of hydrofacies assemblage generated
+- **Hydrofacies** ``fac`` - Type of hydrofacies
+- **Isotropic hydraulic conductivity** ``k_iso``
+- **Dip** ``dip`` - bedding parameter
+- **Azimuth** ``azim`` - bedding parameter
+- **Anisotropy ratio** ``ani_rat`` 
+- **Porosity** ``poros``
+- **Full hydraulic-conductivity tensor** ``ktensors`` - based on isotropic hydraulic conductivity, dip, azimuth and anisotropy ratio (:ref:`methods <tensorgen>`)
 
 
 ------------------------------------------------------------------------
@@ -32,7 +33,7 @@ In HYVR there following sections are necessary:
 
 *   ``[run]`` - This contains parameters related to the model run.
 *   ``[model]`` - This contains details about the model dimensions 
-*   ``[sequences]`` - In this section the sequence parameters are set.
+*   ``[strata]`` - In this section the strata parameters are set.
 *   ``[*architectural_elements*]`` - Each architectural element to be simulated in HYVR is included in its own section. Please see the subsection below for more information.
 *   ``[hydraulics]`` - This section includes information for setting the hydraulic properties of simulated features.
 
@@ -68,29 +69,29 @@ Model setup sections
 
 - ``dx``, ``dy``, ``dz``	- Model grid cell dimensions
 - ``lx``, ``ly``, ``lz``	- Model domain dimensions
-- ``flag_periodic``		- Periodic model domain? (Sheets/truncated ellipsoids only)
-- ``flag_display``		- 'Display'-type simulation? If this flag is set to ``true``, the simulated architectural elements are centred in the model domain so they can be viewed easily.
+- ``flag_periodic``			- Periodic model domain? (Sheets/truncated ellipsoids only)
+- ``flag_display``			- 'Display'-type simulation? If this flag is set to ``true``, the simulated architectural elements are centred in the model domain so they can be viewed easily.
 - ``hetlev`` 				- Hierarchical level at which heterogeneity should be simulated *[ae, facies, internal]*
 
-------------------------------------------------------------------------
-``[sequences]`` section
-------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^
+``[strata]`` section
+^^^^^^^^^^^^^^^^^^^^^^
 
-- ``l_seq``					- List of sequences
-- ``r_seq_top`` 			- List of mean sequence contact elevations
-- ``ll_seq_contact_model``	- Statistical parameters for sequence contact model
+- ``l_ssm``					- List of sequences
+- ``r_ssm_top`` 			- List of mean strata contact elevations
+- ``ll_ssm_contact_model``	- Statistical parameters for strata contact model
 - ``ae_table`` 				- Filepath for architectural element lookup table
-- ``seq_contact``			- Contact surface type *[flat, random, user]*
-- ``ll_seq_ae``				- Which architectural elements are in each sequence
+- ``ssm_contact``			- Contact surface type *[flat, random, user]*
+- ``ll_ssm_ae``				- Which architectural elements are in each stratum
 - ``ll_ae_prob``			- Probability of an architectural element occuring
 - ``ll_ae_z_mean``			- Mean thickness of architectural element unit
 - ``ll_avul_prob``			- Probability of avulsion
 - ``ll_avul``				- Avulsion depth range
 - ``r_bg``					- Background values for unassigned cells 
 
-------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ``[element]`` sections for architectural elements
-------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sections that describe architectural elements are entitled with an identifying name (e.g. ``[sparse_scour]``). Note that section names should not include spaces. The first parameter to be set it the ``geometry``. The current implementation of HYVR includes three geometries: truncated ellipsoids (``trunc_ellip``), channels (``channel``), and sheets (``sheet``).
 
@@ -100,13 +101,13 @@ Unless otherwise noted, ranges (``r_``) represent the lower and upper limits of 
 General ``[*element]`` parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``geometry``  		- Geometry of architectural element *[trunc_ellip, channel, sheet]*
-- ``structure``			- Internal structure of architectural element *[massive, dip]*, also , *[bulb, bulb_l, random]* for truncated ellipsoids.
+- ``geometry``  		- Geometry of hydrofacies assemblages within architectural element *[trunc_ellip, ext_par, sheet]*
+- ``structure``			- Internal structure of hydrofacies assemblages *[massive, dip]*, also , *[bulb, bulb_l, random]* for truncated ellipsoids.
 - ``contact`` 			- Type of bedding contact between element units *[flat, random]*
 - ``r_contact_model``	- Statistical parameters for bedding contact model
-- ``l_facies`` 			- Hydrofacies included in architectural element. These refer to ``[hydraulics].l_hydro`` and are zero-indexed.
-- ``ll_altfacies`` 		- Alternating facies specification. This is a lits of lists and should have one entry for each value in ``[*element].l_facies``.
-- ``r_bg`` 				- Background parameters for unassigned cells in the architectural element unit. This should be three values: facies, azimuth, and dip background values.
+- ``l_facies`` 			- Hydrofacies included in hydrofacies assemblage. These refer to ``[hydraulics].l_hydro`` and are zero-indexed.
+- ``ll_altfacies`` 		- Alternating facies specification. This is a list of lists and should have one entry for each value in ``[*element].l_facies``.
+- ``r_bg`` 				- Background parameters for unassigned cells in the architectural element. This should be three values: facies, azimuth, and dip background values.
 - ``r_geo_ztrend``		- Linear trend in geometry sizes with elevation. Given as a percentage change mulitplier in mean value from bottom to top of domain, i.e. :math:`[\lambda_{bottom}, \lambda_{top}]`
 - ``r_k_ztrend``		- Linear trend in isotropic hydraulic conductivity from bottom to top of domain :math::math:`\xi_{bottom},\xi_{top}`
 - ``r_k_xtrend``		- Linear trend in isotropic hydraulic conductivity from model inlet to outlet :math:`\xi_{inlet},\xi_{outlet}`
@@ -115,7 +116,7 @@ General ``[*element]`` parameters
 - ``r_dip`` 			- Range of dip
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Erosive element-specific parameters (truncated_ellipsoid, channel)
+Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 - ``agg`` 		- Aggradation thickness added between each generation elevation. 
 - ``buffer``	- Buffer to reduce erosion of underlying units (see :ref:`methods <temethod>`).
@@ -139,14 +140,14 @@ Truncated ellipsoid parameters
 .. _chparams:
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Channel parameters
+Extruded parabola parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 - ``width``, ``depth`` -  Mean geometry of channel
-- ``h`` - Channel shape parameter
-- ``k`` - Channel shape wave number
+- ``h`` - Extruded parabola centreline curve shape parameter
+- ``k`` - Extruded parabola centreline curve shape wave number
 - ``ds`` - Distance between centreline points along trajectory
 - ``eps_factor`` - Variance of random fluctuations of channel centreline.
-- ``channel_no`` - Number of channels to generate at each elevation
+- ``channel_no`` - Number of Extruded parabolas to generate at each elevation
 - ``dipset_d`` - Thickness of dipping internal structures.
 
 .. _shparams:
@@ -199,7 +200,7 @@ HyVR has a number model outputs that can be set in the input parameter file. A c
 - ``mat`` MATLAB file
 - ``vtr`` VTK rectilinear grid file -  this can be opened in ParaView for improved three-dimensional visualisation.
 
-HyVR can also create files that can be used as model inputs for some flow and transport modelling packages. These currently include:
+HyVR can also create files that can be used as model inputs for some flow and transport modelling packages These currently include:
 
 - MODFLOW-2005 - ``bas``, ``dis``, ``lpf``, ``nam``, ``oc``, and ``pcg`` model input files. Provided suitable flow and transport parameters are set in the ``[flowtrans]`` section of the input parameter file, this simulation can be executed. 
 - MODFLOW 6 - ``dis``, ``nam``, and ``npf`` model input files. A complete set of MODFLOW 6 input files cannot be generated in HyVR at this stage.
