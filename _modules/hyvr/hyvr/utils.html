@@ -116,9 +116,9 @@
 <span class="sd">    Parameters:</span>
 <span class="sd">        data (numpy array):		Numpy array containing the data, `int` or `float` or `uint`. </span>
 <span class="sd">                                The dimensions should be between 1 and 3</span>
-<span class="sd">        file_name (string):		Name of the file for the output, optional (None)</span>
+<span class="sd">        file_name (str):		Name of the file for the output, optional (None)</span>
 <span class="sd">        grid (class Grid):		Information about the grid can be also provided as a Grid object            </span>
-<span class="sd">        sc_name (string):		Name of the scalar quantities</span>
+<span class="sd">        sc_name (str):		Name of the scalar quantities</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A VTK &#39;STRUCTURED_POINTS&#39; dataset file containing the input numpy data.</span>
@@ -208,7 +208,7 @@
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        data_dict (numpy array):		e.g. {&#39;fac&#39;: fac, &#39;mat&#39;: mat}</span>
-<span class="sd">        file_name (string):		        Name of the file for the output.</span>
+<span class="sd">        file_name (str):		        Name of the file for the output.</span>
 <span class="sd">        grid (class Grid):		        The information about the grid can be also provided as a grid object.</span>
 
 <span class="sd">    Returns:</span>
@@ -232,7 +232,7 @@
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        data (numpy array):		Data to replace</span>
-<span class="sd">        out_name (string):		Name of the file for the output.</span>
+<span class="sd">        out_name (str):		Name of the file for the output.</span>
 <span class="sd">        mask_val (int):			Value of the facies which should be masked</span>
 <span class="sd">        grid:					Grid class</span>
 
@@ -274,8 +274,8 @@
 <span class="sd">        file_in (str): 				Name and filepath to read</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        gegrid (hyvr.grid class): 	Grid class</span>
-<span class="sd">        props (numpy array): 		Grid properties</span>
+<span class="sd">        - gegrid *(hyvr.grid class)* - Grid class</span>
+<span class="sd">        - props *(numpy array)* - Grid properties</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -324,12 +324,12 @@
 <span class="sd">        file_out: 	Output file</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        gegrid: 	Grid class of the data</span>
-<span class="sd">        props: 		The data as a nx x ny x nz array</span>
+<span class="sd">        - gegrid - Grid class of the data</span>
+<span class="sd">        - props - The data as a nx x ny x nz array</span>
 
-<span class="sd">        ...notes:</span>
-<span class="sd">            * Number of cells (nx, ny, nz) is changed</span>
-<span class="sd">            * Spacing (dx, dy, dz) is NOT changed</span>
+<span class="sd">	.. note:</span>
+<span class="sd">		* Number of cells (nx, ny, nz) is changed</span>
+<span class="sd">		* Spacing (dx, dy, dz) is NOT changed</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -363,8 +363,8 @@
 <span class="sd">        fn (str): 				Directory and file name for save</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        data (numpy array):     Data from ERSI-style ASCII-file</span>
-<span class="sd">        meta (dict):            Dict with grid metadata</span>
+<span class="sd">        - data *(numpy array)* - Data from ERSI-style ASCII-file</span>
+<span class="sd">        - meta *(dict)* - Dict with grid metadata</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -441,7 +441,7 @@
 <span class="sd">        fn (str): 			.gslib file path and name</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        gslib_dict (dict):  properties</span>
+<span class="sd">        gslib_dict *(dict)* - properties</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">gslib_dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -488,7 +488,7 @@
 <span class="sd">        pickfile:		Input file</span>
 
 <span class="sd">    Return:</span>
-<span class="sd">        data (dict):	Pickled data of input file </span>
+<span class="sd">        data *(dict)* - Pickled data of input file </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickfile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -508,12 +508,12 @@
 <span class="sd">        file_in (str):  		Parameter file path</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        run (dict):             Model run parameters</span>
-<span class="sd">        model (dict):           Model domain parameters</span>
-<span class="sd">        sequences (dict):       Sequence parameters</span>
-<span class="sd">        hydraulics (dict):      Hydraulic properties parameters</span>
-<span class="sd">        flowtrans (dict):       Flow &amp; transport simulation parameters</span>
-<span class="sd">        elements (dict):        Architectural elements and parameters</span>
+<span class="sd">        - run *(dict)* - Model run parameters</span>
+<span class="sd">        - model *(dict)* - Model domain parameters</span>
+<span class="sd">        - sequences *(dict)* - Sequence parameters</span>
+<span class="sd">        - hydraulics *(dict)* - Hydraulic properties parameters</span>
+<span class="sd">        - flowtrans *(dict)* - Flow &amp; transport simulation parameters</span>
+<span class="sd">        - elements *(dict)* - Architectural elements and parameters</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -524,9 +524,9 @@
 
     <span class="n">elements</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">str_values</span> <span class="o">=</span> <span class="s1">&#39;geometry&#39;</span><span class="p">,</span> <span class="s1">&#39;structure&#39;</span><span class="p">,</span> <span class="s1">&#39;runname&#39;</span><span class="p">,</span> <span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="s1">&#39;contact_file&#39;</span><span class="p">,</span> <span class="s1">&#39;modeldir&#39;</span><span class="p">,</span> <span class="s1">&#39;hetlev&#39;</span><span class="p">,</span> <span class="s1">&#39;ae_table&#39;</span><span class="p">,</span>\
-                 <span class="s1">&#39;k_trend&#39;</span><span class="p">,</span> <span class="s1">&#39;seq_contact&#39;</span>
-    <span class="n">dtype_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ll_seq_ae&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;ll_altfacies&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;ll_contact_model&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="s1">&#39;ll_ae_prob&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-                  <span class="s1">&#39;ll_ae_z_mean&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ycorlengths&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ncorlengths&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_seq_contact_model&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="s1">&#39;k_trend&#39;</span><span class="p">,</span> <span class="s1">&#39;ssm_contact&#39;</span>
+    <span class="n">dtype_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ll_ssm_ae&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;ll_altfacies&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;ll_contact_model&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="s1">&#39;ll_ae_prob&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                  <span class="s1">&#39;ll_ae_z_mean&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ycorlengths&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ncorlengths&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ssm_contact_model&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                   <span class="s1">&#39;ll_avul&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_avul_prob&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>
 
 
@@ -555,8 +555,8 @@
 
         <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="s1">&#39;model&#39;</span><span class="p">:</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">ndict</span>
-        <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="s1">&#39;sequences&#39;</span><span class="p">:</span>
-            <span class="n">sequences</span> <span class="o">=</span> <span class="n">ndict</span>
+        <span class="k">elif</span> <span class="n">section</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;systems&#39;</span><span class="p">,</span> <span class="s1">&#39;sequences&#39;</span><span class="p">,</span> <span class="s1">&#39;strata&#39;</span><span class="p">]:</span>
+            <span class="n">systems</span> <span class="o">=</span> <span class="n">ndict</span>
         <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="s1">&#39;hydraulics&#39;</span><span class="p">:</span>
             <span class="n">hydraulics</span> <span class="o">=</span> <span class="n">ndict</span>
         <span class="k">elif</span> <span class="n">section</span> <span class="o">==</span> <span class="s1">&#39;run&#39;</span><span class="p">:</span>
@@ -566,6 +566,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndict</span>
 
+
+		
+		
     <span class="c1"># Create runfile directory in main directory</span>
     <span class="k">if</span> <span class="s1">&#39;modeldir&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">run</span><span class="p">:</span>
         <span class="c1"># Use same directory as parameter file</span>
@@ -590,7 +593,7 @@
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_save</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
         <span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span></div>
+    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span></div>
 
 
 <div class="viewcode-block" id="model_setup"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.model_setup">[docs]</a><span class="k">def</span> <span class="nf">model_setup</span><span class="p">(</span><span class="n">pf</span><span class="p">):</span>
@@ -601,16 +604,16 @@
 <span class="sd">        pf (str):   					Parameter file path</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        run (dict):                     Model run parameters</span>
-<span class="sd">        mod (dict):                     Model domain parameters</span>
-<span class="sd">        sequences (dict):               Sequence parameters</span>
-<span class="sd">        hydraulics (dict):              Hydraulic properties parameters</span>
-<span class="sd">        flowtrans (dict):               Flow &amp; transport simulation parameters</span>
-<span class="sd">        elements (dict):                Architectural elements and parameters</span>
-<span class="sd">        model_grid (object class):      Grid object class</span>
+<span class="sd">        - run *(dict)* - Model run parameters</span>
+<span class="sd">        - mod *(dict)* - Model domain parameters</span>
+<span class="sd">        - sequences *(dict)* - Sequence parameters</span>
+<span class="sd">        - hydraulics *(dict)* - Hydraulic properties parameters</span>
+<span class="sd">        - flowtrans *(dict)* - Flow &amp; transport simulation parameters</span>
+<span class="sd">        - elements *(dict)* - Architectural elements and parameters</span>
+<span class="sd">        - model_grid *(object class)* - Grid object class</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
     <span class="n">model_grid</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Grid</span><span class="p">(</span><span class="n">dx</span><span class="o">=</span><span class="n">mod</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">],</span>
                          <span class="n">dy</span><span class="o">=</span><span class="n">mod</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">],</span>
                          <span class="n">dz</span><span class="o">=</span><span class="n">mod</span><span class="p">[</span><span class="s1">&#39;dz&#39;</span><span class="p">],</span>
@@ -619,32 +622,36 @@
                          <span class="n">nz</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">mod</span><span class="p">[</span><span class="s1">&#39;lz&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">mod</span><span class="p">[</span><span class="s1">&#39;dz&#39;</span><span class="p">]),</span>
                          <span class="n">gtype</span><span class="o">=</span><span class="s1">&#39;cells&#39;</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="n">mod</span><span class="p">[</span><span class="s1">&#39;flag_periodic&#39;</span><span class="p">])</span>
 
-    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">model_grid</span></div>
+    <span class="c1"># Assign architectural element identifiers</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">elements</span><span class="p">[</span><span class="n">element</span><span class="p">][</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">systems</span><span class="p">[</span><span class="s1">&#39;l_ae&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">model_grid</span></div>
 
 
 <div class="viewcode-block" id="read_lu"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.read_lu">[docs]</a><span class="k">def</span> <span class="nf">read_lu</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load user-defined sequences (architectural element lookup table),</span>
+<span class="sd">    Load user-defined strata (architectural element lookup table),</span>
 <span class="sd">    split the data based on a delimiter and return it as a new list</span>
 
 <span class="sd">    Parameters:</span>
-<span class="sd">        sq_fp:			Load user-defined sequences (architectural element lookup table)</span>
+<span class="sd">        sq_fp:			Load user-defined strata (architectural element lookup table)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        seq_lu (list):	Values of architectural element lookup table</span>
+<span class="sd">        ssm_lu *(list)*: -Values of architectural element lookup table</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Load user-defined sequences / architectural element lookup table</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;: Reading sequence data from &#39;</span> <span class="o">+</span> <span class="n">sq_fp</span><span class="p">)</span>
+    <span class="c1"># Load user-defined systems / architectural element lookup table</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;: Reading strata data from &#39;</span> <span class="o">+</span> <span class="n">sq_fp</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
 
-    <span class="n">seq_lu</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ssm_lu</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>
-        <span class="n">seq_lu</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
+        <span class="n">ssm_lu</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
 
-    <span class="k">return</span> <span class="n">seq_lu</span></div>
+    <span class="k">return</span> <span class="n">ssm_lu</span></div>
 
 
 <div class="viewcode-block" id="to_modflow"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.to_modflow">[docs]</a><span class="k">def</span> <span class="nf">to_modflow</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">k_iso</span><span class="p">,</span> <span class="n">anirat</span><span class="p">):</span>
@@ -659,12 +666,12 @@
 <span class="sd">        anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        mf:					MODFLOW model object</span>
-<span class="sd">        dis:				Discretization of modflow object</span>
-<span class="sd">        bas:				BAS package of modflow model</span>
-<span class="sd">        lpf:				LPF package of modflow model</span>
-<span class="sd">        oc:					OC package of modflow model</span>
-<span class="sd">        pcg:				pcg package of modflow model</span>
+<span class="sd">        - mf - MODFLOW model object</span>
+<span class="sd">        - dis - Discretization of modflow object</span>
+<span class="sd">        - bas - BAS package of modflow model</span>
+<span class="sd">        - lpf - LPF package of modflow model</span>
+<span class="sd">        - oc - OC package of modflow model</span>
+<span class="sd">        - pcg - pcg package of modflow model</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -724,12 +731,12 @@
 <span class="sd">        anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        mf:					MODFLOW model object</span>
-<span class="sd">        dis:				Discretization of modflow object</span>
-<span class="sd">        bas:				BAS package of modflow model</span>
-<span class="sd">        lpf:				LPF package of modflow model</span>
-<span class="sd">        oc:					OC package of modflow model</span>
-<span class="sd">        pcg:				pcg package of modflow model</span>
+<span class="sd">        - mf - MODFLOW model object</span>
+<span class="sd">        - dis - Discretization of modflow object</span>
+<span class="sd">        - bas - BAS package of modflow model</span>
+<span class="sd">        - lpf - LPF package of modflow model</span>
+<span class="sd">        - oc - OC package of modflow model</span>
+<span class="sd">        - pcg - pcg package of modflow model</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -784,7 +791,7 @@
                                           <span class="n">angle1</span><span class="o">=</span><span class="n">azim</span><span class="p">,</span>                              <span class="c1"># azimuth</span>
                                           <span class="n">angle2</span><span class="o">=</span><span class="n">dip</span><span class="p">,</span>                               <span class="c1"># dip</span>
                                           <span class="n">angle3</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">)))</span>   <span class="c1"># no rotation</span>
-
+ 
     <span class="c1"># Create the constant head package.</span>
     <span class="c1"># chd_rec = []</span>
     <span class="c1"># for layer in range(0, mg.nz):</span>
@@ -823,8 +830,8 @@
 <span class="sd">        poros:				Array with values of porosity</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        val_fmts (dict):	Dictionary with values of K tensor and porosity</span>
-<span class="sd">        val_filepath:		file name of HGS output file</span>
+<span class="sd">        - val_fmts *(dict)* - Dictionary with values of K tensor and porosity</span>
+<span class="sd">        - val_filepath - file name of HGS output file</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -872,10 +879,10 @@
 <span class="sd">        aniso:			Anisotropy</span>
 <span class="sd">        azimuth:		Azimuth angles</span>
 <span class="sd">        dip:			Dipping angles</span>
-<span class="sd">        k_in:			-</span>
+<span class="sd">        k_in:</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        k_rotate:		Rotated K tensor</span>
+<span class="sd">        k_rotate - Rotated K tensor</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -886,7 +893,7 @@
     <span class="n">kplane</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">aniso</span><span class="p">)</span>  <span class="c1"># relative value</span>
     <span class="n">kperp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">aniso</span><span class="p">)</span>    <span class="c1"># relative value</span>
 
-    <span class="n">k_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
+    <span class="n">k_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
         <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">],</span>
                       <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">],</span>
@@ -910,7 +917,7 @@
 <span class="sd">        fout: 		Filepath to save borehole information</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        bhdf:	X, Y values at centroids</span>
+<span class="sd">        bhdf - X, Y values at centroids</span>
 
 <span class="sd">    .. note:</span>
 
@@ -975,13 +982,10 @@
 <span class="sd">        var:    	Variance</span>
 <span class="sd">        corl:   	Tuple of correlation length of random variable</span>
 <span class="sd">        twod:   	Flag for two-dimensional simulation</span>
-<span class="sd">        covmod: 	Which covariance model to use</span>
-<span class="sd">                        &#39;gau&#39;: Gaussian</span>
-<span class="sd">                        &#39;exp&#39;: Exponential</span>
+<span class="sd">        covmod: 	Which covariance model to use (&#39;gau&#39; = Gaussian, &#39;exp&#39; = Exponential).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        bigy:   	Random gaussian variable</span>
-<span class="sd">                    Real part of a complex array, created via inverse discrete Fourier Transform</span>
+<span class="sd">        bigy - Random gaussian variable. Real part of a complex array, created via inverse DFT</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 

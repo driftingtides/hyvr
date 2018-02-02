@@ -152,12 +152,13 @@ contained in a VTK structured grid file.</p>
 <dt id="hyvr.hyvr.grid.Grid.cart_coords">
 <code class="descname">cart_coords</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/grid.html#Grid.cart_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.grid.Grid.cart_coords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get x,y,z coordinates in a tuple</p>
-<p>Parameters:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Tuple containing the x,y and z-coordinates of the grid</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Tuple containing the x,y and z-coordinates of the grid</td>
 </tr>
 </tbody>
 </table>
@@ -233,9 +234,10 @@ contained in a VTK structured grid file.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8211;</td>
+</tr>
 </tbody>
 </table>
-<p>Returns:</p>
 </dd></dl>
 
 <dl class="method">
@@ -296,9 +298,10 @@ contained in a VTK structured grid file.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8211;</td>
+</tr>
 </tbody>
 </table>
-<p>Returns:</p>
 </dd></dl>
 
 <dl class="method">
@@ -388,17 +391,13 @@ grid. Useful for the implementation of &#8216;property&#8217;.</p>
 <dt id="hyvr.hyvr.grid.Grid.idx_z">
 <code class="descname">idx_z</code><span class="sig-paren">(</span><em>zval</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/grid.html#Grid.idx_z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.grid.Grid.idx_z" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the index of an elevation for the k-dimension of a 3D array</p>
-<dl class="docutils">
-<dt>Parameter:</dt>
-<dd>zval:               Elevation value</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>iz</strong> &#8211; Index of elevation</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>zval</strong> &#8211; Elevation value</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">iz <em>(int)</em> - Index of elevation</td>
 </tr>
 </tbody>
 </table>
@@ -489,7 +488,7 @@ is the delta between points (<em>idem</em> for <em>y</em> and <em>z</em>).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<em>string</em>) &#8211; containing [&#8216;x&#8217;,&#8217;y&#8217;,&#8217;z&#8217;], [optional]
-If the default value &#8220;xyz&#8221; is used, then all the intevals are printed.</td>
+If the default value &#8220;xyz&#8221; is used, then all the intervals are printed.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">print intervals that constitute the simulation domain</td>
 </tr>
@@ -624,9 +623,7 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vectors of spatial coordinates</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">xv, yv, zv</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xv, yv, zv - Vectors of spatial coordinates</td>
 </tr>
 </tbody>
 </table>
@@ -642,9 +639,7 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vectors of spatial coordinates of bounding nodes</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">xv, yv, zv</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xv, yv, zv - Vectors of spatial coordinates of bounding nodes</td>
 </tr>
 </tbody>
 </table>
@@ -660,9 +655,7 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector of spatial x-coordinate</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">xv</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xv - Vector of spatial x-coordinate</td>
 </tr>
 </tbody>
 </table>
@@ -678,9 +671,7 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector of spatial y-coordinate</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">yv</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">yv - Vector of spatial y-coordinate</td>
 </tr>
 </tbody>
 </table>
@@ -696,9 +687,7 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vector of spatial z-coordinate</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">zv</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">zv - Vector of spatial z-coordinate</td>
 </tr>
 </tbody>
 </table>
@@ -727,7 +716,7 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Angle between v1 and v2 (float)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">angle value <em>(float)</em> - Angle between v1 and v2</p>
 </td>
 </tr>
 </tbody>
@@ -736,8 +725,8 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 
 <dl class="function">
 <dt id="hyvr.hyvr.sim.channel_checker">
-<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">channel_checker</code><span class="sig-paren">(</span><em>param_file</em>, <em>ae_name</em>, <em>no_channels=1</em>, <em>dist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#channel_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.channel_checker" title="Permalink to this definition">¶</a></dt>
-<dd><p>channel_checker function for quickly assessing the shape of channel inputs</p>
+<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">channel_checker</code><span class="sig-paren">(</span><em>param_file</em>, <em>ae_name</em>, <em>no_extpar=1</em>, <em>dist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#channel_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.channel_checker" title="Permalink to this definition">¶</a></dt>
+<dd><p>extruded parabola checker function for quickly assessing the shape of extruded parabola inputs</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -745,12 +734,12 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>param_file</strong> (<em>str</em>) &#8211; Parameter file location</li>
 <li><strong>ae_name</strong> (<em>str</em>) &#8211; Name of architectural element</li>
-<li><strong>no_channels</strong> (<em>float</em>) &#8211; Number of channels</li>
-<li><strong>dist</strong> (<em>float</em>) &#8211; Distance to generate channels - defaults to mg.lx</li>
+<li><strong>no_extpar</strong> (<em>float</em>) &#8211; Number of extruded parabolas</li>
+<li><strong>dist</strong> (<em>float</em>) &#8211; Distance to generate extruded parabolas - defaults to mg.lx</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Plots showing shape of Ferguson channels</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Plots showing shape of Ferguson extruded parabolas</p>
 </td>
 </tr>
 </tbody>
@@ -773,11 +762,11 @@ If the default value &#8220;xyz&#8221; is used, then all the intevals are printe
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">x coordinates of interpolated points
-yn:                     y coordinates of interpolated points</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">xn</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>xn - x coordinates of interpolated points</li>
+<li>yn - y coordinates of interpolated points</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -799,10 +788,7 @@ Note that inputs and outputs are in degrees</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Azimuth output angle</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dip_out</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dip_out - Azimuth output angle</p>
 </td>
 </tr>
 </tbody>
@@ -811,7 +797,7 @@ Note that inputs and outputs are in degrees</p>
 
 <dl class="function">
 <dt id="hyvr.hyvr.sim.dip_sets">
-<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">dip_sets</code><span class="sig-paren">(</span><em>mg</em>, <em>aep</em>, <em>znow</em>, <em>channel=[]</em>, <em>select=[]</em>, <em>azimuth_z=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#dip_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.dip_sets" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">dip_sets</code><span class="sig-paren">(</span><em>mg</em>, <em>aep</em>, <em>znow</em>, <em>curve=[]</em>, <em>select=[]</em>, <em>azimuth_z=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#dip_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.dip_sets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate dip angles and assign to the dip matrix</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -820,18 +806,18 @@ Note that inputs and outputs are in degrees</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>mg</strong> &#8211; Mesh grid object class</li>
 <li><strong>aep</strong> &#8211; Architectural element parameters (dict)</li>
-<li><strong>channel</strong> &#8211; Tuple of x,y coordinates of channel (omitted for linear flows)
-- x, y coordinates of channel
-- vx, vy of channel flow</li>
+<li><strong>cruve</strong> &#8211; Tuple of x,y coordinates of extruded parabola (omitted for linear flows)
+- x, y coordinates of extruded parabola
+- vx, vy of extruded parabola flow</li>
 <li><strong>select</strong> &#8211; Model grid nodes to assign</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of assigned dip values
-fac_out:    Array of assigned hydrofacies</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dip_out</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>dip_out - Array of assigned dip values</li>
+<li>fac_out - Array of assigned hydrofacies</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -853,11 +839,11 @@ fac_out:    Array of assigned hydrofacies</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dipping in 3D
-azimuth_g:              Azimuth in 3D</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dip_g</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>dip_g - Dipping in 3D</li>
+<li>azimuth_g - Azimuth in 3D</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -866,7 +852,7 @@ azimuth_g:              Azimuth in 3D</p>
 
 <dl class="function">
 <dt id="hyvr.hyvr.sim.facies">
-<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">facies</code><span class="sig-paren">(</span><em>run</em>, <em>model</em>, <em>sequences</em>, <em>hydraulics</em>, <em>flowtrans</em>, <em>elements</em>, <em>mg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#facies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.facies" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">facies</code><span class="sig-paren">(</span><em>run</em>, <em>model</em>, <em>strata</em>, <em>hydraulics</em>, <em>flowtrans</em>, <em>elements</em>, <em>mg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#facies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.facies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate hydrofacies fields</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -875,44 +861,37 @@ azimuth_g:              Azimuth in 3D</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>run</strong> &#8211; Model run parameters like <code class="docutils literal"><span class="pre">runname</span></code>, <code class="docutils literal"><span class="pre">rundir</span></code>, <code class="docutils literal"><span class="pre">l_dataoutputs</span></code>, <code class="docutils literal"><span class="pre">l_modeloutputs</span></code>, etc.</li>
 <li><strong>model</strong> &#8211; Model domain parameters</li>
-<li><strong>sequences</strong> &#8211; Details about the sequences</li>
+<li><strong>strata</strong> &#8211; Details about the strata</li>
 <li><strong>hydraulics</strong> &#8211; Details about the hydraulics</li>
 <li><strong>flowtrans</strong> &#8211; Flow &amp; transport simulation parameters</li>
-<li><strong>elements</strong> &#8211; Architectural elements and parametersX</li>
+<li><strong>elements</strong> &#8211; Architectural elements and parameters</li>
 <li><strong>mg</strong> &#8211; Mesh grid object class</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Tuple containing:</p>
 <blockquote>
-<div><ul>
+<div><ul class="simple">
+<li>probs <em>(dict)</em>: Contains data of architectural element units and associated hydrofacies</li>
+</ul>
+</div></blockquote>
+<ul>
 <li><dl class="first docutils">
-<dt><strong>probs</strong> (dict): Contains data of architectural element units and associated hydrofacies</dt>
+<dt>params <em>(tuple)</em> - Contains parameters of model domain, strata, hydraulics, etc.</dt>
 <dd><ul class="first last simple">
-<li>ae_arr: Array with architectural element unit details</li>
-<li>seq_arr: Array with sequence details</li>
-<li>mat: Material values</li>
-<li>fac: Hydrofacies values</li>
-<li>dip: Dipping angles (if model parameter &#8216;flag_anisotropy&#8217;)</li>
-<li>azim: Azimuth angles (if model parameter &#8216;flag_anisotropy&#8217;)</li>
+<li>run (dict) - Model run parameters</li>
+<li>model (dict) - Model domain parameters</li>
+<li>strata (dict) - Strata parameters</li>
+<li>hydraulics (dict) - Hydraulic properties parameters</li>
+<li>flowtrans (dict) - Flow &amp; transport simulation parameters</li>
+<li>elements (dict) - Architectural elements and parameters</li>
+<li>mg - Mesh grid object class</li>
+<li>ae_lu - Architectural element lookup table</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p class="first"><strong>params</strong> (tuple): Contains parameters of model domain, sequence, hydraulics, etc.</p>
-<blockquote>
-<div><p>run (dict) =                    Model run parameters
-model (dict) =                  Model domain parameters
-sequences (dict) =              Sequence parameters
-hydraulics (dict) =             Hydraulic properties parameters
-flowtrans (dict) =              Flow &amp; transport simulation parameters
-elements (dict) =               Architectural elements and parameters
-mg =                                    Mesh grid object class
-ae_lu =                                 Architectural element lookup table</p>
-</div></blockquote>
-</li>
 </ul>
-</div></blockquote>
 </p>
 </td>
 </tr>
@@ -924,9 +903,9 @@ ae_lu =                                 Architectural element lookup table</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hyvr.hyvr.sim.ferguson_channel">
-<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">ferguson_channel</code><span class="sig-paren">(</span><em>mg</em>, <em>h</em>, <em>k</em>, <em>ds</em>, <em>eps_factor</em>, <em>dist=0</em>, <em>disp=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#ferguson_channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.ferguson_channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulate channel centrelines using the Ferguson (1976) disturbed meander model
+<dt id="hyvr.hyvr.sim.ferguson_curve">
+<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">ferguson_curve</code><span class="sig-paren">(</span><em>mg</em>, <em>h</em>, <em>k</em>, <em>ds</em>, <em>eps_factor</em>, <em>dist=0</em>, <em>disp=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.ferguson_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model
 Implementation of AR2 autoregressive model
 <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -937,14 +916,14 @@ Implementation of AR2 autoregressive model
 <li><strong>mg</strong> (<em>object class</em>) &#8211; Mesh grid object class</li>
 <li><strong>h</strong> (<em>float</em>) &#8211; Height</li>
 <li><strong>k</strong> (<em>float</em>) &#8211; Wave number</li>
-<li><strong>ds</strong> (<em>float</em>) &#8211; Channel distance for calculations</li>
+<li><strong>ds</strong> (<em>float</em>) &#8211; Curve distance for calculations</li>
 <li><strong>eps_factor</strong> (<em>float</em>) &#8211; Random background noise</li>
-<li><strong>dist</strong> (<em>float</em>) &#8211; Distance to generate channels - defaults to mg.lx</li>
-<li><strong>disp</strong> (<em>bool</em>) &#8211; Creating display channel - channel begins at (0,0)</li>
+<li><strong>dist</strong> (<em>float</em>) &#8211; Distance to generate curves - defaults to mg.lx</li>
+<li><strong>disp</strong> (<em>bool</em>) &#8211; Creating display extruded parabola - extruded parabola begins at (0,0)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputs</strong> &#8211; Simulated channel centerlines: storage array containing values for x coordinate, y coordinate, vx and vy</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputs</strong> &#8211; Simulated extruded parabola centerlines: storage array containing values for x coordinate, y coordinate, vx and vy</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float array</p>
@@ -957,23 +936,20 @@ Implementation of AR2 autoregressive model
 <dl class="function">
 <dt id="hyvr.hyvr.sim.ferguson_theta">
 <code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">ferguson_theta</code><span class="sig-paren">(</span><em>s</em>, <em>eps_factor</em>, <em>k</em>, <em>h</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.ferguson_theta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate channel direction angle</p>
+<dd><p>Calculate curve direction angle</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>s</strong> &#8211; Steps within generated channel distance</li>
+<li><strong>s</strong> &#8211; Steps within generated curve distance</li>
 <li><strong>eps_factor</strong> &#8211; Random background noise</li>
 <li><strong>k</strong> &#8211; Wave number</li>
 <li><strong>h</strong> &#8211; Height</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>th_store</strong> &#8211; Channel direction angle</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">th_store <em>(array)</em> - Curve direction angle</p>
 </td>
 </tr>
 </tbody>
@@ -981,13 +957,13 @@ Implementation of AR2 autoregressive model
 </dd></dl>
 
 <dl class="function">
-<dt id="hyvr.hyvr.sim.gen_channel">
-<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">gen_channel</code><span class="sig-paren">(</span><em>ch_par</em>, <em>mg</em>, <em>model</em>, <em>seq</em>, <em>ae_array</em>, <em>count</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#gen_channel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.gen_channel" title="Permalink to this definition">¶</a></dt>
+<dt id="hyvr.hyvr.sim.gen_extpar">
+<code class="descclassname">hyvr.hyvr.sim.</code><code class="descname">gen_extpar</code><span class="sig-paren">(</span><em>ch_par</em>, <em>mg</em>, <em>model</em>, <em>ssm</em>, <em>ae_array</em>, <em>count</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/sim.html#gen_extpar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.sim.gen_extpar" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
-<dt>Generate channels architectural element:</dt>
+<dt>Generate extruded parabola geometries:</dt>
 <dd><ul class="first last simple">
-<li>Flow regime is assumed to be reasonably constant so the major geometry of the channels doesn&#8217;t change so much</li>
-<li>&#8216;Migration&#8217; of the channels according to a shift vector</li>
+<li>Flow regime is assumed to be reasonably constant so the major geometry of the extruded parabolas doesn&#8217;t change so much</li>
+<li>&#8216;Migration&#8217; of the extruded parabolas according to a shift vector</li>
 </ul>
 </dd>
 </dl>
@@ -996,10 +972,10 @@ Implementation of AR2 autoregressive model
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ch_par</strong> &#8211; Channel parameters</li>
+<li><strong>ch_par</strong> &#8211; Extruded parabola parameters</li>
 <li><strong>mg</strong> &#8211; Mesh grid object class</li>
 <li><strong>model</strong> (<em>dict</em>) &#8211; Model domain parameters</li>
-<li><strong>seq</strong> (<em>dict</em>) &#8211; Sequence parameters</li>
+<li><strong>ssm</strong> (<em>dict</em>) &#8211; Strata parameters</li>
 <li><strong>ae_array</strong> &#8211; Array with architectural element unit details</li>
 <li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
 <li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
@@ -1008,28 +984,27 @@ Implementation of AR2 autoregressive model
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Contains data of architectural element units and associated hydrofacies</p>
-<blockquote>
-<div><p>if &#8216;ani&#8217;:</p>
-<blockquote>
-<div><p>mat =                       Material values
-azim =                      Azimuth angles
-dip =                       Dipping angles
-fac =                       Facies values
-ae_arr_i =          Array with architectural element unit details</p>
-</div></blockquote>
-<p>else</p>
-<blockquote>
-<div><p>mat =                       Material values
-fac =                       Facies values
-ae_arr_i =          Array with architectural element unit details</p>
-</div></blockquote>
-</div></blockquote>
-<p>count (int):    Material number and/or identifier</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Tuple containing:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>probs <em>(dict)</em>: Contains data of architectural element units and associated hydrofacies</dt>
+<dd><ul class="first last simple">
+<li>mat - Material values</li>
+<li>azim - Azimuth angles (ani == True)</li>
+<li>dip - Dipping angles (ani == True)</li>
+<li>fac - Facies values</li>
+<li>ae_arr_i - Array with architectural element unit details</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">count <em>(int)</em> - Material number and/or identifier</p>
+</li>
+</ul>
 </p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">probs</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(tuple)</p>
 </td>
 </tr>
 </tbody>
@@ -1047,18 +1022,18 @@ ae_arr_i =          Array with architectural element unit details</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>sh</strong> &#8211; Sheet parameters</li>
 <li><strong>mg</strong> &#8211; Model grid class</li>
-<li><strong>ae_i</strong> &#8211; Architectural element lookup details [sequence number, z_bottom, z_top, architectural element, geometry]</li>
+<li><strong>ae_i</strong> &#8211; Architectural element lookup details [system number, z_bottom, z_top, architectural element, geometry]</li>
 <li><strong>ae_array</strong> &#8211; Architectural element array</li>
 <li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
 <li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>probs</strong> &#8211; Contains data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)
-count (int):    Material number and/or identifier</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>probs <em>(dict)</em> - Contains data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)</li>
+<li>count <em>(int)</em> - Material number and/or identifier</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1077,17 +1052,17 @@ count (int):    Material number and/or identifier</p>
 <li><strong>tr</strong> (<em>dict</em>) &#8211; Trough parameters</li>
 <li><strong>mg</strong> (<em>grid class</em>) &#8211; Model grid</li>
 <li><strong>ae</strong> (<em>list</em>) &#8211; Architectural element unit details</li>
-<li><strong>ae_arr</strong> (<em>ndarray</em>) &#8211; 3D array of sequeunce numbers</li>
+<li><strong>ae_arr</strong> (<em>ndarray</em>) &#8211; 3D array of system numbers</li>
 <li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
 <li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>probs</strong> &#8211; Grid properties
-count (int):                    Material number and/or identifier</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>probs <em>(numpy array)</em> - Grid properties</li>
+<li>count <em>(int)</em> - Material number and/or identifier</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1104,15 +1079,15 @@ count (int):                    Material number and/or identifier</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>probs</strong> (<em>list</em>) &#8211; Data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)</li>
-<li><strong>params</strong> (<em>list</em>) &#8211; Parameters of model domain, sequence, hydraulics, etc.</li>
+<li><strong>params</strong> (<em>list</em>) &#8211; Parameters of model domain, system, hydraulics, etc.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>probs</strong> &#8211; Data of architectural element units and associated hydrofacies
-params (list):                  Input parameters, assigned with heterogenity</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>probs <em>(list)</em> - Data of architectural element units and associated hydrofacies</li>
+<li>params <em>(list)</em> - Input parameters, assigned with heterogenity</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1155,10 +1130,7 @@ params (list):                  Input parameters, assigned with heterogenity</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of planes with selected model grid nodes</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">set_no</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">set_no - Number of planes with selected model grid nodes</p>
 </td>
 </tr>
 </tbody>
@@ -1179,10 +1151,7 @@ params (list):                  Input parameters, assigned with heterogenity</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>choice</strong> &#8211; Random value of architectural elements</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">choice <em>(int)</em> - Random value of architectural elements</p>
 </td>
 </tr>
 </tbody>
@@ -1204,10 +1173,7 @@ params (list):                  Input parameters, assigned with heterogenity</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Length, width and depth of ellipsoid</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">a, b, c</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a, b, c - Length, width and depth of ellipsoid</p>
 </td>
 </tr>
 </tbody>
@@ -1224,9 +1190,7 @@ params (list):                  Input parameters, assigned with heterogenity</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inray</strong> &#8211; Array with indices</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vectorized function of inray</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">vecmat</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vecmat - Vectorized function of inray</td>
 </tr>
 </tbody>
 </table>
@@ -1247,11 +1211,11 @@ params (list):                  Input parameters, assigned with heterogenity</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Material values
-fac:                    Facies values</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mat</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>ha_arr - Material values</li>
+<li>fac - Facies values</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1323,11 +1287,11 @@ fac:                    Facies values</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Grid cells within ellipsoid
-R2:                             Grid of scaled and rotated values</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">select</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>select - Grid cells within ellipsoid</li>
+<li>R2 - Grid of scaled and rotated values</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1399,10 +1363,11 @@ R2:                             Grid of scaled and rotated values</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fn</strong> (<em>str</em>) &#8211; Directory and file name for save</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>data</strong> &#8211; Data from ERSI-style ASCII-file
-meta (dict):            Dict with grid metadata</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy array</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>data <em>(numpy array)</em> - Data from ERSI-style ASCII-file</li>
+<li>meta <em>(dict)</em> - Dict with grid metadata</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1446,10 +1411,7 @@ Returns values at centroids - this might not match the borehole inputs</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">X, Y values at centroids</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bhdf</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bhdf - X, Y values at centroids</p>
 </td>
 </tr>
 </tbody>
@@ -1468,9 +1430,7 @@ commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fn</strong> (<em>str</em>) &#8211; .gslib file path and name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>gslib_dict</strong> &#8211; properties</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">gslib_dict <em>(dict)</em> - properties</td>
 </tr>
 </tbody>
 </table>
@@ -1486,9 +1446,7 @@ commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pickfile</strong> &#8211; Input file</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>data</strong> &#8211; Pickled data of input file</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">data <em>(dict)</em> - Pickled data of input file</td>
 </tr>
 </tbody>
 </table>
@@ -1526,15 +1484,16 @@ This saves the array objects in the given dictionary to a MATLAB- style .mat fil
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pf</strong> (<em>str</em>) &#8211; Parameter file path</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>run</strong> &#8211; Model run parameters
-mod (dict):                     Model domain parameters
-sequences (dict):               Sequence parameters
-hydraulics (dict):              Hydraulic properties parameters
-flowtrans (dict):               Flow &amp; transport simulation parameters
-elements (dict):                Architectural elements and parameters
-model_grid (object class):      Grid object class</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>run <em>(dict)</em> - Model run parameters</li>
+<li>mod <em>(dict)</em> - Model domain parameters</li>
+<li>sequences <em>(dict)</em> - Sequence parameters</li>
+<li>hydraulics <em>(dict)</em> - Hydraulic properties parameters</li>
+<li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
+<li>elements <em>(dict)</em> - Architectural elements and parameters</li>
+<li>model_grid <em>(object class)</em> - Grid object class</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1550,14 +1509,15 @@ model_grid (object class):      Grid object class</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_in</strong> (<em>str</em>) &#8211; Parameter file path</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>run</strong> &#8211; Model run parameters
-model (dict):           Model domain parameters
-sequences (dict):       Sequence parameters
-hydraulics (dict):      Hydraulic properties parameters
-flowtrans (dict):       Flow &amp; transport simulation parameters
-elements (dict):        Architectural elements and parameters</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>run <em>(dict)</em> - Model run parameters</li>
+<li>model <em>(dict)</em> - Model domain parameters</li>
+<li>sequences <em>(dict)</em> - Sequence parameters</li>
+<li>hydraulics <em>(dict)</em> - Hydraulic properties parameters</li>
+<li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
+<li>elements <em>(dict)</em> - Architectural elements and parameters</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1566,15 +1526,15 @@ elements (dict):        Architectural elements and parameters</td>
 <dl class="function">
 <dt id="hyvr.hyvr.utils.read_lu">
 <code class="descclassname">hyvr.hyvr.utils.</code><code class="descname">read_lu</code><span class="sig-paren">(</span><em>sq_fp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/hyvr/utils.html#read_lu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.hyvr.utils.read_lu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load user-defined sequences (architectural element lookup table),
+<dd><p>Load user-defined strata (architectural element lookup table),
 split the data based on a delimiter and return it as a new list</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sq_fp</strong> &#8211; Load user-defined sequences (architectural element lookup table)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sq_fp</strong> &#8211; Load user-defined strata (architectural element lookup table)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>seq_lu</strong> &#8211; Values of architectural element lookup table</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>ssm_lu *</strong> &#8211; -Values of architectural element lookup table</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -1595,17 +1555,11 @@ split the data based on a delimiter and return it as a new list</p>
 <li><strong>aniso</strong> &#8211; Anisotropy</li>
 <li><strong>azimuth</strong> &#8211; Azimuth angles</li>
 <li><strong>dip</strong> &#8211; Dipping angles</li>
-<li><strong>k_in</strong> &#8211; <ul>
-<li></li>
-</ul>
-</li>
+<li><strong>k_in</strong> &#8211; </li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Rotated K tensor</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">k_rotate</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">k_rotate - Rotated K tensor</p>
 </td>
 </tr>
 </tbody>
@@ -1647,21 +1601,11 @@ split the data based on a delimiter and return it as a new list</p>
 <li><strong>var</strong> &#8211; Variance</li>
 <li><strong>corl</strong> &#8211; Tuple of correlation length of random variable</li>
 <li><strong>twod</strong> &#8211; Flag for two-dimensional simulation</li>
-<li><strong>covmod</strong> &#8211; Which covariance model to use
-&#8216;gau&#8217;: Gaussian
-&#8216;exp&#8217;: Exponential</li>
+<li><strong>covmod</strong> &#8211; Which covariance model to use (&#8216;gau&#8217; = Gaussian, &#8216;exp&#8217; = Exponential).</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>Random gaussian variable</dt>
-<dd><p class="first last">Real part of a complex array, created via inverse discrete Fourier Transform</p>
-</dd>
-</dl>
-</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bigy</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bigy - Random gaussian variable. Real part of a complex array, created via inverse DFT</p>
 </td>
 </tr>
 </tbody>
@@ -1683,11 +1627,11 @@ split the data based on a delimiter and return it as a new list</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>val_fmts</strong> &#8211; Dictionary with values of K tensor and porosity
-val_filepath:           file name of HGS output file</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>val_fmts <em>(dict)</em> - Dictionary with values of K tensor and porosity</li>
+<li>val_filepath - file name of HGS output file</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1712,15 +1656,15 @@ val_filepath:           file name of HGS output file</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">MODFLOW model object
-dis:                            Discretization of modflow object
-bas:                            BAS package of modflow model
-lpf:                            LPF package of modflow model
-oc:                                     OC package of modflow model
-pcg:                            pcg package of modflow model</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mf</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>mf - MODFLOW model object</li>
+<li>dis - Discretization of modflow object</li>
+<li>bas - BAS package of modflow model</li>
+<li>lpf - LPF package of modflow model</li>
+<li>oc - OC package of modflow model</li>
+<li>pcg - pcg package of modflow model</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1744,15 +1688,15 @@ pcg:                            pcg package of modflow model</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">MODFLOW model object
-dis:                            Discretization of modflow object
-bas:                            BAS package of modflow model
-lpf:                            LPF package of modflow model
-oc:                                     OC package of modflow model
-pcg:                            pcg package of modflow model</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mf</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>mf - MODFLOW model object</li>
+<li>dis - Discretization of modflow object</li>
+<li>bas - BAS package of modflow model</li>
+<li>lpf - LPF package of modflow model</li>
+<li>oc - OC package of modflow model</li>
+<li>pcg - pcg package of modflow model</li>
+</ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1770,9 +1714,9 @@ pcg:                            pcg package of modflow model</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>numpy array</em>) &#8211; Numpy array containing the data, <cite>int</cite> or <cite>float</cite> or <cite>uint</cite>.
 The dimensions should be between 1 and 3</li>
-<li><strong>file_name</strong> (<em>string</em>) &#8211; Name of the file for the output, optional (None)</li>
+<li><strong>file_name</strong> (<em>str</em>) &#8211; Name of the file for the output, optional (None)</li>
 <li><strong>grid</strong> (<em>class Grid</em>) &#8211; Information about the grid can be also provided as a Grid object</li>
-<li><strong>sc_name</strong> (<em>string</em>) &#8211; Name of the scalar quantities</li>
+<li><strong>sc_name</strong> (<em>str</em>) &#8211; Name of the scalar quantities</li>
 </ul>
 </td>
 </tr>
@@ -1794,7 +1738,7 @@ The dimensions should be between 1 and 3</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data_dict</strong> (<em>numpy array</em>) &#8211; e.g. {&#8216;fac&#8217;: fac, &#8216;mat&#8217;: mat}</li>
-<li><strong>file_name</strong> (<em>string</em>) &#8211; Name of the file for the output.</li>
+<li><strong>file_name</strong> (<em>str</em>) &#8211; Name of the file for the output.</li>
 <li><strong>grid</strong> (<em>class Grid</em>) &#8211; The information about the grid can be also provided as a grid object.</li>
 </ul>
 </td>
@@ -1823,7 +1767,7 @@ The dimensions should be between 1 and 3</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<em>numpy array</em>) &#8211; Data to replace</li>
-<li><strong>out_name</strong> (<em>string</em>) &#8211; Name of the file for the output.</li>
+<li><strong>out_name</strong> (<em>str</em>) &#8211; Name of the file for the output.</li>
 <li><strong>mask_val</strong> (<em>int</em>) &#8211; Value of the facies which should be masked</li>
 <li><strong>grid</strong> &#8211; Grid class</li>
 </ul>
@@ -1846,10 +1790,11 @@ The dimensions should be between 1 and 3</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_in</strong> (<em>str</em>) &#8211; Name and filepath to read</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>gegrid</strong> &#8211; Grid class
-props (numpy array):            Grid properties</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">hyvr.grid class</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>gegrid <em>(hyvr.grid class)</em> - Grid class</li>
+<li>props <em>(numpy array)</em> - Grid properties</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1872,20 +1817,11 @@ Saves as a .vtk file with everything the same except the dimensions</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Grid class of the data
-props:          The data as a nx x ny x nz array</p>
-<dl class="docutils">
-<dt>...notes:</dt>
-<dd><ul class="first last simple">
-<li>Number of cells (nx, ny, nz) is changed</li>
-<li>Spacing (dx, dy, dz) is NOT changed</li>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>gegrid - Grid class of the data</li>
+<li>props - The data as a nx x ny x nz array</li>
 </ul>
-</dd>
-</dl>
 </p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">gegrid</p>
 </td>
 </tr>
 </tbody>

@@ -65,16 +65,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#model-setup-sections">Model setup sections</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#run-section"><code class="docutils literal"><span class="pre">[run]</span></code> section</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-section"><code class="docutils literal"><span class="pre">[model]</span></code> section</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sequences-section"><code class="docutils literal"><span class="pre">[sequences]</span></code> section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#element-sections-for-architectural-elements"><code class="docutils literal"><span class="pre">[element]</span></code> sections for architectural elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#strata-section"><code class="docutils literal"><span class="pre">[strata]</span></code> section</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#element-sections-for-architectural-elements"><code class="docutils literal"><span class="pre">[element]</span></code> sections for architectural elements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#general-element-parameters">General <code class="docutils literal"><span class="pre">[*element]</span></code> parameters</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#erosive-element-specific-parameters-truncated-ellipsoid-channel">Erosive element-specific parameters (truncated_ellipsoid, channel)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#erosive-element-specific-parameters-truncated-ellipsoid-extruded-parabola">Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#truncated-ellipsoid-parameters">Truncated ellipsoid parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#channel-parameters">Channel parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extruded-parabola-parameters">Extruded parabola parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sheet-parameters">Sheet parameters</a></li>
 </ul>
 </li>
@@ -127,16 +125,17 @@
 <h2>Parameter inputs and model outputs<a class="headerlink" href="#parameter-inputs-and-model-outputs" title="Permalink to this headline">¶</a></h2>
 <p>Model outputs include three-dimensional fields with values at each model grid cell for the following parameters:</p>
 <ul class="simple">
-<li><strong>Sequence</strong> - sequence identifier</li>
-<li><strong>Architectural element unit</strong> - architectural element unit identifier</li>
-<li><strong>Material</strong> - Unique identifiers for each architectural element generated</li>
-<li><strong>Hydrofacies</strong> - Type of hydrofacies</li>
-<li><strong>Isotropic hydraulic conductivity</strong></li>
-<li><strong>Dip</strong> - bedding parameter</li>
-<li><strong>Azimuth</strong> - bedding parameter</li>
-<li><strong>Anisotropy ratio</strong></li>
-<li><strong>Full hydraulic-conductivity tensor</strong> - based on isotropic hydraulic conductivity, dip, azimuth and anisotropy ratio (<a class="reference internal" href="methods.html#tensorgen"><span class="std std-ref">methods</span></a>)</li>
-<li><strong>Porosity</strong></li>
+<li><strong>Strata</strong>, <code class="docutils literal"><span class="pre">ssm</span></code> - strata identifier</li>
+<li><strong>Architectural element</strong> <code class="docutils literal"><span class="pre">ae</span></code> - architectural element identifier</li>
+<li><strong>Hydrofacies assemblage</strong> <code class="docutils literal"><span class="pre">ha</span></code> - Unique identifiers for each hydrofacies assemblage generated</li>
+<li><strong>Hydrofacies assemblage type</strong> <code class="docutils literal"><span class="pre">hat</span></code> - Type of hydrofacies assemblage generated</li>
+<li><strong>Hydrofacies</strong> <code class="docutils literal"><span class="pre">fac</span></code> - Type of hydrofacies</li>
+<li><strong>Isotropic hydraulic conductivity</strong> <code class="docutils literal"><span class="pre">k_iso</span></code></li>
+<li><strong>Dip</strong> <code class="docutils literal"><span class="pre">dip</span></code> - bedding parameter</li>
+<li><strong>Azimuth</strong> <code class="docutils literal"><span class="pre">azim</span></code> - bedding parameter</li>
+<li><strong>Anisotropy ratio</strong> <code class="docutils literal"><span class="pre">ani_rat</span></code></li>
+<li><strong>Porosity</strong> <code class="docutils literal"><span class="pre">poros</span></code></li>
+<li><strong>Full hydraulic-conductivity tensor</strong> <code class="docutils literal"><span class="pre">ktensors</span></code> - based on isotropic hydraulic conductivity, dip, azimuth and anisotropy ratio (<a class="reference internal" href="methods.html#tensorgen"><span class="std std-ref">methods</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="the-ini-configuration-file">
@@ -147,7 +146,7 @@
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">[run]</span></code> - This contains parameters related to the model run.</li>
 <li><code class="docutils literal"><span class="pre">[model]</span></code> - This contains details about the model dimensions</li>
-<li><code class="docutils literal"><span class="pre">[sequences]</span></code> - In this section the sequence parameters are set.</li>
+<li><code class="docutils literal"><span class="pre">[strata]</span></code> - In this section the strata parameters are set.</li>
 <li><code class="docutils literal"><span class="pre">[*architectural_elements*]</span></code> - Each architectural element to be simulated in HYVR is included in its own section. Please see the subsection below for more information.</li>
 <li><code class="docutils literal"><span class="pre">[hydraulics]</span></code> - This section includes information for setting the hydraulic properties of simulated features.</li>
 </ul>
@@ -180,21 +179,20 @@
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">dx</span></code>, <code class="docutils literal"><span class="pre">dy</span></code>, <code class="docutils literal"><span class="pre">dz</span></code>        - Model grid cell dimensions</li>
 <li><code class="docutils literal"><span class="pre">lx</span></code>, <code class="docutils literal"><span class="pre">ly</span></code>, <code class="docutils literal"><span class="pre">lz</span></code>        - Model domain dimensions</li>
-<li><code class="docutils literal"><span class="pre">flag_periodic</span></code>             - Periodic model domain? (Sheets/truncated ellipsoids only)</li>
-<li><code class="docutils literal"><span class="pre">flag_display</span></code>              - &#8216;Display&#8217;-type simulation? If this flag is set to <code class="docutils literal"><span class="pre">true</span></code>, the simulated architectural elements are centred in the model domain so they can be viewed easily.</li>
+<li><code class="docutils literal"><span class="pre">flag_periodic</span></code>                     - Periodic model domain? (Sheets/truncated ellipsoids only)</li>
+<li><code class="docutils literal"><span class="pre">flag_display</span></code>                      - &#8216;Display&#8217;-type simulation? If this flag is set to <code class="docutils literal"><span class="pre">true</span></code>, the simulated architectural elements are centred in the model domain so they can be viewed easily.</li>
 <li><code class="docutils literal"><span class="pre">hetlev</span></code>                            - Hierarchical level at which heterogeneity should be simulated <em>[ae, facies, internal]</em></li>
 </ul>
 </div>
-</div>
-<div class="section" id="sequences-section">
-<h2><code class="docutils literal"><span class="pre">[sequences]</span></code> section<a class="headerlink" href="#sequences-section" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="strata-section">
+<h3><code class="docutils literal"><span class="pre">[strata]</span></code> section<a class="headerlink" href="#strata-section" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">l_seq</span></code>                                     - List of sequences</li>
-<li><code class="docutils literal"><span class="pre">r_seq_top</span></code>                         - List of mean sequence contact elevations</li>
-<li><code class="docutils literal"><span class="pre">ll_seq_contact_model</span></code>      - Statistical parameters for sequence contact model</li>
+<li><code class="docutils literal"><span class="pre">l_ssm</span></code>                                     - List of sequences</li>
+<li><code class="docutils literal"><span class="pre">r_ssm_top</span></code>                         - List of mean strata contact elevations</li>
+<li><code class="docutils literal"><span class="pre">ll_ssm_contact_model</span></code>      - Statistical parameters for strata contact model</li>
 <li><code class="docutils literal"><span class="pre">ae_table</span></code>                          - Filepath for architectural element lookup table</li>
-<li><code class="docutils literal"><span class="pre">seq_contact</span></code>                       - Contact surface type <em>[flat, random, user]</em></li>
-<li><code class="docutils literal"><span class="pre">ll_seq_ae</span></code>                         - Which architectural elements are in each sequence</li>
+<li><code class="docutils literal"><span class="pre">ssm_contact</span></code>                       - Contact surface type <em>[flat, random, user]</em></li>
+<li><code class="docutils literal"><span class="pre">ll_ssm_ae</span></code>                         - Which architectural elements are in each stratum</li>
 <li><code class="docutils literal"><span class="pre">ll_ae_prob</span></code>                        - Probability of an architectural element occuring</li>
 <li><code class="docutils literal"><span class="pre">ll_ae_z_mean</span></code>                      - Mean thickness of architectural element unit</li>
 <li><code class="docutils literal"><span class="pre">ll_avul_prob</span></code>                      - Probability of avulsion</li>
@@ -203,19 +201,20 @@
 </ul>
 </div>
 <div class="section" id="element-sections-for-architectural-elements">
-<h2><code class="docutils literal"><span class="pre">[element]</span></code> sections for architectural elements<a class="headerlink" href="#element-sections-for-architectural-elements" title="Permalink to this headline">¶</a></h2>
+<h3><code class="docutils literal"><span class="pre">[element]</span></code> sections for architectural elements<a class="headerlink" href="#element-sections-for-architectural-elements" title="Permalink to this headline">¶</a></h3>
 <p>Sections that describe architectural elements are entitled with an identifying name (e.g. <code class="docutils literal"><span class="pre">[sparse_scour]</span></code>). Note that section names should not include spaces. The first parameter to be set it the <code class="docutils literal"><span class="pre">geometry</span></code>. The current implementation of HYVR includes three geometries: truncated ellipsoids (<code class="docutils literal"><span class="pre">trunc_ellip</span></code>), channels (<code class="docutils literal"><span class="pre">channel</span></code>), and sheets (<code class="docutils literal"><span class="pre">sheet</span></code>).</p>
 <p>Unless otherwise noted, ranges (<code class="docutils literal"><span class="pre">r_</span></code>) represent the lower and upper limits of uniform distributions from which values are randomly generated.</p>
+</div>
 <div class="section" id="general-element-parameters">
 <h3>General <code class="docutils literal"><span class="pre">[*element]</span></code> parameters<a class="headerlink" href="#general-element-parameters" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">geometry</span></code>                  - Geometry of architectural element <em>[trunc_ellip, channel, sheet]</em></li>
-<li><code class="docutils literal"><span class="pre">structure</span></code>                 - Internal structure of architectural element <em>[massive, dip]</em>, also , <em>[bulb, bulb_l, random]</em> for truncated ellipsoids.</li>
+<li><code class="docutils literal"><span class="pre">geometry</span></code>                  - Geometry of hydrofacies assemblages within architectural element <em>[trunc_ellip, ext_par, sheet]</em></li>
+<li><code class="docutils literal"><span class="pre">structure</span></code>                 - Internal structure of hydrofacies assemblages <em>[massive, dip]</em>, also , <em>[bulb, bulb_l, random]</em> for truncated ellipsoids.</li>
 <li><code class="docutils literal"><span class="pre">contact</span></code>                   - Type of bedding contact between element units <em>[flat, random]</em></li>
 <li><code class="docutils literal"><span class="pre">r_contact_model</span></code>   - Statistical parameters for bedding contact model</li>
-<li><code class="docutils literal"><span class="pre">l_facies</span></code>                  - Hydrofacies included in architectural element. These refer to <code class="docutils literal"><span class="pre">[hydraulics].l_hydro</span></code> and are zero-indexed.</li>
-<li><code class="docutils literal"><span class="pre">ll_altfacies</span></code>              - Alternating facies specification. This is a lits of lists and should have one entry for each value in <code class="docutils literal"><span class="pre">[*element].l_facies</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">r_bg</span></code>                              - Background parameters for unassigned cells in the architectural element unit. This should be three values: facies, azimuth, and dip background values.</li>
+<li><code class="docutils literal"><span class="pre">l_facies</span></code>                  - Hydrofacies included in hydrofacies assemblage. These refer to <code class="docutils literal"><span class="pre">[hydraulics].l_hydro</span></code> and are zero-indexed.</li>
+<li><code class="docutils literal"><span class="pre">ll_altfacies</span></code>              - Alternating facies specification. This is a list of lists and should have one entry for each value in <code class="docutils literal"><span class="pre">[*element].l_facies</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">r_bg</span></code>                              - Background parameters for unassigned cells in the architectural element. This should be three values: facies, azimuth, and dip background values.</li>
 <li><code class="docutils literal"><span class="pre">r_geo_ztrend</span></code>              - Linear trend in geometry sizes with elevation. Given as a percentage change mulitplier in mean value from bottom to top of domain, i.e. <span class="math">\([\lambda_{bottom}, \lambda_{top}]\)</span></li>
 <li><code class="docutils literal"><span class="pre">r_k_ztrend</span></code>                - Linear trend in isotropic hydraulic conductivity from bottom to top of domain :math:<span class="math">\(\xi_{bottom},\xi_{top}\)</span></li>
 <li><code class="docutils literal"><span class="pre">r_k_xtrend</span></code>                - Linear trend in isotropic hydraulic conductivity from model inlet to outlet <span class="math">\(\xi_{inlet},\xi_{outlet}\)</span></li>
@@ -223,8 +222,8 @@
 <li><code class="docutils literal"><span class="pre">r_n_xtrend</span></code>                - Linear trend in porosity from model inlet to outlet <span class="math">\(\xi_{inlet},\xi_{outlet}\)</span></li>
 <li><code class="docutils literal"><span class="pre">r_dip</span></code>                     - Range of dip</li>
 </ul>
-<div class="section" id="erosive-element-specific-parameters-truncated-ellipsoid-channel">
-<h4>Erosive element-specific parameters (truncated_ellipsoid, channel)<a class="headerlink" href="#erosive-element-specific-parameters-truncated-ellipsoid-channel" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="erosive-element-specific-parameters-truncated-ellipsoid-extruded-parabola">
+<h4>Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)<a class="headerlink" href="#erosive-element-specific-parameters-truncated-ellipsoid-extruded-parabola" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">agg</span></code>               - Aggradation thickness added between each generation elevation.</li>
 <li><code class="docutils literal"><span class="pre">buffer</span></code>    - Buffer to reduce erosion of underlying units (see <a class="reference internal" href="methods.html#temethod"><span class="std std-ref">methods</span></a>).</li>
@@ -245,15 +244,15 @@
 <li><code class="docutils literal"><span class="pre">dipset_d</span></code> - Thickness of dipping internal structures.</li>
 </ul>
 </div>
-<div class="section" id="channel-parameters">
-<span id="chparams"></span><h3>Channel parameters<a class="headerlink" href="#channel-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="extruded-parabola-parameters">
+<span id="chparams"></span><h3>Extruded parabola parameters<a class="headerlink" href="#extruded-parabola-parameters" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">width</span></code>, <code class="docutils literal"><span class="pre">depth</span></code> -  Mean geometry of channel</li>
-<li><code class="docutils literal"><span class="pre">h</span></code> - Channel shape parameter</li>
-<li><code class="docutils literal"><span class="pre">k</span></code> - Channel shape wave number</li>
+<li><code class="docutils literal"><span class="pre">h</span></code> - Extruded parabola centreline curve shape parameter</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> - Extruded parabola centreline curve shape wave number</li>
 <li><code class="docutils literal"><span class="pre">ds</span></code> - Distance between centreline points along trajectory</li>
 <li><code class="docutils literal"><span class="pre">eps_factor</span></code> - Variance of random fluctuations of channel centreline.</li>
-<li><code class="docutils literal"><span class="pre">channel_no</span></code> - Number of channels to generate at each elevation</li>
+<li><code class="docutils literal"><span class="pre">channel_no</span></code> - Number of Extruded parabolas to generate at each elevation</li>
 <li><code class="docutils literal"><span class="pre">dipset_d</span></code> - Thickness of dipping internal structures.</li>
 </ul>
 </div>
@@ -297,7 +296,7 @@
 <li><code class="docutils literal"><span class="pre">mat</span></code> MATLAB file</li>
 <li><code class="docutils literal"><span class="pre">vtr</span></code> VTK rectilinear grid file -  this can be opened in ParaView for improved three-dimensional visualisation.</li>
 </ul>
-<p>HyVR can also create files that can be used as model inputs for some flow and transport modelling packages. These currently include:</p>
+<p>HyVR can also create files that can be used as model inputs for some flow and transport modelling packages These currently include:</p>
 <ul class="simple">
 <li>MODFLOW-2005 - <code class="docutils literal"><span class="pre">bas</span></code>, <code class="docutils literal"><span class="pre">dis</span></code>, <code class="docutils literal"><span class="pre">lpf</span></code>, <code class="docutils literal"><span class="pre">nam</span></code>, <code class="docutils literal"><span class="pre">oc</span></code>, and <code class="docutils literal"><span class="pre">pcg</span></code> model input files. Provided suitable flow and transport parameters are set in the <code class="docutils literal"><span class="pre">[flowtrans]</span></code> section of the input parameter file, this simulation can be executed.</li>
 <li>MODFLOW 6 - <code class="docutils literal"><span class="pre">dis</span></code>, <code class="docutils literal"><span class="pre">nam</span></code>, and <code class="docutils literal"><span class="pre">npf</span></code> model input files. A complete set of MODFLOW 6 input files cannot be generated in HyVR at this stage.</li>

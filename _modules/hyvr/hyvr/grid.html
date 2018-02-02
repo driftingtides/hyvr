@@ -201,7 +201,7 @@
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            axis (string):  containing [&#39;x&#39;,&#39;y&#39;,&#39;z&#39;], [optional]</span>
-<span class="sd">                            If the default value &quot;xyz&quot; is used, then all the intevals are printed.</span>
+<span class="sd">                            If the default value &quot;xyz&quot; is used, then all the intervals are printed.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            print intervals that constitute the simulation domain</span>
@@ -281,7 +281,7 @@
 <span class="sd">            self:		An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            xv, yv, zv: Vectors of spatial coordinates</span>
+<span class="sd">            xv, yv, zv - Vectors of spatial coordinates</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -304,7 +304,7 @@
 <span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            xv, yv, zv: Vectors of spatial coordinates of bounding nodes</span>
+<span class="sd">            xv, yv, zv - Vectors of spatial coordinates of bounding nodes</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -322,7 +322,7 @@
 <span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            xv: 	Vector of spatial x-coordinate</span>
+<span class="sd">            xv - Vector of spatial x-coordinate</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>	
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ox</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -346,7 +346,7 @@
 <span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            yv: 	Vector of spatial y-coordinate</span>
+<span class="sd">            yv - Vector of spatial y-coordinate</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>		
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oy</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -371,7 +371,7 @@
 <span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            zv: 	Vector of spatial z-coordinate</span>
+<span class="sd">            zv - Vector of spatial z-coordinate</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>			
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oz</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -425,6 +425,7 @@
 <span class="sd">        Get x,y,z coordinates in a tuple</span>
 
 <span class="sd">        Parameters:</span>
+<span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A Tuple containing the x,y and z-coordinates of the grid</span>
@@ -626,7 +627,8 @@
 <span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-
+<span class="sd">            --</span>
+<span class="sd">			</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points</span></div>
 
@@ -663,7 +665,7 @@
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nx</span><span class="o">&gt;</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span> \
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ny</span><span class="o">&gt;</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span> \
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nz</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nz</span><span class="o">&gt;</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
-
+ 
 <div class="viewcode-block" id="Grid.del_cells"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.grid.Grid.del_cells">[docs]</a>    <span class="k">def</span> <span class="nf">del_cells</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the cells for a cells grid</span>
@@ -672,7 +674,7 @@
 <span class="sd">            self:	An instance of the Grid class</span>
 
 <span class="sd">        Returns:</span>
-
+<span class="sd">            --</span>
 <span class="sd">        &quot;&quot;&quot;</span>	
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cells</span></div>
 
@@ -699,11 +701,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the index of an elevation for the k-dimension of a 3D array</span>
 
-<span class="sd">        Parameter:</span>
-<span class="sd">            zval:		Elevation value	</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            zval:	Elevation value	</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            iz (int):	Index of elevation</span>
+<span class="sd">            iz *(int)* - Index of elevation</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">iz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">((</span><span class="n">zval</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">oz</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz</span><span class="p">)</span>

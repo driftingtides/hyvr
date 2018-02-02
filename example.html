@@ -102,17 +102,17 @@
             
   <div class="section" id="hyvr-example">
 <h1>HYVR Example<a class="headerlink" href="#hyvr-example" title="Permalink to this headline">¶</a></h1>
-<p>An example of a parameter file mimicking the MADE site in Columbus, Mississippi, is included in this section.</p>
+<p>Two examples are provided with the HyVR simulation module: the MADE site example <code class="docutils literal"><span class="pre">made.ini</span></code>), mimicking the MADE site in Columbus, Mississippi, and a test case with user-defined architectural element mean contact surface elevations (<code class="docutils literal"><span class="pre">test_lu.ini</span></code>).</p>
 <div class="figure align-center" id="id1">
 <span id="made"></span><a class="reference internal image-reference" href="_images/MADEsmall_lowres.jpg"><img alt="_images/MADEsmall_lowres.jpg" src="_images/MADEsmall_lowres.jpg" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text"><em>Examply field mimicking the MADE site, generated using HyVR.</em></span></p>
+<p class="caption"><span class="caption-text"><em>Example field mimicking the MADE site, generated using HyVR.</em></span></p>
 </div>
 <div class="section" id="example-parameter-file">
 <h2>Example parameter file<a class="headerlink" href="#example-parameter-file" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">## Example HyVR model parameter input file</span>
 <span class="c1"># HyVR 0.1 simulation package</span>
 <span class="c1"># https://github.com/driftingtides/hyvr/</span>
-<span class="c1"># Jeremy P. Bennett, University of Tübingen, 2017-2018 </span>
+<span class="c1"># Jeremy P. Bennett, University of Tuebingen, 2017-2018 </span>
 
 <span class="c1"># Notes:</span>
 <span class="c1">#	- String values do not require quotation marks</span>
@@ -130,7 +130,7 @@
 <span class="c1"># ------------------</span>
 
 <span class="c1"># Name of model simulation run</span>
-<span class="n">runname</span> <span class="o">=</span> <span class="n">testing_small1</span>
+<span class="n">runname</span> <span class="o">=</span> <span class="n">small</span>
 
 <span class="c1"># Number of realisations</span>
 <span class="n">numsim</span> <span class="o">=</span> <span class="mi">1</span>
@@ -141,12 +141,12 @@
 <span class="c1"># py: python pickle</span>
 <span class="c1"># mat *.mat</span>
 <span class="n">l_dataoutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">vtk</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">py</span><span class="p">]</span>
-<span class="n">l_modeloutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">mf</span><span class="p">,</span><span class="n">hgs</span><span class="p">,</span><span class="n">mf6</span><span class="p">]</span>
+<span class="c1">#l_modeloutputs = [mf,hgs,mf6]</span>
 
 <span class="c1"># Full Filepath/directory for outputs</span>
 <span class="c1"># Default is the directory of the parameter initialization file</span>
 <span class="c1"># if modeldir == &#39;select&#39;</span>
-<span class="n">modeldir</span> <span class="o">=</span> <span class="n">select</span>
+<span class="c1">#modeldir = select</span>
 
 <span class="c1"># Overwrite parameter files</span>
 <span class="n">flag_ow</span> <span class="o">=</span> <span class="n">true</span>
@@ -183,19 +183,19 @@
 <span class="c1"># 	-internal</span>
 <span class="n">hetlev</span> <span class="o">=</span> <span class="n">internal</span>
 
-<span class="p">[</span><span class="n">sequences</span><span class="p">]</span>
+<span class="p">[</span><span class="n">strata</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
-<span class="c1"># Sequence parameters</span>
+<span class="c1"># Strata parameters</span>
 <span class="c1"># ------------------</span>
 
 <span class="c1">## List of sequences</span>
-<span class="n">l_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">glaflu</span><span class="p">,</span> <span class="n">meander</span><span class="p">]</span>
+<span class="n">l_ssm</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">glaflu</span><span class="p">,</span> <span class="n">meander</span><span class="p">]</span>
 
 <span class="c1">## List of sequence top contact depths</span>
-<span class="n">r_seq_top</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">r_ssm_top</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
 
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">ll_seq_contact_model</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+<span class="n">ll_ssm_contact_model</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
 
 <span class="c1">## Architectural element lookup table</span>
 <span class="c1">#ae_table = ae_lu_19-09-2017_10.39.18.txt</span>
@@ -206,12 +206,15 @@
 <span class="c1"># 				- requires geostatistical model &quot;l_contact_model&quot; </span>
 <span class="c1"># user: 	Use-defined contact surfaces</span>
 <span class="c1"># 				- requires input path &quot;contact_file&quot;</span>
-<span class="n">seq_contact</span> <span class="o">=</span> <span class="n">random</span>
+<span class="n">ssm_contact</span> <span class="o">=</span> <span class="n">random</span>
+
+<span class="c1"># List of architectural elements in model</span>
+<span class="n">l_ae</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay_sheet</span><span class="p">,</span> <span class="n">sand_sheet</span><span class="p">,</span> <span class="n">clay_lens</span><span class="p">,</span> <span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">,</span> <span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]</span>
 
 <span class="c1"># Which architectural elements are included in each sequence</span>
 <span class="c1"># - Must have same length as l_seq, </span>
 <span class="c1"># - Architectural elements must be identical to section names (except [model],[hydraulics])</span>
-<span class="n">ll_seq_ae</span> <span class="o">=</span> <span class="p">[[</span><span class="n">clay_sheet</span><span class="p">],[</span><span class="n">sand_sheet</span><span class="p">,</span><span class="n">clay_lens</span><span class="p">],[</span><span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">],[</span><span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]]</span>
+<span class="n">ll_ssm_ae</span> <span class="o">=</span> <span class="p">[[</span><span class="n">clay_sheet</span><span class="p">],[</span><span class="n">sand_sheet</span><span class="p">,</span><span class="n">clay_lens</span><span class="p">],[</span><span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">],[</span><span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]]</span>
 
 <span class="c1"># The probability of an architecutral element occuring </span>
 <span class="n">ll_ae_prob</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">],[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">],[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]]</span>
@@ -261,7 +264,7 @@
 <span class="n">width</span> <span class="o">=</span> <span class="mf">10.4</span>
 <span class="n">depth</span> <span class="o">=</span> <span class="mf">1.2</span>
 
-<span class="c1"># Mean angles [°]</span>
+<span class="c1"># Mean angles [deg]</span>
 <span class="n">r_paleoflow</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
 <span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
 <span class="n">r_azimuth</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
@@ -291,7 +294,7 @@
 <span class="c1"># ------------------</span>
 <span class="c1"># Meander channel element</span>
 <span class="c1"># ------------------</span>
-<span class="n">geometry</span> <span class="o">=</span> <span class="n">channel</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">ext_par</span>
 <span class="n">agg</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">width</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">depth</span> <span class="o">=</span> <span class="mf">1.5</span>
@@ -460,7 +463,7 @@
 <span class="n">width</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.3</span>
 
-<span class="c1"># Mean angles [°]</span>
+<span class="c1"># Mean angles [degrees]</span>
 <span class="n">r_paleoflow</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
 <span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">r_azimuth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
