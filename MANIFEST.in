@@ -3,7 +3,8 @@ include LICENCE
 
 # Include example parameter file
 include hyvr/tests/made.ini
-include hyvr/tests/test_channel.ini
+include hyvr/tests/test_lu.ini
+include hyvr/tests/test_aelu.txt
 
 # Include readme
 include README.rst

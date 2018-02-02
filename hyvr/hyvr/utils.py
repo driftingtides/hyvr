@@ -35,9 +35,9 @@ def to_vtk(data, file_name, grid=None, sc_name=None):
     Parameters:
         data (numpy array):		Numpy array containing the data, `int` or `float` or `uint`. 
                                 The dimensions should be between 1 and 3
-        file_name (string):		Name of the file for the output, optional (None)
+        file_name (str):		Name of the file for the output, optional (None)
         grid (class Grid):		Information about the grid can be also provided as a Grid object            
-        sc_name (string):		Name of the scalar quantities
+        sc_name (str):		Name of the scalar quantities
 
     Returns:
         A VTK 'STRUCTURED_POINTS' dataset file containing the input numpy data.
@@ -127,7 +127,7 @@ def to_vtr(data_dict, file_name, grid):
 
     Parameters:
         data_dict (numpy array):		e.g. {'fac': fac, 'mat': mat}
-        file_name (string):		        Name of the file for the output.
+        file_name (str):		        Name of the file for the output.
         grid (class Grid):		        The information about the grid can be also provided as a grid object.
 
     Returns:
@@ -151,7 +151,7 @@ def vtk_mask(data, out_name, mask_val=-15, grid=None):
 
     Parameters:
         data (numpy array):		Data to replace
-        out_name (string):		Name of the file for the output.
+        out_name (str):		Name of the file for the output.
         mask_val (int):			Value of the facies which should be masked
         grid:					Grid class
 
@@ -193,8 +193,8 @@ def vtk_read(file_in):
         file_in (str): 				Name and filepath to read
 
     Returns:
-        gegrid (hyvr.grid class): 	Grid class
-        props (numpy array): 		Grid properties
+        - gegrid *(hyvr.grid class)* - Grid class
+        - props *(numpy array)* - Grid properties
 
 
     """
@@ -243,12 +243,12 @@ def vtk_trim(file_in, dims, file_out=None):
         file_out: 	Output file
 
     Returns:
-        gegrid: 	Grid class of the data
-        props: 		The data as a nx x ny x nz array
+        - gegrid - Grid class of the data
+        - props - The data as a nx x ny x nz array
 
-        ...notes:
-            * Number of cells (nx, ny, nz) is changed
-            * Spacing (dx, dy, dz) is NOT changed
+	.. note:
+		* Number of cells (nx, ny, nz) is changed
+		* Spacing (dx, dy, dz) is NOT changed
 
     """
 
@@ -282,8 +282,8 @@ def dem_load(fn):
         fn (str): 				Directory and file name for save
 
     Returns:
-        data (numpy array):     Data from ERSI-style ASCII-file
-        meta (dict):            Dict with grid metadata
+        - data *(numpy array)* - Data from ERSI-style ASCII-file
+        - meta *(dict)* - Dict with grid metadata
 
     """
 
@@ -360,7 +360,7 @@ def load_gslib(fn):
         fn (str): 			.gslib file path and name
 
     Returns:
-        gslib_dict (dict):  properties
+        gslib_dict *(dict)* - properties
 
     """
     gslib_dict = {}
@@ -407,7 +407,7 @@ def load_pickle(pickfile):
         pickfile:		Input file
 
     Return:
-        data (dict):	Pickled data of input file 
+        data *(dict)* - Pickled data of input file 
 
     """
     with open(pickfile, 'rb') as f:
@@ -427,12 +427,12 @@ def parameters(file_in):
         file_in (str):  		Parameter file path
 
     Returns:
-        run (dict):             Model run parameters
-        model (dict):           Model domain parameters
-        sequences (dict):       Sequence parameters
-        hydraulics (dict):      Hydraulic properties parameters
-        flowtrans (dict):       Flow & transport simulation parameters
-        elements (dict):        Architectural elements and parameters
+        - run *(dict)* - Model run parameters
+        - model *(dict)* - Model domain parameters
+        - sequences *(dict)* - Sequence parameters
+        - hydraulics *(dict)* - Hydraulic properties parameters
+        - flowtrans *(dict)* - Flow & transport simulation parameters
+        - elements *(dict)* - Architectural elements and parameters
 
     """
 
@@ -443,9 +443,9 @@ def parameters(file_in):
 
     elements = {}
     str_values = 'geometry', 'structure', 'runname', 'contact', 'contact_file', 'modeldir', 'hetlev', 'ae_table',\
-                 'k_trend', 'seq_contact'
-    dtype_dict = {'ll_seq_ae': str, 'll_altfacies': int, 'll_contact_model': float,  'll_ae_prob': float,
-                  'll_ae_z_mean': float, 'll_ycorlengths': float, 'll_ncorlengths': float, 'll_seq_contact_model': float,
+                 'k_trend', 'ssm_contact'
+    dtype_dict = {'ll_ssm_ae': str, 'll_altfacies': int, 'll_contact_model': float,  'll_ae_prob': float,
+                  'll_ae_z_mean': float, 'll_ycorlengths': float, 'll_ncorlengths': float, 'll_ssm_contact_model': float,
                   'll_avul': float, 'll_avul_prob': float}
 
 
@@ -474,8 +474,8 @@ def parameters(file_in):
 
         if section == 'model':
             model = ndict
-        elif section == 'sequences':
-            sequences = ndict
+        elif section in ['systems', 'sequences', 'strata']:
+            systems = ndict
         elif section == 'hydraulics':
             hydraulics = ndict
         elif section == 'run':
@@ -485,6 +485,9 @@ def parameters(file_in):
         else:
             elements[section] = ndict
 
+
+		
+		
     # Create runfile directory in main directory
     if 'modeldir' not in run:
         # Use same directory as parameter file
@@ -509,7 +512,7 @@ def parameters(file_in):
     with open(file_save, 'w') as configfile:
         p.write(configfile)
 
-    return run, model, sequences, hydraulics, flowtrans, elements,
+    return run, model, systems, hydraulics, flowtrans, elements,
 
 
 def model_setup(pf):
@@ -520,16 +523,16 @@ def model_setup(pf):
         pf (str):   					Parameter file path
 
     Returns:
-        run (dict):                     Model run parameters
-        mod (dict):                     Model domain parameters
-        sequences (dict):               Sequence parameters
-        hydraulics (dict):              Hydraulic properties parameters
-        flowtrans (dict):               Flow & transport simulation parameters
-        elements (dict):                Architectural elements and parameters
-        model_grid (object class):      Grid object class
+        - run *(dict)* - Model run parameters
+        - mod *(dict)* - Model domain parameters
+        - sequences *(dict)* - Sequence parameters
+        - hydraulics *(dict)* - Hydraulic properties parameters
+        - flowtrans *(dict)* - Flow & transport simulation parameters
+        - elements *(dict)* - Architectural elements and parameters
+        - model_grid *(object class)* - Grid object class
 
     """
-    run, mod, sequences, hydraulics, flowtrans, elements = parameters(pf)
+    run, mod, systems, hydraulics, flowtrans, elements = parameters(pf)
     model_grid = gr.Grid(dx=mod['dx'],
                          dy=mod['dy'],
                          dz=mod['dz'],
@@ -540,34 +543,34 @@ def model_setup(pf):
 
     # Assign architectural element identifiers
     for element in elements.keys():
-        elements[element]['ae_id'] = sequences['l_ae'].index(element)
+        elements[element]['ae_id'] = systems['l_ae'].index(element)
 
-    return run, mod, sequences, hydraulics, flowtrans, elements, model_grid
+    return run, mod, systems, hydraulics, flowtrans, elements, model_grid
 
 
 def read_lu(sq_fp):
     """
-    Load user-defined sequences (architectural element lookup table),
+    Load user-defined strata (architectural element lookup table),
     split the data based on a delimiter and return it as a new list
 
     Parameters:
-        sq_fp:			Load user-defined sequences (architectural element lookup table)
+        sq_fp:			Load user-defined strata (architectural element lookup table)
 
     Returns:
-        seq_lu (list):	Values of architectural element lookup table
+        ssm_lu *(list)*: -Values of architectural element lookup table
 
     """
-    # Load user-defined sequences / architectural element lookup table
-    print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Reading sequence data from ' + sq_fp)
+    # Load user-defined systems / architectural element lookup table
+    print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Reading strata data from ' + sq_fp)
     with open(sq_fp) as f:
         lines = f.read().splitlines()
 
-    seq_lu = []
+    ssm_lu = []
     for li in lines:
         temp = li.split(', ')
-        seq_lu.append([int(temp[0]), float(temp[1]), float(temp[2]), str(temp[3]), int(temp[4])])
+        ssm_lu.append([int(temp[0]), float(temp[1]), float(temp[2]), str(temp[3]), int(temp[4])])
 
-    return seq_lu
+    return ssm_lu
 
 
 def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
@@ -582,12 +585,12 @@ def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
         anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)
 
     Returns:
-        mf:					MODFLOW model object
-        dis:				Discretization of modflow object
-        bas:				BAS package of modflow model
-        lpf:				LPF package of modflow model
-        oc:					OC package of modflow model
-        pcg:				pcg package of modflow model
+        - mf - MODFLOW model object
+        - dis - Discretization of modflow object
+        - bas - BAS package of modflow model
+        - lpf - LPF package of modflow model
+        - oc - OC package of modflow model
+        - pcg - pcg package of modflow model
 
     """
 
@@ -647,12 +650,12 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
         anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)
 
     Returns:
-        mf:					MODFLOW model object
-        dis:				Discretization of modflow object
-        bas:				BAS package of modflow model
-        lpf:				LPF package of modflow model
-        oc:					OC package of modflow model
-        pcg:				pcg package of modflow model
+        - mf - MODFLOW model object
+        - dis - Discretization of modflow object
+        - bas - BAS package of modflow model
+        - lpf - LPF package of modflow model
+        - oc - OC package of modflow model
+        - pcg - pcg package of modflow model
 
     """
 
@@ -707,7 +710,7 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
                                           angle1=azim,                              # azimuth
                                           angle2=dip,                               # dip
                                           angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
-
+ 
     # Create the constant head package.
     # chd_rec = []
     # for layer in range(0, mg.nz):
@@ -746,8 +749,8 @@ def to_hgs(hgspath, mg, flowtrans, ktensors, poros):
         poros:				Array with values of porosity
 
     Returns:
-        val_fmts (dict):	Dictionary with values of K tensor and porosity
-        val_filepath:		file name of HGS output file
+        - val_fmts *(dict)* - Dictionary with values of K tensor and porosity
+        - val_filepath - file name of HGS output file
 
     """
 
@@ -795,10 +798,10 @@ def rotate_ktensor(count, aniso, azimuth, dip, k_in):
         aniso:			Anisotropy
         azimuth:		Azimuth angles
         dip:			Dipping angles
-        k_in:			-
+        k_in:
 
     Returns:
-        k_rotate:		Rotated K tensor
+        k_rotate - Rotated K tensor
     
     """
 
@@ -833,7 +836,7 @@ def get_boreholes(bh_loc, fin, fout=None):
         fout: 		Filepath to save borehole information
 
     Returns:
-        bhdf:	X, Y values at centroids
+        bhdf - X, Y values at centroids
 
     .. note:
 
@@ -898,13 +901,10 @@ def specsim(gr, var, corl, twod=False, covmod='gau'):
         var:    	Variance
         corl:   	Tuple of correlation length of random variable
         twod:   	Flag for two-dimensional simulation
-        covmod: 	Which covariance model to use
-                        'gau': Gaussian
-                        'exp': Exponential
+        covmod: 	Which covariance model to use ('gau' = Gaussian, 'exp' = Exponential).
 
     Returns:
-        bigy:   	Random gaussian variable
-                    Real part of a complex array, created via inverse discrete Fourier Transform
+        bigy - Random gaussian variable. Real part of a complex array, created via inverse DFT
 
     """
 

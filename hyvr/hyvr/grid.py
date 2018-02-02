@@ -120,7 +120,7 @@ class Grid:
 
         Parameters:
             axis (string):  containing ['x','y','z'], [optional]
-                            If the default value "xyz" is used, then all the intevals are printed.
+                            If the default value "xyz" is used, then all the intervals are printed.
 
         Returns:
             print intervals that constitute the simulation domain
@@ -200,7 +200,7 @@ class Grid:
             self:		An instance of the Grid class
 
         Returns:
-            xv, yv, zv: Vectors of spatial coordinates
+            xv, yv, zv - Vectors of spatial coordinates
 
         """
 
@@ -223,7 +223,7 @@ class Grid:
             self:	An instance of the Grid class
 
         Returns:
-            xv, yv, zv: Vectors of spatial coordinates of bounding nodes
+            xv, yv, zv - Vectors of spatial coordinates of bounding nodes
 
         """
 
@@ -241,7 +241,7 @@ class Grid:
             self:	An instance of the Grid class
 
         Returns:
-            xv: 	Vector of spatial x-coordinate
+            xv - Vector of spatial x-coordinate
 
         """	
         if self.ox != 0:
@@ -265,7 +265,7 @@ class Grid:
             self:	An instance of the Grid class
 
         Returns:
-            yv: 	Vector of spatial y-coordinate
+            yv - Vector of spatial y-coordinate
 
         """		
         if self.oy != 0:
@@ -290,7 +290,7 @@ class Grid:
             self:	An instance of the Grid class
 
         Returns:
-            zv: 	Vector of spatial z-coordinate
+            zv - Vector of spatial z-coordinate
 
         """			
         if self.oz != 0:
@@ -344,6 +344,7 @@ class Grid:
         Get x,y,z coordinates in a tuple
 
         Parameters:
+            self:	An instance of the Grid class
 
         Returns:
             A Tuple containing the x,y and z-coordinates of the grid
@@ -545,7 +546,8 @@ class Grid:
             self:	An instance of the Grid class
 
         Returns:
-
+            --
+			
         """
         del self._points
 
@@ -582,7 +584,7 @@ class Grid:
             (self.nx-1 if self.nx>1 else 1)* \
             (self.ny-1 if self.ny>1 else 1)* \
             (self.nz-1 if self.nz>1 else 1)
-
+ 
     def del_cells(self):
         """
         Delete the cells for a cells grid
@@ -591,7 +593,7 @@ class Grid:
             self:	An instance of the Grid class
 
         Returns:
-
+            --
         """	
         del self._cells
 
@@ -618,11 +620,11 @@ class Grid:
         """
         Return the index of an elevation for the k-dimension of a 3D array
 
-        Parameter:
-            zval:		Elevation value	
+        Parameters:
+            zval:	Elevation value	
 
         Returns:
-            iz (int):	Index of elevation
+            iz *(int)* - Index of elevation
 
         """
         iz = np.around((zval - self.oz) / self.dz)
