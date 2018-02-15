@@ -175,6 +175,10 @@ def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
         ae_lu = []
         count = 0
 
+        if max(strata['r_ssm_top']) < mg.lz:
+            sys.exit('Final major strata elevation and uppermost model grid elevation do not match.\n'
+                     'Please update model.lz or strata.r_ssm_top.')
+
         for si, ssmi in enumerate(strata['l_ssm']):
             # Randomly assign strata / architectural element contact surfaces
             znow = strata['r_ssm_bot'][si]
@@ -567,9 +571,12 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
             # MODFLOW 6 output
 
             # Create HGS output folder
-            mf6dir = realdir
+            mf6dir = os.path.join(realdir, 'mf6')
             mf6name = realname
-            hu.to_mf6(mf6dir, realname, mg, flowtrans, k_iso, anirat, dip, azim)
+            if not os.path.exists(mf6dir):
+                os.makedirs(mf6dir)
+
+            hu.to_mf6(mf6dir, mf6name, mg, flowtrans, k_iso, anirat, dip, azim)
 
         if output == 'hgs':
             # HydroGeoSphere output
@@ -979,10 +986,17 @@ def gen_extpar(ch_par, mg, model, ssm, ae_array, count, ani=True):
         z_ch_width = ch_par['width'] * zfactor
         z_ch_depth = ch_par['depth'] * zfactor
 
+        if 'r_ch_start' in ch_par:
+            cstart = ch_par['r_ch_start']
+        else:
+            cstart = []
         # Loop over total extruded parabolas per system
         for chan in range(0, total_extpar):
             """ Loop over multiple extruded parabolas at 'timestep' """
-            aha = ferguson_curve(mg, ch_par['h'], ch_par['k'],  ch_par['ds'], ch_par['eps_factor'], disp=model['flag_display'])
+            aha = ferguson_curve(mg, ch_par['h'], ch_par['k'],  ch_par['ds'],
+                                 ch_par['eps_factor'],
+                                 disp=model['flag_display'],
+                                 ch_start=ch_par['r_ch_start'])
 
             """ Get flow direction in extruded parabolas for azimuth """
             # For periodicity shift trajectories into model unit cell
@@ -1075,7 +1089,7 @@ def gen_extpar(ch_par, mg, model, ssm, ae_array, count, ani=True):
     return props, count
 
 
-def ferguson_curve(mg, h, k, ds, eps_factor, dist=0, disp=False):
+def ferguson_curve(mg, h, k, ds, eps_factor, dist=0, disp=False, ch_start=[]):
     """
     Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model
     Implementation of AR2 autoregressive model
@@ -1089,6 +1103,7 @@ def ferguson_curve(mg, h, k, ds, eps_factor, dist=0, disp=False):
         eps_factor (float):			Random background noise
         dist (float): 		        Distance to generate curves - defaults to mg.lx
         disp (bool): 		        Creating display extruded parabola - extruded parabola begins at (0,0)
+        ch_start (tuple):           Starting location of channel (x,y coordinates)
 
     Returns:
         outputs (float array):		Simulated extruded parabola centerlines: storage array containing values for x coordinate, y coordinate, vx and vy
@@ -1099,7 +1114,7 @@ def ferguson_curve(mg, h, k, ds, eps_factor, dist=0, disp=False):
     if dist > 0:
         ns = dist
     else:
-        ns = mg.lx * 2
+        ns = mg.lx/10
     s = np.arange(0, ns, ds)
 
     # Centreline starting point
@@ -1135,16 +1150,20 @@ def ferguson_curve(mg, h, k, ds, eps_factor, dist=0, disp=False):
 
     outputs[:, 2:] = np.dot(rotMatrix, outputs[:, 2:].transpose()).transpose()
 
-    # Move to random starting location in x-direction
-    outputs[:, 0] = roro[0, :].transpose() + np.random.uniform(-50, -10)
+    # Move starting location in x-direction
+    outputs[:, 0] = roro[0, :].transpose() - np.random.uniform(mg.lx/5, mg.lx/10)
     outputs[:, 1] = roro[1, :].transpose()
 
     # Remove values before model domain
     if dist > 0:
         indomain = outputs[:, 0] >= mg.ox
     else:
-        indomain = np.logical_and(outputs[:, 0] >= mg.ox, outputs[:, 0] <= mg.nx)
+        indomain = np.logical_and(outputs[:, 0] >= mg.ox, outputs[:, 0] <= mg.lx)
     outputs = outputs[indomain, :]
+
+    if len(ch_start) > 0:
+        outputs[:, 0] += ch_start[0]
+        outputs[:, 1] += ch_start[1]
 
     # Make sure streamlines begin within domain with respect to y
     yout = outputs[0, 1] > mg.ly/4 or outputs[0, 1] > mg.ly/4
@@ -1265,6 +1284,15 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
                 if ani:
                     azim[ae_array == ae_i[0]] = np.random.uniform(sh['r_azimuth'][0], sh['r_azimuth'][1])
                     dip[ae_array == ae_i[0]] = np.random.uniform(sh['r_dip'][0], sh['r_dip'][1])
+
+        elif 'r_azimuth' in sh and max(sh['r_azimuth']) != 0:
+            fac[ae_array == ae_i[0]] = sh['l_facies'][0]
+            ha_arr[ae_array == ae_i[0]] =  count
+            count += 1
+            if ani:
+                azim[ae_array == ae_i[0]] = np.random.uniform(sh['r_azimuth'][0], sh['r_azimuth'][1])
+                dip[ae_array == ae_i[0]] = np.random.uniform(sh['r_dip'][0], sh['r_dip'][1])
+
         else:
             # No dip
             ha_arr[ae_array == ae_i[0]] = count
@@ -1634,5 +1662,6 @@ if __name__ == '__main__':
         print(sys.argv[1])
     else:
         param_file = 0
-    param_file = 'E:/Repositories/hyvr/hyvr/tests/test_lu.ini'
+    param_file = 'E:/Repositories/hyvr/external/emilio/s3M.ini'
+    #channel_checker(param_file, 'meander_channel', no_extpar=5, dist=10000)
     main(param_file)

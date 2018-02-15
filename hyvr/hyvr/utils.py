@@ -443,12 +443,10 @@ def parameters(file_in):
 
     elements = {}
     str_values = 'geometry', 'structure', 'runname', 'contact', 'contact_file', 'modeldir', 'hetlev', 'ae_table',\
-                 'k_trend', 'ssm_contact'
+                 'k_trend', 'ssm_contact', 'linear_acceleration'
     dtype_dict = {'ll_ssm_ae': str, 'll_altfacies': int, 'll_contact_model': float,  'll_ae_prob': float,
                   'll_ae_z_mean': float, 'll_ycorlengths': float, 'll_ncorlengths': float, 'll_ssm_contact_model': float,
                   'll_avul': float, 'll_avul_prob': float}
-
-
 
     for section in p.sections():
         ndict = dict(p[section])
@@ -485,24 +483,33 @@ def parameters(file_in):
         else:
             elements[section] = ndict
 
-
-		
-		
     # Create runfile directory in main directory
-    if 'modeldir' not in run:
+    if 'flag_ow' in run and run['flag_ow'] is True:
+        run['modeldir'] = os.path.abspath('/'.join(file_in.split('/')[0:-2]))
+        run['rundir'] = run['modeldir'] + '\\' + run['runname']
+    elif file_in[-15:] == '_parameters.ini':
+        run['modeldir'] = os.path.abspath('/'.join(file_in.split('/')[0:-1]))
+        run['rundir'] = run['modeldir']
+
+    elif 'modeldir' not in run:
         # Use same directory as parameter file
         run['modeldir'] = os.path.abspath('/'.join(file_in.split('/')[0:-1]))
+        run['rundir'] = run['modeldir'] + '\\' + run['runname']
+        try_makefolder(run['rundir'])
+
     elif run['modeldir'] == 'select':
         # User input for save location
         run['modeldir'] = input('Please input the model directory save path, or press <enter> to save in default directory:\n')
         if len(run['modeldir']) == 0:
              run['modeldir'] = os.path.abspath(os.path.join(os.path.dirname(__file__)[0:-5], 'tests\\made_example\\'))
         try_makefolder(run['modeldir'])
+        run['rundir'] = run['modeldir'] + '\\' + run['runname']
+        try_makefolder(run['rundir'])
+
     else:
         try_makefolder(run['modeldir'])
-
-    run['rundir'] = run['modeldir'] + '\\' + run['runname']
-    try_makefolder(run['rundir'])
+        run['rundir'] = run['modeldir'] + '\\' + run['runname']
+        try_makefolder(run['rundir'])
 
     # Save parameter file
     if 'flag_ow' in run and run['flag_ow'] is False:
@@ -666,72 +673,85 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
     dip = np.transpose(dip, transpose_order)
     azim = np.transpose(azim, transpose_order)
 
-    # Create the Flopy simulation object
-    sim = flopy.mf6.MFSimulation(sim_name=runname, sim_ws=mfdir)
+    """ create simulation """
+    sim = flopy.mf6.MFSimulation(sim_name=runname,
+                                 version='mf6',
+                                 exe_name='mf6',
+                                 sim_ws=mfdir,
+                                 sim_tdis_file='simulation.tdis')
 
-    # Create the Flopy temporal discretization object
-    tdis = flopy.mf6.ModflowTdis(sim, time_units='DAYS', nper=1,
-                                 tdisrecarray=[(1.0, 1, 1.0)])
+    """ Create the Flopy temporal discretization object - STEADY-STATE """
+    tdis = flopy.mf6.modflow.mftdis.ModflowTdis(sim,
+                                                time_units='DAYS',
+                                                nper=1,
+                                                tdisrecarray=[(1.0, 1, 1.0)])
 
-    # Create the Flopy groundwater flow (gwf) model object
-    gwf_name = runname
-    gwf = flopy.mf6.MFModel(sim, model_type='gwf6',
-                            model_name=gwf_name,
-                            model_nam_file='{}.nam'.format(gwf_name),
-                            sms_file_name='{}.sms'.format(gwf_name))
+    """ create gwf model """
+    gwf = flopy.mf6.MFModel(sim,
+                            model_type='gwf6',
+                            model_name=runname,
+                            model_nam_file='{}.nam'.format(runname),
+                            ims_file_name='{}.ims'.format(runname))
+    gwf.name_file.save_flows = True
 
-    # Create the Flopy iterative model solver Package object (taken from ex15-whirlsxt3d from MF6)
-    # ims = flopy.mf6.ModflowIms(sim, print_option='SUMMARY', complexity='SIMPLE',
-    #                            outer_hclose=1.e-8, outer_maximum=500,
-    #                            under_relaxation='NONE', inner_maximum=100,
-    #                            inner_hclose=1.e-8, rcloserecord=0.001,
-    #                            linear_acceleration='BICGSTAB', scaling_method='NONE',
-    #                            reordering_method='NONE', relaxation_factor=0.97)
-    # sim.register_ims_package(ims, [gwf_name])
+    ims = flopy.mf6.ModflowIms(sim,
+                               print_option='SUMMARY',
+                               complexity='COMPLEX')
+    sim.register_ims_package(ims, [gwf.name])
 
-    # Create discretisation object
+    """ Create discretization """
     ztop = mg.oz + mg.lz
     zbot = mg.oz
     botm = np.linspace(ztop, zbot, mg.nz + 1)
-    dis = flopy.mf6.ModflowGwfdis(gwf, length_units='METERS',
-                                  nlay=mg.nz, nrow=mg.ny, ncol=mg.nx,
-                                  delr=mg.dy, delc=mg.dx,
-                                  top=ztop, botm=botm[1:],
-                                  fname='{}.dis'.format(gwf_name))
+    dis = flopy.mf6.modflow.mfgwfdis.ModflowGwfdis(gwf,
+                                                   nlay=mg.nz, nrow=mg.ny, ncol=mg.nx,
+                                                   delr=mg.dy, delc=mg.dx,
+                                                   top=ztop,
+                                                   botm=botm[1:],
+                                                   fname='{}.dis'.format(runname))
 
-    # Create the initial conditions package
-    # start = np.zeros((mg.nz, mg.ny, mg.nx))
-    # ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=start)
+    """ Create the initial conditions package """
+    # Constant initial condition: h = 0.5
+    ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=0.5)
 
-    # Create Node Property Flow package object
-    npf_package = flopy.mf6.ModflowGwfnpf(gwf, save_flows=True, icelltype=0, xt3doptions='',
+    """ Create Node Property Flow package object """
+    npf_package = flopy.mf6.ModflowGwfnpf(gwf,
+                                          save_flows=True, icelltype=0, xt3doptions='',
                                           k=k_iso,                                  # within-bedding hydraulic conductivity
                                           k33=k_iso/anirat,                         # across-bedding hydraulic conductivity
                                           angle1=azim,                              # azimuth
                                           angle2=dip,                               # dip
                                           angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
  
-    # Create the constant head package.
-    # chd_rec = []
-    # for layer in range(0, mg.nz):
-    #     for row in range(0, mg.ny):
-    #         chd_rec.append(((layer, row, 0),  flowtrans['hin'][0]))         # Apply at model inlet
-    #         chd_rec.append(((layer, row, mg.nx-1), flowtrans['hout'][0]))   # Apply at model outlet
-    # chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
-    #                                                periodrecarray=chd_rec, save_flows=True)
+    """ Create the constant head package """
+    # chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf,
+    #                                                maxbound=1,
+    #                                                periodrecarray=[((0, 0, nx-1), 0)],
+    #                                                save_flows=True)
 
-    # Create the output control package
-    # headfile = '{}.hds'.format(gwf_name)
-    # head_filerecord = [headfile]
-    # budgetfile = '{}.cbb'.format(gwf_name)
-    # budget_filerecord = [budgetfile]
-    # saverecord = [('HEAD', 'ALL'),
-    #               ('BUDGET', 'ALL')]
-    # printrecord = [('HEAD', 'LAST')]
-    # oc = flopy.mf6.modflow.mfgwfoc.ModflowGwfoc(gwf, saverecord=saverecord,
-    #                                             head_filerecord=head_filerecord,
-    #                                             budget_filerecord=budget_filerecord,
-    #                                             printrecord=printrecord)
+    if 'hin' in flowtrans:
+        chd_rec = []
+        for layer in range(0, mg.nz):
+            for row in range(0, mg.ny):
+                chd_rec.append(((layer, row, 0),  flowtrans['hin'][0]))         # Apply at model inlet
+                chd_rec.append(((layer, row, mg.nx-1), flowtrans['hout'][0]))   # Apply at model outlet
+
+        chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
+                                                       periodrecarray=chd_rec, save_flows=True)
+
+    """ Create the output control package """
+    headfile = '{}.hds'.format(runname)
+    head_filerecord = [headfile]
+    budgetfile = '{}.cbc'.format(runname)
+    budget_filerecord = [budgetfile]
+    saverecord = [('HEAD', 'ALL'),
+                  ('BUDGET', 'ALL')]
+    printrecord = [('HEAD', 'LAST')]
+    oc = flopy.mf6.modflow.mfgwfoc.ModflowGwfoc(gwf,
+                                                saverecord=saverecord,
+                                                head_filerecord=head_filerecord,
+                                                budget_filerecord=budget_filerecord,
+                                                printrecord=printrecord)
 
     # write simulation to new location
     sim.write_simulation()

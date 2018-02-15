@@ -15,3 +15,5 @@ pypi_instructions.txt
 build/*
 hyvr/tests/made*
 *herten*
+external/*
+*mf6/

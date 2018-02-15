@@ -115,9 +115,9 @@ General ``[*element]`` parameters
 - ``r_n_xtrend``		- Linear trend in porosity from model inlet to outlet :math:`\xi_{inlet},\xi_{outlet}`
 - ``r_dip`` 			- Range of dip
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 - ``agg`` 		- Aggradation thickness added between each generation elevation. 
 - ``buffer``	- Buffer to reduce erosion of underlying units (see :ref:`methods <temethod>`).
 - ``r_migrate``	- Lateral migration of ellipsoid centrepoints drawn from a random normal distribution, given as mean and variance in :math:`x` and :math:`y` directions :math:`[\overline{\Delta x}, \sigma^2_{\Delta x}, \overline{\Delta y}, \sigma^2_{\Delta y}]`. 
