@@ -38,3 +38,5 @@ external/*
 *.so
 *.pyd
 push_to_github.sh
+.hgtags
+pytest.ini

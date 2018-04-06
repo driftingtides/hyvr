@@ -55,6 +55,7 @@ setup(
         'pyevtk',
         'flopy==3.2.8',
         'cython',
+        'h5py',
         ],
 
     # If there are data files included in your packages that need to be
