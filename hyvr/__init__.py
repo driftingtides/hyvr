@@ -1,3 +1,3 @@
-from hyvr.hyvr import grid
-from hyvr.hyvr import sim
-from hyvr.hyvr import utils
+import hyvr.sim
+import hyvr.parameters
+from hyvr.sim import run
