@@ -16,7 +16,7 @@ Two examples are provided with the HyVR simulation module: the MADE site example
 Example parameter file
 ^^^^^^^^^^^^^^^^^^^^^^	
 
-.. literalinclude:: ../hyvr/tests/made.ini
+.. literalinclude:: ../testcases/made.ini
 
 
 

@@ -1,3 +1,5 @@
+.. _inout:
+
 ==========================================================
 HYVR inputs and outputs
 ==========================================================
@@ -39,13 +41,6 @@ In HYVR there following sections are necessary:
 
 An additional section ``[flowtrans]`` is included in some parameter files - this section included parameters used in groundwater flow and solute transport simulation packages not implemented in HYVR. ``.ini`` files are readable by a range of programming languages so the user can also store and read flow and transport parameters from the configuration file.
 
-A number of key prefixes are used in the configuration files to assist identification when the HYVR package reads the configuration file:
-
-* ``r_`` - This prefix denotes the lower and upper bounds of a range of float values.
-* ``l_`` - This denotes a list of string values (no punctuation marks are required).
-* ``ll_`` - This prefix denote a list of lists, each enclosed in brackets.
-* ``flag_`` - keys with this prefix will be intepreted as true/false (boolean) values.
-
 ------------------------------------------------------------------------
 Model setup sections
 ------------------------------------------------------------------------
@@ -54,74 +49,177 @@ Model setup sections
 ``[run]`` section
 ^^^^^^^^^^^^^^^^^^^^^^
 
-- ``runname``				- Name of the model simulation run
-- ``numsim`` 				- Number of realisations to be generated
-- ``l_dataoutputs``			- Simulation output data formats [vtk, mat, py]
-- ``l_modeloutputs``		- Simulation output model formats [mf, hgs]
-- ``modeldir`` 				- filepath/directory for simulation outputs
-- ``flag_ow``				- overwrite previous simulation with same name?
-- ``flag_anisotropy``		- Generate anisotropy parameters?
-- ``flag_het``				- Generate heterogeneity?
+This section contains general sections how the program should be run. It
+controls where outputs are stored and which kind of output files are generated,
+what kind of parameters are generated and how many realisations are generated.
+
+HYVR simulations are structured in the following way:
+
+Model -> Run -> Realisation
+
+Typically we assume that the ``.ini`` file is stored in a model directory::
+
+    mymodel/
+    |-- myconfig.ini
+
+When HyVR is run with this parameter file, it will create a run directory.
+The name of the run directory can be set with the ``runname`` option, e.g. to ``myrun``.
+HyVR then stores a copy of the ``.ini`` file inside the run directory under
+the name ``myrun_parameters.ini``. If ``runname`` is not given, the filename of
+the ini-file without ``.ini`` will be used. If you are only running one
+realization, the output of this realization is also stored directly in this
+directory::
+
+    mymodel/
+    |-- myconfig.ini
+    |-- myrun/
+    |   |-- myrun_parameters.ini
+    |   |-- myrun_hyvr.dat
+    |   |-- myrun_hyvr.vtk
+    |   |...
+
+If you are running multiple realizations, HyVR creates a subdirectory for
+each realization output::
+
+    mymodel/
+    |-- myconfig.ini
+    |-- myrun/
+    |   |-- myrun_parameters.ini
+    |   |-- real_001/
+    |   |   |-- myrun_real_001_hyvr.dat
+    |   |   |-- myrun_real_001_hyvr.vtk
+    |   |-- real_002/
+    |   |   |-- myrun_real_002_hyvr.dat
+    |   |   |-- myrun_real_002_hyvr.vtk
+    |   |...
+
+**ATTENTION**: If the name of the ini-file ends with ``_parameters.ini`` we
+assume the file was created automatically and is already in the run directory.
+In this case the model directory will default to the directory one above the
+directory of the ini-file and the run directory will be the directory of the
+ini-file. Also, if the ``runname`` is not given in the ini-file, the part before
+``_parameters.ini`` will be chosen as runname.
+
+Example: If you run the file ``myrun_parameters.ini`` in the example above, the
+run directory will be ``myrun`` and the runname will default to ``myrun`` if it
+is not given.
+
+The following settings are possible in the run section:
+
+- ``runname``: *(optional)* Name of the model simulation run. Defaults to the name of the
+  ini-file without the last for characters (``.ini``)
+- ``numsim``: *(optional, default: 1)* Number of realisations to be generated.
+- ``dataoutputs``: *(optional)* List of simulation output data formats (see `Model outputs
+  <modelout>`), e.g. ``[vtk, mat, py]``
+- ``modeloutputs``: *(optional)* List of simulation output formats for model input (see `Model
+  outputs <modelout>`), e.g. ``[mf, hgs]``
+- ``flag_ow``: *(optional, default: true)* Whether to overwrite previous model
+  results. If ``true`` *(default)* model outputs are stored in the current
+  directory and previous results will be overwritten. If ``false``, HyVR
+  will check if the directory already exists and will ask you to change the
+  runname in case it exists.
+- ``anisotropy``: *(optional, default: true)* Generate anisotropy parameters?
+- ``het``: *(optional, default: true)* Generate heterogeneity?
 
 ^^^^^^^^^^^^^^^^^^^^^^
 ``[model]`` section
 ^^^^^^^^^^^^^^^^^^^^^^
 
-- ``dx``, ``dy``, ``dz``	- Model grid cell dimensions
-- ``lx``, ``ly``, ``lz``	- Model domain dimensions
-- ``flag_periodic``			- Periodic model domain? (Sheets/truncated ellipsoids only)
-- ``flag_display``			- 'Display'-type simulation? If this flag is set to ``true``, the simulated architectural elements are centred in the model domain so they can be viewed easily.
-- ``hetlev`` 				- Hierarchical level at which heterogeneity should be simulated *[ae, facies, internal]*
+- ``dx``, ``dy``, ``dz``: *(required/optional)* Model grid cell dimensions. If
+  ``dy`` or ``dz`` are not given, ``dx`` will be used instead.
+- ``lx``, ``ly``, ``lz``: *(required)* Model domain dimensions.
+- ``periodic``: *(optional, default: false)* Periodic model domain?
+  (Sheets/truncated ellipsoids only)
+- ``display``: *(optional, default: false)* 'Display'-type simulation? If this
+  flag is set to ``true``, the simulated architectural elements are centred in
+  the model domain so they can be viewed easily.
+- ``hetlev``: *(required)* Hierarchical level at which heterogeneity should be
+  simulated. Can be ``ae``, ``facies`` or ``internal``
 
 ^^^^^^^^^^^^^^^^^^^^^^
 ``[strata]`` section
 ^^^^^^^^^^^^^^^^^^^^^^
 
-- ``l_ssm``					- List of sequences
-- ``r_ssm_top`` 			- List of mean strata contact elevations
-- ``ll_ssm_contact_model``	- Statistical parameters for strata contact model
-- ``ae_table`` 				- Filepath for architectural element lookup table
-- ``ssm_contact``			- Contact surface type *[flat, random, user]*
-- ``ll_ssm_ae``				- Which architectural elements are in each stratum
-- ``ll_ae_prob``			- Probability of an architectural element occuring
-- ``ll_ae_z_mean``			- Mean thickness of architectural element unit
-- ``ll_avul_prob``			- Probability of avulsion
-- ``ll_avul``				- Avulsion depth range
-- ``r_bg``					- Background values for unassigned cells 
+- ``ssm``: *(required)* List of sequence names. This should be a list of
+  strings.
+- ``ssm_top``: *(required)* List of mean strata contact elevations. This should
+  be a list of floats of the same length as ``ssm``.
+- ``ssm_contact_model``: *(required)* Statistical parameters for strata contact
+  model. This can either be a list of floats of length 3, e.g. ``[0.05, 6, 6]``,
+  or a list of the same length as ``ssm`` of lists of floats of length 3, e.g.
+  ``[[0.05, 6, 6], [0.05, 5, 4], ...]``
+- ``ssm_contact``: *(optional, default: flat)* Contact surface type, either flat,
+  random, or user
+- ``ae_table``: *(optional)* Relative filepath (starting from the modeldir) for
+  a architectural element lookup table.
+- ``ae``: List of architectural elements. This is a list of strings, which are
+  the names of the ``[*architectural_elements*]`` sections below.
+- ``ssm_ae``: *(required)* Which architectural elements are in each stratum.
+  This should be a list of lists of strings. The outer list must have the same
+  length as ``ssm``, the inner list can be of variable length. The elements of
+  the inner lists must be strings from ``ae``.
+- ``ae_prob``: *(required)* Probability of an architectural element occuring.
+  This must be a list of lists of floats with the same shape as ``ssm_ae``.
+- ``ae_z_mean``: *(required)* Mean thickness of architectural element unit. This
+  must be a list of lists of floats with the same shape as ``ssm_ae``.
+- ``avul_prob``: *(required)* Probability of avulsion. List of floats with the
+  same length as ``ssm``.
+- ``avul``: *(required)* Avulsion depth range. List of lists of floats. The
+  outer list must have the same length as ``ssm``, the inner lists must be of
+  length 2 and are the start and end point of the depth range.
+- ``bg``: *(optional)* Background parameters for unassigned cells in the
+  architectural elements. This should be three float values: facies, azimuth, and
+  dip background values.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ``[element]`` sections for architectural elements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Sections that describe architectural elements are entitled with an identifying name (e.g. ``[sparse_scour]``). Note that section names should not include spaces. The first parameter to be set it the ``geometry``. The current implementation of HYVR includes three geometries: truncated ellipsoids (``trunc_ellip``), channels (``channel``), and sheets (``sheet``).
+Sections that describe architectural elements are entitled with an identifying
+name (e.g. ``[sparse_scour]``). Note that section names should not include
+spaces. The first parameter to be set it the ``geometry``. The current
+implementation of HYVR includes three geometries: truncated ellipsoids
+(``trunc_ellip``), channels (``channel``), and sheets (``sheet``).
 
-Unless otherwise noted, ranges (``r_``) represent the lower and upper limits of uniform distributions from which values are randomly generated.
+Unless otherwise noted, ranges (``r_``) represent the lower and upper limits of
+uniform distributions from which values are randomly generated.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 General ``[*element]`` parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``geometry``  		- Geometry of hydrofacies assemblages within architectural element *[trunc_ellip, ext_par, sheet]*
-- ``structure``			- Internal structure of hydrofacies assemblages *[massive, dip]*, also , *[bulb, bulb_l, random]* for truncated ellipsoids.
-- ``contact`` 			- Type of bedding contact between element units *[flat, random]*
-- ``r_contact_model``	- Statistical parameters for bedding contact model
-- ``l_facies`` 			- Hydrofacies included in hydrofacies assemblage. These refer to ``[hydraulics].l_hydro`` and are zero-indexed.
-- ``ll_altfacies`` 		- Alternating facies specification. This is a list of lists and should have one entry for each value in ``[*element].l_facies``.
-- ``r_bg`` 				- Background parameters for unassigned cells in the architectural element. This should be three values: facies, azimuth, and dip background values.
-- ``r_geo_ztrend``		- Linear trend in geometry sizes with elevation. Given as a percentage change mulitplier in mean value from bottom to top of domain, i.e. :math:`[\lambda_{bottom}, \lambda_{top}]`
-- ``r_k_ztrend``		- Linear trend in isotropic hydraulic conductivity from bottom to top of domain :math::math:`\xi_{bottom},\xi_{top}`
-- ``r_k_xtrend``		- Linear trend in isotropic hydraulic conductivity from model inlet to outlet :math:`\xi_{inlet},\xi_{outlet}`
-- ``r_n_ztrend``		- Linear trend in porosity from bottom to top of domain :math:`\xi_{bottom},\xi_{top}`
-- ``r_n_xtrend``		- Linear trend in porosity from model inlet to outlet :math:`\xi_{inlet},\xi_{outlet}`
-- ``r_dip`` 			- Range of dip
+- ``geometry``: *(required)* Geometry of hydrofacies assemblages within
+  architectural element, either ``trunc_ellip``, ``ext_par``, or ``sheet``
+- ``structure``: *(required)* Internal structure of hydrofacies assemblages.
+  This can be ``massive`` or ``dip`` and also ``bulb``, ``bulb_l``, or
+  ``random`` for truncated ellipsoids.
+- ``contact``: *(required)* Type of bedding contact between element units.
+  Either ``flat`` or ``random``.
+- ``contact_model`` *(required)* Statistical parameters for bedding contact
+  model. This should be a list of floats of length 3.
+- ``facies``: *(required)* Hydrofacies included in hydrofacies assemblage. These
+  are indices referring to ``[hydraulics].hydro`` (starting from 0).
+- ``altfacies``: *(optional)* Alternating facies specification. This is a list of
+  lists where the outer list has the same length as ``facies``.
+- ``bg``: *(optional)* Background parameters for unassigned cells in the architectural element. This should be three float values: facies, azimuth, and dip background values.
+- ``geo_ztrend``: *(optional)* Linear trend in geometry sizes with elevation.
+  Given as a percentage change mulitplier in mean value from bottom to top of
+  domain, i.e. :math:`[\lambda_{bottom}, \lambda_{top}]`
+- ``k_ztrend``: *(optional)* Linear trend in isotropic hydraulic conductivity
+  from bottom to top of domain :math:`[\xi_{bottom},\xi_{top}]`
+- ``k_xtrend``: *(optional)* Linear trend in isotropic hydraulic conductivity from model inlet to outlet :math:`[\xi_{inlet},\xi_{outlet}]`
+- ``n_ztrend``: *(optional)* Linear trend in porosity from bottom to top of domain :math:`[\xi_{bottom},\xi_{top}]`
+- ``n_xtrend``: *(optional)* Linear trend in porosity from model inlet to outlet :math:`[\xi_{inlet},\xi_{outlet}]`
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-- ``agg`` 		- Aggradation thickness added between each generation elevation. 
-- ``buffer``	- Buffer to reduce erosion of underlying units (see :ref:`methods <temethod>`).
-- ``r_migrate``	- Lateral migration of ellipsoid centrepoints drawn from a random normal distribution, given as mean and variance in :math:`x` and :math:`y` directions :math:`[\overline{\Delta x}, \sigma^2_{\Delta x}, \overline{\Delta y}, \sigma^2_{\Delta y}]`. 
-- ``l_lag`` 	- Parameters for lag surface *[lag thickness, hydrofacies ID]*
+- ``agg``: *(required)* Aggradation thickness added between each generation elevation. 
+- ``buffer``: *(optional)* Buffer to reduce erosion of underlying units (see :ref:`methods <temethod>`).
+- ``dipset_d``: *(optional)* Thickness of dipping internal structures.
+- ``migrate``: *(optional)* Lateral migration of ellipsoid centrepoints drawn from a random normal distribution, given as mean and variance in :math:`x` and :math:`y` directions :math:`[\overline{\Delta x}, \sigma^2_{\Delta x}, \overline{\Delta y}, \sigma^2_{\Delta y}]`. 
+- ``lag``: *(optional)* Parameters for lag surface *[lag thickness, hydrofacies ID]*
+- ``dip``: *(required)* Range of the uniform distribution from which the dip will be randomly drawn.
 
 
 .. _teparams:
@@ -129,19 +227,21 @@ Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Truncated ellipsoid parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- ``el_z``		- Number of elements to be simulated per simulation elevation and layer area
-- ``length``, ``width``, ``depth`` -  Mean geometry of truncated ellipsoids
-- ``r_paleoflow`` 	- Range of the uniform distribution from which the paleoflow orientation will be randomly drawn. 
-- ``r_dip``- Range of the uniform distribution from which the dip will be randomly drawn.
-- ``r_azimuth`` - Range of the uniform distribution from which the azimuth will be randomly drawn.
-- ``bulbset_d`` - Thickness of nested-bulb structures at the maximum depth of the truncated ellipsoid.
-- ``dipset_d`` - Thickness of dipping internal structures.
+- ``el_z``: *(required)* Number of elements to be simulated per simulation elevation and layer area
+- ``length``, ``width``, ``depth``: *(required)* Mean geometry of truncated ellipsoids
+- ``paleoflow``: *(required)* Range of the uniform distribution from which the paleoflow orientation will be randomly drawn. 
+- ``azimuth``: *(required)* Range of the uniform distribution from which the azimuth will be randomly drawn.
+- ``bulbset_d``: *(optional)* Thickness of nested-bulb structures at the maximum depth of the truncated ellipsoid.
+- ``te_xyz``: *(optional)* List of 3D coordinated for manually setting the
+  centrepoint of truncated ellipsoids. This should be a list of lists. The inner
+  lists must have length 3.
 
 .. _chparams:
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Extruded parabola parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TODO: add required/optional
 - ``width``, ``depth`` -  Mean geometry of channel
 - ``h`` - Extruded parabola centreline curve shape parameter
 - ``k`` - Extruded parabola centreline curve shape wave number
@@ -163,38 +263,54 @@ Sheet parameters
 ------------------------------------------------------------------------
 The input parameters in this section are associated with the simulation of hydraulic parameters. It is also possible to only simulate the geometries of architectural elements and hydrofacies if required.
 
-- ``flag_gen`` 			- Generate hydraulic parameters (i.e. hydraulic conductivity)?
-- ``l_hydro`` 			- List of hydrofacies codes
-- ``r_k_h`` 			- Mean horizontal hydraulic conductivity 
-- ``r_sig_y`` 			- Variance of log hydraulic conductivity
-- ``ll_ycorlengths`` 	- Default correlation lengths for :math:`\log(K_{iso})` in each hydrofacies in :math:`x,y,z`-directions
-- ``r_k_ratio`` 		- List of perpendicular anisotropy ratios (i.e :math:`\frac{K_h}{K_v}`)
-- ``r_n`` 				- List of mean porosity values
-- ``r_sig_n``			- Variance of porosity values
-- ``ll_ncorlengths`` 	- Default correlation lengths for porosity in each hydrofacies in :math:`x,y,z`-directions
+- ``gen``: *(optional, default: true)* Generate hydraulic parameters (i.e. hydraulic conductivity)?
+- ``hydro``: *(required)* List of hydrofacies codes
+- ``k_h``: Mean horizontal hydraulic conductivity. This must be either a float
+  if it is the same for all hydrofacies, or a list of the same length as
+  ``hydro``.
+- ``sig_y`` - Variance of log hydraulic conductivity. This must be either a
+  float if it is the same for all hydrofacies, or a list of the same length as
+  ``hydro``.
+- ``ycorlengths``: *(required)* Default correlation lengths for
+  :math:`\log(K_{iso})` in each hydrofacies in :math:`x,y,z`-directions. This
+  can be either a single float, if it's the same in all directions for all
+  hydrofacies, a list of floats of length 3 if it's the same for all
+  hydrofacies, or a list of lists of floats, where the outer list has the same
+  length as ``hydro`` and the inner lists have length 3
+- ``k_ratio``: *(required)* List of perpendicular anisotropy ratios (i.e
+  :math:`\frac{K_h}{K_v}`) or single value if it's the same for all hydrofacies.
+- ``n``: *(required)* List of mean porosity values or single value if it's the
+  same for all hydrofacies.
+- ``sig_n``: *(required)* Variance of porosity values. List of floats or single
+  float if it's the same for all hydrofacies.
+- ``ncorlengths``: *(required)* Default correlation lengths for porosity in each
+  hydrofacies in :math:`x,y,z`-directions This can be either a single float, if
+  it's the same in all directions for all hydrofacies, a list of floats of
+  length 3 if it's the same for all hydrofacies, or a list of lists of floats,
+  where the outer list has the same length as ``hydro`` and the inner lists have
+  length 3
 
 
 ------------------------------------------------------------------------
 ``[flowtrans]`` section
 ------------------------------------------------------------------------
-This section contains parameters to be used for groundwater flow and solute transport simulations. This allows all input parameters for field generation and subsequent modelling to be stored in the same ``.ini`` file. 
+This section contains parameters to be used for groundwater flow and solute
+transport simulations. This allows all input parameters for field generation and
+subsequent modelling to be stored in the same ``.ini`` file.
+
+- ``hin``: *(required)* boundary condition (head in). List of 3 floats
+- ``hout``: *(required)* boundary condition (head out). List of 3 floats
 
 
-----------------------------------
-File structure
-----------------------------------
-
-HYVR simulations are structured in the following way:
-
-Model -> Run -> Realisation
-
-The default operation of HYVR is to save simulation outputs in the same directory as the ``.ini`` parameter input file. However, it is possible to save the simulation outputs into another directory by specifying ``run.modeldir`` in the parameter file.
-
+.. _modelout:
 
 -----------------------------------
 Model outputs
 -----------------------------------
-HyVR has a number model outputs that can be set in the input parameter file. A copy of the ``ini`` model parameter file is saved in the model directory automatically. The following data output files include model outputs as three-dimensional arrays:
+HyVR has a number model outputs that can be set in the input parameter file. A
+copy of the ``ini`` model parameter file is saved in the model directory
+automatically. The following data output files include model outputs as
+three-dimensional arrays:
 
 - ``dat`` Python 'pickle' file - this is a native Python format that can be loaded into Python using ``hyvr.utils.load_pickle()``.
 - ``mat`` MATLAB file

@@ -15,7 +15,7 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
 # Custom for github pages
-GH_PAGES_SOURCES = hyvr docs docs/img Makefile
+GH_PAGES_SOURCES = hyvr docs
 
 .PHONY: help
 help:
@@ -226,3 +226,19 @@ dummy:
 	$(SPHINXBUILD) -b dummy $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+.ONESHELL:
+gh-pages:
+	cd ..
+	git checkout gh-pages
+	rm -rf _sources _static
+	git checkout master -- $(GH_PAGES_SOURCES)
+	git reset HEAD
+	cd docs
+	make html
+	cd ..
+	cp -r docs/_build/html/* ./
+	rm -rf $(GH_PAGES_SOURCES)
+	git add -A
+	git commit -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && git push origin gh-pages
+	git checkout master
