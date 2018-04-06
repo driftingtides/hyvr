@@ -11,7 +11,7 @@ except ModuleNotFoundError:
     import pip
     pip.main(['install', "numpy"])
     import numpy as np
-    
+
 try:
     from Cython.Build import cythonize
 except ModuleNotFoundError:
@@ -53,7 +53,7 @@ setup(
         'matplotlib',
         'pandas',
         'pyevtk',
-        'flopy',
+        'flopy==3.2.8',
         'cython',
         ],
 

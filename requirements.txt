@@ -1,7 +1,0 @@
-scipy==1.0.0
-numpy==1.13.3
-pyevtk==1.1.0
-setuptools==28.8.0
-matplotlib==2.1.0
-flopy==3.2.8
-pandas==0.21.0
