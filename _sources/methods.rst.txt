@@ -95,7 +95,15 @@ Parabolas extruded along arbitrary curves with variable sinuosity are useful to 
 
 :math:`\theta + \frac{2h}{k} \frac{d\theta}{ds} + \frac{1}{k^2} \frac{d^2\theta}{ds^2}  = \epsilon(s)`
 
-with curve direction :math:`\theta`, damping factor :math:`h \in [0,1]`, :math:`k = 2\pi/\lambda` is the wavenumber with :math:`\lambda` the frequency of the undamped sine wave, and :math:`s` is the distance along the curve. This model can be approximated using the following second-order autoregressive model described in Equation 15 of :cite:`Ferguson1976` (this method was also used by :cite:`Pyrcz2009` for the simulation of alluvial depositional features). Model grid cells are assigned to the extruded parabola if the following conditions are met:
+with curve direction :math:`\theta`, damping factor :math:`h \in [0,1]`, :math:`k = 2\pi/\lambda` is the wavenumber with :math:`\lambda` the frequency of the undamped sine wave, and :math:`s` is the distance along the curve. This model can be approximated using the following second-order autoregressive model described in Equation 15 of :cite:`Ferguson1976`:
+
+:math:`\theta_i - b_1 \theta_{i-1} - b_2\theta{i-2} = \epsilon_i`
+
+with:
+:math:`b_1 = 2e^{-kh}\cos(k\arcsin(h))`
+:math:`b_2 = -e^{-2kh}`
+
+This method was also used by :cite:`Pyrcz2009` for the simulation of alluvial depositional features. Model grid cells are assigned to the extruded parabola if the following conditions are met:
 
 :math:`D^2 \leqslant \frac{w^2_{ch}}{4} - \left[ \frac{(z_{ch} - z_{cell})\cdot\Delta z \cdot w_{ch}}{d_{ch}} \right] ^2 \; \wedge \; z_{cell} \leqslant z_{ch}`
 

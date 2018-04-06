@@ -23,6 +23,7 @@ Contents
    inout
    example
    more
+   troubleshooting
    references
    modules
 

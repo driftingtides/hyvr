@@ -4,35 +4,43 @@ hyvr package
 Submodules
 ----------
 
-hyvr.hyvr.grid module
+hyvr.grid module
 ----------------------
 
-.. automodule:: hyvr.hyvr.grid
+.. automodule:: hyvr.grid
     :members:
     :undoc-members:
     :show-inheritance:
 
-hyvr.hyvr.sim module
+hyvr.sim module
 --------------------
 
-.. automodule:: hyvr.hyvr.sim
+.. automodule:: hyvr.sim
     :members:
     :undoc-members:
     :show-inheritance:
 
-hyvr.hyvr.utils module
+hyvr.utils module
 ----------------------
 
-.. automodule:: hyvr.hyvr.utils
+.. automodule:: hyvr.utils
     :members:
     :undoc-members:
     :show-inheritance:
+
+hyvr.option_parsing module
+---------------------
+
+.. automodule:: hyvr.option_parsing
+                :members:
+                :undoc-members:
+                :show-inheritance:
 
 
 Module contents
 ---------------
 
-.. automodule:: hyvr.hyvr
+.. automodule:: hyvr
     :members:
     :undoc-members:
     :show-inheritance:

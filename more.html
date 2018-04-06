@@ -2,39 +2,28 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Extending HyVR &#8212; HYVR 0.1 documentation</title>
-    
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="HYVR 0.1 documentation" href="index.html" />
-    <link rel="next" title="References" href="references.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
     <link rel="prev" title="HYVR Example" href="example.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -42,10 +31,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="references.html" title="References"
+          <a href="troubleshooting.html" title="Troubleshooting"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="example.html" title="HYVR Example"
@@ -66,6 +52,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#the-hyvr-wish-list">The HyVR wish list</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">hyvr</a></li>
 </ul>
@@ -74,23 +61,25 @@
   <p class="topless"><a href="example.html"
                         title="previous chapter">HYVR Example</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="references.html"
-                        title="next chapter">References</a></p>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="next chapter">Troubleshooting</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/more.txt"
+      <li><a href="_sources/more.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -107,22 +96,22 @@
 <div class="section" id="adding-more-geometries">
 <h2>Adding more geometries<a class="headerlink" href="#adding-more-geometries" title="Permalink to this headline">¶</a></h2>
 <p>HyVR has been set up in such a way to facilitate the implementation of additional hydrofacies assemblage geometries.</p>
-<p>In order to generate new types of geometries a new function needs to be written in the <code class="docutils literal"><span class="pre">hyvr</span></code> module that will be called from <code class="docutils literal"><span class="pre">hyvr.sim.main()</span></code> where individual architectural elements and hydrofacies are simulated (around line 288 of <code class="docutils literal"><span class="pre">hyvr.sim.main()</span></code> - search for <code class="docutils literal"><span class="pre">ADD</span> <span class="pre">NEW</span> <span class="pre">GEOMETRIES</span> <span class="pre">HERE</span></code>).</p>
-<p>Any new geometry function needs to return a <code class="docutils literal"><span class="pre">count</span></code> integer value (for keeping track of individual hydrofacies assemblage identifiers) and a <code class="docutils literal"><span class="pre">props</span></code> dictionary containing the following properties:</p>
+<p>In order to generate new types of geometries a new function needs to be written in the <code class="docutils literal notranslate"><span class="pre">hyvr</span></code> module that will be called from <code class="docutils literal notranslate"><span class="pre">hyvr.run()</span></code> where individual architectural elements and hydrofacies are simulated (around line 288 of <code class="docutils literal notranslate"><span class="pre">hyvr.run()</span></code> - search for <code class="docutils literal notranslate"><span class="pre">ADD</span> <span class="pre">NEW</span> <span class="pre">GEOMETRIES</span> <span class="pre">HERE</span></code>).</p>
+<p>Any new geometry function needs to return a <code class="docutils literal notranslate"><span class="pre">count</span></code> integer value (for keeping track of individual hydrofacies assemblage identifiers) and a <code class="docutils literal notranslate"><span class="pre">props</span></code> dictionary containing the following properties:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">ha_array</span></code> (numpy array) -  hydrofacies assemblages</li>
-<li><code class="docutils literal"><span class="pre">hat_array</span></code> (numpy array) - types of hydrofacies assemblage</li>
-<li><code class="docutils literal"><span class="pre">azim</span></code> (numpy array) - azimuth</li>
-<li><code class="docutils literal"><span class="pre">dip</span></code> (numpy array) - dip</li>
-<li><code class="docutils literal"><span class="pre">fac</span></code> (numpy array) - hydrofacies</li>
+<li><code class="docutils literal notranslate"><span class="pre">ha_array</span></code> (numpy array) -  hydrofacies assemblages</li>
+<li><code class="docutils literal notranslate"><span class="pre">hat_array</span></code> (numpy array) - types of hydrofacies assemblage</li>
+<li><code class="docutils literal notranslate"><span class="pre">azim</span></code> (numpy array) - azimuth</li>
+<li><code class="docutils literal notranslate"><span class="pre">dip</span></code> (numpy array) - dip</li>
+<li><code class="docutils literal notranslate"><span class="pre">fac</span></code> (numpy array) - hydrofacies</li>
 </ul>
 <p>When adding geometries, we suggest reviewing the code for the existing geometries to see how it is currently implemented. This should provide a reasonable idea of how to put a new geometry together.</p>
 </div>
 <div class="section" id="the-hyvr-wish-list">
 <h2>The HyVR wish list<a class="headerlink" href="#the-hyvr-wish-list" title="Permalink to this headline">¶</a></h2>
-<p>Any modelling project will have &#8216;areas for growth&#8217; (as opposed to weaknesses). I have identified some things that I would like HyVR to have, but that are outside of the scope of my PhD research (and funds...). Perhaps you have the time and need to complete these yourself?</p>
+<p>Any modelling project will have ‘areas for growth’ (as opposed to weaknesses). I have identified some things that I would like HyVR to have, but that are outside of the scope of my PhD research (and funds…). Perhaps you have the time and need to complete these yourself?</p>
 <ul class="simple">
-<li>Extensions in <code class="docutils literal"><span class="pre">C</span></code> programming language to speed up bottlenecks in simulations, particularly in <code class="docutils literal"><span class="pre">hyvr.scale_rotate</span></code>, <code class="docutils literal"><span class="pre">hyvr.reindex</span></code>, and <code class="docutils literal"><span class="pre">hyvr.planepoint</span></code>.</li>
+<li>Extensions in <code class="docutils literal notranslate"><span class="pre">C</span></code> or <code class="docutils literal notranslate"><span class="pre">Cython</span></code> to speed up bottlenecks in simulations, particularly in <code class="docutils literal notranslate"><span class="pre">hyvr.planepoint</span></code>.</li>
 <li>Some level of conditioning, or improved interfacing with multiple-point geostatistical packages.</li>
 <li>Interaction of extruded parabolas, as well as more complex/realisitic configurations of channel deposits (e.g. point bars).</li>
 <li>Utilities for deriving HyVR simulation parameters from transitional probability geostatistics.</li>
@@ -144,10 +133,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="references.html" title="References"
+          <a href="troubleshooting.html" title="Troubleshooting"
              >next</a> |</li>
         <li class="right" >
           <a href="example.html" title="HYVR Example"
@@ -157,7 +143,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

@@ -11,7 +11,7 @@ Adding more geometries
 
 HyVR has been set up in such a way to facilitate the implementation of additional hydrofacies assemblage geometries. 
 
-In order to generate new types of geometries a new function needs to be written in the ``hyvr`` module that will be called from ``hyvr.sim.main()`` where individual architectural elements and hydrofacies are simulated (around line 288 of ``hyvr.sim.main()`` - search for ``ADD NEW GEOMETRIES HERE``). 
+In order to generate new types of geometries a new function needs to be written in the ``hyvr`` module that will be called from ``hyvr.run()`` where individual architectural elements and hydrofacies are simulated (around line 288 of ``hyvr.run()`` - search for ``ADD NEW GEOMETRIES HERE``). 
 
 Any new geometry function needs to return a ``count`` integer value (for keeping track of individual hydrofacies assemblage identifiers) and a ``props`` dictionary containing the following properties:
 
@@ -29,7 +29,7 @@ The HyVR wish list
 
 Any modelling project will have 'areas for growth' (as opposed to weaknesses). I have identified some things that I would like HyVR to have, but that are outside of the scope of my PhD research (and funds...). Perhaps you have the time and need to complete these yourself?
 
-* Extensions in ``C`` programming language to speed up bottlenecks in simulations, particularly in ``hyvr.scale_rotate``, ``hyvr.reindex``, and ``hyvr.planepoint``.
+* Extensions in ``C`` or ``Cython`` to speed up bottlenecks in simulations, particularly in ``hyvr.planepoint``.
 * Some level of conditioning, or improved interfacing with multiple-point geostatistical packages.
 * Interaction of extruded parabolas, as well as more complex/realisitic configurations of channel deposits (e.g. point bars).
 * Utilities for deriving HyVR simulation parameters from transitional probability geostatistics.

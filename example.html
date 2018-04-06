@@ -2,39 +2,28 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>HYVR Example &#8212; HYVR 0.1 documentation</title>
-    
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="HYVR 0.1 documentation" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Extending HyVR" href="more.html" />
     <link rel="prev" title="HYVR inputs and outputs" href="inout.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -65,6 +54,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">hyvr</a></li>
 </ul>
@@ -78,18 +68,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/example.txt"
+      <li><a href="_sources/example.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -102,27 +94,17 @@
             
   <div class="section" id="hyvr-example">
 <h1>HYVR Example<a class="headerlink" href="#hyvr-example" title="Permalink to this headline">¶</a></h1>
-<p>Two examples are provided with the HyVR simulation module: the MADE site example <code class="docutils literal"><span class="pre">made.ini</span></code>), mimicking the MADE site in Columbus, Mississippi, and a test case with user-defined architectural element mean contact surface elevations (<code class="docutils literal"><span class="pre">test_lu.ini</span></code>).</p>
+<p>Two examples are provided with the HyVR simulation module: the MADE site example <code class="docutils literal notranslate"><span class="pre">made.ini</span></code>), mimicking the MADE site in Columbus, Mississippi, and a test case with user-defined architectural element mean contact surface elevations (<code class="docutils literal notranslate"><span class="pre">test_lu.ini</span></code>).</p>
 <div class="figure align-center" id="id1">
 <span id="made"></span><a class="reference internal image-reference" href="_images/MADEsmall_lowres.jpg"><img alt="_images/MADEsmall_lowres.jpg" src="_images/MADEsmall_lowres.jpg" style="width: 75%;" /></a>
 <p class="caption"><span class="caption-text"><em>Example field mimicking the MADE site, generated using HyVR.</em></span></p>
 </div>
 <div class="section" id="example-parameter-file">
 <h2>Example parameter file<a class="headerlink" href="#example-parameter-file" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">## Example HyVR model parameter input file</span>
-<span class="c1"># HyVR 0.1 simulation package</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## Example HyVR model parameter input file</span>
+<span class="c1"># HyVR 0.2 simulation package</span>
 <span class="c1"># https://github.com/driftingtides/hyvr/</span>
 <span class="c1"># Jeremy P. Bennett, University of Tuebingen, 2017-2018 </span>
-
-<span class="c1"># Notes:</span>
-<span class="c1">#	- String values do not require quotation marks</span>
-<span class="c1"># 	- All section and variable names should be lower case</span>
-
-<span class="c1"># Suffixes</span>
-<span class="c1"># r_: 		range of float values</span>
-<span class="c1"># l_: 		list of string values</span>
-<span class="c1"># ll_:		list of tuples</span>
-<span class="c1"># flag_: 	flag value (boolean)</span>
 
 <span class="p">[</span><span class="n">run</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -140,8 +122,8 @@
 <span class="c1"># vtk: *.vtk</span>
 <span class="c1"># py: python pickle</span>
 <span class="c1"># mat *.mat</span>
-<span class="n">l_dataoutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">vtk</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">py</span><span class="p">]</span>
-<span class="c1">#l_modeloutputs = [mf,hgs,mf6]</span>
+<span class="n">dataoutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">vtk</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">py</span><span class="p">]</span>
+<span class="n">modeloutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">mf6</span><span class="p">]</span>
 
 <span class="c1"># Full Filepath/directory for outputs</span>
 <span class="c1"># Default is the directory of the parameter initialization file</span>
@@ -152,8 +134,8 @@
 <span class="n">flag_ow</span> <span class="o">=</span> <span class="n">true</span>
 
 <span class="c1"># Will anisotropy be assigned?</span>
-<span class="n">flag_anisotropy</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">flag_het</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">anisotropy</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">het</span> <span class="o">=</span> <span class="n">true</span>
 
 
 <span class="p">[</span><span class="n">model</span><span class="p">]</span>
@@ -174,8 +156,8 @@
 <span class="n">lz</span> <span class="o">=</span> <span class="mi">11</span>
 
 <span class="c1"># Is domain periodic?</span>
-<span class="n">flag_periodic</span> <span class="o">=</span> <span class="n">false</span>
-<span class="n">flag_display</span> <span class="o">=</span>  <span class="n">false</span>
+<span class="n">periodic</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">display</span> <span class="o">=</span>  <span class="n">false</span>
 
 <span class="c1"># Lowest hierarchical level of heterogeneity to assign</span>
 <span class="c1">#	-ae</span>
@@ -189,13 +171,13 @@
 <span class="c1"># ------------------</span>
 
 <span class="c1">## List of sequences</span>
-<span class="n">l_ssm</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">glaflu</span><span class="p">,</span> <span class="n">meander</span><span class="p">]</span>
+<span class="n">ssm</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">glaflu</span><span class="p">,</span> <span class="n">meander</span><span class="p">]</span>
 
 <span class="c1">## List of sequence top contact depths</span>
-<span class="n">r_ssm_top</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+<span class="n">ssm_top</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
 
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">ll_ssm_contact_model</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+<span class="n">ssm_contact_model</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
 
 <span class="c1">## Architectural element lookup table</span>
 <span class="c1">#ae_table = ae_lu_19-09-2017_10.39.18.txt</span>
@@ -209,29 +191,29 @@
 <span class="n">ssm_contact</span> <span class="o">=</span> <span class="n">random</span>
 
 <span class="c1"># List of architectural elements in model</span>
-<span class="n">l_ae</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay_sheet</span><span class="p">,</span> <span class="n">sand_sheet</span><span class="p">,</span> <span class="n">clay_lens</span><span class="p">,</span> <span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">,</span> <span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]</span>
+<span class="n">ae</span> <span class="o">=</span> <span class="p">[</span><span class="n">clay_sheet</span><span class="p">,</span> <span class="n">sand_sheet</span><span class="p">,</span> <span class="n">clay_lens</span><span class="p">,</span> <span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">,</span> <span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]</span>
 
 <span class="c1"># Which architectural elements are included in each sequence</span>
 <span class="c1"># - Must have same length as l_seq, </span>
 <span class="c1"># - Architectural elements must be identical to section names (except [model],[hydraulics])</span>
-<span class="n">ll_ssm_ae</span> <span class="o">=</span> <span class="p">[[</span><span class="n">clay_sheet</span><span class="p">],[</span><span class="n">sand_sheet</span><span class="p">,</span><span class="n">clay_lens</span><span class="p">],[</span><span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">],[</span><span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]]</span>
+<span class="n">ssm_ae</span> <span class="o">=</span> <span class="p">[[</span><span class="n">clay_sheet</span><span class="p">],[</span><span class="n">sand_sheet</span><span class="p">,</span><span class="n">clay_lens</span><span class="p">],[</span><span class="n">crossbedded_scour</span><span class="p">,</span> <span class="n">sandy_gravel</span><span class="p">],[</span><span class="n">mc_sheet</span><span class="p">,</span> <span class="n">meander_channel</span><span class="p">]]</span>
 
 <span class="c1"># The probability of an architecutral element occuring </span>
-<span class="n">ll_ae_prob</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">],[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">],[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]]</span>
+<span class="n">ae_prob</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">],[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.6</span><span class="p">],[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]]</span>
 
 <span class="c1"># Mean thickness of architectural element</span>
-<span class="n">ll_ae_z_mean</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">3.0</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mf">1.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]]</span>
+<span class="n">ae_z_mean</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">3.0</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mf">1.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]]</span>
 
 <span class="c1">## Erosion / deposition rules</span>
 <span class="c1"># Avulsion probability</span>
-<span class="n">ll_avul_prob</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">],[</span><span class="mf">0.7</span><span class="p">],[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">avul_prob</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">],[</span><span class="mf">0.7</span><span class="p">],[</span><span class="mi">0</span><span class="p">]]</span>
 
 <span class="c1"># Avulsion depth range [m]</span>
-<span class="n">ll_avul</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]]</span>
+<span class="n">avul</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]]</span>
 
 <span class="c1"># Background parameters for unassigned cells</span>
 <span class="c1"># [fac, azim, dip]</span>
-<span class="n">r_bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span> 
+<span class="n">bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> 
 
 
 <span class="p">[</span><span class="n">crossbedded_scour</span><span class="p">]</span>
@@ -247,13 +229,13 @@
 <span class="c1"># Contact type</span>
 <span class="n">contact</span> <span class="o">=</span> <span class="n">random</span>
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Number of elements per simulation elevation</span>
-<span class="n">el_z</span> <span class="o">=</span> <span class="mi">3</span><span class="n">e</span><span class="o">-</span><span class="mi">3</span>
+<span class="n">el_z</span> <span class="o">=</span> <span class="mf">3e-3</span>
 
 <span class="c1"># Migration of troughs [mean &amp; var migration in x, y]</span>
-<span class="n">r_migrate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">migrate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
 
 <span class="c1"># Do not generate troughs close to bottom contact</span>
 <span class="c1"># Value is proportion of trough depth</span>
@@ -265,17 +247,17 @@
 <span class="n">depth</span> <span class="o">=</span> <span class="mf">1.2</span>
 
 <span class="c1"># Mean angles [deg]</span>
-<span class="n">r_paleoflow</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
-<span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
-<span class="n">r_azimuth</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
+<span class="n">paleoflow</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
+<span class="n">dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="n">azimuth</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro; 0-indexed)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 
 <span class="c1"># Alternating facies</span>
 <span class="c1"># List of what hydrofacies can follow those listed in l_facies</span>
 <span class="c1"># To generate cyclical facies each list entry should have only one facies value</span>
-<span class="n">ll_altfacies</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">]]</span>
+<span class="n">altfacies</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">]]</span>
 
 <span class="c1"># Thickness of lenses (or) spatial period (lambda) of inclined set [m]</span>
 <span class="n">bulbset_d</span> <span class="o">=</span> <span class="mf">0.1</span>
@@ -283,12 +265,12 @@
 
 <span class="c1"># Background parameters for unassigned cells</span>
 <span class="c1"># [fac, azim, dip]</span>
-<span class="n">r_bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
+<span class="n">bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
 
 <span class="c1"># Geometry trend with elevation</span>
 <span class="c1"># Trends are linear, moving from bottom to top of domain</span>
 <span class="c1"># Percentage change of mean value with dx = 1m</span>
-<span class="n">r_geo_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">geo_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
 
 <span class="p">[</span><span class="n">meander_channel</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -305,10 +287,10 @@
 <span class="c1"># Contact type</span>
 <span class="n">contact</span> <span class="o">=</span> <span class="n">random</span>
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Migration of channels [mean &amp; var migration in x, y]</span>
-<span class="n">r_migrate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">migrate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
 
 <span class="c1"># Channel shape parameters</span>
 <span class="n">h</span> <span class="o">=</span> <span class="mf">0.4</span>
@@ -322,22 +304,24 @@
 <span class="n">channel_no</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="c1"># Dip range ([0,0] = massive bedding without any dip)</span>
-<span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Do not generate troughs close to bottom contact</span>
 <span class="c1"># Value is proportion of trough depth</span>
 <span class="n">buffer</span> <span class="o">=</span> <span class="mf">0.4</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro; 0-indexed)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
 
 <span class="c1"># Lag surface at bottom of feature</span>
 <span class="c1"># [lag depth, hydrofacies]</span>
-<span class="n">l_lag</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">lag</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Background parameters for unassigned cells</span>
 <span class="c1"># [fac, azim, dip]</span>
-<span class="n">r_bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
+<span class="n">bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
+
+
 
 <span class="p">[</span><span class="n">sandy_gravel</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -351,10 +335,10 @@
 <span class="c1"># Contact type</span>
 <span class="n">contact</span> <span class="o">=</span> <span class="n">random</span>
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="p">[</span><span class="n">sand_sheet</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -369,20 +353,20 @@
 <span class="n">contact</span> <span class="o">=</span> <span class="n">flat</span>
 
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Dip range ([0,0] = massive bedding without any dip)</span>
-<span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Spatial period (lambda) of inclined set [m]</span>
 <span class="n">setlamb</span> <span class="o">=</span> <span class="mf">0.3</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
 <span class="c1"># Global hydraulics trend with elevation</span>
 <span class="c1"># Trends are linear, moving from bottom to top of domain</span>
-<span class="n">r_k_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">k_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 
 <span class="p">[</span><span class="n">clay_sheet</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -396,20 +380,20 @@
 <span class="c1"># Contact type</span>
 <span class="n">contact</span> <span class="o">=</span> <span class="n">flat</span>
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Dip range ([0,0] = massive bedding without any dip)</span>
-<span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Spatial period (lambda) of inclined set [m]</span>
 <span class="n">setlamb</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
 
 <span class="c1"># Global hydraulics trend with elevation</span>
 <span class="c1"># Trends are linear, moving from bottom to top of domain</span>
-<span class="n">r_k_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">k_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 
 <span class="p">[</span><span class="n">mc_sheet</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -422,16 +406,16 @@
 
 <span class="c1"># Contact type</span>
 <span class="n">contact</span> <span class="o">=</span> <span class="n">flat</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Spatial period (lambda) of inclined set [m]</span>
 <span class="n">setlamb</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="c1"># Dip range ([0,0] = massive bedding without any dip)</span>
-<span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="p">[</span><span class="n">clay_lens</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
@@ -446,13 +430,13 @@
 <span class="c1"># Contact type</span>
 <span class="n">contact</span> <span class="o">=</span> <span class="n">flat</span>
 <span class="c1">#  [variance, correlation length x, corr. length. y]</span>
-<span class="n">r_contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">contact_model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Number of elements per simulation elevation</span>
-<span class="n">el_z</span> <span class="o">=</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">3</span>
+<span class="n">el_z</span> <span class="o">=</span> <span class="mf">1e-3</span>
 
 <span class="c1"># Migration of troughs [mean &amp; var migration in x, y]</span>
-<span class="c1">#r_migrate = [20, 1, 10, 1]</span>
+<span class="c1">#migrate = [20, 1, 10, 1]</span>
 
 <span class="c1"># Do not generate troughs close to bottom contact</span>
 <span class="c1"># Value is proportion of trough depth</span>
@@ -464,65 +448,65 @@
 <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.3</span>
 
 <span class="c1"># Mean angles [degrees]</span>
-<span class="n">r_paleoflow</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
-<span class="n">r_dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">r_azimuth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">paleoflow</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="n">dip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">azimuth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Hydrofacies (refer to [hydraulics]l_hydro; 0-indexed)</span>
-<span class="n">l_facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">facies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
 
 <span class="c1"># Alternating facies</span>
 <span class="c1"># List of what hydrofacies can follow those listed in l_facies</span>
 <span class="c1"># To generate cyclical facies each list entry should have only one facies value</span>
-<span class="n">ll_altfacies</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">],[</span><span class="mi">6</span><span class="p">]]</span>
+<span class="n">altfacies</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">]]</span>
 
 <span class="c1"># Thickness of lenses (or) spatial period (lambda) of inclined set [m]</span>
 <span class="n">setlamb</span> <span class="o">=</span> <span class="mf">0.2</span>
 
 <span class="c1"># Background parameters for unassigned cells</span>
 <span class="c1"># [mat, fac, azim, dip]</span>
-<span class="n">r_bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
+<span class="n">bg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> 
 
 <span class="c1"># Geometry trend with elevation</span>
 <span class="c1"># Trends are linear, moving from bottom to top of domain</span>
 <span class="c1"># Percentage change of mean value with dx = 1m</span>
-<span class="n">r_geo_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">geo_ztrend</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="p">[</span><span class="n">hydraulics</span><span class="p">]</span>
 <span class="c1"># ------------------</span>
 <span class="c1"># Hydraulic parameters</span>
 <span class="c1"># ------------------</span>
 <span class="c1"># Simulation of hydraulic parameters?</span>
-<span class="n">flag_gen</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">gen</span> <span class="o">=</span> <span class="n">true</span>
 
 <span class="c1"># List of hydrofacies codes</span>
-<span class="n">l_hydro</span> <span class="o">=</span> <span class="p">[</span><span class="n">sG</span><span class="p">,</span> <span class="n">scG</span><span class="p">,</span> <span class="n">oG</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">fS</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">mS</span><span class="p">]</span>
+<span class="n">hydro</span> <span class="o">=</span> <span class="p">[</span><span class="n">sG</span><span class="p">,</span> <span class="n">scG</span><span class="p">,</span> <span class="n">oG</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">fS</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">mS</span><span class="p">]</span>
 
 <span class="c1"># mean horizontal hydraulic conductivity [m/s]</span>
-<span class="n">r_k_h</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="n">e</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="n">e</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
+<span class="n">k_h</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="mf">2e-9</span><span class="p">,</span> <span class="mf">3e-9</span><span class="p">]</span>
 
 <span class="c1"># variance of log hydraulic conductivity [-]</span>
-<span class="n">r_sig_y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sig_y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="c1"># default correlation lengths for log(K) in each hydrofacies in x,y,z-directions</span>
-<span class="n">ll_ycorlengths</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">]]</span>
+<span class="n">ycorlengths</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">],[</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mf">1.6</span><span class="p">]]</span>
 
 <span class="c1"># List of perpendicular anisotropy ratios (i.e K_h/K_v) [-]</span>
-<span class="n">r_k_ratio</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">]</span>
+<span class="n">k_ratio</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">]</span>
 
 <span class="c1"># list of mean porosity values [-]</span>
-<span class="n">r_n</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.52</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.52</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">]</span>
 
 <span class="c1"># variance of porosity values [-]</span>
-<span class="n">r_sig_n</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span><span class="mf">0.0005</span><span class="p">]</span>
+<span class="n">sig_n</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span><span class="mf">0.0005</span><span class="p">]</span>
 
 <span class="c1"># default correlation lengths for n in each hydrofacies in x,y,z-directions</span>
-<span class="n">ll_ncorlengths</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">]]</span>
+<span class="n">ncorlengths</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">]]</span>
 
 <span class="c1"># Global hydraulics trend with elevation</span>
 <span class="c1"># Trends are linear, moving from bottom to top of domain</span>
-<span class="c1">#r_k_ztrend = [1.5, 0.9]</span>
-<span class="c1">#r_k_xtrend = [1.5, 0.9]</span>
+<span class="c1">#k_ztrend = [1.5, 0.9]</span>
+<span class="c1">#k_xtrend = [1.5, 0.9]</span>
 
 
 <span class="p">[</span><span class="n">flowtrans</span><span class="p">]</span>
@@ -566,7 +550,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
