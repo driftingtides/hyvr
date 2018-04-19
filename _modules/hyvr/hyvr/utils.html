@@ -1,27 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
-<!doctype html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.hyvr.utils &#8212; HYVR 0.1 documentation</title>
-    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    
+    <title>hyvr.hyvr.utils &#8212; HYVR 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
-    <![endif]-->
-  </head><body>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HYVR 0.2 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -31,38 +37,10 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HYVR 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HYVR 0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HYVR Computational methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HYVR inputs and outputs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HYVR Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">hyvr</a></li>
-</ul>
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -91,7 +69,6 @@
 <span class="kn">import</span> <span class="nn">scipy.io</span>
 <span class="kn">import</span> <span class="nn">scipy.spatial</span> <span class="k">as</span> <span class="nn">sp</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">errno</span>
 <span class="kn">from</span> <span class="nn">pyevtk.hl</span> <span class="k">import</span> <span class="n">gridToVTK</span>
 <span class="kn">import</span> <span class="nn">flopy</span>
@@ -106,10 +83,10 @@
     <span class="sd">&quot;&quot;&quot; Save a numpy array into a VTK STRUCTURED_POINTS file.</span>
 
 <span class="sd">    Parameters:</span>
-<span class="sd">        data (numpy array):		Numpy array containing the data, `int` or `float` or `uint`.</span>
+<span class="sd">        data (numpy array):		Numpy array containing the data, `int` or `float` or `uint`. </span>
 <span class="sd">                                The dimensions should be between 1 and 3</span>
 <span class="sd">        file_name (str):		Name of the file for the output, optional (None)</span>
-<span class="sd">        grid (class Grid):		Information about the grid can be also provided as a Grid object</span>
+<span class="sd">        grid (class Grid):		Information about the grid can be also provided as a Grid object            </span>
 <span class="sd">        sc_name (str):		Name of the scalar quantities</span>
 
 <span class="sd">    Returns:</span>
@@ -190,8 +167,8 @@
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span>
                    <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">),</span>
                    <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-</div>
-    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;: VTK export complete&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;: VTK export complete&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="to_vtr"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.to_vtr">[docs]</a><span class="k">def</span> <span class="nf">to_vtr</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
@@ -214,8 +191,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">gvec</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">vec_node</span><span class="p">()</span>
-    <span class="n">gridToVTK</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cellData</span><span class="o">=</span><span class="n">data_dict</span><span class="p">)</span></div>
-    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;: VTR export complete&#39;</span><span class="p">)</span>
+    <span class="n">gridToVTK</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cellData</span><span class="o">=</span><span class="n">data_dict</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;: VTR export complete&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="vtk_mask"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.vtk_mask">[docs]</a><span class="k">def</span> <span class="nf">vtk_mask</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">mask_val</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -254,8 +231,8 @@
     <span class="n">mask</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uni</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="n">grid</span><span class="o">.</span><span class="n">gname</span> <span class="o">=</span> <span class="s1">&#39;IMPALA Mask input&#39;</span>
-    <span class="n">to_vtk</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="s1">&#39;mask_code&#39;</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">uni</span>
+    <span class="n">to_vtk</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="s1">&#39;mask_code&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uni</span></div>
 
 
 <div class="viewcode-block" id="vtk_read"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.vtk_read">[docs]</a><span class="k">def</span> <span class="nf">vtk_read</span><span class="p">(</span><span class="n">file_in</span><span class="p">):</span>
@@ -300,8 +277,8 @@
     <span class="n">gegrid</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Grid</span><span class="p">(</span><span class="n">nx</span><span class="o">=</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="n">nz</span><span class="p">,</span>
                      <span class="n">dx</span><span class="o">=</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="o">=</span><span class="n">dz</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;: VTK read complete&#39;</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">gegrid</span><span class="p">,</span> <span class="n">props</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%X</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;: VTK read complete&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gegrid</span><span class="p">,</span> <span class="n">props</span></div>
 
 
 <div class="viewcode-block" id="vtk_trim"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.vtk_trim">[docs]</a><span class="k">def</span> <span class="nf">vtk_trim</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">file_out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -343,12 +320,12 @@
         <span class="n">file_out</span> <span class="o">=</span> <span class="n">file_in</span><span class="p">[:</span><span class="n">file_in</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="s1">&#39;_trim.vtk&#39;</span>
 
     <span class="n">to_vtk</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">file_out</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="n">gegrid</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">gegrid</span><span class="p">,</span> <span class="n">props</span>
+
+    <span class="k">return</span> <span class="n">gegrid</span><span class="p">,</span> <span class="n">props</span></div>
 
 
 <div class="viewcode-block" id="dem_load"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.dem_load">[docs]</a><span class="k">def</span> <span class="nf">dem_load</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Load data from ESRI-style ASCII-file.</span>
 
 <span class="sd">    Parameters:</span>
@@ -372,12 +349,12 @@
     <span class="c1"># Extract data using pandas</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
-</div>
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">meta</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">meta</span></div>
 
 
 <div class="viewcode-block" id="dem_save"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.dem_save">[docs]</a><span class="k">def</span> <span class="nf">dem_save</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">gro</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Save DEM data to ESRI-style ASCII-file</span>
 
 <span class="sd">    Parameters:</span>
@@ -402,12 +379,12 @@
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span>
                    <span class="n">data</span><span class="p">,</span>
                    <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span>
-                   <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1">&#39;</span><span class="p">,</span></div>
-                   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                   <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1">&#39;</span><span class="p">,</span>
+                   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="matlab_save"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.matlab_save">[docs]</a><span class="k">def</span> <span class="nf">matlab_save</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Save numpy array to .mat file for use in matlab.</span>
 
 <span class="sd">    Parameters:</span>
@@ -419,12 +396,12 @@
 <span class="sd">        This saves the array objects in the given dictionary to a MATLAB- style .mat file.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-</div>
-    <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">savemat</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">))</span>
+
+    <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">savemat</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="load_gslib"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.load_gslib">[docs]</a><span class="k">def</span> <span class="nf">load_gslib</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Load .gslib files. This has been appropriated from the HPGL library</span>
 <span class="sd">    https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py</span>
 <span class="sd">    commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa</span>
@@ -468,8 +445,8 @@
         <span class="n">gslib_dict</span><span class="p">[</span><span class="n">dkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">gslib_dict</span><span class="p">[</span><span class="n">dkey</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ly</span><span class="p">,</span> <span class="n">lx</span><span class="p">,</span> <span class="n">lz</span><span class="p">))</span>
 
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
-    <span class="k">return</span> <span class="n">gslib_dict</span>
+
+    <span class="k">return</span> <span class="n">gslib_dict</span></div>
 
 
 <div class="viewcode-block" id="load_pickle"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.load_pickle">[docs]</a><span class="k">def</span> <span class="nf">load_pickle</span><span class="p">(</span><span class="n">pickfile</span><span class="p">):</span>
@@ -480,20 +457,20 @@
 <span class="sd">        pickfile:		Input file</span>
 
 <span class="sd">    Return:</span>
-<span class="sd">        data *(dict)* - Pickled data of input file</span>
+<span class="sd">        data *(dict)* - Pickled data of input file </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickfile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
 
 
 <span class="sd">&#39;&#39;&#39; HYVR-specific utilities&#39;&#39;&#39;</span>
 
 
 <div class="viewcode-block" id="parameters"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.parameters">[docs]</a><span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="n">file_in</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Get parameters for hierarchical facies modelling</span>
 
 <span class="sd">    Parameters:</span>
@@ -516,18 +493,19 @@
 
     <span class="n">elements</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">str_values</span> <span class="o">=</span> <span class="s1">&#39;geometry&#39;</span><span class="p">,</span> <span class="s1">&#39;structure&#39;</span><span class="p">,</span> <span class="s1">&#39;runname&#39;</span><span class="p">,</span> <span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="s1">&#39;contact_file&#39;</span><span class="p">,</span> <span class="s1">&#39;modeldir&#39;</span><span class="p">,</span> <span class="s1">&#39;hetlev&#39;</span><span class="p">,</span> <span class="s1">&#39;ae_table&#39;</span><span class="p">,</span>\
-                 <span class="s1">&#39;k_trend&#39;</span><span class="p">,</span> <span class="s1">&#39;ssm_contact&#39;</span><span class="p">,</span> <span class="s1">&#39;linear_acceleration&#39;</span>
+                 <span class="s1">&#39;k_trend&#39;</span><span class="p">,</span> <span class="s1">&#39;ssm_contact&#39;</span>
     <span class="n">dtype_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ll_ssm_ae&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;ll_altfacies&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;ll_contact_model&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="s1">&#39;ll_ae_prob&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                   <span class="s1">&#39;ll_ae_z_mean&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ycorlengths&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ncorlengths&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_ssm_contact_model&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                   <span class="s1">&#39;ll_avul&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s1">&#39;ll_avul_prob&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>
-    <span class="n">section_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+
 
     <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
         <span class="n">ndict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">section</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ndict</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;flag&#39;</span><span class="p">):</span>
                 <span class="n">ndict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">str_values</span><span class="p">):</span> <span class="c1"># this is unnecessary</span>
+            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">str_values</span><span class="p">):</span>
                 <span class="n">ndict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ndict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
             <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;r_&#39;</span><span class="p">):</span>
                 <span class="n">ndict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ndict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
@@ -558,63 +536,37 @@
             <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndict</span>
 
 
-    <span class="c1"># if runname is not given, it&#39;s the part of the ini-file before</span>
-    <span class="c1"># &quot;_parameters.ini&quot; or &quot;.ini&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;runname&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">run</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ini_name</span><span class="p">[</span><span class="o">-</span><span class="mi">15</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">&quot;parameters.ini&quot;</span><span class="p">:</span>
-            <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
-
-    <span class="c1"># modeldir is either the given option or the path of the .ini file</span>
-    <span class="c1"># rundir is modeldir/runname</span>
-    <span class="c1"># But:</span>
-    <span class="c1"># If the .ini-filename ends with &quot;_parameters.ini&quot;, the directory of the</span>
-    <span class="c1"># ini-file is the rundir and modeldir is the directory above.</span>
-    <span class="c1"># This should overwrite all other settings (except flag_ow)</span>
-
-    <span class="n">ini_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_in</span><span class="p">))</span>
-    <span class="n">ini_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_in</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">ini_name</span><span class="p">[</span><span class="o">-</span><span class="mi">15</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">&quot;_parameters.ini&quot;</span><span class="p">:</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ini_path</span><span class="p">,</span> <span class="s1">&#39;../&#39;</span><span class="p">))</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ini_path</span><span class="p">)</span>
+		
+		
+    <span class="c1"># Create runfile directory in main directory</span>
+    <span class="k">if</span> <span class="s1">&#39;modeldir&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">run</span><span class="p">:</span>
+        <span class="c1"># Use same directory as parameter file</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_in</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">elif</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;select&#39;</span><span class="p">:</span>
+        <span class="c1"># User input for save location</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Please input the model directory save path, or press &lt;enter&gt; to save in default directory:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+             <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;tests</span><span class="se">\\</span><span class="s1">made_example</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">))</span>
+        <span class="n">try_makefolder</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># either inipath or the chosen modeldir</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;modeldir&#39;</span><span class="p">,</span> <span class="n">ini_path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;select&#39;</span><span class="p">:</span>
-            <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
-                <span class="s1">&#39;Please input the model directory save path, or press &lt;enter&gt; to&#39;</span>
-                <span class="s1">&#39;save in default directory:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inipath</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">],</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">])</span>
+        <span class="n">try_makefolder</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span>
 
-    <span class="n">try_makefolder</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span>
+    <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span>
+    <span class="n">try_makefolder</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
 
-    <span class="c1"># now test if the run directory already exists</span>
-    <span class="n">exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">run</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;flag_ow&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
-            <span class="c1"># if it exists and we want to overwrite we just delete it and create a new one</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run directory already exists and overwrite flag is set to &#39;false&#39;&quot;</span>
-                  <span class="s2">&quot;. Either change the runname or the overwrite flag (&#39;flag_ow&#39;).&quot;</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Save parameter file</span>
+    <span class="k">if</span> <span class="s1">&#39;flag_ow&#39;</span> <span class="ow">in</span> <span class="n">run</span> <span class="ow">and</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;flag_ow&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">file_save</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%m-%Y_%H.%M.%S&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_parameters.ini&#39;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
-
-    <span class="n">file_save</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">],</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_parameters.ini&#39;</span><span class="p">)</span>
+        <span class="n">file_save</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_parameters.ini&#39;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_save</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
         <span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span>
+
+    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span></div>
 
 
 <div class="viewcode-block" id="model_setup"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.model_setup">[docs]</a><span class="k">def</span> <span class="nf">model_setup</span><span class="p">(</span><span class="n">pf</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Set up model using grid.Grid() class and assign parameters</span>
 
 <span class="sd">    Parameters:</span>
@@ -642,8 +594,8 @@
     <span class="c1"># Assign architectural element identifiers</span>
     <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">elements</span><span class="p">[</span><span class="n">element</span><span class="p">][</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">systems</span><span class="p">[</span><span class="s1">&#39;l_ae&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">model_grid</span>
+
+    <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">systems</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">model_grid</span></div>
 
 
 <div class="viewcode-block" id="read_lu"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.read_lu">[docs]</a><span class="k">def</span> <span class="nf">read_lu</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">):</span>
@@ -667,12 +619,12 @@
     <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>
         <span class="n">ssm_lu</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
-</div>
-    <span class="k">return</span> <span class="n">ssm_lu</span>
+
+    <span class="k">return</span> <span class="n">ssm_lu</span></div>
 
 
 <div class="viewcode-block" id="to_modflow"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.to_modflow">[docs]</a><span class="k">def</span> <span class="nf">to_modflow</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">k_iso</span><span class="p">,</span> <span class="n">anirat</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Convert HYVR outputs to MODFLOW inputs</span>
 
 <span class="sd">    Parameters:</span>
@@ -726,8 +678,8 @@
     <span class="n">oc</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowOc</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>        <span class="c1"># Add OC package to the MODFLOW model</span>
     <span class="n">pcg</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowPcg</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>      <span class="c1"># Add PCG package to the MODFLOW model</span>
     <span class="n">mf</span><span class="o">.</span><span class="n">write_input</span><span class="p">()</span>                        <span class="c1"># Write the MODFLOW model input files</span>
-</div>
-    <span class="k">return</span> <span class="n">mf</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">bas</span><span class="p">,</span> <span class="n">lpf</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">pcg</span>
+
+    <span class="k">return</span> <span class="n">mf</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">bas</span><span class="p">,</span> <span class="n">lpf</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">pcg</span></div>
 
 
 <div class="viewcode-block" id="to_mf6"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.to_mf6">[docs]</a><span class="k">def</span> <span class="nf">to_mf6</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">runname</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">k_iso</span><span class="p">,</span> <span class="n">anirat</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">azim</span><span class="p">):</span>
@@ -764,94 +716,81 @@
     <span class="n">dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dip</span><span class="p">,</span> <span class="n">transpose_order</span><span class="p">)</span>
     <span class="n">azim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">azim</span><span class="p">,</span> <span class="n">transpose_order</span><span class="p">)</span>
 
-    <span class="sd">&quot;&quot;&quot; create simulation &quot;&quot;&quot;</span>
-    <span class="n">sim</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFSimulation</span><span class="p">(</span><span class="n">sim_name</span><span class="o">=</span><span class="n">runname</span><span class="p">,</span>
-                                 <span class="n">version</span><span class="o">=</span><span class="s1">&#39;mf6&#39;</span><span class="p">,</span>
-                                 <span class="n">exe_name</span><span class="o">=</span><span class="s1">&#39;mf6&#39;</span><span class="p">,</span>
-                                 <span class="n">sim_ws</span><span class="o">=</span><span class="n">mfdir</span><span class="p">,</span>
-                                 <span class="n">sim_tdis_file</span><span class="o">=</span><span class="s1">&#39;simulation.tdis&#39;</span><span class="p">)</span>
+    <span class="c1"># Create the Flopy simulation object</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFSimulation</span><span class="p">(</span><span class="n">sim_name</span><span class="o">=</span><span class="n">runname</span><span class="p">,</span> <span class="n">sim_ws</span><span class="o">=</span><span class="n">mfdir</span><span class="p">)</span>
 
-    <span class="sd">&quot;&quot;&quot; Create the Flopy temporal discretization object - STEADY-STATE &quot;&quot;&quot;</span>
-    <span class="n">tdis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mftdis</span><span class="o">.</span><span class="n">ModflowTdis</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span>
-                                                <span class="n">time_units</span><span class="o">=</span><span class="s1">&#39;DAYS&#39;</span><span class="p">,</span>
-                                                <span class="n">nper</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                                <span class="n">tdisrecarray</span><span class="o">=</span><span class="p">[(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)])</span>
+    <span class="c1"># Create the Flopy temporal discretization object</span>
+    <span class="n">tdis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowTdis</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">time_units</span><span class="o">=</span><span class="s1">&#39;DAYS&#39;</span><span class="p">,</span> <span class="n">nper</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                 <span class="n">tdisrecarray</span><span class="o">=</span><span class="p">[(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)])</span>
 
-    <span class="sd">&quot;&quot;&quot; create gwf model &quot;&quot;&quot;</span>
-    <span class="n">gwf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFModel</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span>
-                            <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gwf6&#39;</span><span class="p">,</span>
-                            <span class="n">model_name</span><span class="o">=</span><span class="n">runname</span><span class="p">,</span>
-                            <span class="n">model_nam_file</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.nam&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">),</span>
-                            <span class="n">ims_file_name</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.ims&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">))</span>
-    <span class="n">gwf</span><span class="o">.</span><span class="n">name_file</span><span class="o">.</span><span class="n">save_flows</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># Create the Flopy groundwater flow (gwf) model object</span>
+    <span class="n">gwf_name</span> <span class="o">=</span> <span class="n">runname</span>
+    <span class="n">gwf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFModel</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gwf6&#39;</span><span class="p">,</span>
+                            <span class="n">model_name</span><span class="o">=</span><span class="n">gwf_name</span><span class="p">,</span>
+                            <span class="n">model_nam_file</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.nam&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gwf_name</span><span class="p">),</span>
+                            <span class="n">sms_file_name</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.sms&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gwf_name</span><span class="p">))</span>
 
-    <span class="n">ims</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowIms</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span>
-                               <span class="n">print_option</span><span class="o">=</span><span class="s1">&#39;SUMMARY&#39;</span><span class="p">,</span>
-                               <span class="n">complexity</span><span class="o">=</span><span class="s1">&#39;COMPLEX&#39;</span><span class="p">)</span>
-    <span class="n">sim</span><span class="o">.</span><span class="n">register_ims_package</span><span class="p">(</span><span class="n">ims</span><span class="p">,</span> <span class="p">[</span><span class="n">gwf</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+    <span class="c1"># Create the Flopy iterative model solver Package object (taken from ex15-whirlsxt3d from MF6)</span>
+    <span class="c1"># ims = flopy.mf6.ModflowIms(sim, print_option=&#39;SUMMARY&#39;, complexity=&#39;SIMPLE&#39;,</span>
+    <span class="c1">#                            outer_hclose=1.e-8, outer_maximum=500,</span>
+    <span class="c1">#                            under_relaxation=&#39;NONE&#39;, inner_maximum=100,</span>
+    <span class="c1">#                            inner_hclose=1.e-8, rcloserecord=0.001,</span>
+    <span class="c1">#                            linear_acceleration=&#39;BICGSTAB&#39;, scaling_method=&#39;NONE&#39;,</span>
+    <span class="c1">#                            reordering_method=&#39;NONE&#39;, relaxation_factor=0.97)</span>
+    <span class="c1"># sim.register_ims_package(ims, [gwf_name])</span>
 
-    <span class="sd">&quot;&quot;&quot; Create discretization &quot;&quot;&quot;</span>
+    <span class="c1"># Create discretisation object</span>
     <span class="n">ztop</span> <span class="o">=</span> <span class="n">mg</span><span class="o">.</span><span class="n">oz</span> <span class="o">+</span> <span class="n">mg</span><span class="o">.</span><span class="n">lz</span>
     <span class="n">zbot</span> <span class="o">=</span> <span class="n">mg</span><span class="o">.</span><span class="n">oz</span>
     <span class="n">botm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ztop</span><span class="p">,</span> <span class="n">zbot</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">dis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfdis</span><span class="o">.</span><span class="n">ModflowGwfdis</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                                   <span class="n">nlay</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span>
-                                                   <span class="n">delr</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">delc</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span>
-                                                   <span class="n">top</span><span class="o">=</span><span class="n">ztop</span><span class="p">,</span>
-                                                   <span class="n">botm</span><span class="o">=</span><span class="n">botm</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
-                                                   <span class="n">fname</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.dis&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">))</span>
+    <span class="n">dis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowGwfdis</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">length_units</span><span class="o">=</span><span class="s1">&#39;METERS&#39;</span><span class="p">,</span>
+                                  <span class="n">nlay</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span>
+                                  <span class="n">delr</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">delc</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span>
+                                  <span class="n">top</span><span class="o">=</span><span class="n">ztop</span><span class="p">,</span> <span class="n">botm</span><span class="o">=</span><span class="n">botm</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                                  <span class="n">fname</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.dis&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gwf_name</span><span class="p">))</span>
 
-    <span class="sd">&quot;&quot;&quot; Create the initial conditions package &quot;&quot;&quot;</span>
-    <span class="c1"># Constant initial condition: h = 0.5</span>
-    <span class="n">ic</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfic</span><span class="o">.</span><span class="n">ModflowGwfic</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">strt</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="c1"># Create the initial conditions package</span>
+    <span class="c1"># start = np.zeros((mg.nz, mg.ny, mg.nx))</span>
+    <span class="c1"># ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=start)</span>
 
-    <span class="sd">&quot;&quot;&quot; Create Node Property Flow package object &quot;&quot;&quot;</span>
-    <span class="n">npf_package</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowGwfnpf</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                          <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">icelltype</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xt3doptions</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="c1"># Create Node Property Flow package object</span>
+    <span class="n">npf_package</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowGwfnpf</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">icelltype</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xt3doptions</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
                                           <span class="n">k</span><span class="o">=</span><span class="n">k_iso</span><span class="p">,</span>                                  <span class="c1"># within-bedding hydraulic conductivity</span>
                                           <span class="n">k33</span><span class="o">=</span><span class="n">k_iso</span><span class="o">/</span><span class="n">anirat</span><span class="p">,</span>                         <span class="c1"># across-bedding hydraulic conductivity</span>
                                           <span class="n">angle1</span><span class="o">=</span><span class="n">azim</span><span class="p">,</span>                              <span class="c1"># azimuth</span>
                                           <span class="n">angle2</span><span class="o">=</span><span class="n">dip</span><span class="p">,</span>                               <span class="c1"># dip</span>
                                           <span class="n">angle3</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">)))</span>   <span class="c1"># no rotation</span>
+ 
+    <span class="c1"># Create the constant head package.</span>
+    <span class="c1"># chd_rec = []</span>
+    <span class="c1"># for layer in range(0, mg.nz):</span>
+    <span class="c1">#     for row in range(0, mg.ny):</span>
+    <span class="c1">#         chd_rec.append(((layer, row, 0),  flowtrans[&#39;hin&#39;][0]))         # Apply at model inlet</span>
+    <span class="c1">#         chd_rec.append(((layer, row, mg.nx-1), flowtrans[&#39;hout&#39;][0]))   # Apply at model outlet</span>
+    <span class="c1"># chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),</span>
+    <span class="c1">#                                                periodrecarray=chd_rec, save_flows=True)</span>
 
-    <span class="sd">&quot;&quot;&quot; Create the constant head package &quot;&quot;&quot;</span>
-    <span class="c1"># chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf,</span>
-    <span class="c1">#                                                maxbound=1,</span>
-    <span class="c1">#                                                periodrecarray=[((0, 0, nx-1), 0)],</span>
-    <span class="c1">#                                                save_flows=True)</span>
+    <span class="c1"># Create the output control package</span>
+    <span class="c1"># headfile = &#39;{}.hds&#39;.format(gwf_name)</span>
+    <span class="c1"># head_filerecord = [headfile]</span>
+    <span class="c1"># budgetfile = &#39;{}.cbb&#39;.format(gwf_name)</span>
+    <span class="c1"># budget_filerecord = [budgetfile]</span>
+    <span class="c1"># saverecord = [(&#39;HEAD&#39;, &#39;ALL&#39;),</span>
+    <span class="c1">#               (&#39;BUDGET&#39;, &#39;ALL&#39;)]</span>
+    <span class="c1"># printrecord = [(&#39;HEAD&#39;, &#39;LAST&#39;)]</span>
+    <span class="c1"># oc = flopy.mf6.modflow.mfgwfoc.ModflowGwfoc(gwf, saverecord=saverecord,</span>
+    <span class="c1">#                                             head_filerecord=head_filerecord,</span>
+    <span class="c1">#                                             budget_filerecord=budget_filerecord,</span>
+    <span class="c1">#                                             printrecord=printrecord)</span>
 
-    <span class="k">if</span> <span class="s1">&#39;hin&#39;</span> <span class="ow">in</span> <span class="n">flowtrans</span><span class="p">:</span>
-        <span class="n">chd_rec</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">):</span>
-                <span class="n">chd_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">layer</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hin&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>         <span class="c1"># Apply at model inlet</span>
-                <span class="n">chd_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">layer</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hout&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>   <span class="c1"># Apply at model outlet</span>
-
-        <span class="n">chd</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfchd</span><span class="o">.</span><span class="n">ModflowGwfchd</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">maxbound</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chd_rec</span><span class="p">),</span>
-                                                       <span class="n">periodrecarray</span><span class="o">=</span><span class="n">chd_rec</span><span class="p">,</span> <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="sd">&quot;&quot;&quot; Create the output control package &quot;&quot;&quot;</span>
-    <span class="n">headfile</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.hds&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">)</span>
-    <span class="n">head_filerecord</span> <span class="o">=</span> <span class="p">[</span><span class="n">headfile</span><span class="p">]</span>
-    <span class="n">budgetfile</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.cbc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">)</span>
-    <span class="n">budget_filerecord</span> <span class="o">=</span> <span class="p">[</span><span class="n">budgetfile</span><span class="p">]</span>
-    <span class="n">saverecord</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;ALL&#39;</span><span class="p">),</span>
-                  <span class="p">(</span><span class="s1">&#39;BUDGET&#39;</span><span class="p">,</span> <span class="s1">&#39;ALL&#39;</span><span class="p">)]</span>
-    <span class="n">printrecord</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;LAST&#39;</span><span class="p">)]</span>
-    <span class="n">oc</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfoc</span><span class="o">.</span><span class="n">ModflowGwfoc</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                                <span class="n">saverecord</span><span class="o">=</span><span class="n">saverecord</span><span class="p">,</span>
-                                                <span class="n">head_filerecord</span><span class="o">=</span><span class="n">head_filerecord</span><span class="p">,</span>
-                                                <span class="n">budget_filerecord</span><span class="o">=</span><span class="n">budget_filerecord</span><span class="p">,</span>
-                                                <span class="n">printrecord</span><span class="o">=</span><span class="n">printrecord</span><span class="p">)</span>
-
-    <span class="c1"># write simulation to new location</span></div>
-    <span class="n">sim</span><span class="o">.</span><span class="n">write_simulation</span><span class="p">()</span>
+    <span class="c1"># write simulation to new location</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">write_simulation</span><span class="p">()</span></div>
     <span class="c1"># success, buff = sim.run_simulation()</span>
     <span class="c1"># print(&#39;\nSuccess is: &#39;, success)</span>
 
 
 <div class="viewcode-block" id="to_hgs"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.to_hgs">[docs]</a><span class="k">def</span> <span class="nf">to_hgs</span><span class="p">(</span><span class="n">hgspath</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">ktensors</span><span class="p">,</span> <span class="n">poros</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Convert HYVR outputs to HydroGeoSphere inputs</span>
 
 <span class="sd">    Parameters:</span>
@@ -880,8 +819,8 @@
 
     <span class="c1"># Loop over properties to write</span>
     <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">vals_to_write</span><span class="p">:</span>
-        <span class="n">val_filepath</span> <span class="o">=</span> <span class="n">hgspath</span> <span class="o">+</span> <span class="n">val</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span>                      <span class="c1"># File name of HGS output file</span></div>
-        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">val_filepath</span><span class="p">,</span> <span class="n">vals_to_write</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="n">val_fmts</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
+        <span class="n">val_filepath</span> <span class="o">=</span> <span class="n">hgspath</span> <span class="o">+</span> <span class="n">val</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span>                      <span class="c1"># File name of HGS output file</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">val_filepath</span><span class="p">,</span> <span class="n">vals_to_write</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="n">val_fmts</span><span class="p">[</span><span class="n">val</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="round_x"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.round_x">[docs]</a><span class="k">def</span> <span class="nf">round_x</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">prec</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
@@ -893,11 +832,11 @@
 <span class="sd">        base (int):		Base parameter for avoiding floating-point values</span>
 <span class="sd">        prec:			Precision of rounding</span>
 
-<span class="sd">    Returns:</span>
+<span class="sd">    Returns:	</span>
 <span class="sd">        Rounded value of nearest z-increment</span>
 
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">base</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">base</span><span class="p">),</span> <span class="n">prec</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">base</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">base</span><span class="p">),</span> <span class="n">prec</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="rotate_ktensor"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.rotate_ktensor">[docs]</a><span class="k">def</span> <span class="nf">rotate_ktensor</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">aniso</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">k_in</span><span class="p">):</span>
@@ -913,7 +852,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        k_rotate - Rotated K tensor</span>
-
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># convert dip and azimuth to radians</span>
@@ -932,8 +871,8 @@
                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                   <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dip</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">[</span><span class="n">ii</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
         <span class="n">k_rotate</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">kplane</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">kplane</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">kperp</span><span class="p">[</span><span class="n">ii</span><span class="p">]]))</span> <span class="o">*</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
-</div>
-    <span class="k">return</span> <span class="n">k_rotate</span>
+
+    <span class="k">return</span> <span class="n">k_rotate</span></div>
 
 
 <div class="viewcode-block" id="get_boreholes"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.get_boreholes">[docs]</a><span class="k">def</span> <span class="nf">get_boreholes</span><span class="p">(</span><span class="n">bh_loc</span><span class="p">,</span> <span class="n">fin</span><span class="p">,</span> <span class="n">fout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -970,27 +909,27 @@
     <span class="k">if</span> <span class="n">fout</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">fe_zones</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">centroids_pm</span><span class="p">,</span> <span class="n">fe_facies</span><span class="p">,</span> <span class="n">fe_K</span><span class="p">,</span> <span class="n">fe_poros</span><span class="p">)),</span>
                    <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%i</span><span class="s1"> </span><span class="si">%1.2e</span><span class="s1"> </span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">bhdf</span>
+
+    <span class="k">return</span> <span class="n">bhdf</span></div>
 
 
 <div class="viewcode-block" id="calc_norm"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.calc_norm">[docs]</a><span class="k">def</span> <span class="nf">calc_norm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Calculate norm (compute the complex conjugate from &#39;x&#39;)</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        x:	Input parameter</span>
 
-<span class="sd">    Returns:</span>
+<span class="sd">    Returns:	</span>
 <span class="sd">        Complex conjugate of x</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">real</span></div>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="try_makefolder"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.try_makefolder">[docs]</a><span class="k">def</span> <span class="nf">try_makefolder</span><span class="p">(</span><span class="n">makedir</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Create modflow output folder</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -999,8 +938,8 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">makedir</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span></div>
-            <span class="k">raise</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+            <span class="k">raise</span></div>
 
 
 <div class="viewcode-block" id="specsim"><a class="viewcode-back" href="../../../hyvr.html#hyvr.hyvr.utils.specsim">[docs]</a><span class="k">def</span> <span class="nf">specsim</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">corl</span><span class="p">,</span> <span class="n">twod</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">covmod</span><span class="o">=</span><span class="s1">&#39;gau&#39;</span><span class="p">):</span>
@@ -1052,23 +991,47 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">syy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="c1"># st.norm.rvs calls cost a bit more than np.radom.randn</span>
-    <span class="c1"># real = st.norm.rvs(size=syy.shape)</span>
-    <span class="c1"># imag = st.norm.rvs(size=syy.shape)</span>
-    <span class="n">real</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">syy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">imag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">syy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">real</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">syy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">imag</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">syy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">epsilon</span> <span class="o">=</span> <span class="n">real</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">imag</span>
-    <span class="n">rand</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">syy</span><span class="p">)</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="p">(</span><span class="n">syy</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">bigy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">rand</span> <span class="o">*</span> <span class="n">ntot</span><span class="p">))</span>
-</div>
-    <span class="k">return</span> <span class="n">bigy</span>
+
+    <span class="k">return</span> <span class="n">bigy</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot; Testing functions&quot;&quot;&quot;</span>
+
 </pre></div>
 
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">HyVR package</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1082,13 +1045,13 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HYVR 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HYVR 0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

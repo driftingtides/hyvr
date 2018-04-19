@@ -1,29 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
-<!doctype html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr &#8212; HYVR 0.1 documentation</title>
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    
+    <title>HyVR package &#8212; HYVR 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="hyvr package" href="hyvr.html" />
-    <link rel="prev" title="References" href="references.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
-    <![endif]-->
-  </head><body>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HYVR 0.2 documentation" href="index.html" />
+    <link rel="prev" title="References" href="references.html" /> 
+  </head>
+  <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -34,27 +38,1926 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="hyvr.html" title="hyvr package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
           <a href="references.html" title="References"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HYVR 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HYVR 0.2 documentation</a> &#187;</li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hyvr-package">
+<h1>HyVR package<a class="headerlink" href="#hyvr-package" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="module-hyvr.grid">
+<span id="hyvr-grid-module"></span><h2>hyvr.grid module<a class="headerlink" href="#module-hyvr.grid" title="Permalink to this headline">¶</a></h2>
+<p>Grid class</p>
+<blockquote>
+<div>A module containing some classes and function useful to work with structured grids.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Usage:</th><td class="field-body"><p class="first">Import as a normal python module.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body"><p class="first">0.1 , 01-09-2016 : Forked from Alessandro Comunian</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body"><p class="first">Jeremy P. Bennett</p>
+<dl class="last docutils">
+<dt>Notes:</dt>
+<dd><p class="first last">The grids for the moment are always considered as 3D.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="hyvr.grid.Grid">
+<em class="property">class </em><code class="descclassname">hyvr.grid.</code><code class="descname">Grid</code><span class="sig-paren">(</span><em>ox=0.0</em>, <em>oy=0.0</em>, <em>oz=0.0</em>, <em>dx=1.0</em>, <em>dy=1.0</em>, <em>dz=1.0</em>, <em>nx=200</em>, <em>ny=200</em>, <em>nz=10</em>, <em>gtype='points'</em>, <em>gname='image'</em>, <em>periodicity=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Grid class</p>
+<p>A simple class that contains the <em>Origin</em>, <em>Delta</em> and <em>Size</em> of a
+simulation. It can also be used as container for some information
+contained in a VTK structured grid file.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li>By default, the size of the grid is considered as points.</li>
+</ul>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-mod docutils literal"><span class="pre">vtknumpy</span></code></p>
+</div>
+<dl class="method">
+<dt id="hyvr.grid.Grid.cart_coords">
+<code class="descname">cart_coords</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.cart_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.cart_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get x,y,z coordinates in a tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Tuple containing the x,y and z-coordinates of the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.cart_coords2d">
+<code class="descname">cart_coords2d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.cart_coords2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.cart_coords2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get x,y coordinates in a tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple containing the x,y-coordinates of the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.grid.Grid.cells">
+<code class="descname">cells</code><a class="headerlink" href="#hyvr.grid.Grid.cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of cells</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.cellsize_2d">
+<code class="descname">cellsize_2d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.cellsize_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.cellsize_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the cell size in 2D</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Cell size in 2D</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.compute_max">
+<code class="descname">compute_max</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.compute_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.compute_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the max values for <em>x</em>, <em>y</em> and <em>z</em> of the grid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Max values of x,y and z</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.grid.Grid.cs2">
+<code class="descname">cs2</code><a class="headerlink" href="#hyvr.grid.Grid.cs2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some helpful things for getting grid indices</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.del_cells">
+<code class="descname">del_cells</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.del_cells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.del_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the cells for a cells grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8211;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.del_lx">
+<code class="descname">del_lx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.del_lx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.del_lx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the x-dimension of a grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in x-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.del_ly">
+<code class="descname">del_ly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.del_ly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.del_ly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the y-dimension of a grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in y-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.del_lz">
+<code class="descname">del_lz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.del_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.del_lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the z-dimension of a grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in z-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.del_points">
+<code class="descname">del_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.del_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.del_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the points of a points grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8211;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.get_cells">
+<code class="descname">get_cells</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.get_cells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.get_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the number of cells for a cells grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of cells for x, y and z</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.get_lx">
+<code class="descname">get_lx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.get_lx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.get_lx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide as output a tuple containing the x-size of a
+grid. Useful for the implementation of &#8216;property&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in x-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.get_ly">
+<code class="descname">get_ly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.get_ly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.get_ly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide as output a tuple containing the y-size of a
+grid. Useful for the implementation of &#8216;property&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in y-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.get_lz">
+<code class="descname">get_lz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.get_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.get_lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide as output a tuple containing the z-size of a
+grid. Useful for the implementation of &#8216;property&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in z-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.get_points">
+<code class="descname">get_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.get_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.get_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the number of points for a points grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of points for a points grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.idx_z">
+<code class="descname">idx_z</code><span class="sig-paren">(</span><em>zval</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.idx_z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.idx_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the index of an elevation for the k-dimension of a 3D array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>zval</strong> &#8211; Elevation value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">iz <em>(int)</em> - Index of elevation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.grid.Grid.lx">
+<code class="descname">lx</code><a class="headerlink" href="#hyvr.grid.Grid.lx" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8216;size&#8217; along <em>x</em> of the grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.grid.Grid.ly">
+<code class="descname">ly</code><a class="headerlink" href="#hyvr.grid.Grid.ly" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8216;size&#8217; along <em>y</em> of the grid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.grid.Grid.lz">
+<code class="descname">lz</code><a class="headerlink" href="#hyvr.grid.Grid.lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8216;size&#8217; along <em>z</em> of the grid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.meshup">
+<code class="descname">meshup</code><span class="sig-paren">(</span><em>ind='ij'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.meshup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.meshup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a meshgrid representation of the grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple containing the x,y,z-coordinates of the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.meshup2d">
+<code class="descname">meshup2d</code><span class="sig-paren">(</span><em>ind='ij'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.meshup2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.meshup2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a 2D meshgrid representation of the grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple containing the x,y-coordinates of the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.origin">
+<code class="descname">origin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.origin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>To print out the origin of the grid as a tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple containing the origin defined in the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.grid.Grid.points">
+<code class="descname">points</code><a class="headerlink" href="#hyvr.grid.Grid.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of points</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.print_intervals">
+<code class="descname">print_intervals</code><span class="sig-paren">(</span><em>axis='xyz'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.print_intervals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.print_intervals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the intervals that constitute the simulation domain in a format like:</p>
+<blockquote>
+<div>[ ox, ox+nx*dx] [ oy, oy+ny*dy] [ oz, oz+nz*dz]</div></blockquote>
+<p>where <em>ox</em> is the origin, <em>nx</em> is the number of points and <em>dx</em>
+is the delta between points (<em>idem</em> for <em>y</em> and <em>z</em>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<em>string</em>) &#8211; containing [&#8216;x&#8217;,&#8217;y&#8217;,&#8217;z&#8217;], [optional]
+If the default value &#8220;xyz&#8221; is used, then all the intervals are printed.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">print intervals that constitute the simulation domain</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.set_cells">
+<code class="descname">set_cells</code><span class="sig-paren">(</span><em>val=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.set_cells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.set_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of cells for a cells grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of cells for x, y and z</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.set_lx">
+<code class="descname">set_lx</code><span class="sig-paren">(</span><em>val=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.set_lx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.set_lx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the x-size of a grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in x-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.set_ly">
+<code class="descname">set_ly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.set_ly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.set_ly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the y-size of a grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in y-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.set_lz">
+<code class="descname">set_lz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.set_lz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.set_lz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the z-size of a grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple containing the size of a grid in z-direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.set_points">
+<code class="descname">set_points</code><span class="sig-paren">(</span><em>val=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.set_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.set_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of points for a points grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of points for a points grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>To print out the shape of the grid as a tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>self</strong> &#8211; An instance of the Grid class</li>
+<li><strong>gtype</strong> (<em>string</em>) &#8211; &#8216;points&#8217; or &#8216;cells&#8217;. String to decide to print the shape in terms of points or in terms of cells.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tuple containing the shape defined in the grid</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.spacing">
+<code class="descname">spacing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>To print out the spacing of the grid as a tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple containing the spacing defined in the grid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.vec">
+<code class="descname">vec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.vec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.vec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create vectors of spatial coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xv, yv, zv - Vectors of spatial coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.vec_node">
+<code class="descname">vec_node</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.vec_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.vec_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create vectors of spatial coordinates of bounding nodes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xv, yv, zv - Vectors of spatial coordinates of bounding nodes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.vec_x">
+<code class="descname">vec_x</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.vec_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.vec_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create vector of spatial x-coordinate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">xv - Vector of spatial x-coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.vec_y">
+<code class="descname">vec_y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.vec_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.vec_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create vector of spatial y-coordinate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">yv - Vector of spatial y-coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.grid.Grid.vec_z">
+<code class="descname">vec_z</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/grid.html#Grid.vec_z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.grid.Grid.vec_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create vector of spatial z-coordinate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>self</strong> &#8211; An instance of the Grid class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">zv - Vector of spatial z-coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.sim">
+<span id="hyvr-sim-module"></span><h2>hyvr.sim module<a class="headerlink" href="#module-hyvr.sim" title="Permalink to this headline">¶</a></h2>
+<p>Hydrogeological Virtual Reality simulation package.</p>
+<p>Hydrogeological virtual reality (HYVR) simulator for object-based modelling
+of sedimentary structures</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Jeremy P. Bennett</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Notes:</th><td class="field-body">Grid nodes are cell-centred!</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="hyvr.sim.angle">
+<code class="descclassname">hyvr.sim.</code><code class="descname">angle</code><span class="sig-paren">(</span><em>v1</em>, <em>v2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#angle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return angle between two vectors in [°]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>v1</strong> &#8211; Vector 1</li>
+<li><strong>v2</strong> &#8211; Vector 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">angle value <em>(float)</em> - Angle between v1 and v2</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.channel_checker">
+<code class="descclassname">hyvr.sim.</code><code class="descname">channel_checker</code><span class="sig-paren">(</span><em>param_file</em>, <em>ae_name</em>, <em>no_extpar=1</em>, <em>dist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#channel_checker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.channel_checker" title="Permalink to this definition">¶</a></dt>
+<dd><p>extruded parabola checker function for quickly assessing the shape of extruded parabola inputs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>param_file</strong> (<em>str</em>) &#8211; Parameter file location</li>
+<li><strong>ae_name</strong> (<em>str</em>) &#8211; Name of architectural element</li>
+<li><strong>no_extpar</strong> (<em>float</em>) &#8211; Number of extruded parabolas</li>
+<li><strong>dist</strong> (<em>float</em>) &#8211; Distance to generate extruded parabolas - defaults to mg.lx</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Plots showing shape of Ferguson extruded parabolas</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.curve_interp">
+<code class="descclassname">hyvr.sim.</code><code class="descname">curve_interp</code><span class="sig-paren">(</span><em>xc</em>, <em>yc</em>, <em>spacing</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#curve_interp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.curve_interp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by &#8216;Unutbu&#8217; on
+<a class="reference external" href="http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values">http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values</a> (retrieved 17/04/2017)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xc</strong> &#8211; x coordinates of curve</li>
+<li><strong>yc</strong> &#8211; y coordinates of curve</li>
+<li><strong>spacing</strong> &#8211; Spacing between points</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>xn - x coordinates of interpolated points</li>
+<li>yn - y coordinates of interpolated points</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.dip_rotate">
+<code class="descclassname">hyvr.sim.</code><code class="descname">dip_rotate</code><span class="sig-paren">(</span><em>azimuth_in</em>, <em>dip_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#dip_rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.dip_rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate dip angle based on azimuth
+Note that inputs and outputs are in degrees</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>azimuth_in</strong> &#8211; Azimuth input angle</li>
+<li><strong>dip_in</strong> &#8211; Dipping input angle</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dip_out - Azimuth output angle</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.dip_sets">
+<code class="descclassname">hyvr.sim.</code><code class="descname">dip_sets</code><span class="sig-paren">(</span><em>mg</em>, <em>aep</em>, <em>znow</em>, <em>curve=[]</em>, <em>select=[]</em>, <em>azimuth_z=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#dip_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.dip_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate dip angles and assign to the dip matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+<li><strong>aep</strong> &#8211; Architectural element parameters (dict)</li>
+<li><strong>cruve</strong> &#8211; Tuple of x,y coordinates of extruded parabola (omitted for linear flows)
+- x, y coordinates of extruded parabola
+- vx, vy of extruded parabola flow</li>
+<li><strong>select</strong> &#8211; Model grid nodes to assign</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>dip_out - Array of assigned dip values</li>
+<li>fac_out - Array of assigned hydrofacies</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.ellipsoid_gradient">
+<code class="descclassname">hyvr.sim.</code><code class="descname">ellipsoid_gradient</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em>, <em>a</em>, <em>b</em>, <em>c</em>, <em>alpha</em>, <em>select</em>, <em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#ellipsoid_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.ellipsoid_gradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate dip and strike values in rotated ellipsoids</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y, z</strong> (<em>x,</em>) &#8211; Distances to centre of ellipsoid</li>
+<li><strong>b, c</strong> (<em>a,</em>) &#8211; Majox/minor axes of ellipsoid</li>
+<li><strong>alpha</strong> &#8211; Rotation of ellipsoid from mean flow direction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>dip_g - Dipping in 3D</li>
+<li>azimuth_g - Azimuth in 3D</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.facies">
+<code class="descclassname">hyvr.sim.</code><code class="descname">facies</code><span class="sig-paren">(</span><em>run</em>, <em>model</em>, <em>strata</em>, <em>hydraulics</em>, <em>flowtrans</em>, <em>elements</em>, <em>mg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#facies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.facies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate hydrofacies fields</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>run</strong> &#8211; Model run parameters like <code class="docutils literal"><span class="pre">runname</span></code>, <code class="docutils literal"><span class="pre">rundir</span></code>, <code class="docutils literal"><span class="pre">l_dataoutputs</span></code>, <code class="docutils literal"><span class="pre">l_modeloutputs</span></code>, etc.</li>
+<li><strong>model</strong> &#8211; Model domain parameters</li>
+<li><strong>strata</strong> &#8211; Details about the strata</li>
+<li><strong>hydraulics</strong> &#8211; Details about the hydraulics</li>
+<li><strong>flowtrans</strong> &#8211; Flow &amp; transport simulation parameters</li>
+<li><strong>elements</strong> &#8211; Architectural elements and parameters</li>
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Tuple containing:</p>
+<blockquote>
+<div><ul class="simple">
+<li>probs <em>(dict)</em>: Contains data of architectural element units and associated hydrofacies</li>
+</ul>
+</div></blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>params <em>(tuple)</em> - Contains parameters of model domain, strata, hydraulics, etc.</dt>
+<dd><ul class="first last simple">
+<li>run (dict) - Model run parameters</li>
+<li>model (dict) - Model domain parameters</li>
+<li>strata (dict) - Strata parameters</li>
+<li>hydraulics (dict) - Hydraulic properties parameters</li>
+<li>flowtrans (dict) - Flow &amp; transport simulation parameters</li>
+<li>elements (dict) - Architectural elements and parameters</li>
+<li>mg - Mesh grid object class</li>
+<li>ae_lu - Architectural element lookup table</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(tuple)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.ferguson_curve">
+<code class="descclassname">hyvr.sim.</code><code class="descname">ferguson_curve</code><span class="sig-paren">(</span><em>mg</em>, <em>h</em>, <em>k</em>, <em>ds</em>, <em>eps_factor</em>, <em>dist=0</em>, <em>disp=False</em>, <em>ch_start=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.ferguson_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model
+Implementation of AR2 autoregressive model
+<a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mg</strong> (<em>object class</em>) &#8211; Mesh grid object class</li>
+<li><strong>h</strong> (<em>float</em>) &#8211; Height</li>
+<li><strong>k</strong> (<em>float</em>) &#8211; Wave number</li>
+<li><strong>ds</strong> (<em>float</em>) &#8211; Curve distance for calculations</li>
+<li><strong>eps_factor</strong> (<em>float</em>) &#8211; Random background noise</li>
+<li><strong>dist</strong> (<em>float</em>) &#8211; Distance to generate curves - defaults to mg.lx</li>
+<li><strong>disp</strong> (<em>bool</em>) &#8211; Creating display extruded parabola - extruded parabola begins at (0,0)</li>
+<li><strong>ch_start</strong> (<em>tuple</em>) &#8211; Starting location of channel (x,y coordinates)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputs</strong> &#8211; Simulated extruded parabola centerlines: storage array containing values for x coordinate, y coordinate, vx and vy</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.ferguson_theta">
+<code class="descclassname">hyvr.sim.</code><code class="descname">ferguson_theta</code><span class="sig-paren">(</span><em>s</em>, <em>eps_factor</em>, <em>k</em>, <em>h</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.ferguson_theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate curve direction angle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> &#8211; Steps within generated curve distance</li>
+<li><strong>eps_factor</strong> &#8211; Random background noise</li>
+<li><strong>k</strong> &#8211; Wave number</li>
+<li><strong>h</strong> &#8211; Height</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">th_store <em>(array)</em> - Curve direction angle</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.gen_extpar">
+<code class="descclassname">hyvr.sim.</code><code class="descname">gen_extpar</code><span class="sig-paren">(</span><em>ch_par</em>, <em>mg</em>, <em>model</em>, <em>ssm</em>, <em>ae_array</em>, <em>count</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#gen_extpar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.gen_extpar" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Generate extruded parabola geometries:</dt>
+<dd><ul class="first last simple">
+<li>Flow regime is assumed to be reasonably constant so the major geometry of the extruded parabolas doesn&#8217;t change so much</li>
+<li>&#8216;Migration&#8217; of the extruded parabolas according to a shift vector</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ch_par</strong> &#8211; Extruded parabola parameters</li>
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+<li><strong>model</strong> (<em>dict</em>) &#8211; Model domain parameters</li>
+<li><strong>ssm</strong> (<em>dict</em>) &#8211; Strata parameters</li>
+<li><strong>ae_array</strong> &#8211; Array with architectural element unit details</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
+<li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
+<li><strong>(z_in</strong> &#8211; starting depth)</li>
+<li><strong>(thickness</strong> &#8211; Thickness of architectural element)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Tuple containing:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>probs <em>(dict)</em>: Contains data of architectural element units and associated hydrofacies</dt>
+<dd><ul class="first last simple">
+<li>mat - Material values</li>
+<li>azim - Azimuth angles (ani == True)</li>
+<li>dip - Dipping angles (ani == True)</li>
+<li>fac - Facies values</li>
+<li>ae_arr_i - Array with architectural element unit details</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">count <em>(int)</em> - Material number and/or identifier</p>
+</li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(tuple)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.gen_sheet">
+<code class="descclassname">hyvr.sim.</code><code class="descname">gen_sheet</code><span class="sig-paren">(</span><em>sh</em>, <em>mg</em>, <em>ae_i</em>, <em>ae_array</em>, <em>count</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#gen_sheet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.gen_sheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate gravel sheet with internal heterogeneity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sh</strong> &#8211; Sheet parameters</li>
+<li><strong>mg</strong> &#8211; Model grid class</li>
+<li><strong>ae_i</strong> &#8211; Architectural element lookup details [system number, z_bottom, z_top, architectural element, geometry]</li>
+<li><strong>ae_array</strong> &#8211; Architectural element array</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
+<li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>probs <em>(dict)</em> - Contains data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)</li>
+<li>count <em>(int)</em> - Material number and/or identifier</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.gen_trough">
+<code class="descclassname">hyvr.sim.</code><code class="descname">gen_trough</code><span class="sig-paren">(</span><em>tr</em>, <em>mg</em>, <em>model</em>, <em>ae</em>, <em>ae_arr</em>, <em>count</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#gen_trough"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.gen_trough" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create trough shapes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tr</strong> (<em>dict</em>) &#8211; Trough parameters</li>
+<li><strong>mg</strong> (<em>grid class</em>) &#8211; Model grid</li>
+<li><strong>ae</strong> (<em>list</em>) &#8211; Architectural element unit details</li>
+<li><strong>ae_arr</strong> (<em>ndarray</em>) &#8211; 3D array of system numbers</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
+<li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>probs <em>(numpy array)</em> - Grid properties</li>
+<li>count <em>(int)</em> - Material number and/or identifier</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.heterogeneity">
+<code class="descclassname">hyvr.sim.</code><code class="descname">heterogeneity</code><span class="sig-paren">(</span><em>props</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#heterogeneity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.heterogeneity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate internal heterogeneity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>probs</strong> (<em>list</em>) &#8211; Data of architectural element units and associated hydrofacies (e.g. values of azimuth, material, dipping, etc.)</li>
+<li><strong>params</strong> (<em>list</em>) &#8211; Parameters of model domain, system, hydraulics, etc.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>probs <em>(list)</em> - Data of architectural element units and associated hydrofacies</li>
+<li>params <em>(list)</em> - Input parameters, assigned with heterogenity</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.planepoint">
+<code class="descclassname">hyvr.sim.</code><code class="descname">planepoint</code><span class="sig-paren">(</span><em>dip_norm</em>, <em>x_dip</em>, <em>y_dip</em>, <em>znow</em>, <em>xtemp</em>, <em>ytemp</em>, <em>ztemp</em>, <em>select=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#planepoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.planepoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute number of planes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dip_norm</strong> &#8211; </li>
+<li><strong>x_dip</strong> &#8211; X coordinates of points on dip planes</li>
+<li><strong>y_dip</strong> &#8211; Y coordinates of points on dip planes</li>
+<li><strong>znow</strong> &#8211; Current coordinates of Z, needed to compute Z coordinates of points on dip planes</li>
+<li><strong>xtemp</strong> &#8211; X dimension of model grid nodes</li>
+<li><strong>ytemp</strong> &#8211; Y dimension of model grid nodes</li>
+<li><strong>ztemp</strong> &#8211; Z dimension of model grid nodes</li>
+<li><strong>select</strong> &#8211; Model grid nodes to consider</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">set_no - Number of planes with selected model grid nodes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.prob_choose">
+<code class="descclassname">hyvr.sim.</code><code class="descname">prob_choose</code><span class="sig-paren">(</span><em>choices</em>, <em>probs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#prob_choose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.prob_choose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get random values of an architectural element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>choices</strong> &#8211; Fixed number of choices</li>
+<li><strong>probs</strong> &#8211; Contains data of architectural element units and associated hydrofacies</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">choice <em>(int)</em> - Random value of architectural elements</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.rand_trough">
+<code class="descclassname">hyvr.sim.</code><code class="descname">rand_trough</code><span class="sig-paren">(</span><em>tr</em>, <em>mg=False</em>, <em>ztr=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#rand_trough"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.rand_trough" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly generate ellipsoid geometry parameters:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tr</strong> &#8211; Ellipsoid parameters</li>
+<li><strong>mg</strong> &#8211; Meshgrid object</li>
+<li><strong>ztr</strong> &#8211; Elevation of ellipsoid centre point</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a, b, c - Length, width and depth of ellipsoid</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.run">
+<code class="descclassname">hyvr.sim.</code><code class="descname">run</code><span class="sig-paren">(</span><em>param_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function for HYVR generation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>param_file</strong> (<em>str</em>) &#8211; Parameter file location</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Save data outputs as parameter file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.save_arrays">
+<code class="descclassname">hyvr.sim.</code><code class="descname">save_arrays</code><span class="sig-paren">(</span><em>arr_size</em>, <em>bg=None</em>, <em>mat_count=0</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#save_arrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.save_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate arrays for material properties storage</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr_size</strong> &#8211; Size of array</li>
+<li><strong>bg</strong> &#8211; List of background values for each array</li>
+<li><strong>ani</strong> (<em>bool</em>) &#8211; Boolean if anisotropy is to be generated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>ha_arr - Material values</li>
+<li>fac - Facies values</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.save_models">
+<code class="descclassname">hyvr.sim.</code><code class="descname">save_models</code><span class="sig-paren">(</span><em>realdir</em>, <em>realname</em>, <em>mg</em>, <em>outputs</em>, <em>flowtrans</em>, <em>k_iso</em>, <em>ktensors</em>, <em>poros</em>, <em>anirat</em>, <em>dip</em>, <em>azim</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#save_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.save_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save HYVR outputs to standard modelling codes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>run</strong> (<em>dict</em>) &#8211; Model run parameters</li>
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+<li><strong>flowtrans</strong> (<em>dict</em>) &#8211; Flow &amp; transport simulation parameters</li>
+<li><strong>k_iso</strong> &#8211; Horizontal hydraulic conductivity array</li>
+<li><strong>ktensors</strong> &#8211; Array with tensor values of K</li>
+<li><strong>poros</strong> &#8211; Porosity array</li>
+<li><strong>anirat</strong> &#8211; Anistropic ratio ($K_h/K_v$)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Save data outputs as .mf (MODFLOW) or .hgs (HydroGeoSphere)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.save_outputs">
+<code class="descclassname">hyvr.sim.</code><code class="descname">save_outputs</code><span class="sig-paren">(</span><em>realdir</em>, <em>realname</em>, <em>outputs</em>, <em>mg</em>, <em>outdict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#save_outputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.save_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save data arrays to standard formats</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>realdir</strong> (<em>str</em>) &#8211; File path to save to</li>
+<li><strong>realname</strong> (<em>str</em>) &#8211; File name</li>
+<li><strong>outputs</strong> (<em>str</em>) &#8211; String codes for what type of outputs should be saved</li>
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+<li><strong>outdict</strong> &#8211; Output directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Save data outputs as .vtk (Paraview), .mat (Matlab) or .dat (Python pickle output)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.scale_rotate">
+<code class="descclassname">hyvr.sim.</code><code class="descname">scale_rotate</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em>, <em>alpha=0</em>, <em>a=1</em>, <em>b=1</em>, <em>c=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#scale_rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.scale_rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale and rotate three-dimensional trough</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y, z</strong> (<em>x,</em>) &#8211; Spatial coordinates</li>
+<li><strong>alpha</strong> (<em>float</em>) &#8211; Rotation angle about the z-axis</li>
+<li><strong>b, c</strong> (<em>a,</em>) &#8211; Axis lengths in x, y, z directions (ellipsoid length, width, depth)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>select - Grid cells within ellipsoid</li>
+<li>R2 - Grid of scaled and rotated values</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.sim.thetaAR2">
+<code class="descclassname">hyvr.sim.</code><code class="descname">thetaAR2</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>k</em>, <em>h</em>, <em>eps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#thetaAR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.thetaAR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)
+<a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t1</strong> &#8211; theta(i-1)</li>
+<li><strong>t2</strong> &#8211; theta(i-2)</li>
+<li><strong>k</strong> &#8211; Wavenumber</li>
+<li><strong>h</strong> &#8211; Height</li>
+<li><strong>eps</strong> &#8211; Random background noise</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">2nd-order autoregression (AR2)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.utils">
+<span id="hyvr-utils-module"></span><h2>hyvr.utils module<a class="headerlink" href="#module-hyvr.utils" title="Permalink to this headline">¶</a></h2>
+<p>Some utility functions for HFM modelling</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Jeremy P. Bennett, with help from Alessandro Comunian and Samuel Scherrer</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Notes:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="hyvr.utils.calc_norm">
+<code class="descclassname">hyvr.utils.</code><code class="descname">calc_norm</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#calc_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.calc_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate norm (compute the complex conjugate from &#8216;x&#8217;)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> &#8211; Input parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Complex conjugate of x</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.dem_load">
+<code class="descclassname">hyvr.utils.</code><code class="descname">dem_load</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#dem_load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.dem_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from ESRI-style ASCII-file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fn</strong> (<em>str</em>) &#8211; Directory and file name for save</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>data <em>(numpy array)</em> - Data from ERSI-style ASCII-file</li>
+<li>meta <em>(dict)</em> - Dict with grid metadata</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.dem_save">
+<code class="descclassname">hyvr.utils.</code><code class="descname">dem_save</code><span class="sig-paren">(</span><em>fn</em>, <em>data</em>, <em>gro</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#dem_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.dem_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save DEM data to ESRI-style ASCII-file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>str</em>) &#8211; Directory and file name for save</li>
+<li><strong>data</strong> (<em>numpy array</em>) &#8211; DEM data</li>
+<li><strong>gr</strong> (<em>object class</em>) &#8211; grid.Grid() object class</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Save DEM data to ESRI-style ASCII-file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.get_boreholes">
+<code class="descclassname">hyvr.utils.</code><code class="descname">get_boreholes</code><span class="sig-paren">(</span><em>bh_loc</em>, <em>fin</em>, <em>fout=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#get_boreholes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.get_boreholes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get virtual borehole data
+Returns values at centroids - this might not match the borehole inputs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bh_loc</strong> &#8211; Location of boreholes</li>
+<li><strong>fin</strong> &#8211; Filepath of properties input</li>
+<li><strong>fout</strong> &#8211; Filepath to save borehole information</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bhdf - X, Y values at centroids</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.load_gslib">
+<code class="descclassname">hyvr.utils.</code><code class="descname">load_gslib</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#load_gslib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.load_gslib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load .gslib files. This has been appropriated from the HPGL library
+<a class="reference external" href="https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py">https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py</a>
+commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fn</strong> (<em>str</em>) &#8211; .gslib file path and name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">gslib_dict <em>(dict)</em> - properties</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.load_pickle">
+<code class="descclassname">hyvr.utils.</code><code class="descname">load_pickle</code><span class="sig-paren">(</span><em>pickfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#load_pickle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.load_pickle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pickle input file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pickfile</strong> &#8211; Input file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">data <em>(dict)</em> - Pickled data of input file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.matlab_save">
+<code class="descclassname">hyvr.utils.</code><code class="descname">matlab_save</code><span class="sig-paren">(</span><em>fn</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#matlab_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.matlab_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save numpy array to .mat file for use in matlab.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>str</em>) &#8211; File name (ending with .mat)</li>
+<li><strong>data</strong> (<em>numpy array</em>) &#8211; Data to save</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Save a dictionary of names and arrays into a MATLAB-style .mat file.
+This saves the array objects in the given dictionary to a MATLAB- style .mat file.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.read_lu">
+<code class="descclassname">hyvr.utils.</code><code class="descname">read_lu</code><span class="sig-paren">(</span><em>sq_fp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#read_lu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.read_lu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load user-defined strata (architectural element lookup table),
+split the data based on a delimiter and return it as a new list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sq_fp</strong> &#8211; Load user-defined strata (architectural element lookup table)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>ssm_lu *</strong> &#8211; -Values of architectural element lookup table</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.rotate_ktensor">
+<code class="descclassname">hyvr.utils.</code><code class="descname">rotate_ktensor</code><span class="sig-paren">(</span><em>count</em>, <em>aniso</em>, <em>azimuth</em>, <em>dip</em>, <em>k_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#rotate_ktensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.rotate_ktensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a rotated K tensor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>count</strong> (<em>int</em>) &#8211; Material number and/or identifier</li>
+<li><strong>aniso</strong> &#8211; Anisotropy</li>
+<li><strong>azimuth</strong> &#8211; Azimuth angles</li>
+<li><strong>dip</strong> &#8211; Dipping angles</li>
+<li><strong>k_in</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">k_rotate - Rotated K tensor</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.round_x">
+<code class="descclassname">hyvr.utils.</code><code class="descname">round_x</code><span class="sig-paren">(</span><em>x</em>, <em>base=1</em>, <em>prec=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#round_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.round_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round to the nearest z-increment (Refer to <a class="reference external" href="http://stackoverflow.com/questions/2272149/round-to-5-or-other-number-in-python">http://stackoverflow.com/questions/2272149/round-to-5-or-other-number-in-python</a>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; Input parameter</li>
+<li><strong>base</strong> (<em>int</em>) &#8211; Base parameter for avoiding floating-point values</li>
+<li><strong>prec</strong> &#8211; Precision of rounding</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Rounded value of nearest z-increment</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.specsim">
+<code class="descclassname">hyvr.utils.</code><code class="descname">specsim</code><span class="sig-paren">(</span><em>gr</em>, <em>var</em>, <em>corl</em>, <em>twod=False</em>, <em>covmod='gau'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#specsim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.specsim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate random variables stationary covariance function using spectral techniques of Dietrich &amp; Newsam (1993)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gr</strong> &#8211; Grid class object</li>
+<li><strong>var</strong> &#8211; Variance</li>
+<li><strong>corl</strong> &#8211; Tuple of correlation length of random variable</li>
+<li><strong>twod</strong> &#8211; Flag for two-dimensional simulation</li>
+<li><strong>covmod</strong> &#8211; Which covariance model to use (&#8216;gau&#8217; = Gaussian, &#8216;exp&#8217; = Exponential).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bigy - Random gaussian variable. Real part of a complex array, created via inverse DFT</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.to_hgs">
+<code class="descclassname">hyvr.utils.</code><code class="descname">to_hgs</code><span class="sig-paren">(</span><em>hgspath</em>, <em>mg</em>, <em>flowtrans</em>, <em>ktensors</em>, <em>poros</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_hgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_hgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert HYVR outputs to HydroGeoSphere inputs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hgspath</strong> (<em>str</em>) &#8211; Path where to save HGS output file</li>
+<li><strong>ktensors</strong> &#8211; Array with tensor values of K</li>
+<li><strong>poros</strong> &#8211; Array with values of porosity</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>val_fmts <em>(dict)</em> - Dictionary with values of K tensor and porosity</li>
+<li>val_filepath - file name of HGS output file</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.to_mf6">
+<code class="descclassname">hyvr.utils.</code><code class="descname">to_mf6</code><span class="sig-paren">(</span><em>mfdir</em>, <em>runname</em>, <em>mg</em>, <em>flowtrans</em>, <em>k_iso</em>, <em>anirat</em>, <em>dip</em>, <em>azim</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_mf6"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_mf6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert HYVR outputs to MODFLOW6 inputs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mfdir</strong> &#8211; Directory of MODFLOW model object</li>
+<li><strong>runname</strong> &#8211; Run name</li>
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+<li><strong>flowtrans</strong> (<em>dict</em>) &#8211; Flow &amp; transport simulation parameters</li>
+<li><strong>k_iso</strong> &#8211; Hydraulic conductivity of HYVR</li>
+<li><strong>anirat</strong> &#8211; Background anistropic ratio (K_h/K_v anisotropy ratio)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>mf - MODFLOW model object</li>
+<li>dis - Discretization of modflow object</li>
+<li>bas - BAS package of modflow model</li>
+<li>lpf - LPF package of modflow model</li>
+<li>oc - OC package of modflow model</li>
+<li>pcg - pcg package of modflow model</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.to_modflow">
+<code class="descclassname">hyvr.utils.</code><code class="descname">to_modflow</code><span class="sig-paren">(</span><em>mfdir</em>, <em>mg</em>, <em>flowtrans</em>, <em>k_iso</em>, <em>anirat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_modflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_modflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert HYVR outputs to MODFLOW inputs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mfdir</strong> &#8211; Directory of MODFLOW model object</li>
+<li><strong>mg</strong> &#8211; Mesh grid object class</li>
+<li><strong>flowtrans</strong> (<em>dict</em>) &#8211; Flow &amp; transport simulation parameters</li>
+<li><strong>k_iso</strong> &#8211; Hydraulic conductivity of HYVR</li>
+<li><strong>anirat</strong> &#8211; Background anistropic ratio (K_h/K_v anisotropy ratio)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>mf - MODFLOW model object</li>
+<li>dis - Discretization of modflow object</li>
+<li>bas - BAS package of modflow model</li>
+<li>lpf - LPF package of modflow model</li>
+<li>oc - OC package of modflow model</li>
+<li>pcg - pcg package of modflow model</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.to_vtk">
+<code class="descclassname">hyvr.utils.</code><code class="descname">to_vtk</code><span class="sig-paren">(</span><em>data</em>, <em>file_name</em>, <em>grid=None</em>, <em>sc_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_vtk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a numpy array into a VTK STRUCTURED_POINTS file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy array</em>) &#8211; Numpy array containing the data, <cite>int</cite> or <cite>float</cite> or <cite>uint</cite>.
+The dimensions should be between 1 and 3</li>
+<li><strong>file_name</strong> (<em>str</em>) &#8211; Name of the file for the output, optional (None)</li>
+<li><strong>grid</strong> (<em>class Grid</em>) &#8211; Information about the grid can be also provided as a Grid object</li>
+<li><strong>sc_name</strong> (<em>str</em>) &#8211; Name of the scalar quantities</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A VTK &#8216;STRUCTURED_POINTS&#8217; dataset file containing the input numpy data.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.to_vtr">
+<code class="descclassname">hyvr.utils.</code><code class="descname">to_vtr</code><span class="sig-paren">(</span><em>data_dict</em>, <em>file_name</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_vtr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_vtr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a numpy array into a <code class="docutils literal"><span class="pre">.vtr</span></code> rectilinear grid of voxels using pyevtk</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data_dict</strong> (<em>numpy array</em>) &#8211; e.g. {&#8216;fac&#8217;: fac, &#8216;mat&#8217;: mat}</li>
+<li><strong>file_name</strong> (<em>str</em>) &#8211; Name of the file for the output.</li>
+<li><strong>grid</strong> (<em>class Grid</em>) &#8211; The information about the grid can be also provided as a grid object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A VTK STRUCTURED_POINTS dataset file containing the input numpy data.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.try_makefolder">
+<code class="descclassname">hyvr.utils.</code><code class="descname">try_makefolder</code><span class="sig-paren">(</span><em>makedir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#try_makefolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.try_makefolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create modflow output folder</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.vtk_mask">
+<code class="descclassname">hyvr.utils.</code><code class="descname">vtk_mask</code><span class="sig-paren">(</span><em>data</em>, <em>out_name</em>, <em>mask_val=-15</em>, <em>grid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#vtk_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.vtk_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a mask file from a <code class="docutils literal"><span class="pre">vtk</span></code> input. All values should be 0 or 1 after this operation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>numpy array</em>) &#8211; Data to replace</li>
+<li><strong>out_name</strong> (<em>str</em>) &#8211; Name of the file for the output.</li>
+<li><strong>mask_val</strong> (<em>int</em>) &#8211; Value of the facies which should be masked</li>
+<li><strong>grid</strong> &#8211; Grid class</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A VTK &#8216;STRUCTURED_POINTS&#8217; dataset file containing the mask data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.vtk_read">
+<code class="descclassname">hyvr.utils.</code><code class="descname">vtk_read</code><span class="sig-paren">(</span><em>file_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#vtk_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.vtk_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a <code class="docutils literal"><span class="pre">.vtk</span></code> file into a numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_in</strong> (<em>str</em>) &#8211; Name and filepath to read</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>gegrid <em>(hyvr.grid class)</em> - Grid class</li>
+<li>props <em>(numpy array)</em> - Grid properties</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.vtk_trim">
+<code class="descclassname">hyvr.utils.</code><code class="descname">vtk_trim</code><span class="sig-paren">(</span><em>file_in</em>, <em>dims</em>, <em>file_out=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#vtk_trim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.vtk_trim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trims a vtk file to the desired dimensions.
+Removes the effort of working out the indexing in a .grdecl file
+Saves as a .vtk file with everything the same except the dimensions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_in</strong> &#8211; .vtk file to trim</li>
+<li><strong>dims</strong> &#8211; 3-tuple of dimensions</li>
+<li><strong>file_out</strong> &#8211; Output file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>gegrid - Grid class of the data</li>
+<li>props - The data as a nx x ny x nz array</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.parameters">
+<span id="hyvr-parameters-module"></span><h2>hyvr.parameters module<a class="headerlink" href="#module-hyvr.parameters" title="Permalink to this headline">¶</a></h2>
+<p>This is the main module for parsing the parameter file. There are two other
+modules strongly linked ot this one:
+* options: contains definitions of the possible options of a parameter file
+* option_parsing: provides the classes Section and Option for simpler parsing and validation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Jeremy P. Bennett, Samuel Scherrer</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="hyvr.parameters.model_setup">
+<code class="descclassname">hyvr.parameters.</code><code class="descname">model_setup</code><span class="sig-paren">(</span><em>pf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up model using grid.Grid() class and assign parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pf</strong> (<em>str</em>) &#8211; Parameter file path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>run <em>(dict)</em> - Model run parameters</li>
+<li>mod <em>(dict)</em> - Model domain parameters</li>
+<li>sequences <em>(dict)</em> - Sequence parameters</li>
+<li>hydraulics <em>(dict)</em> - Hydraulic properties parameters</li>
+<li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
+<li>elements <em>(dict)</em> - Architectural elements and parameters</li>
+<li>model_grid <em>(object class)</em> - Grid object class</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.parameters.parameters">
+<code class="descclassname">hyvr.parameters.</code><code class="descname">parameters</code><span class="sig-paren">(</span><em>inifile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get parameters for hierarchical facies modelling from a .ini-file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inifile</strong> (<em>str</em>) &#8211; Parameter file path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li>run <em>(dict)</em> - Model run parameters</li>
+<li>model <em>(dict)</em> - Model domain parameters</li>
+<li>sequences <em>(dict)</em> - Sequence parameters</li>
+<li>hydraulics <em>(dict)</em> - Hydraulic properties parameters</li>
+<li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
+<li>elements <em>(dict)</em> - Architectural elements and parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.options">
+<span id="hyvr-options-module"></span><h2>hyvr.options module<a class="headerlink" href="#module-hyvr.options" title="Permalink to this headline">¶</a></h2>
+<p>This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Samuel Scherrer, Jeremy P. Bennett</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-hyvr.option_parsing">
+<span id="hyvr-option-parsing-module"></span><h2>hyvr.option_parsing module<a class="headerlink" href="#module-hyvr.option_parsing" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the classes Section and Option to simplify parsing and
+validating ini-files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Samuel Scherrer</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="hyvr.option_parsing.Section">
+<em class="property">class </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">Section</code><span class="sig-paren">(</span><em>name</em>, <em>options</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#Section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.Section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hyvr.option_parsing.Section.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>section_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#Section.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.Section.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses and validates options of the section given a dictionary
+containing key-value pairs of the options. If options are not present,
+default values might be set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>section_dict</strong> (<em>dictionary</em>) &#8211; <p>Dictionary of section values. This can for example be obtained
+using <code class="docutils literal"><span class="pre">configparser</span></code>:</p>
+<blockquote>
+<div>p = configparser.ConfigParser()
+p.read(filename)
+section_dict = dict(p[section_name])</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>section_dict</strong> &#8211; The same dictionary with parsed and validated values</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hyvr.option_parsing.Option">
+<em class="property">class </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">Option</code><span class="sig-paren">(</span><em>name</em>, <em>dtype</em>, <em>optional=False</em>, <em>default=None</em>, <em>shape=-1</em>, <em>datatype=None</em>, <em>validation_func=&lt;function Option.&lt;lambda&gt; at 0x000000001BEC07B8&gt;</em>, <em>alternatives=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.Option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; name of the option</li>
+<li><strong>dtype</strong> (<em>type</em>) &#8211; type of the value of the option, e.g. float, str, int, or list.
+If dtype is list, every entry of the list must have the same type.</li>
+<li><strong>optional</strong> (<em>bool, optional (default: False)</em>) &#8211; whether the option is optional or not</li>
+<li><strong>default</strong> (<em>optional, (default: None)</em>) &#8211; if optional=True, this default value will be used if this option is not
+given.</li>
+<li><strong>shape</strong> (<em>int or string or list/tuple of ints and/or strings, optional (only</em>) &#8211; <p>required for lists, default: None)
+If dtype is <code class="docutils literal"><span class="pre">list</span></code>, this is the shape of the list.
+There are several possibilities how to use this option:</p>
+<ul>
+<li>if <code class="docutils literal"><span class="pre">shape=n</span></code> where n is a nonnegative integer, the value must be
+a list with length <code class="docutils literal"><span class="pre">n</span></code>.</li>
+<li>if <code class="docutils literal"><span class="pre">shape=-1</span></code> the value can have an arbitrary shape.</li>
+<li>if <code class="docutils literal"><span class="pre">shape=&quot;option1&quot;</span></code>, the value of this option must have the same
+shape as &#8220;option1&#8221;. This is especially useful if the shape of
+&#8220;option1&#8221; is set to -1.</li>
+<li>if <code class="docutils literal"><span class="pre">shape=[2,</span> <span class="pre">3]</span></code>, the value must be a list of lists, where the
+outermost list has length 2 and the inner lists all have length 3.
+This also works for more than 2 dimensions.</li>
+<li>if <a href="#id1"><span class="problematic" id="id2">``</span></a>shape=[2, -1, 3], the value must be a list of lists of lists.
+The outermost list must again have length 2, the innermost lists must
+have length 3, and the lists at the intermediate level can have any
+length (even different lengths).</li>
+<li>if <code class="docutils literal"><span class="pre">shape=[2,</span> <span class="pre">&quot;option1&quot;,</span> <span class="pre">3]</span></code>, the values must again be a list of
+lists similar to above, but now the lists at the intermediate level
+must have the same length as &#8220;option1&#8221;.</li>
+<li>if <code class="docutils literal"><span class="pre">shape=[2,</span> <span class="pre">[1,</span> <span class="pre">2],</span> <span class="pre">[[3],</span> <span class="pre">[3,</span> <span class="pre">3]]]</span></code>, the value must be a list
+of lists of lists. The outermost list must again have length 2. The
+two lists it contains have length 1 and length 2. The innermost lists
+all must have length 3.</li>
+</ul>
+<p>It&#8217;s also possible to only give the innermost value(s), e.g. for a list
+with <code class="docutils literal"><span class="pre">shape=[2,</span> <span class="pre">3]</span></code> only the value <code class="docutils literal"><span class="pre">18</span></code>. This will then be expanded
+to <code class="docutils literal"><span class="pre">[[18,</span> <span class="pre">18,</span> <span class="pre">18],</span> <span class="pre">[18,</span> <span class="pre">18,</span> <span class="pre">18]]</span></code>. Similarly, <code class="docutils literal"><span class="pre">[18,</span> <span class="pre">19,</span> <span class="pre">20]</span></code> would
+be expanded to <code class="docutils literal"><span class="pre">[[18,</span> <span class="pre">19,</span> <span class="pre">20],</span> <span class="pre">[18,</span> <span class="pre">19,</span> <span class="pre">20]]</span></code>.
+This expansion obviously doesn&#8217;t work if <code class="docutils literal"><span class="pre">shape=-1</span></code>.
+If <code class="docutils literal"><span class="pre">shape=[2,</span> <span class="pre">-1,</span> <span class="pre">3]</span></code>, expansion is possible if the given value is
+e.g. <code class="docutils literal"><span class="pre">[[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]]</span></code>, but not if only <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>
+is given, since the length of the second dimension must be determined
+from the given value.</p>
+</li>
+<li><strong>datatype</strong> (<em>int, float or string, optional (only required for lists, default: None)</em>) &#8211; Type of the innermost elements of the option in case the option is a list.</li>
+<li><strong>validation_func</strong> (<em>function of one argument that returns a boolean, optional.</em>) &#8211; Returns true if the value (for lists or lists of lists this applies to
+all values) is valid.</li>
+<li><strong>alternatives</strong> (<em>list of strings</em>) &#8211; List of alternative names for this option. If the option is not found
+in the given dictionary while parsing, these alternatives are used if
+they exist. If an alternative is found (searching happens in the
+supplied order), the option is stored under it&#8217;s standard name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hyvr.option_parsing.Option.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>section</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#Option.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.Option.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the option based on it&#8217;s attributes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="hyvr.option_parsing.MissingSectionError">
+<em class="property">exception </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">MissingSectionError</code><span class="sig-paren">(</span><em>sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#MissingSectionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.MissingSectionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hyvr.option_parsing.MissingOptionError">
+<em class="property">exception </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">MissingOptionError</code><span class="sig-paren">(</span><em>optionname</em>, <em>sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#MissingOptionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.MissingOptionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hyvr.option_parsing.ShapeError">
+<em class="property">exception </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">ShapeError</code><span class="sig-paren">(</span><em>optionname</em>, <em>sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#ShapeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.ShapeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.option_parsing.assert_exists">
+<code class="descclassname">hyvr.option_parsing.</code><code class="descname">assert_exists</code><span class="sig-paren">(</span><em>option</em>, <em>dictionary</em>, <em>section_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#assert_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.assert_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="methods.html">HYVR Computational methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="inout.html">HYVR inputs and outputs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example.html">HYVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">HyVR Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="more.html">Extending HyVR</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">hyvr</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html">hyvr package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HyVR package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-hyvr.grid">hyvr.grid module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-hyvr.sim">hyvr.sim module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-hyvr.utils">hyvr.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-hyvr.parameters">hyvr.parameters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-hyvr.options">hyvr.options module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-hyvr.option_parsing">hyvr.option_parsing module</a></li>
 </ul>
 </li>
 </ul>
@@ -62,55 +1965,23 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="references.html"
                         title="previous chapter">References</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="hyvr.html"
-                        title="next chapter">hyvr package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/modules.rst.txt"
+      <li><a href="_sources/modules.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="hyvr">
-<h1>hyvr<a class="headerlink" href="#hyvr" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="hyvr.html">hyvr package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html#module-hyvr.grid">hyvr.grid module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html#module-hyvr.sim">hyvr.sim module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html#module-hyvr.utils">hyvr.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html#hyvr-option-parsing-module">hyvr.option_parsing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hyvr.html#module-hyvr">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-
-          </div>
         </div>
       </div>
       <div class="clearer"></div>
@@ -125,17 +1996,14 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="hyvr.html" title="hyvr package"
-             >next</a> |</li>
-        <li class="right" >
           <a href="references.html" title="References"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HYVR 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HYVR 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

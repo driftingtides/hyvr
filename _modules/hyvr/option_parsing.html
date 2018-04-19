@@ -1,27 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
-<!doctype html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.option_parsing &#8212; HYVR 0.1 documentation</title>
-    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    
+    <title>hyvr.option_parsing &#8212; HYVR 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
-    <![endif]-->
-  </head><body>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="HYVR 0.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -31,38 +37,10 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HYVR 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HYVR 0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../methods.html">HYVR Computational methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../inout.html">HYVR inputs and outputs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../example.html">HYVR Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../more.html">Extending HyVR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">hyvr</a></li>
-</ul>
-
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -83,14 +61,14 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Section&quot;</span><span class="p">,</span> <span class="s2">&quot;Option&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingSectionError&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingOptionError&quot;</span><span class="p">,</span> <span class="s2">&quot;ShapeError&quot;</span><span class="p">,</span> <span class="s2">&quot;assert_exists&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="Section"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.Section">[docs]</a><span class="k">class</span> <span class="nc">Section</span><span class="p">():</span>
+<div class="viewcode-block" id="Section"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Section">[docs]</a><span class="k">class</span> <span class="nc">Section</span><span class="p">():</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">options</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Section.parse"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.Section.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="Section.parse"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Section.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parses and validates options of the section given a dictionary</span>
 <span class="sd">        containing key-value pairs of the options. If options are not present,</span>
@@ -113,10 +91,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dict</span> <span class="o">=</span> <span class="n">section_dict</span>
         <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span></div></div>
 
-<div class="viewcode-block" id="Option"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.Option">[docs]</a><span class="k">class</span> <span class="nc">Option</span><span class="p">():</span>
+<div class="viewcode-block" id="Option"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Option">[docs]</a><span class="k">class</span> <span class="nc">Option</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -197,7 +175,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has type list, but no datatype for its elements was given.&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Option.parse"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.Option.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+<div class="viewcode-block" id="Option.parse"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Option.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parses the option based on it&#39;s attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -287,8 +265,8 @@
                 <span class="c1"># * shape validation</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">expand_to_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_shapes</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">get_shape</span><span class="p">(</span><span class="n">value</span><span class="p">)):</span>
-                    <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div></div>
-                <span class="k">return</span> <span class="n">value</span>
+                    <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">value</span></div></div>
 
 
 
@@ -418,9 +396,9 @@
 
 
 
-<div class="viewcode-block" id="assert_exists"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.assert_exists">[docs]</a><span class="k">def</span> <span class="nf">assert_exists</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">,</span> <span class="n">section_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span></div>
-        <span class="k">raise</span> <span class="n">MissingOptionError</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">section_name</span><span class="p">)</span>
+<div class="viewcode-block" id="assert_exists"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.assert_exists">[docs]</a><span class="k">def</span> <span class="nf">assert_exists</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">,</span> <span class="n">section_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MissingOptionError</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">section_name</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">all_true</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">)):</span>
@@ -463,23 +441,49 @@
     <span class="k">return</span> <span class="n">l</span>
 
 
-<div class="viewcode-block" id="ShapeError"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.ShapeError">[docs]</a><span class="k">class</span> <span class="nc">ShapeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="ShapeError"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.ShapeError">[docs]</a><span class="k">class</span> <span class="nc">ShapeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optionname</span><span class="p">,</span> <span class="n">sectionname</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; has wrong shape!&quot;</span></div>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; has wrong shape!&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MissingOptionError"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.MissingOptionError">[docs]</a><span class="k">class</span> <span class="nc">MissingOptionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="MissingOptionError"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.MissingOptionError">[docs]</a><span class="k">class</span> <span class="nc">MissingOptionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optionname</span><span class="p">,</span> <span class="n">sectionname</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; is missing!&quot;</span></div>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; is missing!&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MissingSectionError"><a class="viewcode-back" href="../../hyvr.html#hyvr.option_parsing.MissingSectionError">[docs]</a><span class="k">class</span> <span class="nc">MissingSectionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="MissingSectionError"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.MissingSectionError">[docs]</a><span class="k">class</span> <span class="nc">MissingSectionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sectionname</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; is missing!&quot;</span></div>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; is missing!&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">HyVR package</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -493,13 +497,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HYVR 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HYVR 0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>
