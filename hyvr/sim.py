@@ -1157,7 +1157,7 @@ def ferguson_curve(mg, h, k, ds, eps_factor, dist=0, disp=False, ch_start=[]):
     if dist > 0:
         ns = dist
     else:
-        ns = mg.lx/10
+        ns = mg.lx*100
     s = np.arange(0, ns, ds)
 
     # Centreline starting point

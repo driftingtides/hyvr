@@ -315,6 +315,8 @@ three-dimensional arrays:
 - ``dat`` Python 'pickle' file - this is a native Python format that can be loaded into Python using ``hyvr.utils.load_pickle()``.
 - ``mat`` MATLAB file
 - ``vtr`` VTK rectilinear grid file -  this can be opened in ParaView for improved three-dimensional visualisation.
+- ``h5`` HDF5 format 
+- ``npz`` Numpy compressed format
 
 HyVR can also create files that can be used as model inputs for some flow and transport modelling packages These currently include:
 

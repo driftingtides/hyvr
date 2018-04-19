@@ -37,6 +37,10 @@ external/*
 *.c
 *.so
 *.pyd
+.orig
+hyvr/sim.py.orig
+*.tif
+*.orig
 push_to_github.sh
 .hgtags
 pytest.ini
