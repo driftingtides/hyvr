@@ -26,6 +26,7 @@ Contents
    troubleshooting
    references
    modules
+   changelog
 
 
 

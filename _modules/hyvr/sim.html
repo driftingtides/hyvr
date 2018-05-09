@@ -68,7 +68,6 @@
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">h5py</span>
@@ -139,8 +138,9 @@
                             <span class="n">props</span><span class="p">[</span><span class="s1">&#39;poros&#39;</span><span class="p">],</span>
                             <span class="n">props</span><span class="p">[</span><span class="s1">&#39;anirat&#39;</span><span class="p">],</span>
                             <span class="n">props</span><span class="p">[</span><span class="s1">&#39;dip&#39;</span><span class="p">],</span>
-                            <span class="n">props</span><span class="p">[</span><span class="s1">&#39;azim&#39;</span><span class="p">])</span></div>
+                            <span class="n">props</span><span class="p">[</span><span class="s1">&#39;azim&#39;</span><span class="p">])</span>
 
+    <span class="k">return</span> <span class="n">props</span><span class="p">,</span> <span class="n">params</span></div>
 
 <div class="viewcode-block" id="facies"><a class="viewcode-back" href="../../modules.html#hyvr.sim.facies">[docs]</a><span class="k">def</span> <span class="nf">facies</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">mg</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;  Generate hydrofacies fields</span>
@@ -172,7 +172,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="sd">&quot;&quot;&quot;--------------------------------------------------------------------------------------------------------------</span>
-<span class="sd">    Simulate system contacts</span>
+<span class="sd">    Simulate major strata contacts</span>
 <span class="sd">    --------------------------------------------------------------------------------------------------------------&quot;&quot;&quot;</span>
     <span class="n">num_ssm</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm&#39;</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">num_ssm</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -185,7 +185,7 @@
 
         <span class="k">for</span> <span class="n">si</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_ssm</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm_contact&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span> <span class="ow">and</span> <span class="n">si</span> <span class="o">!=</span> <span class="n">num_ssm</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">sp</span> <span class="o">=</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm_contact_model&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">]</span>       <span class="c1"># geostatistical parameters of system</span>
+                <span class="n">sp</span> <span class="o">=</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm_contact_model&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">]</span>       <span class="c1"># geostatistical parameters of major strata</span>
 
                 <span class="c1"># Generate random top contact</span>
                 <span class="n">z_top</span> <span class="o">=</span> <span class="n">hu</span><span class="o">.</span><span class="n">specsim</span><span class="p">(</span><span class="n">mg</span><span class="p">,</span> <span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">twod</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">covmod</span><span class="o">=</span><span class="s1">&#39;gau&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm_top&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">]</span>
@@ -250,9 +250,8 @@
                                         <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_prob&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">])</span>
 
                 <span class="c1"># Assign unit thickness</span>
-                <span class="n">ae_z_mean</span> <span class="o">=</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_z_mean&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">][</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm_ae&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">aelu_z</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span>
-                <span class="n">ae_z</span> <span class="o">=</span> <span class="n">hu</span><span class="o">.</span><span class="n">round_x</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">ae_z_mean</span><span class="p">,</span> <span class="n">ae_z_mean</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">base</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;dz&#39;</span><span class="p">])</span>
-                <span class="n">aelu_z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ae_z</span> <span class="o">+</span> <span class="n">znow</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">lz</span><span class="p">)</span>
+                <span class="n">ae_z_mean</span> <span class="o">=</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_z_mean&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">][</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ssm_ae&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">aelu_z</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span>          <span class="c1"># Get mean</span>
+                <span class="n">ae_z</span> <span class="o">=</span> <span class="n">hu</span><span class="o">.</span><span class="n">round_x</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">ae_z_mean</span><span class="p">,</span> <span class="n">ae_z_mean</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">base</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;dz&#39;</span><span class="p">])</span>   <span class="c1"># Randomly assign thickness</span>
 
                 <span class="c1"># Assign avulsion</span>
                 <span class="n">avul_prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;avul_prob&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">])</span>
@@ -260,6 +259,8 @@
                 <span class="n">avudr</span> <span class="o">=</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;avul&#39;</span><span class="p">][</span><span class="n">si</span><span class="p">]</span>      <span class="c1"># Avulsion depth range for system</span>
                 <span class="n">dz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">avudr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">avudr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">yn</span>
                 <span class="n">znow</span> <span class="o">+=</span> <span class="n">ae_z</span> <span class="o">+</span> <span class="n">dz</span>
+
+                <span class="n">aelu_z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">znow</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">lz</span><span class="p">)</span>     <span class="c1"># Assign depth to list</span>
 
                 <span class="c1"># Append to lookup table</span>
                 <span class="n">ae_lu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aelu_z</span><span class="p">)</span>
@@ -304,14 +305,14 @@
 
         <span class="n">z_bot</span> <span class="o">=</span> <span class="n">z_top</span>           <span class="c1"># Update lower contact surface elevation</span>
 
-    <span class="c1"># Save system lookup table</span>
-    <span class="c1"># if &#39;ae_table&#39; not in strata:</span>
-    <span class="c1">#     lu_savetxt = rundir + &#39;/ae_lu_&#39; + time.strftime(&#39;%d-%m-%Y_%H.%M.%S.txt&#39;)</span>
-    <span class="c1">#     with open(lu_savetxt, &#39;w&#39;) as fwr:</span>
-    <span class="c1">#         print(&#39;strata summary&#39;)</span>
-    <span class="c1">#         for i in ae_lu:</span>
-    <span class="c1">#             fwr.write(&#39;%s\n&#39; % str()[1:-1])</span>
-    <span class="c1">#             print(i)</span>
+    <span class="sd">&quot;&quot;&quot; Save architectural element lookup table &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;save_aelu&#39;</span> <span class="ow">in</span> <span class="n">strata</span> <span class="ow">and</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;save_aelu&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">lu_savetxt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">],</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_aelu.txt&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">lu_savetxt</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fwr</span><span class="p">:</span>
+            <span class="n">fwr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;ae_no,mean_Z_lower,mean_Z_upper,geometry,strata_no</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ae_lu</span><span class="p">:</span>
+                <span class="n">fwr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]))</span>
+                <span class="n">fwr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="sd">&quot;&quot;&quot;--------------------------------------------------------------------------------------------------------------</span>
 <span class="sd">    Hydrofacies simulation</span>
@@ -515,6 +516,18 @@
             <span class="n">k_iso</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">k_iso</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">*</span> <span class="n">xf_vec</span><span class="p">)</span>
             <span class="n">k_iso</span> <span class="o">*=</span> <span class="n">zf_vec</span>
 
+            <span class="k">if</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;n_ztrend&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">zf_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;n_ztrend&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;n_ztrend&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">)</span>  <span class="c1"># Z factor at each elevation</span>
+            <span class="k">else</span><span class="p">:</span>
+               <span class="c1"># Longitudinal trend</span>
+               <span class="n">zf_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,))</span>
+            <span class="k">if</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;n_xtrend&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+               <span class="n">xf_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;n_xtrend&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;n_xtrend&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+               <span class="n">xf_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,))</span>
+            <span class="n">poros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">poros</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">*</span> <span class="n">xf_vec</span><span class="p">)</span>
+            <span class="n">poros</span> <span class="o">*=</span> <span class="n">zf_vec</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Homogeneous case</span>
         <span class="k">for</span> <span class="n">hy_idx</span><span class="p">,</span> <span class="n">hyi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydro&#39;</span><span class="p">]):</span>
@@ -557,7 +570,7 @@
     <span class="k">return</span> <span class="n">props</span><span class="p">,</span> <span class="n">params</span></div>
 
 
-<div class="viewcode-block" id="save_outputs"><a class="viewcode-back" href="../../modules.html#hyvr.sim.save_outputs">[docs]</a><span class="k">def</span> <span class="nf">save_outputs</span><span class="p">(</span><span class="n">realdir</span><span class="p">,</span> <span class="n">realname</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">outdict</span><span class="p">):</span>
+<div class="viewcode-block" id="save_outputs"><a class="viewcode-back" href="../../modules.html#hyvr.sim.save_outputs">[docs]</a><span class="k">def</span> <span class="nf">save_outputs</span><span class="p">(</span><span class="n">realdir</span><span class="p">,</span> <span class="n">realname</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">outdict</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save data arrays to standard formats</span>
 
@@ -567,6 +580,7 @@
 <span class="sd">        outputs (str):		String codes for what type of outputs should be saved</span>
 <span class="sd">        mg:					Mesh grid object class</span>
 <span class="sd">        outdict:			Output directory</span>
+<span class="sd">        suffix (str):       Suffix for file names</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Save data outputs as .vtk (Paraview), .mat (Matlab) or .dat (Python pickle output)</span>
@@ -574,9 +588,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saving files in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">realdir</span><span class="p">))</span>
-    <span class="n">realname</span> <span class="o">=</span> <span class="n">realname</span> <span class="o">+</span> <span class="s1">&#39;_hyvr&#39;</span>
-    <span class="k">if</span> <span class="s1">&#39;vtk&#39;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-        <span class="c1"># VTK output for visualisation in ParaView</span>
+    <span class="k">if</span> <span class="n">suffix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">realname</span> <span class="o">=</span> <span class="n">realname</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">suffix</span>
+
+    <span class="k">if</span> <span class="s1">&#39;vtr&#39;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+        <span class="c1"># VTR output for visualisation in ParaView</span>
         <span class="n">hu</span><span class="o">.</span><span class="n">to_vtr</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">outdict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">outdict</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ktensors&#39;</span><span class="p">]},</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">realdir</span><span class="p">,</span> <span class="n">realname</span><span class="p">),</span> <span class="n">mg</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;: VTR export complete&#39;</span><span class="p">)</span>
@@ -648,9 +664,10 @@
     <span class="k">if</span> <span class="s1">&#39;mf6&#39;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
         <span class="c1"># MODFLOW 6 output</span>
 
-        <span class="c1"># Create HGS output folder</span>
+        <span class="c1"># Create output folder</span>
         <span class="n">mf6dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">realdir</span><span class="p">,</span> <span class="s1">&#39;mf6/hyvr&#39;</span><span class="p">)</span>
-        <span class="n">mf6name</span> <span class="o">=</span> <span class="n">realname</span>
+        <span class="n">mf6name</span> <span class="o">=</span> <span class="s1">&#39;hyvr&#39;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mf6dir</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">mf6dir</span><span class="p">)</span>
 
@@ -702,7 +719,7 @@
         <span class="n">hat_arr</span><span class="p">,</span> <span class="n">ha_arr</span><span class="p">,</span> <span class="n">fac</span> <span class="o">=</span> <span class="n">save_arrays</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">mat_count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;bg&#39;</span><span class="p">],</span> <span class="n">ani</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
-    <span class="n">ae_arr_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">ae_arr_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="c1"># Assign background values</span>
     <span class="n">ae_arr_i</span><span class="p">[</span><span class="n">ae_arr</span> <span class="o">==</span> <span class="n">ae</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ae</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -712,7 +729,7 @@
         <span class="n">tr_bot</span> <span class="o">=</span> <span class="n">ae</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;buffer&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tr_bot</span> <span class="o">=</span> <span class="n">ae</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">tr_top</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ae</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tr_bot</span><span class="p">)</span> <span class="o">+</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;agg&#39;</span><span class="p">]</span>
+    <span class="n">tr_top</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ae</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">tr_bot</span><span class="p">)</span> <span class="c1">#+ tr[&#39;agg&#39;]</span>
 
     <span class="k">if</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;te_xyz&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">gen_elevations</span> <span class="o">=</span> <span class="p">[</span><span class="n">xyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;te_xyz&#39;</span><span class="p">]]</span>
@@ -774,7 +791,7 @@
             <span class="sd">&quot;&quot;&quot;&quot; Assign internal structure &quot;&quot;&quot;</span>
             <span class="n">tr_struct</span> <span class="o">=</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;structure&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">tr_struct</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span><span class="p">:</span>
-                <span class="n">tr_struct</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;dip&#39;</span><span class="p">,</span> <span class="s1">&#39;bulb_l&#39;</span><span class="p">])</span>
+                <span class="n">tr_struct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;dip&#39;</span><span class="p">,</span> <span class="s1">&#39;bulb_l&#39;</span><span class="p">])</span>
 
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">select</span><span class="p">)):</span>
                 <span class="c1"># Skip section if no grid cells selected</span>
@@ -785,7 +802,7 @@
 
             <span class="k">if</span> <span class="n">model</span><span class="p">[</span><span class="s1">&#39;hetlev&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span>
                 <span class="c1"># Add &#39;dip layers&#39; into trough</span>
-                <span class="n">fac_now</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+                <span class="n">fac_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
                 <span class="n">fac</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">fac_now</span>
                 <span class="n">ha_arr</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
                 <span class="n">hat_arr</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span>
@@ -802,7 +819,7 @@
                 <span class="n">dip_tr</span><span class="p">,</span> <span class="n">azim_tr</span> <span class="o">=</span> <span class="n">ellipsoid_gradient</span><span class="p">(</span><span class="n">xd</span><span class="p">,</span> <span class="n">yd</span><span class="p">,</span> <span class="n">zd</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">tr</span><span class="p">)</span>
 
                 <span class="c1"># Assign generated values to grid cells</span>
-                <span class="n">fac_now</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+                <span class="n">fac_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
                 <span class="n">fac</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">fac_now</span>
                 <span class="n">ha_arr</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
                 <span class="n">hat_arr</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span>
@@ -830,11 +847,11 @@
                     <span class="c1"># Assign generated values to grid cells</span>
                     <span class="k">if</span> <span class="n">c_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="c1"># Randomly choose facies</span>
-                        <span class="n">fac_now</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+                        <span class="n">fac_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># Choose next hydrofacies from alternating sets</span>
                         <span class="n">pf_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">fac_now</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># Get facies index</span>
-                        <span class="n">fac_now</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">][</span><span class="n">pf_i</span><span class="p">])</span>                   <span class="c1"># Get next alternating facies</span>
+                        <span class="n">fac_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">][</span><span class="n">pf_i</span><span class="p">])</span>                   <span class="c1"># Get next alternating facies</span>
 
                     <span class="n">fac</span><span class="p">[</span><span class="n">bulb_select</span><span class="p">]</span> <span class="o">=</span> <span class="n">fac_now</span>                                      <span class="c1"># Alternating facies</span>
                     <span class="n">ha_arr</span><span class="p">[</span><span class="n">bulb_select</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
@@ -858,7 +875,7 @@
 
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Add &#39;dip layers&#39; into trough</span>
-                <span class="n">fac</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+                <span class="n">fac</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
                 <span class="n">ha_arr</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
                 <span class="n">hat_arr</span><span class="p">[</span><span class="n">select</span><span class="p">]</span> <span class="o">=</span> <span class="n">tr</span><span class="p">[</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">ani</span><span class="p">:</span>
@@ -1133,7 +1150,7 @@
                 <span class="n">do</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="n">av</span> <span class="o">=</span> <span class="n">dip_sets</span><span class="p">(</span><span class="n">mg</span><span class="p">,</span> <span class="n">ch_par</span><span class="p">,</span> <span class="n">znow</span><span class="p">,</span> <span class="n">curve</span><span class="o">=</span><span class="p">[</span><span class="n">aha</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">aha</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">vx_znow</span><span class="p">,</span> <span class="n">vy_znow</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">do</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">))</span> <span class="o">+</span> <span class="n">count</span>
-                <span class="n">fd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ch_par</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">]))</span>
+                <span class="n">fd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ch_par</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">]))</span>
                 <span class="n">dv</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="n">av</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">))</span>
 
@@ -1355,7 +1372,13 @@
         <span class="n">hat_arr</span><span class="p">,</span> <span class="n">ha_arr</span><span class="p">,</span> <span class="n">fac</span><span class="p">,</span> <span class="n">azim</span><span class="p">,</span> <span class="n">dip</span> <span class="o">=</span> <span class="n">save_arrays</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">hat_arr</span><span class="p">,</span> <span class="n">ha_arr</span><span class="p">,</span> <span class="n">fac</span> <span class="o">=</span> <span class="n">save_arrays</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">ani</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
     <span class="n">hat_arr</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sh</span><span class="p">[</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span>
+
+    <span class="n">ae_arr_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c1"># Assign background values</span>
+    <span class="n">ae_arr_i</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="c1"># Massive bedding -----------------------------------</span>
     <span class="k">if</span> <span class="n">sh</span><span class="p">[</span><span class="s1">&#39;lens_thickness&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -1389,7 +1412,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># No dip</span>
             <span class="n">ha_arr</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">count</span>
-            <span class="n">fac</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+            <span class="n">fac</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">ani</span><span class="p">:</span>
                 <span class="n">azim</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">dip</span><span class="p">[</span><span class="n">ae_array</span> <span class="o">==</span> <span class="n">ae_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1429,7 +1452,7 @@
                     <span class="n">azim</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">z_range</span><span class="p">]</span> <span class="o">=</span> <span class="n">av</span>
                     <span class="n">dip</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">z_range</span><span class="p">]</span> <span class="o">=</span> <span class="n">dv</span>   <span class="c1"># Assign facies sets to storage arrays</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">fac</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">z_range</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+                <span class="n">fac</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">z_range</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
                 <span class="n">ha_arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">z_range</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
                 <span class="k">if</span> <span class="n">ani</span><span class="p">:</span>
                     <span class="n">azim</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">z_range</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1502,10 +1525,10 @@
     <span class="k">if</span> <span class="n">aep</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># Alternating hydrofacies</span>
         <span class="n">ae_fac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">aep</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">fac_now</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ae_fac</span><span class="p">)</span>       <span class="c1"># Initialise previous facies</span>
+        <span class="n">fac_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ae_fac</span><span class="p">)</span>       <span class="c1"># Initialise previous facies</span>
         <span class="k">for</span> <span class="n">idi</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">set_no</span><span class="p">):</span>
             <span class="n">pf_i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fac_now</span> <span class="o">==</span> <span class="n">ae_fac</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>                                         <span class="c1"># Get previous facies index</span>
-            <span class="n">fac_now</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">aep</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">][</span><span class="n">pf_i</span><span class="p">])</span>  <span class="c1"># Get next alternating facies</span>
+            <span class="n">fac_now</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">aep</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">][</span><span class="n">pf_i</span><span class="p">])</span>  <span class="c1"># Get next alternating facies</span>
             <span class="n">fac_set</span><span class="p">[</span><span class="n">set_no</span> <span class="o">==</span> <span class="n">idi</span><span class="p">]</span> <span class="o">=</span> <span class="n">fac_now</span>                                                    <span class="c1"># Set previous facies</span>
 
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">facies</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">aep</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">]):</span>      <span class="c1"># Cycle over hydrofacies in element</span>
@@ -1632,7 +1655,7 @@
     <span class="n">ae_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">chi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">choices</span><span class="p">)):</span>
         <span class="n">ae_list</span> <span class="o">+=</span> <span class="p">[</span><span class="n">choices</span><span class="p">[</span><span class="n">chi</span><span class="p">]]</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">probs</span><span class="p">[</span><span class="n">chi</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-    <span class="n">choice</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ae_list</span><span class="p">)</span>
+    <span class="n">choice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ae_list</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">choice</span></div>
 
@@ -1742,8 +1765,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">param_file</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1">#channel_checker(param_file, &#39;meander_channel&#39;, no_extpar=5, dist=10000)</span>
-        <span class="c1"># param_file = &#39;E:\\Repositories\\WP3_effects\\case_studies\\trough\\tr1\\tr1dip.ini&#39;</span>
-        <span class="c1"># param_file = &#39;..\\testcases\\made.ini&#39;</span>
+        <span class="n">param_file</span> <span class="o">=</span> <span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">testcases</span><span class="se">\\</span><span class="s1">made.ini&#39;</span>
     <span class="n">run</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span>
 </pre></div>
 
@@ -1762,6 +1784,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">HyVR package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog/Bug Fixes</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">

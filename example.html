@@ -78,13 +78,9 @@
 <span class="c1"># Number of realisations</span>
 <span class="n">numsim</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="c1">## Outputs</span>
-<span class="c1"># Required outputs </span>
-<span class="c1"># vtk: *.vtk</span>
-<span class="c1"># py: python pickle</span>
-<span class="c1"># mat *.mat</span>
-<span class="n">dataoutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">vtk</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">py</span><span class="p">]</span>
-<span class="n">modeloutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">mf6</span><span class="p">]</span>
+<span class="c1">## Outputs required</span>
+<span class="n">dataoutputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">vtr</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">npz</span><span class="p">]</span>
+<span class="c1">#modeloutputs = [mf6]</span>
 
 <span class="c1"># Full Filepath/directory for outputs</span>
 <span class="c1"># Default is the directory of the parameter initialization file</span>
@@ -110,10 +106,10 @@
 <span class="n">dz</span> <span class="o">=</span> <span class="mf">0.1</span>
 
 <span class="c1"># Model dimensions [m]</span>
-<span class="n">lx</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="c1">#lx = 40</span>
-<span class="n">ly</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="c1">#ly = 20</span>
+<span class="c1">#lx = 100</span>
+<span class="n">lx</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="c1">#ly = 50</span>
+<span class="n">ly</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">lz</span> <span class="o">=</span> <span class="mi">11</span>
 
 <span class="c1"># Is domain periodic?</span>
@@ -504,6 +500,7 @@
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">HyVR package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog/Bug Fixes</a></li>
 </ul>
 
   <h4>Previous topic</h4>

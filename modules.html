@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="HYVR 0.2 documentation" href="index.html" />
+    <link rel="next" title="Changelog/Bug Fixes" href="changelog.html" />
     <link rel="prev" title="References" href="references.html" /> 
   </head>
   <body role="document">
@@ -37,6 +38,9 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="changelog.html" title="Changelog/Bug Fixes"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="references.html" title="References"
              accesskey="P">previous</a> |</li>
@@ -1190,7 +1194,7 @@ Implementation of AR2 autoregressive model
 
 <dl class="function">
 <dt id="hyvr.sim.save_outputs">
-<code class="descclassname">hyvr.sim.</code><code class="descname">save_outputs</code><span class="sig-paren">(</span><em>realdir</em>, <em>realname</em>, <em>outputs</em>, <em>mg</em>, <em>outdict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#save_outputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.save_outputs" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.sim.</code><code class="descname">save_outputs</code><span class="sig-paren">(</span><em>realdir</em>, <em>realname</em>, <em>outputs</em>, <em>mg</em>, <em>outdict</em>, <em>suffix=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#save_outputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.save_outputs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save data arrays to standard formats</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1202,6 +1206,7 @@ Implementation of AR2 autoregressive model
 <li><strong>outputs</strong> (<em>str</em>) &#8211; String codes for what type of outputs should be saved</li>
 <li><strong>mg</strong> &#8211; Mesh grid object class</li>
 <li><strong>outdict</strong> &#8211; Output directory</li>
+<li><strong>suffix</strong> (<em>str</em>) &#8211; Suffix for file names</li>
 </ul>
 </td>
 </tr>
@@ -1329,29 +1334,6 @@ Implementation of AR2 autoregressive model
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Save DEM data to ESRI-style ASCII-file</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="hyvr.utils.get_boreholes">
-<code class="descclassname">hyvr.utils.</code><code class="descname">get_boreholes</code><span class="sig-paren">(</span><em>bh_loc</em>, <em>fin</em>, <em>fout=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#get_boreholes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.get_boreholes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get virtual borehole data
-Returns values at centroids - this might not match the borehole inputs</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bh_loc</strong> &#8211; Location of boreholes</li>
-<li><strong>fin</strong> &#8211; Filepath of properties input</li>
-<li><strong>fout</strong> &#8211; Filepath to save borehole information</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bhdf - X, Y values at centroids</p>
 </td>
 </tr>
 </tbody>
@@ -1596,7 +1578,7 @@ split the data based on a delimiter and return it as a new list</p>
 
 <dl class="function">
 <dt id="hyvr.utils.to_vtk">
-<code class="descclassname">hyvr.utils.</code><code class="descname">to_vtk</code><span class="sig-paren">(</span><em>data</em>, <em>file_name</em>, <em>grid=None</em>, <em>sc_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_vtk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_vtk" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.utils.</code><code class="descname">to_vtk</code><span class="sig-paren">(</span><em>data</em>, <em>file_name</em>, <em>grid=None</em>, <em>sc_name=None</em>, <em>gtype=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#to_vtk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.to_vtk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a numpy array into a VTK STRUCTURED_POINTS file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1608,6 +1590,7 @@ The dimensions should be between 1 and 3</li>
 <li><strong>file_name</strong> (<em>str</em>) &#8211; Name of the file for the output, optional (None)</li>
 <li><strong>grid</strong> (<em>class Grid</em>) &#8211; Information about the grid can be also provided as a Grid object</li>
 <li><strong>sc_name</strong> (<em>str</em>) &#8211; Name of the scalar quantities</li>
+<li><strong>gtype</strong> (<em>str</em>) &#8211; Grid type (default taken from grid class)</li>
 </ul>
 </td>
 </tr>
@@ -1646,6 +1629,37 @@ The dimensions should be between 1 and 3</li>
 <dt id="hyvr.utils.try_makefolder">
 <code class="descclassname">hyvr.utils.</code><code class="descname">try_makefolder</code><span class="sig-paren">(</span><em>makedir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#try_makefolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.try_makefolder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create modflow output folder</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.utils.virtual_boreholes">
+<code class="descclassname">hyvr.utils.</code><code class="descname">virtual_boreholes</code><span class="sig-paren">(</span><em>data_dict</em>, <em>d</em>, <em>l</em>, <em>file_out=None</em>, <em>vals=[]</em>, <em>opts=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/utils.html#virtual_boreholes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.utils.virtual_boreholes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform &#8216;virtual&#8217; borehole sampling of parameter field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data_dict</strong> (<em>dict</em>) &#8211; Data to sample</li>
+<li><strong>d</strong> (<em>list</em>) &#8211; 3-tuple of model grid cell dimensions</li>
+<li><strong>l</strong> (<em>list</em>) &#8211; 3-tuple of total model dimensions/lengths</li>
+<li><strong>file_out</strong> (<em>str</em>) &#8211; Output filename and path</li>
+<li><strong>vals</strong> (<em>list</em>) &#8211; Parameter fields to include</li>
+<li><strong>opts</strong> (<em>dict</em>) &#8211; Sampling options
+opts[&#8216;noBH&#8217;] (int):     Random sampling
+opts[&#8216;grid_spacing&#8217;]:   Grid sample spacing
+opt[&#8216;log10K&#8217;] (bool):   Log10 transform isotropic hydraulic conductivity</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Pandas DataFrame class</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bh_df</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -1723,9 +1737,11 @@ Saves as a .vtk file with everything the same except the dimensions</p>
 <div class="section" id="module-hyvr.parameters">
 <span id="hyvr-parameters-module"></span><h2>hyvr.parameters module<a class="headerlink" href="#module-hyvr.parameters" title="Permalink to this headline">¶</a></h2>
 <p>This is the main module for parsing the parameter file. There are two other
-modules strongly linked ot this one:
-* options: contains definitions of the possible options of a parameter file
-* option_parsing: provides the classes Section and Option for simpler parsing and validation.</p>
+modules strongly linked ot this one:</p>
+<ul class="simple">
+<li>options: contains definitions of the possible options of a parameter file</li>
+<li>option_parsing: provides the classes Section and Option for simpler parsing and validation.</li>
+</ul>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1736,15 +1752,19 @@ modules strongly linked ot this one:
 </table>
 <dl class="function">
 <dt id="hyvr.parameters.model_setup">
-<code class="descclassname">hyvr.parameters.</code><code class="descname">model_setup</code><span class="sig-paren">(</span><em>pf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.parameters.</code><code class="descname">model_setup</code><span class="sig-paren">(</span><em>pf</em>, <em>nodir=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up model using grid.Grid() class and assign parameters</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pf</strong> (<em>str</em>) &#8211; Parameter file path</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pf</strong> (<em>str</em>) &#8211; Parameter file path</li>
+<li><strong>nodir</strong> (<em>bool</em>) &#8211; Flag for leaving folder structure alone</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li>run <em>(dict)</em> - Model run parameters</li>
 <li>mod <em>(dict)</em> - Model domain parameters</li>
 <li>sequences <em>(dict)</em> - Sequence parameters</li>
@@ -1753,6 +1773,7 @@ modules strongly linked ot this one:
 <li>elements <em>(dict)</em> - Architectural elements and parameters</li>
 <li>model_grid <em>(object class)</em> - Grid object class</li>
 </ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1761,15 +1782,19 @@ modules strongly linked ot this one:
 
 <dl class="function">
 <dt id="hyvr.parameters.parameters">
-<code class="descclassname">hyvr.parameters.</code><code class="descname">parameters</code><span class="sig-paren">(</span><em>inifile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.parameters.</code><code class="descname">parameters</code><span class="sig-paren">(</span><em>inifile</em>, <em>nodir=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for hierarchical facies modelling from a .ini-file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inifile</strong> (<em>str</em>) &#8211; Parameter file path</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inifile</strong> (<em>str</em>) &#8211; Parameter file path</li>
+<li><strong>nodir</strong> (<em>bool</em>) &#8211; Flag for leaving folder structure alone</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
 <li>run <em>(dict)</em> - Model run parameters</li>
 <li>model <em>(dict)</em> - Model domain parameters</li>
 <li>sequences <em>(dict)</em> - Sequence parameters</li>
@@ -1777,6 +1802,7 @@ modules strongly linked ot this one:
 <li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
 <li>elements <em>(dict)</em> - Architectural elements and parameters</li>
 </ul>
+</p>
 </td>
 </tr>
 </tbody>
@@ -1824,10 +1850,11 @@ default values might be set.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>section_dict</strong> (<em>dictionary</em>) &#8211; <p>Dictionary of section values. This can for example be obtained
 using <code class="docutils literal"><span class="pre">configparser</span></code>:</p>
-<blockquote>
-<div>p = configparser.ConfigParser()
-p.read(filename)
-section_dict = dict(p[section_name])</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">section_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">section_name</span><span class="p">])</span>
+</pre></div>
+</div>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>section_dict</strong> &#8211; The same dictionary with parsed and validated values</td>
@@ -1842,7 +1869,7 @@ section_dict = dict(p[section_name])</div></blockquote>
 
 <dl class="class">
 <dt id="hyvr.option_parsing.Option">
-<em class="property">class </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">Option</code><span class="sig-paren">(</span><em>name</em>, <em>dtype</em>, <em>optional=False</em>, <em>default=None</em>, <em>shape=-1</em>, <em>datatype=None</em>, <em>validation_func=&lt;function Option.&lt;lambda&gt; at 0x000000001BEC07B8&gt;</em>, <em>alternatives=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.Option" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">hyvr.option_parsing.</code><code class="descname">Option</code><span class="sig-paren">(</span><em>name</em>, <em>dtype</em>, <em>optional=False</em>, <em>default=None</em>, <em>shape=-1</em>, <em>datatype=None</em>, <em>validation_func=&lt;function Option.&lt;lambda&gt;&gt;</em>, <em>alternatives=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/option_parsing.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.option_parsing.Option" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1960,11 +1987,15 @@ supplied order), the option is stored under it&#8217;s standard name.</li>
 <li class="toctree-l2"><a class="reference internal" href="#module-hyvr.option_parsing">hyvr.option_parsing module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog/Bug Fixes</a></li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="references.html"
                         title="previous chapter">References</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="changelog.html"
+                        title="next chapter">Changelog/Bug Fixes</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -1995,6 +2026,9 @@ supplied order), the option is stored under it&#8217;s standard name.</li>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="changelog.html" title="Changelog/Bug Fixes"
+             >next</a> |</li>
         <li class="right" >
           <a href="references.html" title="References"
              >previous</a> |</li>
