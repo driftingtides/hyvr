@@ -18,7 +18,7 @@ options['run'] = [
     Option('het', bool, optional=True, default=True,
            alternatives='flag_het'),
     Option('dataoutputs', list, optional=True, shape=[-1], default=[], datatype=str,
-           validation_func=lambda x: x in ['vtk', 'py', 'mat', 'npz'],
+           validation_func=lambda x: x in ['vtk', 'vtr', 'py', 'mat', 'npz', 'h5'],
            alternatives='l_dataoutputs'),
     Option('modeloutputs', list, optional=True, shape=[-1], default=[], datatype=str,
            validation_func=lambda x:  x in ['mf6', 'hgs'],
@@ -33,9 +33,9 @@ options['model'] = [
     Option('dx', float, optional=False),
     Option('dy', float, optional=True), # use value of 'dx' if 'dy' is missing
     Option('dz', float, optional=True),
-    Option('lx', int, optional=False),
-    Option('ly', int, optional=False),
-    Option('lz', int, optional=False),
+    Option('lx', float, optional=False),
+    Option('ly', float, optional=False),
+    Option('lz', float, optional=False),
     Option('periodic', bool, optional=True, default=False,
            alternatives='flag_periodic'),
     Option('display', bool, optional=True, default=False,
@@ -52,11 +52,12 @@ options['strata'] = [
            alternatives=['l_ssm', 'l_seq']),
     Option('ssm_top', list, optional=False, shape='ssm', datatype=float,
            alternatives='r_ssm_top'),
-    Option('ssm_contact_model', list, optional=False, shape=['ssm', 3], datatype=float,
+    Option('ssm_contact_model', list, optional=True, shape=['ssm', 3], datatype=float,
            alternatives='ll_ssm_contact_model'),
     Option('ssm_contact', str, optional=True, default='flat',
            validation_func=lambda x: x in ['flat', 'random', 'user']),
     Option('ae_table', str, optional=True, default=None),
+    Option('save_aelu', bool, optional=True, default=False),
     Option('ae', list, optional=False, shape=[-1], datatype=str,
            alternatives='l_ae'),
     Option('ssm_ae', list, optional=False, shape=['ssm', -1], datatype=str,
@@ -82,7 +83,7 @@ element_options = [
     Option('structure', str, optional=False),
     Option('contact', str, optional=False,
            validation_func=lambda x: x in ['flat', 'random']),
-    Option('contact_model', list, optional=False, shape=3, datatype=float,
+    Option('contact_model', list, optional=True, shape=3, datatype=float,
            alternatives='r_contact_model'),
     Option('facies', list, optional=False, shape=[-1], datatype=int,
            alternatives='l_facies'),
@@ -179,6 +180,10 @@ options['hydraulics'] = [
            alternatives='r_k_ztrend'),
     Option('k_xtrend', list, optional=True, shape=2, datatype=float,
            alternatives='r_k_xtrend'),
+    Option('n_ztrend', list, optional=True, shape=2, datatype=float,
+           alternatives='r_n_ztrend'),
+    Option('n_xtrend', list, optional=True, shape=2, datatype=float,
+           alternatives='r_n_xtrend'),
 ]
 
 
@@ -187,4 +192,5 @@ options['hydraulics'] = [
 options['flowtrans'] = [
     Option('hin', list, optional=True, shape=3, datatype=float),
     Option('hout', list, optional=True, shape=3, datatype=float),
+    Option('gradh', float, optional=True)
 ]

@@ -16,7 +16,7 @@ Contents
 =========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
    intro
    methods
@@ -26,6 +26,7 @@ Contents
    troubleshooting
    references
    modules
+   changelog
 
 
 

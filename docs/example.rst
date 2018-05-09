@@ -1,5 +1,5 @@
 ===================
-HYVR Example
+HyVR Example
 ===================
 
 Two examples are provided with the HyVR simulation module: the MADE site example ``made.ini``), mimicking the MADE site in Columbus, Mississippi, and a test case with user-defined architectural element mean contact surface elevations (``test_lu.ini``).

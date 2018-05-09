@@ -5,7 +5,6 @@ validating ini-files.
 :Author: Samuel Scherrer
 """
 
-
 from copy import deepcopy
 
 __all__ = ["Section", "Option", "MissingSectionError", "MissingOptionError", "ShapeError", "assert_exists"]
@@ -28,7 +27,7 @@ class Section():
         ----------
         section_dict : dictionary
             Dictionary of section values. This can for example be obtained
-            using ``configparser``:
+            using ``configparser``::
 
                 p = configparser.ConfigParser()
                 p.read(filename)
@@ -63,23 +62,23 @@ class Option():
         If dtype is ``list``, this is the shape of the list.
         There are several possibilities how to use this option:
 
-        - if ``shape=n`` where n is a nonnegative integer, the value must be
+        * if ``shape=n`` where n is a nonnegative integer, the value must be
           a list with length ``n``.
-        - if ``shape=-1`` the value can have an arbitrary shape.
-        - if ``shape="option1"``, the value of this option must have the same
+        * if ``shape=-1`` the value can have an arbitrary shape.
+        * if ``shape="option1"``, the value of this option must have the same
           shape as "option1". This is especially useful if the shape of
           "option1" is set to -1.
-        - if ``shape=[2, 3]``, the value must be a list of lists, where the
+        * if ``shape=[2, 3]``, the value must be a list of lists, where the
           outermost list has length 2 and the inner lists all have length 3.
           This also works for more than 2 dimensions.
-        - if ``shape=[2, -1, 3], the value must be a list of lists of lists.
+        * if ``shape=[2, -1, 3], the value must be a list of lists of lists.
           The outermost list must again have length 2, the innermost lists must
           have length 3, and the lists at the intermediate level can have any
           length (even different lengths).
-        - if ``shape=[2, "option1", 3]``, the values must again be a list of
+        * if ``shape=[2, "option1", 3]``, the values must again be a list of
           lists similar to above, but now the lists at the intermediate level
           must have the same length as "option1".
-        - if ``shape=[2, [1, 2], [[3], [3, 3]]]``, the value must be a list
+        * if ``shape=[2, [1, 2], [[3], [3, 3]]]``, the value must be a list
           of lists of lists. The outermost list must again have length 2. The
           two lists it contains have length 1 and length 2. The innermost lists
           all must have length 3.
@@ -143,7 +142,11 @@ class Option():
             return self.default
         else:
             if self.dtype != list:
-                value = self.dtype(section.dict[self.name])
+                if self.dtype == bool:
+                    # this is necessary since ``bool("False")`` returns ``True``.
+                    value = parse_bool(section, self.name)
+                else:
+                    value = self.dtype(section.dict[self.name])
                 if not self.validation_func(value):
                     raise ValueError('Invalid input for option ' + self.name +
                                     ' in section ' + section.name)
@@ -389,6 +392,23 @@ def parse_list(string, dtype):
         splitted = s.split(',')
         l = list(map(dtype, splitted))
     return l
+
+def parse_bool(section, optionname):
+    """
+    Parses a string option as bool. Possible options are "True"/"False",
+    "yes"/"no", "1"/"0".
+    """
+    string = section.dict[optionname]
+    if string.lower() == "true" or string.lower() == "yes":
+        return True
+    elif string.lower() == "false" or string.lower() == "no":
+        return False
+    elif string.isdigit():
+        return bool(int(string))
+    else:
+        raise ValueError("Option " + optionname + " in section " + section.name
+                         + " is not a valid boolean!")
+
 
 
 class ShapeError(Exception):

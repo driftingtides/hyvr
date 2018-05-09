@@ -16,6 +16,9 @@ def test_configfile():
         Option('missing', float, optional=False, alternatives=['existing1', 'existing2']),
         Option('first_minus_1', list, optional=False, shape=[-1, 'option1'], datatype=float),
         Option('second_minus_1', list, optional=False, shape=['option1', -1], datatype=float),
+        Option('a_flag', bool, optional=False),
+        Option('another_flag', bool, optional=False),
+        Option('yet_another_flag', bool, optional=False),
     ]
 
     section = Section('test', options)
@@ -36,6 +39,9 @@ def test_configfile():
     assert section_dict['missing'] == 2.0
     assert section_dict['first_minus_1'] == [[2., 3.], [4., 5.], [5., 2.], [4., 5.]]
     assert section_dict['second_minus_1'] == [[2., 3., 4., 5., 6.], [7., 0.]]
+    assert section_dict['a_flag']
+    assert not section_dict['another_flag']
+    assert not section_dict['yet_another_flag']
 
 
     options = [

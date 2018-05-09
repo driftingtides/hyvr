@@ -18,7 +18,6 @@ import numpy as np
 import pickle
 import math
 import time
-import random
 import scipy.io as sio
 import matplotlib.pyplot as plt
 import h5py
@@ -91,6 +90,7 @@ def run(param_file):
                             props['dip'],
                             props['azim'])
 
+    return props, params
 
 def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
     """  Generate hydrofacies fields
@@ -122,7 +122,7 @@ def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
     """
 
     """--------------------------------------------------------------------------------------------------------------
-    Simulate system contacts
+    Simulate major strata contacts
     --------------------------------------------------------------------------------------------------------------"""
     num_ssm = len(strata['ssm'])
     if num_ssm > 1:
@@ -135,7 +135,7 @@ def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
 
         for si in range(num_ssm):
             if strata['ssm_contact'] == 'random' and si != num_ssm - 1:
-                sp = strata['ssm_contact_model'][si]       # geostatistical parameters of system
+                sp = strata['ssm_contact_model'][si]       # geostatistical parameters of major strata
 
                 # Generate random top contact
                 z_top = hu.specsim(mg, sp[0], [sp[1], sp[2]], twod=True, covmod='gau') + strata['ssm_top'][si]
@@ -200,9 +200,8 @@ def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
                                         strata['ae_prob'][si])
 
                 # Assign unit thickness
-                ae_z_mean = strata['ae_z_mean'][si][strata['ssm_ae'][si].index(aelu_z[3])]
-                ae_z = hu.round_x(np.random.normal(ae_z_mean, ae_z_mean * 0.1), base=model['dz'])
-                aelu_z[2] = min(ae_z + znow, mg.lz)
+                ae_z_mean = strata['ae_z_mean'][si][strata['ssm_ae'][si].index(aelu_z[3])]          # Get mean
+                ae_z = hu.round_x(np.random.normal(ae_z_mean, ae_z_mean * 0.1), base=model['dz'])   # Randomly assign thickness
 
                 # Assign avulsion
                 avul_prob = np.array(strata['avul_prob'][si])
@@ -210,6 +209,8 @@ def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
                 avudr = strata['avul'][si]      # Avulsion depth range for system
                 dz = np.random.uniform(avudr[0], avudr[1]) * yn
                 znow += ae_z + dz
+
+                aelu_z[2] = min(znow, mg.lz)     # Assign depth to list
 
                 # Append to lookup table
                 ae_lu.append(aelu_z)
@@ -254,14 +255,14 @@ def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
 
         z_bot = z_top           # Update lower contact surface elevation
 
-    # Save system lookup table
-    # if 'ae_table' not in strata:
-    #     lu_savetxt = rundir + '/ae_lu_' + time.strftime('%d-%m-%Y_%H.%M.%S.txt')
-    #     with open(lu_savetxt, 'w') as fwr:
-    #         print('strata summary')
-    #         for i in ae_lu:
-    #             fwr.write('%s\n' % str()[1:-1])
-    #             print(i)
+    """ Save architectural element lookup table """
+    if 'save_aelu' in strata and strata['save_aelu'] is True:
+        lu_savetxt = os.path.join(run['rundir'], run['rundir'] + '_aelu.txt')
+        with open(lu_savetxt, 'w') as fwr:
+            fwr.write('ae_no,mean_Z_lower,mean_Z_upper,geometry,strata_no\n')
+            for i in ae_lu:
+                fwr.write(','.join([str(j) for j in i]))
+                fwr.write('\n')
 
     """--------------------------------------------------------------------------------------------------------------
     Hydrofacies simulation
@@ -465,6 +466,18 @@ def heterogeneity(props, params):
             k_iso = np.transpose(k_iso.transpose() * xf_vec)
             k_iso *= zf_vec
 
+            if hydraulics['n_ztrend'] is not None:
+                zf_vec = np.linspace(hydraulics['n_ztrend'][0], hydraulics['n_ztrend'][1], mg.nz)  # Z factor at each elevation
+            else:
+               # Longitudinal trend
+               zf_vec = np.ones((mg.nz,))
+            if hydraulics['n_xtrend'] is not None:
+               xf_vec = np.linspace(hydraulics['n_xtrend'][0], hydraulics['n_xtrend'][1], mg.nx)
+            else:
+               xf_vec = np.ones((mg.nx,))
+            poros = np.transpose(poros.transpose() * xf_vec)
+            poros *= zf_vec
+
     else:
         # Homogeneous case
         for hy_idx, hyi in enumerate(hydraulics['hydro']):
@@ -507,7 +520,7 @@ def heterogeneity(props, params):
     return props, params
 
 
-def save_outputs(realdir, realname, outputs, mg, outdict):
+def save_outputs(realdir, realname, outputs, mg, outdict, suffix=None):
     """
     Save data arrays to standard formats
 
@@ -517,6 +530,7 @@ def save_outputs(realdir, realname, outputs, mg, outdict):
         outputs (str):		String codes for what type of outputs should be saved
         mg:					Mesh grid object class
         outdict:			Output directory
+        suffix (str):       Suffix for file names
 
     Returns:
         Save data outputs as .vtk (Paraview), .mat (Matlab) or .dat (Python pickle output)
@@ -524,9 +538,11 @@ def save_outputs(realdir, realname, outputs, mg, outdict):
     """
 
     print('Saving files in {}'.format(realdir))
-    realname = realname + '_hyvr'
-    if 'vtk' in outputs:
-        # VTK output for visualisation in ParaView
+    if suffix is not None:
+        realname = realname + '_' + suffix
+
+    if 'vtr' in outputs:
+        # VTR output for visualisation in ParaView
         hu.to_vtr({k: outdict[k] for k in outdict if k not in ['ktensors']},
                     os.path.join(realdir, realname), mg)
         print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': VTR export complete')
@@ -598,9 +614,10 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
     if 'mf6' in outputs:
         # MODFLOW 6 output
 
-        # Create HGS output folder
+        # Create output folder
         mf6dir = os.path.join(realdir, 'mf6/hyvr')
-        mf6name = realname
+        mf6name = 'hyvr'
+
         if not os.path.exists(mf6dir):
             os.makedirs(mf6dir)
 
@@ -652,7 +669,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
         hat_arr, ha_arr, fac = save_arrays((mg.nx, mg.ny, mg.nz), mat_count=count, bg=tr['bg'], ani=False)
     count += 1
 
-    ae_arr_i = np.zeros((mg.nx, mg.ny, mg.nz), dtype=int)
+    ae_arr_i = np.ones((mg.nx, mg.ny, mg.nz), dtype=int) * -1
 
     # Assign background values
     ae_arr_i[ae_arr == ae[0]] = ae[0]
@@ -662,7 +679,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
         tr_bot = ae[1] + tr['depth'] * tr['buffer']
     else:
         tr_bot = ae[1]
-    tr_top = max(ae[2], tr_bot) + tr['agg']
+    tr_top = max(ae[2], tr_bot) #+ tr['agg']
 
     if tr['te_xyz'] is not None:
         gen_elevations = [xyz[2] for xyz in tr['te_xyz']]
@@ -724,7 +741,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
             """" Assign internal structure """
             tr_struct = tr['structure']
             if tr_struct == 'random':
-                tr_struct = random.choice(['dip', 'bulb_l'])
+                tr_struct = np.random.choice(['dip', 'bulb_l'])
 
             if np.all(np.isnan(select)):
                 # Skip section if no grid cells selected
@@ -735,7 +752,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
 
             if model['hetlev'] == 'ha':
                 # Add 'dip layers' into trough
-                fac_now = random.choice(tr['facies'])
+                fac_now = np.random.choice(tr['facies'])
                 fac[select] = fac_now
                 ha_arr[select] = count
                 hat_arr[select] = tr['ae_id']
@@ -752,7 +769,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                 dip_tr, azim_tr = ellipsoid_gradient(xd, yd, zd, a, b, c, alpha, select, tr)
 
                 # Assign generated values to grid cells
-                fac_now = random.choice(tr['facies'])
+                fac_now = np.random.choice(tr['facies'])
                 fac[select] = fac_now
                 ha_arr[select] = count
                 hat_arr[select] = tr['ae_id']
@@ -780,11 +797,11 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
                     # Assign generated values to grid cells
                     if c_idx == 0:
                         # Randomly choose facies
-                        fac_now = random.choice(tr['facies'])
+                        fac_now = np.random.choice(tr['facies'])
                     else:
                         # Choose next hydrofacies from alternating sets
                         pf_i = [i for i, x in enumerate(tr['facies']) if x == fac_now][0]    # Get facies index
-                        fac_now = random.choice(tr['altfacies'][pf_i])                   # Get next alternating facies
+                        fac_now = np.random.choice(tr['altfacies'][pf_i])                   # Get next alternating facies
 
                     fac[bulb_select] = fac_now                                      # Alternating facies
                     ha_arr[bulb_select] = count
@@ -808,7 +825,7 @@ def gen_trough(tr, mg, model, ae, ae_arr, count, ani=True):
 
             else:
                 # Add 'dip layers' into trough
-                fac[select] = random.choice(tr['facies'])
+                fac[select] = np.random.choice(tr['facies'])
                 ha_arr[select] = count
                 hat_arr[select] = tr['ae_id']
                 if ani:
@@ -1083,7 +1100,7 @@ def gen_extpar(ch_par, mg, model, ssm, ae_array, count, ani=True):
                 do, fd, dv, av = dip_sets(mg, ch_par, znow, curve=[aha[:, 0], aha[:, 1], vx_znow, vy_znow])
             else:
                 do = np.ones((mg.nx, mg.ny, mg.nz)) + count
-                fd = np.ones((mg.nx, mg.ny, mg.nz), dtype=int) * int(random.choice(ch_par['facies']))
+                fd = np.ones((mg.nx, mg.ny, mg.nz), dtype=int) * int(np.random.choice(ch_par['facies']))
                 dv = 0.0
                 av = np.zeros((mg.nx, mg.ny, mg.nz))
 
@@ -1305,7 +1322,13 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
         hat_arr, ha_arr, fac, azim, dip = save_arrays((mg.nx, mg.ny, mg.nz))
     else:
         hat_arr, ha_arr, fac = save_arrays((mg.nx, mg.ny, mg.nz), ani=False)
+
     hat_arr[ae_array == ae_i[0]] = sh['ae_id']
+
+    ae_arr_i = np.ones((mg.nx, mg.ny, mg.nz), dtype=int) * -1
+
+    # Assign background values
+    ae_arr_i[ae_array == ae_i[0]] = ae_i[0]
 
     # Massive bedding -----------------------------------
     if sh['lens_thickness'] == -1:
@@ -1339,7 +1362,7 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
         else:
             # No dip
             ha_arr[ae_array == ae_i[0]] = count
-            fac[ae_array == ae_i[0]] = random.choice(sh['facies'])
+            fac[ae_array == ae_i[0]] = np.random.choice(sh['facies'])
             if ani:
                 azim[ae_array == ae_i[0]] = 0
                 dip[ae_array == ae_i[0]] = 0
@@ -1379,7 +1402,7 @@ def gen_sheet(sh, mg, ae_i, ae_array, count, ani=True):
                     azim[:, :, z_range] = av
                     dip[:, :, z_range] = dv   # Assign facies sets to storage arrays
             else:
-                fac[:, :, z_range] = random.choice(sh['facies'])
+                fac[:, :, z_range] = np.random.choice(sh['facies'])
                 ha_arr[:, :, z_range] = count
                 if ani:
                     azim[:, :, z_range] = 0
@@ -1452,10 +1475,10 @@ def dip_sets(mg, aep, znow, curve=[], select=[], azimuth_z=0):
     if aep['altfacies'] is not None:
         # Alternating hydrofacies
         ae_fac = np.asarray(aep['facies'], dtype=int)
-        fac_now = random.choice(ae_fac)       # Initialise previous facies
+        fac_now = np.random.choice(ae_fac)       # Initialise previous facies
         for idi in np.unique(set_no):
             pf_i = int(np.where(fac_now == ae_fac)[0])                                         # Get previous facies index
-            fac_now = random.choice(aep['altfacies'][pf_i])  # Get next alternating facies
+            fac_now = np.random.choice(aep['altfacies'][pf_i])  # Get next alternating facies
             fac_set[set_no == idi] = fac_now                                                    # Set previous facies
 
         for idx, facies in enumerate(aep['facies']):      # Cycle over hydrofacies in element
@@ -1582,7 +1605,7 @@ def prob_choose(choices, probs):
     ae_list = []
     for chi in range(len(choices)):
         ae_list += [choices[chi]] * int(probs[chi] * 1000)
-    choice = random.choice(ae_list)
+    choice = np.random.choice(ae_list)
 
     return choice
 
@@ -1692,6 +1715,5 @@ if __name__ == '__main__':
     else:
         param_file = 0
         #channel_checker(param_file, 'meander_channel', no_extpar=5, dist=10000)
-        # param_file = 'E:\\Repositories\\WP3_effects\\case_studies\\trough\\tr1\\tr1dip.ini'
-        # param_file = '..\\testcases\\made.ini'
+        param_file = '..\\testcases\\made.ini'
     run(param_file)

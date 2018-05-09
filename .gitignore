@@ -41,6 +41,7 @@ external/*
 hyvr/sim.py.orig
 *.tif
 *.orig
+testcases/small/small_parameters.ini
 push_to_github.sh
 .hgtags
 pytest.ini

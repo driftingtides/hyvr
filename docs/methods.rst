@@ -1,5 +1,5 @@
 ==========================================================
-HYVR Computational methods
+HyVR Computational methods
 ==========================================================
 
 The first step in the HyVR algorithm is to load the model parameters, as defined in the ``*.ini`` initialisation file. Major strata contact surfaces are generated first. Architectural element contact surfaces are then simulated within each stratum, either based on input parameters or loaded from a user-defined lookup table of mean contact surface depths. The external and internal geometries of hydrofacies assemblages and associated hydrofacies are then simulated within each architectural element. Finally, microstructure within the features is simulated. 

@@ -9,28 +9,23 @@
 
 """
 
-import sys
 import pickle
 import numpy as np
 import time
-import configparser as cp
 import pandas as pd
 import linecache
 import scipy.io
-import scipy.spatial as sp
 import os
-import shutil
 import errno
 from pyevtk.hl import gridToVTK
 import flopy
-import scipy.stats as st
 import hyvr.grid as gr
 
 
 ''' File I/O and wrangling'''
 
 
-def to_vtk(data, file_name, grid=None, sc_name=None):
+def to_vtk(data, file_name, grid=None, sc_name=None, gtype=None):
     """ Save a numpy array into a VTK STRUCTURED_POINTS file.
 
     Parameters:
@@ -39,6 +34,7 @@ def to_vtk(data, file_name, grid=None, sc_name=None):
         file_name (str):		Name of the file for the output, optional (None)
         grid (class Grid):		Information about the grid can be also provided as a Grid object
         sc_name (str):		Name of the scalar quantities
+        gtype (str):            Grid type (default taken from grid class)
 
     Returns:
         A VTK 'STRUCTURED_POINTS' dataset file containing the input numpy data.
@@ -79,7 +75,9 @@ def to_vtk(data, file_name, grid=None, sc_name=None):
         print(('    Error in "numpy2vtk", wrong data type "%s"' % data.dtype.name))
 
 #    print("GRID:", grid)
-    if grid.gtype == 'points':
+    if gtype is None:
+        gtype = grid.gtype
+    if gtype == 'points':
         header = (
             "# vtk DataFile Version 3.4\n"
             "{0.gname}\n"
@@ -92,7 +90,7 @@ def to_vtk(data, file_name, grid=None, sc_name=None):
             "SCALARS type {1} 1\n"
             "LOOKUP_TABLE default"
             ).format(grid, fmt_head)
-    elif grid.gtype == 'cells':
+    elif gtype == 'cells':
         header = (
             "# vtk DataFile Version 3.4\n"
             "{0.gname}\n"
@@ -112,7 +110,7 @@ def to_vtk(data, file_name, grid=None, sc_name=None):
 
 
     if sc_name:
-        header = header.replace('type',sc_name)
+        header = header.replace('type', sc_name)
 
     with open(file_name, mode='wb') as out_file:
         np.savetxt(out_file,
@@ -419,10 +417,6 @@ def load_pickle(pickfile):
 ''' HYVR-specific utilities'''
 
 
-
-
-
-
 def read_lu(sq_fp):
     """
     Load user-defined strata (architectural element lookup table),
@@ -441,8 +435,8 @@ def read_lu(sq_fp):
         lines = f.read().splitlines()
 
     ssm_lu = []
-    for li in lines:
-        temp = li.split(', ')
+    for li in lines[1:]:
+        temp = li.split(',')
         ssm_lu.append([int(temp[0]), float(temp[1]), float(temp[2]), str(temp[3]), int(temp[4])])
 
     return ssm_lu
@@ -568,23 +562,29 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
 
     ims = flopy.mf6.ModflowIms(sim,
                                print_option='SUMMARY',
-                               complexity='COMPLEX')
+                               complexity='COMPLEX',
+                               outer_hclose=1e-3,
+                               outer_maximum=500,
+                               under_relaxation='NONE',
+                               inner_maximum=100,
+                               inner_hclose=1e-4,
+                               rcloserecord=0.001,
+                               linear_acceleration='BICGSTAB',
+                               scaling_method='NONE',
+                               reordering_method='NONE',
+                               relaxation_factor=0.97)
     sim.register_ims_package(ims, [gwf.name])
 
     """ Create discretization """
     ztop = mg.oz + mg.lz
     zbot = mg.oz
-    botm = np.linspace(ztop, zbot, mg.nz + 1)
+    botm = np.around(np.arange(ztop, zbot-mg.dz, -mg.dz), decimals=3)
     dis = flopy.mf6.modflow.mfgwfdis.ModflowGwfdis(gwf,
                                                    nlay=mg.nz, nrow=mg.ny, ncol=mg.nx,
                                                    delr=mg.dy, delc=mg.dx,
                                                    top=ztop,
                                                    botm=botm[1:],
                                                    fname='{}.dis'.format(runname))
-
-    """ Create the initial conditions package """
-    # Constant initial condition: h = 0.5
-    ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=0.5)
 
     """ Create Node Property Flow package object """
     npf_package = flopy.mf6.ModflowGwfnpf(gwf,
@@ -595,21 +595,60 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
                                           angle2=dip,                               # dip
                                           angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
 
-    """ Create the constant head package """
-    # chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf,
-    #                                                maxbound=1,
-    #                                                periodrecarray=[((0, 0, nx-1), 0)],
-    #                                                save_flows=True)
+    """ Create constant head package """
+    if 'hin' in flowtrans and flowtrans['hin'] is not None:
+        hin = flowtrans['hin'][0]
+        hout = flowtrans['hout'][0]
 
-    if flowtrans['hin'] is not None:
+    elif 'gradh' in flowtrans and flowtrans['gradh'] is not None:
+        hout = 0
+        hin = mg.lx * flowtrans['gradh']
+
+    if 'hin' or 'gradh' in flowtrans:
         chd_rec = []
         for layer in range(0, mg.nz):
             for row in range(0, mg.ny):
-                chd_rec.append(((layer, row, 0),  flowtrans['hin'][0]))         # Apply at model inlet
-                chd_rec.append(((layer, row, mg.nx-1), flowtrans['hout'][0]))   # Apply at model outlet
-
+                chd_rec.append(((layer, row, 0), hin))         # Apply at model inlet
+                chd_rec.append(((layer, row, mg.nx-1), hout))   # Apply at model outlet
         chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
                                                        periodrecarray=chd_rec, save_flows=True)
+
+        """ Create the initial conditions package """
+        # Create linear initial condition
+        # hstart = np.ones_like(k_iso) *(hin - hout)/2
+        hstart = np.ones_like(k_iso) * np.linspace(hin, hout, mg.nx)
+        ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=hstart)
+
+
+
+    """ Create well package """
+    # Apply constant discharges at model faces
+    if 'q_in' in flowtrans and flowtrans['q_in'] is not None:
+        if 'q_in' in flowtrans:
+            q_in = flowtrans['q_in']
+        else:
+            q_in = 0.01
+
+        if 'q_out' in flowtrans:
+            q_out = flowtrans['q_out']
+        else:
+            q_out = -0.01
+
+        wel_rec = []
+        for layer in range(0, mg.nz):
+            for row in range(0, mg.ny):
+                wel_rec.append(((layer, row, 0),  q_in, 'inlet'))          # Apply at model inlet
+                wel_rec.append(((layer, row, mg.nx-1), q_out, 'outlet'))        # Apply at model outlet
+
+        # Apply to model
+        wel = flopy.mf6.ModflowGwfwel(gwf,
+                                      print_input=True,
+                                      print_flows=True,
+                                      save_flows=True,
+                                      boundnames=True,
+                                      maxbound=len(wel_rec),
+                                      periodrecarray=wel_rec)
+
 
     """ Create the output control package """
     headfile = '{}.hds'.format(runname)
@@ -625,10 +664,10 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
                                                 budget_filerecord=budget_filerecord,
                                                 printrecord=printrecord)
 
-    # write simulation to new location
+    # write simulation
     sim.write_simulation()
-    # success, buff = sim.run_simulation()
-    # print('\nSuccess is: ', success)
+
+    return sim
 
 
 def to_hgs(hgspath, mg, flowtrans, ktensors, poros):
@@ -717,42 +756,84 @@ def rotate_ktensor(count, aniso, azimuth, dip, k_in):
     return k_rotate
 
 
-def get_boreholes(bh_loc, fin, fout=None):
-    """
-    Get virtual borehole data
-    Returns values at centroids - this might not match the borehole inputs
+def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
+    """ Perform 'virtual' borehole sampling of parameter field
 
-    Parameters:
-        bh_loc: 	Location of boreholes
-        fin: 		Filepath of properties input
-        fout: 		Filepath to save borehole information
+    Arguments:
+        data_dict (dict):           Data to sample
+        d (list):                   3-tuple of model grid cell dimensions
+        l (list):                   3-tuple of total model dimensions/lengths
+        file_out (str):             Output filename and path
+        vals (list):                Parameter fields to include
+        opts (dict):                Sampling options
+            opts['noBH'] (int):     Random sampling
+            opts['grid_spacing']:   Grid sample spacing
+            opt['log10K'] (bool):   Log10 transform isotropic hydraulic conductivity
 
     Returns:
-        bhdf - X, Y values at centroids
-
-    .. note:
-
-        UNDER CONSTRUCTION!
+        bh_df : Pandas DataFrame class
 
     """
 
-    # Read in properties file
-    df = pd.read_csv(fin, index_col='id', sep=' ')
-    xy = df.as_matrix(['X', 'Y'])
+    nx, ny, nz = np.shape(data_dict['fac'])
 
-    kdt = sp.KDTree(xy)             # Initialise search tree
-    nn_idx = kdt.query(bh_loc)[1]   # Get indices of nearest centroids to boreholes
-    bhdf = pd.DataFrame(columns=('bh', df.columns))
+    # Set up column names
+    cols = ['x', 'y', 'z']
+    if len(vals) == 0:
+        vals = data_dict.keys()
+    cols.extend(vals)
 
-    for i in nn_idx:
-        # Get all nn values with the same coordinates
-        bhdf.append(df.ix[np.nonzero(xy[:, 0] == xy[i, 0])[0]])
+    # Create dataframe
+    bh_df = pd.DataFrame(columns=cols)
 
-    if fout:
-        np.savetxt(fout, np.column_stack((np.arange(1, len(fe_zones)+1), centroids_pm, fe_facies, fe_K, fe_poros)),
-                   fmt='%i %f %f %f %i %1.2e %.2f')
+    # Sampling of grid
+    xy_grid = []
+    xv = np.arange(0.5 * d[0], l[0], d[0])
+    yv = np.arange(0.5 * d[1], l[1], d[1])
+    zv = np.arange(0.5 * d[2], l[2], d[2])
 
-    return bhdf
+    if 'grid_spacing' in opts.keys():
+        """ Sample over uniform grid """
+
+        # Get cartesian coordinates in 2D (x,y)
+        range_x = np.arange((opts['grid_spacing'] * 0.5), l[0], opts['grid_spacing'])
+        range_y = np.arange((opts['grid_spacing'] * 0.5), l[1], opts['grid_spacing'])
+        x_locs, y_locs = np.meshgrid(range_x, range_y)
+
+        # Convert to array indices
+        x_locs = np.floor(x_locs.flatten()/d[0]).astype(int)
+        y_locs = np.floor(y_locs.flatten()/d[1]).astype(int)
+
+    elif 'noBH' in opts.keys():
+        """ Randomly sample the xy plane """
+        x_locs = np.random.choice(range(0, nx), opts['noBH'])    # Borehole location indices
+        y_locs = np.random.choice(range(0, ny), opts['noBH'])    # Borehole location indices
+
+    # Put data into dataframe
+    for idx in range(len(x_locs)):
+        # Get indices of location
+        i = x_locs[idx]
+        j = y_locs[idx]
+
+        # Get vectors of Cartesian coordinates
+        ibh = np.zeros((nz, 3 + len(vals)))
+        ibh[:, 0] = np.ones((nz,)) * xv[i]          # x coordinates
+        ibh[:, 1] = np.ones((nz,)) * yv[j]          # y coordinates
+        ibh[:, 2] = zv                              # z coordinates
+
+        for iv, v in enumerate(vals):
+            # Append to list to be appended to dataframe
+            ibh[:, iv+3] = data_dict[v][i, j, 0:nz]
+        bh_df = bh_df.append(pd.DataFrame(ibh, columns=cols), ignore_index=True)
+
+    if 'log10K' in opts and opts['log10K'] is True:
+        bh_df['log10_K'] = pd.Series(np.log10(bh_df['k_iso']), index=bh_df.index)
+
+    if file_out is not None:
+        # Save borehole data
+        bh_df.to_csv(file_out, index=False)
+
+    return bh_df
 
 
 def calc_norm(x):
