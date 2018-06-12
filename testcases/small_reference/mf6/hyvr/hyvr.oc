@@ -1,0 +1,11 @@
+BEGIN options
+  BUDGET  FILEOUT  hyvr.cbc
+  HEAD  FILEOUT  hyvr.hds
+END options
+
+BEGIN period  1
+  SAVE  HEAD  ALL
+  SAVE  BUDGET  ALL
+  PRINT  HEAD  LAST
+END period  1
+

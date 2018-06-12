@@ -1,0 +1,21 @@
+BEGIN options
+  PRINT_OPTION  summary
+  COMPLEXITY  complex
+END options
+
+BEGIN nonlinear
+  OUTER_HCLOSE       0.00100000
+  OUTER_MAXIMUM  500
+  UNDER_RELAXATION  none
+END nonlinear
+
+BEGIN linear
+  INNER_MAXIMUM  100
+  INNER_HCLOSE  1.00000000E-04
+  inner_rclose       0.00100000
+  LINEAR_ACCELERATION  bicgstab
+  RELAXATION_FACTOR       0.97000000
+  SCALING_METHOD  none
+  REORDERING_METHOD  none
+END linear
+

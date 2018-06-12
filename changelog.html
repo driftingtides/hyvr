@@ -1,33 +1,23 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Changelog/Bug Fixes &#8212; HYVR 0.2 documentation</title>
-    
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.2',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="HYVR 0.2 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="HyVR package" href="modules.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -51,27 +41,47 @@
             
   <div class="section" id="changelog-bug-fixes">
 <h1>Changelog/Bug Fixes<a class="headerlink" href="#changelog-bug-fixes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="hyvr-0-2-2">
+<h2>HyVR 0.2.2<a class="headerlink" href="#hyvr-0-2-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: 12 June 2018</p>
+<div class="section" id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Jeremy Bennett</li>
+<li>Samuel Scherrer</li>
+</ul>
+</div>
+<div class="section" id="changes">
+<h3>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Removed <code class="docutils literal notranslate"><span class="pre">hyvr.utils.to_vtk</span></code> function.</li>
+<li>HyVR now uses Flopy 3.2.9.</li>
+<li>Some changes to MODFLOW 6 utilities.</li>
+<li>HyVR can now be installed from PyPI using pip</li>
+</ul>
+</div>
+</div>
 <div class="section" id="hyvr-0-2-1">
 <h2>HyVR 0.2.1<a class="headerlink" href="#hyvr-0-2-1" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: 9 May 2018</p>
-<div class="section" id="contributors">
-<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Contributors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Jeremy Bennett</li>
 <li>Samuel Scherrer</li>
 <li>Emilio Sanchez</li>
 </ul>
 </div>
-<div class="section" id="changes">
-<h3>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed bug in parsing of boolean options: previously all existing boolean
-options were parsed as <code class="docutils literal"><span class="pre">True</span></code></li>
-<li>Outputs for ParaView .vtr files are now specified with <code class="docutils literal"><span class="pre">vtr</span></code> instead of <code class="docutils literal"><span class="pre">vtk</span></code> as in previous versions.</li>
+options were parsed as <code class="docutils literal notranslate"><span class="pre">True</span></code></li>
+<li>Outputs for ParaView .vtr files are now specified with <code class="docutils literal notranslate"><span class="pre">vtr</span></code> instead of <code class="docutils literal notranslate"><span class="pre">vtk</span></code> as in previous versions.</li>
 <li>Some small changes to the testcase parameter file examples.</li>
 <li>Trends in porosity microstructure are now working.</li>
 <li>Architectural element lookup tables can now be saved to text files following simulation.</li>
-<li>Addition of <code class="docutils literal"><span class="pre">virtual_boreholes</span></code> function to <code class="docutils literal"><span class="pre">HyVR.utils</span></code> module. This can be used for generating borehole data from HyVR simulations.</li>
+<li>Addition of <code class="docutils literal notranslate"><span class="pre">virtual_boreholes</span></code> function to <code class="docutils literal notranslate"><span class="pre">HyVR.utils</span></code> module. This can be used for generating borehole data from HyVR simulations.</li>
 <li>Some improvements to creation of MODFLOW 6 input files, including linear hydraulic head initial condition.</li>
 <li>Added testing functions.</li>
 </ul>
@@ -80,15 +90,15 @@ options were parsed as <code class="docutils literal"><span class="pre">True</sp
 <div class="section" id="hyvr-0-2">
 <h2>HyVR 0.2<a class="headerlink" href="#hyvr-0-2" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: April 2018</p>
-<div class="section" id="id1">
-<h3>Contributors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Contributors<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Jeremy Bennett</li>
 <li>Samuel Scherrer</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Changes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>First Release</li>
 </ul>
@@ -104,7 +114,6 @@ options were parsed as <code class="docutils literal"><span class="pre">True</sp
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="methods.html">HyVR Computational methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inout.html">HyVR inputs and outputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">HyVR Example</a></li>
@@ -113,14 +122,19 @@ options were parsed as <code class="docutils literal"><span class="pre">True</sp
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">HyVR package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog/Bug Fixes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-1">HyVR 0.2.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-2">HyVR 0.2.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changes">Changes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2">HyVR 0.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-1">HyVR 0.2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Contributors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2">HyVR 0.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Changes</a></li>
 </ul>
 </li>
 </ul>
@@ -133,18 +147,20 @@ options were parsed as <code class="docutils literal"><span class="pre">True</sp
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/changelog.txt"
+      <li><a href="_sources/changelog.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -168,7 +184,7 @@ options were parsed as <code class="docutils literal"><span class="pre">True</sp
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
