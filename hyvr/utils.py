@@ -9,118 +9,27 @@
 
 """
 
+import sys
 import pickle
 import numpy as np
 import time
+import configparser as cp
 import pandas as pd
 import linecache
 import scipy.io
+import scipy.spatial as sp
 import os
+import shutil
 import errno
 from pyevtk.hl import gridToVTK
 import flopy
+import scipy.stats as st
 import hyvr.grid as gr
 
 
 ''' File I/O and wrangling'''
 
-
-def to_vtk(data, file_name, grid=None, sc_name=None, gtype=None):
-    """ Save a numpy array into a VTK STRUCTURED_POINTS file.
-
-    Parameters:
-        data (numpy array):		Numpy array containing the data, `int` or `float` or `uint`.
-                                The dimensions should be between 1 and 3
-        file_name (str):		Name of the file for the output, optional (None)
-        grid (class Grid):		Information about the grid can be also provided as a Grid object
-        sc_name (str):		Name of the scalar quantities
-        gtype (str):            Grid type (default taken from grid class)
-
-    Returns:
-        A VTK 'STRUCTURED_POINTS' dataset file containing the input numpy data.
-
-        .. note:
-            * Only 'STRUCTURED_POINTS' output allowed.
-            * The type of the data is extracted from the input array.
-            * Only 3D or 2D input data allowed.
-            * The default output is set to 'POINT_DATA'.
-
-    """
-
-    if grid:
-        nx = grid.nx
-        ny = grid.ny
-        nz = grid.nz
-    else:
-        # Create an internal default grid
-        grid = gr.Grid()
-        try:
-            grid.nx, grid.ny, grid.nz = np.shape(data)
-        except ValueError:
-            print('    Warning (numpy2vtk): input data considered as 2D.')
-            grid.nx, grid.ny = np.shape(data)
-            grid.nz = 1
-
-    # Set the correct format for the output
-    if 'int' in data.dtype.name:
-        fmt = '%i'
-        fmt_head = 'int'
-    elif 'float' in data.dtype.name:
-        fmt = '%.4e'
-        fmt_head = 'float'
-    elif sc_name == 'facies':
-        fmt = '%i'
-        fmt_head = 'int'
-    else:
-        print(('    Error in "numpy2vtk", wrong data type "%s"' % data.dtype.name))
-
-#    print("GRID:", grid)
-    if gtype is None:
-        gtype = grid.gtype
-    if gtype == 'points':
-        header = (
-            "# vtk DataFile Version 3.4\n"
-            "{0.gname}\n"
-            "ASCII\n"
-            "DATASET STRUCTURED_POINTS\n"
-            "DIMENSIONS {0.nx:d} {0.ny:d} {0.nz:d}\n"
-            "ORIGIN {0.ox:f} {0.oy:f} {0.oz:f}\n"
-            "SPACING {0.dx:f} {0.dy:f} {0.dz:f}\n"
-            "POINT_DATA {0.points:d}\n"
-            "SCALARS type {1} 1\n"
-            "LOOKUP_TABLE default"
-            ).format(grid, fmt_head)
-    elif gtype == 'cells':
-        header = (
-            "# vtk DataFile Version 3.4\n"
-            "{0.gname}\n"
-            "ASCII\n"
-            "DATASET RECTILINEAR_GRID\n"
-            "DIMENSIONS {0.nx:d} {0.ny:d} {0.nz:d}\n"
-            "X_COORDINATES {0.nx:d} float\n"
-            "{2}\n"
-            "Y_COORDINATES {0.ny:d} float\n"
-            "{3}\n"
-            "Z_COORDINATES {0.nz:d} float\n"
-            "{4}\n"
-            "POINT_DATA {0.points:d}\n"
-            "SCALARS type {1} 1\n"
-            "LOOKUP_TABLE default"
-            ).format(grid, fmt_head, grid.vec_x(), grid.vec_y(), grid.vec_z())
-
-
-    if sc_name:
-        header = header.replace('type', sc_name)
-
-    with open(file_name, mode='wb') as out_file:
-        np.savetxt(out_file,
-                   np.ravel(data, order='F'),
-                   fmt=fmt, header=header, comments='')
-
-    print(time.strftime('%X'), ': VTK export complete')
-
-
-def to_vtr(data_dict, file_name, grid):
+def to_vtr(data_dict, file_name, grid, points=None):
     """
     Save a numpy array into a ``.vtr`` rectilinear grid of voxels using pyevtk
 
@@ -128,6 +37,7 @@ def to_vtr(data_dict, file_name, grid):
         data_dict (numpy array):		e.g. {'fac': fac, 'mat': mat}
         file_name (str):		        Name of the file for the output.
         grid (class Grid):		        The information about the grid can be also provided as a grid object.
+        points (bool), optional:        Set as True for exporting cell-centered points for contouring (e.g., hydraulic heads)
 
     Returns:
         A VTK STRUCTURED_POINTS dataset file containing the input numpy data.
@@ -139,137 +49,33 @@ def to_vtr(data_dict, file_name, grid):
             * The default output is set to 'POINT_DATA'.
 
     """
-    gvec = grid.vec_node()
-    gridToVTK(file_name, gvec[0], gvec[1], gvec[2], cellData=data_dict)
-
-
-def vtk_mask(data, out_name, mask_val=-15, grid=None):
-    """
-    Prepare a mask file from a ``vtk`` input. All values should be 0 or 1 after this operation
-
-    Parameters:
-        data (numpy array):		Data to replace
-        out_name (str):		Name of the file for the output.
-        mask_val (int):			Value of the facies which should be masked
-        grid:					Grid class
-
-    Returns:
-        A VTK 'STRUCTURED_POINTS' dataset file containing the mask data
-
-    """
-
-    # Get grid details
-    if grid:
-        nx = grid.nx
-        ny = grid.ny
-        nz = grid.nz
+    if points is True:
+        gvec = grid.vec()
+        gridToVTK(file_name, gvec[0], gvec[1], gvec[2], pointData=data_dict)
     else:
-        # Create an internal default grid
-        grid = gr.Grid(gname='IMPALA Mask input')
-        try:
-            grid.nx, grid.ny, grid.nz = np.shape(data)
-        except ValueError:
-            print('    Warning (numpy2vtk): input data considered as 2D.')
-            grid.nx, grid.ny = np.shape(data)
-            grid.nz = 1
-
-    uni = np.unique(data)                             # Get unique values
-    uni = [x for x in uni if x not in mask_val]     # Remove masked values from unique array
-    mask = np.zeros_like(data)
-    mask[np.in1d(data, uni)] = 1
-
-    grid.gname = 'IMPALA Mask input'
-    to_vtk(mask, out_name, grid, 'mask_code')
-    return uni
+        gvec = grid.vec_node()
+        gridToVTK(file_name, gvec[0], gvec[1], gvec[2], cellData=data_dict)
 
 
-def vtk_read(file_in):
+def mf6_vtr(fhead, mg, fout):
     """
-    Reads a ``.vtk`` file into a numpy array
+    Convert a MODFLOW 6 Binary head file into vtr suitable for visualisation in ParaView
 
-    Parameters:
-        file_in (str): 				Name and filepath to read
+    Parameters
+    ----------
 
-    Returns:
-        - gegrid *(hyvr.grid class)* - Grid class
-        - props *(numpy array)* - Grid properties
 
 
     """
+    hfile = flopy.utils.binaryfile.HeadFile(fhead)          #
+    hdata = hfile.get_alldata()                             # Create numpy array with all data
+    head_dict = dict()                                      # Initialise dict with the data
+    for i in range(0, hdata.shape[0]):
+        hf_i = np.squeeze(hdata[i, :, :, :])                # Get heads at individual time steps
+        hf_i = np.transpose(hf_i, (2, 1, 0))                # Permute to be consistent with HyVR grids
+        head_dict['head_timestep{}'.format(i)] = hf_i
 
-    with open(file_in) as vtkfile:
-        for line in vtkfile:
-            if line.startswith('#') or not line.strip():
-                # skip comments and blank lines
-                continue
-            elif line.startswith('DIMENSIONS'):
-                nx, ny, nz = line.split()[1:4]
-                nx = int(nx)
-                ny = int(ny)
-                nz = int(nz)
-            elif line.startswith('SPACING'):
-                dx, dy, dz = line.split()[1:4]
-                dx = np.float16(dx)
-                dy = np.float16(dy)
-                dz = np.float16(dz)
-            elif line.startswith('LOOKUP_TABLE'):
-                props = []
-                try:
-                    while True:
-                        val = int(next(vtkfile))
-                        props.extend([val])
-                except StopIteration:
-                    break
-
-    props = np.asarray(props, dtype=np.int8).reshape((nx, ny, nz), order='F')
-    gegrid = gr.Grid(nx=nx, ny=ny, nz=nz,
-                     dx=dx, dy=dy, dz=dz)
-
-    print(time.strftime('%X'), ': VTK read complete')
-    return gegrid, props
-
-
-def vtk_trim(file_in, dims, file_out=None):
-    """
-    Trims a vtk file to the desired dimensions.
-    Removes the effort of working out the indexing in a .grdecl file
-    Saves as a .vtk file with everything the same except the dimensions
-
-    Parameters:
-        file_in: 	.vtk file to trim
-        dims: 		3-tuple of dimensions
-        file_out: 	Output file
-
-    Returns:
-        - gegrid - Grid class of the data
-        - props - The data as a nx x ny x nz array
-
-	.. note:
-		* Number of cells (nx, ny, nz) is changed
-		* Spacing (dx, dy, dz) is NOT changed
-
-    """
-
-    # Read in VTK file
-    v_in = vtk_read(file_in)
-    gegrid = v_in[0]
-    v_props = v_in[1]
-
-    # Slice up property data
-    props = v_props[0:dims[0], 0:dims[1], 0:dims[2]]
-
-    # Create corresponding grid class
-    gegrid.nx = dims[0]
-    gegrid.ny = dims[1]
-    gegrid.nz = dims[2]
-
-    # Create output file name
-    if not file_out:
-        file_out = file_in[:file_in.find('.')] + '_trim.vtk'
-
-    to_vtk(props, file_out, grid=gegrid)
-
-    return gegrid, props
+    to_vtr(head_dict, fout, mg, points=True)
 
 
 def dem_load(fn):
@@ -442,7 +248,7 @@ def read_lu(sq_fp):
     return ssm_lu
 
 
-def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
+def to_modflow(mfdir, mg, flowtrans, props):
     """
     Convert HYVR outputs to MODFLOW inputs
 
@@ -450,8 +256,7 @@ def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
         mfdir:				Directory of MODFLOW model object
         mg:					Mesh grid object class
         flowtrans (dict):   Flow & transport simulation parameters
-        k_iso:				Hydraulic conductivity of HYVR
-        anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)
+        props (dict):		Parameter fields as numpy arrays (anirat: Background anistropic ratio (K_h/K_v anisotropy ratio)
 
     Returns:
         - mf - MODFLOW model object
@@ -462,6 +267,12 @@ def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
         - pcg - pcg package of modflow model
 
     """
+
+    try:
+        import flopy
+    except ImportError:
+        print('mf output not possible: Flopy not installed.')
+        return
 
     # Assign name and create modflow model object
     mf = flopy.modflow.Modflow(mfdir, exe_name='mf2005')
@@ -484,15 +295,20 @@ def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
     bas = flopy.modflow.ModflowBas(mf, ibound=ibound, strt=strt)
 
     # Assign hydraulic conductivity
-    hyvr_hk = np.transpose(k_iso, (2, 0, 1))
+    hyvr_hk = np.transpose(props['k_iso'], (2, 0, 1))
     hyvr_layvka = 1                                           # VKA dataset is ratio of horizontal K
-    hyvr_vka = np.transpose(anirat, (2, 0, 1))
+    if 'anirat' in props.keys():
+        hyvr_vka = np.transpose(props['anirat'], (2, 0, 1))
 
-    # Add LPF package to the MODFLOW model
-    lpf = flopy.modflow.ModflowLpf(mf,                        # Modflow object
-                                   hk=hyvr_hk,              # Horizontal hydraulic conductivity
-                                   layvka=hyvr_layvka,      # Flag for each layer of anisotropic ratio
-                                   vka=hyvr_vka)            # Anisotropy ratios.
+        # Add LPF package to the MODFLOW model
+        lpf = flopy.modflow.ModflowLpf(mf,                        # Modflow object
+                                       hk=hyvr_hk,              # Horizontal hydraulic conductivity
+                                       layvka=hyvr_layvka,      # Flag for each layer of anisotropic ratio
+                                       vka=hyvr_vka)            # Anisotropy ratios.
+    else:
+        # Add LPF package to the MODFLOW model
+        lpf = flopy.modflow.ModflowLpf(mf,                        # Modflow object
+                                       hk=hyvr_hk)              # Horizontal hydraulic conductivity
 
     oc = flopy.modflow.ModflowOc(mf)        # Add OC package to the MODFLOW model
     pcg = flopy.modflow.ModflowPcg(mf)      # Add PCG package to the MODFLOW model
@@ -501,7 +317,7 @@ def to_modflow(mfdir, mg, flowtrans, k_iso, anirat):
     return mf, dis, bas, lpf, oc, pcg
 
 
-def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
+def to_mf6(mfdir, runname, mg, flowtrans, props):
     """
     .. note:
 
@@ -515,8 +331,7 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
         runname:            Run name
         mg:					Mesh grid object class
         flowtrans (dict):   Flow & transport simulation parameters
-        k_iso:				Hydraulic conductivity of HYVR
-        anirat:				Background anistropic ratio (K_h/K_v anisotropy ratio)
+        props (dict):		Parameter fields as numpy arrays (k_iso: Hydraulic conductivity of HYVR, anirat: Background anistropic ratio (K_h/K_v anisotropy ratio))
 
     Returns:
         - mf - MODFLOW model object
@@ -528,16 +343,26 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
 
     """
 
+    try:
+        import flopy
+    except ImportError:
+        print('mf6 output not possible: Flopy not installed.')
+        return
+
     # mfdir must be a relative path
     # TODO: This still doesn't really work if the parameter file is not in the current directory
     mfdir = os.path.relpath(mfdir)
 
     # Transpose HyVR arrays for MF6 input
     transpose_order = (2, 1, 0)
-    k_iso = np.transpose(k_iso, transpose_order)
-    anirat = np.transpose(anirat, transpose_order)
-    dip = np.transpose(dip, transpose_order)
-    azim = np.transpose(azim, transpose_order)
+    k_iso = np.transpose(props['k_iso'], transpose_order)
+    if set(['anirat', 'dip', 'azim']).issubset(props.keys()):
+        anirat = np.transpose(props['anirat'], transpose_order)
+        dip = np.transpose(props['dip'], transpose_order)
+        azim = np.transpose(props['azim'], transpose_order)
+        xt3d = True
+    else:
+        xt3d = False
 
     """ create simulation """
     sim = flopy.mf6.MFSimulation(sim_name=runname,
@@ -548,17 +373,11 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
 
     """ Create the Flopy temporal discretization object - STEADY-STATE """
     tdis = flopy.mf6.modflow.mftdis.ModflowTdis(sim,
-                                                time_units='DAYS',
-                                                nper=1,
-                                                tdisrecarray=[(1.0, 1, 1.0)])
+                                                time_units='DAYS')
 
     """ create gwf model """
-    gwf = flopy.mf6.MFModel(sim,
-                            model_type='gwf6',
-                            model_name=runname,
-                            model_nam_file='{}.nam'.format(runname),
-                            ims_file_name='{}.ims'.format(runname))
-    gwf.name_file.save_flows = True
+    gwf = flopy.mf6.MFModel(sim, modelname=runname)
+
 
     ims = flopy.mf6.ModflowIms(sim,
                                print_option='SUMMARY',
@@ -587,58 +406,80 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
                                                    fname='{}.dis'.format(runname))
 
     """ Create Node Property Flow package object """
-    npf_package = flopy.mf6.ModflowGwfnpf(gwf,
-                                          save_flows=True, icelltype=0, xt3doptions='',
-                                          k=k_iso,                                  # within-bedding hydraulic conductivity
-                                          k33=k_iso/anirat,                         # across-bedding hydraulic conductivity
-                                          angle1=azim,                              # azimuth
-                                          angle2=dip,                               # dip
-                                          angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
+    if xt3d is True:
+        npf_package = flopy.mf6.ModflowGwfnpf(gwf,
+                                              save_flows=True, icelltype=0, xt3doptions='',
+                                              k=k_iso,                                  # within-bedding hydraulic conductivity
+                                              k33=k_iso/anirat,                         # across-bedding hydraulic conductivity
+                                              angle1=azim,                              # azimuth
+                                              angle2=dip,                               # dip
+                                              angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
+    else:
+        npf_package = flopy.mf6.ModflowGwfnpf(gwf,
+                                              save_flows=True, icelltype=0,
+                                              k=k_iso)                                # within-bedding hydraulic conductivity)
 
     """ Create constant head package """
-    if 'hin' in flowtrans and flowtrans['hin'] is not None:
+    if flowtrans['hin'] is not None:
         hin = flowtrans['hin'][0]
         hout = flowtrans['hout'][0]
 
-    elif 'gradh' in flowtrans and flowtrans['gradh'] is not None:
-        hout = 0
-        hin = mg.lx * flowtrans['gradh']
+    elif flowtrans['gradh'] is not None:
+        hout = 1
+        hin = hout + mg.lx * flowtrans['gradh']
 
-    if 'hin' or 'gradh' in flowtrans:
+    if np.any([flowtrans['hin'] is not None, flowtrans['gradh'] is not None]):
         chd_rec = []
         for layer in range(0, mg.nz):
             for row in range(0, mg.ny):
                 chd_rec.append(((layer, row, 0), hin))         # Apply at model inlet
                 chd_rec.append(((layer, row, mg.nx-1), hout))   # Apply at model outlet
-        chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
-                                                       periodrecarray=chd_rec, save_flows=True)
+        # chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
+        #                                                stress_period_data=chd_rec, save_flows=True)
 
-        """ Create the initial conditions package """
-        # Create linear initial condition
-        # hstart = np.ones_like(k_iso) *(hin - hout)/2
-        hstart = np.ones_like(k_iso) * np.linspace(hin, hout, mg.nx)
-        ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=hstart)
+        chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
+                                                       stress_period_data=chd_rec, save_flows=True)
+    elif flowtrans['q_in'] is not None:
+        """ Apply fixed head at model outlet if fixed head at inlet"""
+        hin = 1
+        hout = 1
+        chd_rec = []
+        for layer in range(0, mg.nz):
+            for row in range(0, mg.ny):
+                chd_rec.append(((layer, row, mg.nx-1), hout))   # Apply at model outlet
+
+        chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
+                                                       stress_period_data=chd_rec, save_flows=True)
+    else:
+        hin = 1
+        hout = 1
+
+    """ Create the initial conditions package """
+    # Create linear initial condition
+    # hstart = np.ones_like(k_iso) *(hin - hout)/2
+    hstart = np.ones_like(k_iso) * np.linspace(hin, hout, mg.nx)
+    ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=hstart)
 
 
 
     """ Create well package """
     # Apply constant discharges at model faces
-    if 'q_in' in flowtrans and flowtrans['q_in'] is not None:
+    if flowtrans['q_in'] is not None:
         if 'q_in' in flowtrans:
             q_in = flowtrans['q_in']
         else:
             q_in = 0.01
 
-        if 'q_out' in flowtrans:
-            q_out = flowtrans['q_out']
-        else:
-            q_out = -0.01
+        # if 'q_out' in flowtrans:
+        #     q_out = flowtrans['q_out']
+        # else:
+        #     q_out = -q_in
 
         wel_rec = []
         for layer in range(0, mg.nz):
             for row in range(0, mg.ny):
                 wel_rec.append(((layer, row, 0),  q_in, 'inlet'))          # Apply at model inlet
-                wel_rec.append(((layer, row, mg.nx-1), q_out, 'outlet'))        # Apply at model outlet
+                # wel_rec.append(((layer, row, mg.nx-1), q_out, 'outlet'))        # Apply at model outlet
 
         # Apply to model
         wel = flopy.mf6.ModflowGwfwel(gwf,
@@ -647,7 +488,7 @@ def to_mf6(mfdir, runname, mg, flowtrans, k_iso, anirat, dip, azim):
                                       save_flows=True,
                                       boundnames=True,
                                       maxbound=len(wel_rec),
-                                      periodrecarray=wel_rec)
+                                      stress_period_data=wel_rec)
 
 
     """ Create the output control package """
@@ -760,15 +601,21 @@ def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
     """ Perform 'virtual' borehole sampling of parameter field
 
     Arguments:
-        data_dict (dict):           Data to sample
-        d (list):                   3-tuple of model grid cell dimensions
-        l (list):                   3-tuple of total model dimensions/lengths
-        file_out (str):             Output filename and path
-        vals (list):                Parameter fields to include
-        opts (dict):                Sampling options
+        data_dict (dict):
+            Data to sample
+        d (list):
+            3-tuple of model grid cell dimensions
+        l (list):
+            3-tuple of total model dimensions/lengths
+        file_out (list: basefile path, list of file types):
+            Output filename and path
+        vals (list):
+            Parameter fields to include
+        opts (dict):
+            Sampling options
             opts['noBH'] (int):     Random sampling
             opts['grid_spacing']:   Grid sample spacing
-            opt['log10K'] (bool):   Log10 transform isotropic hydraulic conductivity
+            opt['lnK'] (bool):   Natural logarithm of isotropic hydraulic conductivity
 
     Returns:
         bh_df : Pandas DataFrame class
@@ -826,12 +673,31 @@ def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
             ibh[:, iv+3] = data_dict[v][i, j, 0:nz]
         bh_df = bh_df.append(pd.DataFrame(ibh, columns=cols), ignore_index=True)
 
-    if 'log10K' in opts and opts['log10K'] is True:
-        bh_df['log10_K'] = pd.Series(np.log10(bh_df['k_iso']), index=bh_df.index)
+    if 'lnK' in opts and opts['lnK'] is True:
+        vals.extend(['lnK'])
+        bh_df['lnK'] = pd.Series(np.log(bh_df['k_iso']), index=bh_df.index)
 
+    # Save borehole data
+    fmtd = {'k_iso': '%.5e',
+            'lnK': '%.5f',
+            'poros': '%.5f',
+            'fac': '%u',
+            'dip': '%.2f',
+            'azim': '%.2f'}
     if file_out is not None:
-        # Save borehole data
-        bh_df.to_csv(file_out, index=False)
+        if 'csv' in file_out[1]:
+            bh_df.to_csv(file_out[0]+'.csv', index=False)
+        if 'gslib' in file_out[1]:
+            n_conddata = bh_df.shape[0]
+            colsout = ['x', 'y', 'z']
+            colsout.extend(vals)
+            to_write = bh_df.as_matrix(columns=colsout)
+            header = [str(n_conddata), str(3 + len(vals)), 'x', 'y', 'z']
+            header.extend(vals)
+            header = '\n'.join(header)
+
+            fmts = '%.3f %.3f %.3f {}'.format(' '.join([fmtd[i] for i in vals]))
+            np.savetxt(file_out[0] + '.gslib', to_write, delimiter=' ', header=header, comments='', fmt=fmts)
 
     return bh_df
 
@@ -924,4 +790,22 @@ def specsim(gr, var, corl, twod=False, covmod='gau'):
     bigy = np.real(np.fft.ifftn(rand * ntot))
 
     return bigy
+
+
+""" Testing functions """
+if __name__ == '__main__':
+    import hyvr
+
+    ini = '..\\..\\fidelity\\runfiles\\small\\braid_vr\\braid_vr_parameters.ini'
+    # Load parameters
+    run, mod, strata, hydraulics, ft, elements, mg = hyvr.parameters.model_setup(ini, nodir=True)
+    # Load data
+    data = np.load('..\\..\\fidelity\\runfiles\\small\\braid_vr\\braid_vr.npz')
+
+    sim = to_mf6(ini[:-4], 'test', mg, ft, data['k_iso'], data['anirat'], data['dip'], data['azim'])
+    sim.run_simulation()
+
+    hh = 'E:\\Repositories\\fidelity\\runfiles\\small\\braid_vr\\braid_vr_parameters\\test.hds'
+    hout = 'E:\\Repositories\\fidelity\\runfiles\\small\\braid_vr\\braid_vr_parameters\\test'
+    mf6_vtr(hh, mg, hout)
 

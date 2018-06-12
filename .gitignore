@@ -41,7 +41,13 @@ external/*
 hyvr/sim.py.orig
 *.tif
 *.orig
-testcases/small/small_parameters.ini
+testcases/small/*
+testcases/small_reference/HGS*
+testcases/small_reference/*.h5
+testcases/small_reference/MODFLOW/*
+.pytest_cache/*
+hyvr/made.ini
+
 push_to_github.sh
 .hgtags
 pytest.ini

@@ -18,7 +18,8 @@ deposits that include bedding structure model outputs (i.e., dip and azimuth).
 Such bedding parameters were required to approximate full hydraulic-conductivity
 tensors for groundwater flow modelling. HyVR is able to simulate these bedding
 parameters and generate spatially distributed parameter fields, including full
-hydraulic-conductivity tensors. More information about HyVR is available in the online `technical documentation <https://driftingtides.github.io/hyvr/index.html>`_.
+hydraulic-conductivity tensors. More information about HyVR is available in the
+online `technical documentation <https://driftingtides.github.io/hyvr/index.html>`_.
 
 I hope you enjoy using HyVR much more than I enjoyed putting it together! I look
 forward to seeing what kind of funky fields you created in the course of your
@@ -27,14 +28,18 @@ work.
 Installing the HYVR package
 --------------------------------------
 
-Windows
-^^^^^^^^^^
+Installing Python
+^^^^^^^^^^^^^^^^^
 
-To install HyVR, we recommend first installing the `Anaconda distribution
+
+Windows
+"""""""
+
+If you are using Windows, we recommend installing the `Anaconda distribution
 <https://www.anaconda.com/download/>`_ of Python 3. This distribution has the
 majority of dependencies that HyVR requires.
 
-It is a good idea to install the HyVR package into a `virtual environment
+It is also a good idea to install the HyVR package into a `virtual environment
 <https://conda.io/docs/user-guide/tasks/manage-environments.html>`_. Do this by
 opening a command prompt window and typing the following::
 
@@ -44,24 +49,34 @@ You need to then activate this environment::
 
     call hyvr_env/scripts/activate
 	
-Once this is completed install HyVR using pip::
-
-    (hyvr_env) pip install hyvr
-	
 
 Linux
-^^^^^^^^^
+"""""
 
-You probably already have Python 3 installed. If not, install it using your
-package manager (e.g. ``apt`` on Ubuntu/Debian).
+Depending on your preferences you can either use the Anaconda/Miniconda
+distribution of python, or the version of your package manager. If you choose
+the former, follow the same steps as for Windows.
 
-As with Windows we recommend using a virtual environment for HyVR in order
-to reduce problems with different versions of the dependencies. A great tool for
-managing virtual environments is `virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/en/latest/>`_.
+If you choose the latter, you probably already have Python 3 installed. If not,
+you can install it using your package manager (e.g. ``apt`` on Ubuntu/Debian).
 
-Once you have activated your virtual environment, you can install HyVR via::
+In any way we recommend using a virtual environment. Non-conda users can for example use
+`virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/en/latest/>`_ or
+`pipenv <https://docs.pipenv.org/>`_.
 
-    (hyvr_env) $ pip install hyvr
+Installing HyVR
+^^^^^^^^^^^^^^^
+
+Once you have activated your virtual environment, you can install HyVR from PyPI using ``pip``::
+
+    pip install hyvr
+
+The version on PyPI should always be up to date. If it's not, you can also install HyVR from github::
+
+    git clone https://github.com/driftingtides/hyvr.git
+    pip install hyvr
+
+Installation from conda-forge will (hopefully) be coming soon.
 
 
 Usage
@@ -72,7 +87,10 @@ You can then run HyVR the following way::
 
     (hyvr_env) $ python -m hyvr my_configfile.ini
 
-HyVR will then run and store all results in a subdirectory.
+HyVR will then run and store all results in a subdirectory. If no configfile is
+given, it will run a test case instead::
+
+    (hyvr_env) $ python -m hyvr
 
 If you want to use HyVR in a script, you can import it and use the ``run`` function::
 
@@ -81,7 +99,7 @@ If you want to use HyVR in a script, you can import it and use the ``run`` funct
     
 Examples can be found in the ``testcases`` directory of the `github repository
 <https://github.com/driftingtides/hyvr/>`_, the general setup and possible
-options of the config-file is described in :ref:`inout`.
+options of the config-file are described in the documentation.
 
 Source
 ------
@@ -106,8 +124,9 @@ Dependencies
 * `pandas <https://pandas.pydata.org/>`_ = 0.21.0
 * `numpy <http://www.numpy.org/>`_ <= 1.13.3
 * `matplotlib <https://matplotlib.org/>`_ <= 2.1.0
-* `flopy <https://github.com/modflowpy/flopy>`_ <= 3.2.8
+* `flopy <https://github.com/modflowpy/flopy>`_ <= 3.2.8 (optional for modflow output)
 * `pyevtk <https://pypi.python.org/pypi/PyEVTK>`_ = 1.1.0
+* `cython <https://www.cython.org>`_
 
 
 Development
@@ -121,7 +140,9 @@ doctoral research at the University of Tübingen.
 Problems, Bugs, Unclear Documentation
 -------------------------------------
 
-If you have problems with HyVR have a look at the `troubleshooting <https://driftingtides.github.io/hyvr/troubleshooting.html>`_
-section. If this doesn't help, don't hesitate to contact us.
+If you have problems with HyVR have a look at the `troubleshooting
+<https://driftingtides.github.io/hyvr/troubleshooting.html>`_ section. If this
+doesn't help, don't hesitate to contact us.
 
-If you find that the documentation is unclear, lacking, or wrong, please contact us.
+If you find that the documentation is unclear, lacking, or wrong, please contact
+us.

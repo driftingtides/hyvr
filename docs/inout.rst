@@ -109,9 +109,9 @@ The following settings are possible in the run section:
 - ``runname``: *(optional)* Name of the model simulation run. Defaults to the name of the
   ini-file without the last for characters (``.ini``)
 - ``numsim``: *(optional, default: 1)* Number of realisations to be generated.
-- ``dataoutputs``: *(optional)* List of simulation output data formats (see `Model outputs
+- ``dataoutputs``: *(optional)* List of simulation output data formats (see :ref:`Model outputs
   <modelout>`), e.g. ``[vtk, mat, py]``
-- ``modeloutputs``: *(optional)* List of simulation output formats for model input (see `Model
+- ``modeloutputs``: *(optional)* List of simulation output formats for model input (see :ref:`Model
   outputs <modelout>`), e.g. ``[mf, hgs]``
 - ``flag_ow``: *(optional, default: true)* Whether to overwrite previous model
   results. If ``true`` *(default)* model outputs are stored in the current
@@ -312,16 +312,16 @@ copy of the ``ini`` model parameter file is saved in the model directory
 automatically. The following data output files include model outputs as
 three-dimensional arrays:
 
-- ``dat`` Python 'pickle' file - this is a native Python format that can be loaded into Python using ``hyvr.utils.load_pickle()``.
-- ``mat`` MATLAB file
-- ``vtr`` VTK rectilinear grid file -  this can be opened in ParaView for improved three-dimensional visualisation.
-- ``h5`` HDF5 format 
-- ``npz`` Numpy compressed format
+- ``dat`` : Python 'pickle' file - this is a native Python format that can be loaded into Python using ``hyvr.utils.load_pickle()``.
+- ``mat`` : MATLAB file
+- ``vtr`` : VTK rectilinear grid file -  this can be opened in ParaView for improved three-dimensional visualisation.
+- ``h5`` : HDF5 format 
+- ``npz`` : Numpy compressed format
 
 HyVR can also create files that can be used as model inputs for some flow and transport modelling packages These currently include:
 
-- MODFLOW-2005 - ``bas``, ``dis``, ``lpf``, ``nam``, ``oc``, and ``pcg`` model input files. Provided suitable flow and transport parameters are set in the ``[flowtrans]`` section of the input parameter file, this simulation can be executed. 
-- MODFLOW 6 - ``dis``, ``nam``, and ``npf`` model input files. A complete set of MODFLOW 6 input files cannot be generated in HyVR at this stage.
-- HydroGeoSphere - *K* tensors and porosity at each grid node. 
+- ``mf`` : MODFLOW-2005 - ``bas``, ``dis``, ``lpf``, ``nam``, ``oc``, and ``pcg`` model input files. Provided suitable flow and transport parameters are set in the ``[flowtrans]`` section of the input parameter file, this simulation can be executed. 
+- ``mf6`` : MODFLOW 6 - ``dis``, ``nam``, and ``npf`` model input files. A complete set of MODFLOW 6 input files cannot be generated in HyVR at this stage.
+- ``hgs`` : HydroGeoSphere - *K* tensors and porosity at each grid node. 
 
 Note that these model inputs can only have regular model grids. They have not been tested for use in the above-named packages. 

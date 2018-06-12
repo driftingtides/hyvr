@@ -8,3 +8,7 @@ include testcases/test_aelu.txt
 
 # Include readme
 include README.rst
+
+# include .c and .pyx file
+include hyvr/optimized.c
+include hyvr/optimized.pyx

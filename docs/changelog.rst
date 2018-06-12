@@ -2,10 +2,31 @@
 Changelog/Bug Fixes
 ====================
 
+HyVR 0.2.2
+----------
+
+Release Date: 12 June 2018
+
+Contributors
+""""""""""""
+
+* Jeremy Bennett
+* Samuel Scherrer
+
+
+Changes
+"""""""
+
+* Removed ``hyvr.utils.to_vtk`` function.
+* HyVR now uses Flopy 3.2.9.
+* Some changes to MODFLOW 6 utilities.
+* HyVR can now be installed from PyPI using pip
+
+
 HyVR 0.2.1
 ----------
 
-Release Date:
+Release Date: 9 May 2018
 
 Contributors
 """"""""""""
