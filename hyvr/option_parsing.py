@@ -71,7 +71,7 @@ class Option():
         * if ``shape=[2, 3]``, the value must be a list of lists, where the
           outermost list has length 2 and the inner lists all have length 3.
           This also works for more than 2 dimensions.
-        * if ``shape=[2, -1, 3], the value must be a list of lists of lists.
+        * if ``shape=[2, -1, 3]``, the value must be a list of lists of lists.
           The outermost list must again have length 2, the innermost lists must
           have length 3, and the lists at the intermediate level can have any
           length (even different lengths).

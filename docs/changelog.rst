@@ -2,10 +2,32 @@
 Changelog/Bug Fixes
 ====================
 
+HyVR 0.2.2
+----------
+
+Release Date: 12 June 2018
+
+Contributors
+""""""""""""
+
+* Jeremy Bennett
+* Samuel Scherrer
+
+
+Changes
+"""""""
+
+* Removed ``hyvr.utils.to_vtk`` function.
+* HyVR now uses Flopy 3.2.9, and incorporates more of that package's features.
+* Some changes to MODFLOW 6 utilities.
+* Improvements to h5 I/O.
+* Improvements to ``hyvr.utils.virtual_boreholes`` function
+
+
 HyVR 0.2.1
 ----------
 
-Release Date:
+Release Date: 9 May 2018
 
 Contributors
 """"""""""""

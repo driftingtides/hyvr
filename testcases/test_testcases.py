@@ -14,13 +14,14 @@ import scipy.io as sio
 import scipy.io as sio
 import filecmp
 
-def test_made():
+def run_testcase(filename, runname):
 
     testcasedir = os.path.relpath(os.path.join(__file__, '../'))
-    testfile = os.path.join(testcasedir, 'made.ini')
+    testfile = os.path.join(testcasedir, filename)
 
     # remove old output
-    shutil.rmtree(os.path.join(testcasedir, 'small'))
+    if os.path.exists(os.path.join(testcasedir, runname)):
+        shutil.rmtree(os.path.join(testcasedir, runname))
 
     # run seeded
     np.random.seed(0)
@@ -28,18 +29,18 @@ def test_made():
 
     # check output
     # ============
-    outputdir = os.path.join(testcasedir, 'small')
-    refdir = os.path.join(testcasedir, 'small_reference')
+    outputdir = os.path.join(testcasedir, runname)
+    refdir = os.path.join(testcasedir, runname + '_reference')
 
     # parameter file
     # --------------
-    assert filecmp.cmp(os.path.join(outputdir, 'small_parameters.ini'),
-                       os.path.join(refdir, 'small_parameters.ini'))
+    assert filecmp.cmp(os.path.join(outputdir, runname + '_parameters.ini'),
+                       os.path.join(refdir, runname + '_parameters.ini'))
 
     # numpy
     # ------
-    numpy_output = np.load(os.path.join(outputdir, 'small.npz'))
-    numpy_ref_output = np.load(os.path.join(refdir, 'small.npz'))
+    numpy_output = np.load(os.path.join(outputdir, runname + '.npz'))
+    numpy_ref_output = np.load(os.path.join(refdir, runname + '.npz'))
 
     assert numpy_output.files == numpy_ref_output.files
     for name in numpy_output.files:
@@ -50,8 +51,8 @@ def test_made():
 
     # matlab
     # ------
-    matlab_output = sio.loadmat(os.path.join(outputdir, 'small.mat'))
-    matlab_ref_output = sio.loadmat(os.path.join(refdir, 'small.mat'))
+    matlab_output = sio.loadmat(os.path.join(outputdir, runname + '.mat'))
+    matlab_ref_output = sio.loadmat(os.path.join(refdir, runname + '.mat'))
 
     del matlab_output['__header__']
     del matlab_ref_output['__header__']
@@ -63,9 +64,14 @@ def test_made():
     # vtr
     # ---
     # this seems to work
-    assert filecmp.cmp(os.path.join(outputdir, 'small.vtr'),
-                       os.path.join(refdir, 'small.vtr'))
+    assert filecmp.cmp(os.path.join(outputdir, runname + '.vtr'),
+                       os.path.join(refdir, runname + '.vtr'))
 
     # TODO: modflow output
 
     print("Everything okay!")
+
+
+def test():
+    run_testcase('made.ini', 'small')
+    # run_testcase('test_lu.ini', 'test_lu')
