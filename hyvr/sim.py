@@ -20,20 +20,22 @@ import math
 import time
 import scipy.io as sio
 import matplotlib.pyplot as plt
-import h5py
+#import h5py
 
 import hyvr.grid as gr
 import hyvr.utils as hu
-import hyvr.optimized as ho
+from . import optimized as ho
 import hyvr.parameters as hp
 
 
-def run(param_file):
+def run(param_file, ensemble=False):
     """
     Main function for HYVR generation
 
     Parameters:
         param_file (str): 	Parameter file location
+        ensemble : bool
+            If True, a HyVR simulation run can be run in an existing directory
 
     Returns:
 
@@ -41,14 +43,15 @@ def run(param_file):
 
     """
 
-    if param_file == 0:
-        param_file = os.path.abspath(os.path.join(os.path.dirname( __file__ ), os.pardir, 'testcases', 'made.ini'))
-        print('param file:', param_file)
-
     # Load parameter file
-    run, model, strata, hydraulics, flowtrans, elements, mg = hp.model_setup(param_file)
+    run, model, strata, hydraulics, flowtrans, elements, mg = hp.model_setup(param_file, nodir=ensemble)
 
     for sim in range(1, int(run['numsim'])+1):
+        # If creating an ensemble, check that the file hasn't already been generated
+        if ensemble is True:
+            if os.path.exists(os.path.join(run['rundir'], 'real_{:03d}'.format(sim))):
+                continue
+
         # Generate facies
         props, params = facies(run, model, strata, hydraulics, flowtrans, elements, mg)
 
@@ -82,15 +85,20 @@ def run(param_file):
             if hydraulics['gen'] is False:
                 print('No hydraulic parameters generated. No model outputs saved')
             else:
-                save_models(realdir, realname, mg, run['modeloutputs'], flowtrans,
-                            props['k_iso'],
-                            props['ktensors'],
-                            props['poros'],
-                            props['anirat'],
-                            props['dip'],
-                            props['azim'])
+                save_models(realdir, realname, mg, run['modeloutputs'], flowtrans, props)
 
-    return props, params
+    if param_file == 0:
+        # this is just the testcase, so we remove the output
+        from pkg_resources import cleanup_resources
+        cleanup_resources()
+        import shutil
+        runpath = os.path.abspath(run['rundir'])
+        if os.path.exists(runpath):
+            shutil.rmtree(runpath)
+
+
+    if run['numsim'] == 1:
+        return props, params
 
 def facies(run, model, strata, hydraulics, flowtrans, elements, mg):
     """  Generate hydrofacies fields
@@ -575,15 +583,18 @@ def save_outputs(realdir, realname, outputs, mg, outdict, suffix=None):
         print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Numpy export complete')
 
     if 'h5' in outputs:
-        # HDF5 format
-        with h5py.File(os.path.join(realdir, realname + '.h5'), 'w') as hf:
-            print('G')
-            for key in outdict.keys():
-                hf.create_dataset(key, data=outdict[key])
-        print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': HDF5 export complete')
+        try:
+            import h5py
+            # HDF5 format
+            with h5py.File(os.path.join(realdir, realname + '.h5'), 'w') as hf:
+                for key in outdict.keys():
+                    hf.create_dataset(key, data=outdict[key], compression=True)
+            print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': HDF5 export complete')
+        except ImportError:
+            print('h5 output not possible: h5py not installed.')
 
 
-def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poros, anirat, dip, azim):
+def save_models(realdir, realname, mg, outputs, flowtrans, props):
     """
     Save HYVR outputs to standard modelling codes
 
@@ -591,10 +602,7 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
         run (dict):			Model run parameters
         mg:					Mesh grid object class
         flowtrans (dict):	Flow & transport simulation parameters
-        k_iso:				Horizontal hydraulic conductivity array
-        ktensors:			Array with tensor values of K
-        poros:				Porosity array
-        anirat:				Anistropic ratio ($K_h/K_v$)
+        props (dict):		Property fields (numpy arrays in dict)
 
     Returns:
         Save data outputs as .mf (MODFLOW) or .hgs (HydroGeoSphere)
@@ -608,7 +616,7 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
         mfdir = os.path.join(realdir,'MODFLOW')
         mfname = os.path.join(mfdir, realname)
         hu.try_makefolder(mfdir)
-        hu.to_modflow(mfname, mg, flowtrans, k_iso, anirat)
+        hu.to_modflow(mfname, mg, flowtrans, props)
         print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': MF export complete')
 
     if 'mf6' in outputs:
@@ -621,7 +629,7 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
         if not os.path.exists(mf6dir):
             os.makedirs(mf6dir)
 
-        hu.to_mf6(mf6dir, mf6name, mg, flowtrans, k_iso, anirat, dip, azim)
+        hu.to_mf6(mf6dir, mf6name, mg, flowtrans, props)
         print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': MF6 export complete')
 
     if 'hgs' in outputs:
@@ -631,7 +639,7 @@ def save_models(realdir, realname, mg, outputs, flowtrans, k_iso, ktensors, poro
         hu.try_makefolder(hgsdir)
 
         # Write to HGS files
-        hu.to_hgs(hgsdir, mg, flowtrans, ktensors, poros)
+        hu.to_hgs(hgsdir, mg, flowtrans, props['ktensors'], props['poros'])
         print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': HGS export complete')
 
 

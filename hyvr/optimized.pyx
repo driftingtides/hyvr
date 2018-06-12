@@ -4,7 +4,6 @@ This module contains optimized versions of routines that were once in sim or uti
 :Author: Samuel Scherrer
 """
 
-
 import numpy as np
 cimport numpy as np
 cimport cython

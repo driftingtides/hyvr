@@ -2,11 +2,12 @@ import sys
 import hyvr
 
 if len(sys.argv) <= 1:
-    print("Please pass a *.ini file as argument.")
-    sys.exit(1)
-
+    filename = 0
+else:
+    filename = sys.argv[1]
 try:
-    hyvr.run(sys.argv[1])
+    hyvr.run(filename)
 except Exception as e:
+    raise e
     print(e, file=sys.stderr)
     sys.exit(1)

@@ -73,6 +73,11 @@ def parameters(inifile, nodir=False):
 
     print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Reading parameter file')
 
+    # test case
+    if inifile == 0:
+        from pkg_resources import resource_filename
+        inifile = resource_filename(__name__, 'made.ini')
+
     # read file
     p = cp.ConfigParser()
     try:
@@ -132,6 +137,7 @@ def parameters(inifile, nodir=False):
 
         # if runname is not given, it's the part of the ini-file before
         # "_parameters.ini" or ".ini"
+        # in the test case runname is given
         ini_path = os.path.dirname(os.path.abspath(inifile))
         ini_name = os.path.basename(os.path.abspath(inifile))
         if 'runname' not in run:

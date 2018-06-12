@@ -18,10 +18,10 @@ options['run'] = [
     Option('het', bool, optional=True, default=True,
            alternatives='flag_het'),
     Option('dataoutputs', list, optional=True, shape=[-1], default=[], datatype=str,
-           validation_func=lambda x: x in ['vtk', 'vtr', 'py', 'mat', 'npz', 'h5'],
+           validation_func=lambda x: x in ['vtr', 'py', 'mat', 'npz', 'h5'],
            alternatives='l_dataoutputs'),
     Option('modeloutputs', list, optional=True, shape=[-1], default=[], datatype=str,
-           validation_func=lambda x:  x in ['mf6', 'hgs'],
+           validation_func=lambda x:  x in ['mf', 'mf6', 'hgs'],
            alternatives='l_modeloutputs'),
     Option('flag_ow', bool, optional=True, default=False),
 ]
@@ -192,5 +192,8 @@ options['hydraulics'] = [
 options['flowtrans'] = [
     Option('hin', list, optional=True, shape=3, datatype=float),
     Option('hout', list, optional=True, shape=3, datatype=float),
-    Option('gradh', float, optional=True)
+    Option('gradh', float, optional=True),
+    Option('q_in', float, optional=True),
+    Option('kw_gradh', float, optional=True),
+    Option('kw_q_in', float, optional=True)
 ]
