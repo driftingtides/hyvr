@@ -53,12 +53,13 @@ If you had problems that are not listed here but you solved them yourself, let
 us know anyway so we can either fix it or add the solution here.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="s2">&quot;/tmp/pip-build-3mre9i5d/flopy/flopy/mbase.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">21</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">ModuleNotFoundError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;numpy&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ModuleNotFoundError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;numpy&#39;</span>
+
+<span class="o">--------------------------------------------</span>
+<span class="n">Command</span> <span class="s2">&quot;python setup.py egg_info&quot;</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">error</span> <span class="n">code</span> <span class="mi">1</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">some</span> <span class="n">path</span><span class="o">&gt;/</span><span class="n">flopy</span><span class="o">/</span>
 </pre></div>
 </div>
-<p>In this case it helps to install numpy first separately.</p>
+<p>This happens because in order to install flopy you need to have numpy installed first. Just install numpy and try again. In newer versions flopy will be an optional dependency, so this should not happen anymore.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">ImportError</span><span class="p">:</span> <span class="n">libtk8</span><span class="o">.</span><span class="mf">6.</span><span class="n">so</span><span class="p">:</span> <span class="n">cannot</span> <span class="nb">open</span> <span class="n">shared</span> <span class="nb">object</span> <span class="n">file</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
 </pre></div>
 </div>
@@ -66,6 +67,14 @@ us know anyway so we can either fix it or add the solution here.</p>
 distribution’s package manager. Depending on your distribution, this might be
 called <code class="docutils literal notranslate"><span class="pre">tk-devel</span></code>, <code class="docutils literal notranslate"><span class="pre">tkinter</span></code>, <code class="docutils literal notranslate"><span class="pre">tk-dev</span></code>, <code class="docutils literal notranslate"><span class="pre">tk</span></code>, <code class="docutils literal notranslate"><span class="pre">python-tk</span></code> or maybe
 another variation. A google search could be helpful.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Failed</span> <span class="n">building</span> <span class="n">wheel</span> <span class="k">for</span> <span class="n">hyvr</span>
+<span class="o">...</span>
+<span class="o">&lt;</span><span class="n">very</span> <span class="n">long</span> <span class="n">command</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">words</span> <span class="s1">&#39;compile&#39;</span> <span class="ow">and</span> <span class="s1">&#39;install&#39;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This happens if there’s only a source distribution on PyPI and you don’t have
+access to a compiler. Contact us if this happens and we’ll try to upload a
+pre-built binary.</p>
 </div>
 <div class="section" id="runtime-errors">
 <h2>Runtime errors<a class="headerlink" href="#runtime-errors" title="Permalink to this headline">¶</a></h2>

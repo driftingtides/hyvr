@@ -17,11 +17,13 @@ Installation
 
 ::
 
-   File "/tmp/pip-build-3mre9i5d/flopy/flopy/mbase.py", line 21, in <module>
-   import numpy as np
    ModuleNotFoundError: No module named 'numpy'
 
-In this case it helps to install numpy first separately.
+   --------------------------------------------
+   Command "python setup.py egg_info" failed with error code 1 in <some path>/flopy/
+
+This happens because in order to install flopy you need to have numpy installed first. Just install numpy and try again. In newer versions flopy will be an optional dependency, so this should not happen anymore.
+
 
 ::
 
@@ -32,6 +34,17 @@ On Linux this can be fixed by installing the package ``tk`` using your
 distribution's package manager. Depending on your distribution, this might be
 called ``tk-devel``, ``tkinter``, ``tk-dev``, ``tk``, ``python-tk`` or maybe
 another variation. A google search could be helpful.
+
+
+::
+
+    Failed building wheel for hyvr
+    ...
+    <very long command containing the words 'compile' and 'install'>
+
+This happens if there's only a source distribution on PyPI and you don't have
+access to a compiler. Contact us if this happens and we'll try to upload a
+pre-built binary.
 
 
 -----------------------------
