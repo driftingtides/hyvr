@@ -48,6 +48,3 @@ testcases/small_reference/MODFLOW/*
 .pytest_cache/*
 hyvr/made.ini
 
-push_to_github.sh
-.hgtags
-pytest.ini

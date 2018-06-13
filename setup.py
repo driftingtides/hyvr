@@ -95,8 +95,6 @@ setup(
         'matplotlib',
         'pandas',
         'pyevtk',
-        'flopy==3.2.9',
-        # 'cython',
         # 'h5py',
         ],
 

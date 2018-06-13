@@ -43,11 +43,11 @@ It is also a good idea to install the HyVR package into a `virtual environment
 <https://conda.io/docs/user-guide/tasks/manage-environments.html>`_. Do this by
 opening a command prompt window and typing the following::
 
-    python -m virtualenv hyvr_env
-	    
+    conda create --name hyvr_env
+
 You need to then activate this environment::
 
-    call hyvr_env/scripts/activate
+    conda activate hyvr_env
 	
 
 Linux
@@ -63,6 +63,7 @@ you can install it using your package manager (e.g. ``apt`` on Ubuntu/Debian).
 In any way we recommend using a virtual environment. Non-conda users can for example use
 `virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/en/latest/>`_ or
 `pipenv <https://docs.pipenv.org/>`_.
+
 
 Installing HyVR
 ^^^^^^^^^^^^^^^
@@ -124,9 +125,9 @@ Dependencies
 * `pandas <https://pandas.pydata.org/>`_ = 0.21.0
 * `numpy <http://www.numpy.org/>`_ <= 1.13.3
 * `matplotlib <https://matplotlib.org/>`_ <= 2.1.0
-* `flopy <https://github.com/modflowpy/flopy>`_ <= 3.2.8 (optional for modflow output)
+* `flopy <https://github.com/modflowpy/flopy>`_ == 3.2.9 (optional for modflow output)
 * `pyevtk <https://pypi.python.org/pypi/PyEVTK>`_ = 1.1.0
-* `cython <https://www.cython.org>`_
+* `h5py <https://www.h5py.org/>`_ (optional for HDF5 output)
 
 
 Development
