@@ -44,6 +44,7 @@
 <span class="sd">:Author: Samuel Scherrer</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Section&quot;</span><span class="p">,</span> <span class="s2">&quot;Option&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingSectionError&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingOptionError&quot;</span><span class="p">,</span> <span class="s2">&quot;ShapeError&quot;</span><span class="p">,</span> <span class="s2">&quot;assert_exists&quot;</span><span class="p">]</span>
@@ -52,6 +53,14 @@
 <div class="viewcode-block" id="Section"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Section">[docs]</a><span class="k">class</span> <span class="nc">Section</span><span class="p">():</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the section</span>
+<span class="sd">        options : list</span>
+<span class="sd">            List of Options</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">options</span><span class="p">]</span>
@@ -78,9 +87,22 @@
 <span class="sd">            The same dictionary with parsed and validated values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dict</span> <span class="o">=</span> <span class="n">section_dict</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">section_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Unknown option: </span><span class="si">{:s}</span><span class="s2"> in section </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">option</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+                <span class="p">)</span>
         <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">repr</span> <span class="o">=</span>  <span class="s2">&quot;Section(name=</span><span class="si">{:s}</span><span class="s2">,options=&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">:</span>
+            <span class="nb">repr</span> <span class="o">+=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+        <span class="nb">repr</span> <span class="o">+=</span> <span class="s1">&#39;)&#39;</span></div>
+        <span class="k">return</span> <span class="nb">repr</span>
+
 
 <div class="viewcode-block" id="Option"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Option">[docs]</a><span class="k">class</span> <span class="nc">Option</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -162,6 +184,11 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has type list, but no shape was given.&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has type list, but no datatype for its elements was given.&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Option(name=</span><span class="si">{:s}</span><span class="s2">, dtype=</span><span class="si">{:s}</span><span class="s2">, optional=</span><span class="si">{:s}</span><span class="s2">, default=</span><span class="si">{:s}</span><span class="s2">, shape=</span><span class="si">{:s}</span><span class="s2">, datatype=</span><span class="si">{:}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optional</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datatype</span><span class="p">)</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="Option.parse"><a class="viewcode-back" href="../../modules.html#hyvr.option_parsing.Option.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

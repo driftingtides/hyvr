@@ -1115,7 +1115,7 @@ Implementation of AR2 autoregressive model
 
 <dl class="function">
 <dt id="hyvr.sim.run">
-<code class="descclassname">hyvr.sim.</code><code class="descname">run</code><span class="sig-paren">(</span><em>param_file</em>, <em>ensemble=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.run" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.sim.</code><code class="descname">run</code><span class="sig-paren">(</span><em>param_file</em>, <em>flag_ow=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/sim.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.sim.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main function for HYVR generation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1123,8 +1123,8 @@ Implementation of AR2 autoregressive model
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>param_file</strong> (<em>str</em>) – Parameter file location</li>
-<li><strong>ensemble</strong> – bool
-If True, a HyVR simulation run can be run in an existing directory</li>
+<li><strong>flag_ow</strong> – bool
+If True, an existing run directory is overwritten.</li>
 </ul>
 </td>
 </tr>
@@ -1618,9 +1618,10 @@ split the data based on a delimiter and return it as a new list</p>
 Output filename and path</li>
 <li><strong>vals</strong> (<em>list</em>) – Parameter fields to include</li>
 <li><strong>opts</strong> (<em>dict</em>) – Sampling options
-opts[‘noBH’] (int):     Random sampling
-opts[‘grid_spacing’]:   Grid sample spacing
-opt[‘lnK’] (bool):   Natural logarithm of isotropic hydraulic conductivity</li>
+opts[‘noBH’] (int):             Random sampling
+opts[‘grid_spacing’]:           float, or list of floats [x spacing, y spacing] Grid sample spacing
+opts[‘grid_n’]:                 int, or list of ints [n in x, n in y] Number of grid nodes per x,y dimensions
+opt[‘lnK’] (bool):              Natural logarithm of isotropic hydraulic conductivity</li>
 </ul>
 </td>
 </tr>
@@ -1653,19 +1654,15 @@ modules strongly linked ot this one:</p>
 </table>
 <dl class="function">
 <dt id="hyvr.parameters.model_setup">
-<code class="descclassname">hyvr.parameters.</code><code class="descname">model_setup</code><span class="sig-paren">(</span><em>pf</em>, <em>nodir=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.parameters.</code><code class="descname">model_setup</code><span class="sig-paren">(</span><em>pf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up model using grid.Grid() class and assign parameters</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pf</strong> (<em>str</em>) – Parameter file path</li>
-<li><strong>nodir</strong> (<em>bool</em>) – Flag for leaving folder structure alone</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pf</strong> (<em>str</em>) – Parameter file path</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
 <li>run <em>(dict)</em> - Model run parameters</li>
 <li>mod <em>(dict)</em> - Model domain parameters</li>
 <li>sequences <em>(dict)</em> - Sequence parameters</li>
@@ -1674,7 +1671,6 @@ modules strongly linked ot this one:</p>
 <li>elements <em>(dict)</em> - Architectural elements and parameters</li>
 <li>model_grid <em>(object class)</em> - Grid object class</li>
 </ul>
-</p>
 </td>
 </tr>
 </tbody>
@@ -1683,19 +1679,15 @@ modules strongly linked ot this one:</p>
 
 <dl class="function">
 <dt id="hyvr.parameters.parameters">
-<code class="descclassname">hyvr.parameters.</code><code class="descname">parameters</code><span class="sig-paren">(</span><em>inifile</em>, <em>nodir=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hyvr.parameters.</code><code class="descname">parameters</code><span class="sig-paren">(</span><em>inifile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for hierarchical facies modelling from a .ini-file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>inifile</strong> (<em>str</em>) – Parameter file path</li>
-<li><strong>nodir</strong> (<em>bool</em>) – Flag for leaving folder structure alone</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inifile</strong> (<em>str</em>) – Parameter file path</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
 <li>run <em>(dict)</em> - Model run parameters</li>
 <li>model <em>(dict)</em> - Model domain parameters</li>
 <li>sequences <em>(dict)</em> - Sequence parameters</li>
@@ -1703,7 +1695,27 @@ modules strongly linked ot this one:</p>
 <li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
 <li>elements <em>(dict)</em> - Architectural elements and parameters</li>
 </ul>
-</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.parameters.set_up_directories">
+<code class="descclassname">hyvr.parameters.</code><code class="descname">set_up_directories</code><span class="sig-paren">(</span><em>run</em>, <em>configfile</em>, <em>flag_ow=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hyvr/parameters.html#set_up_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.parameters.set_up_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions creates the necessary directories (modeldir, rundir). It also stores the used
+ini-file in the rundir.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>run</strong> (<em>dict</em>) – parsed run-section of the config file</li>
+<li><strong>configfile</strong> (<em>str</em>) – path to config file</li>
+<li><strong>flag_ow</strong> (<em>bool</em>) – Whether to overwrite the old run directory. If it is None, the option
+from the config file will be chosen instead (default in configfile: False)</li>
+</ul>
 </td>
 </tr>
 </tbody>

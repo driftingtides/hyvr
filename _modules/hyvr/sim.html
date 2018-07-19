@@ -63,18 +63,19 @@
 
 <span class="kn">import</span> <span class="nn">hyvr.grid</span> <span class="k">as</span> <span class="nn">gr</span>
 <span class="kn">import</span> <span class="nn">hyvr.utils</span> <span class="k">as</span> <span class="nn">hu</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">optimized</span> <span class="k">as</span> <span class="n">ho</span>
+<span class="c1">#from . import optimized as ho</span>
+<span class="kn">import</span> <span class="nn">hyvr.optimized</span> <span class="k">as</span> <span class="nn">ho</span>
 <span class="kn">import</span> <span class="nn">hyvr.parameters</span> <span class="k">as</span> <span class="nn">hp</span>
 
 
-<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../modules.html#hyvr.sim.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">ensemble</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../modules.html#hyvr.sim.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">flag_ow</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Main function for HYVR generation</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        param_file (str): 	Parameter file location</span>
-<span class="sd">        ensemble : bool</span>
-<span class="sd">            If True, a HyVR simulation run can be run in an existing directory</span>
+<span class="sd">        flag_ow : bool</span>
+<span class="sd">            If True, an existing run directory is overwritten.</span>
 
 <span class="sd">    Returns:</span>
 
@@ -83,13 +84,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Load parameter file</span>
-    <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">mg</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">model_setup</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">nodir</span><span class="o">=</span><span class="n">ensemble</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">mg</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">model_setup</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span>
+    <span class="n">hp</span><span class="o">.</span><span class="n">set_up_directories</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">param_file</span><span class="p">,</span> <span class="n">flag_ow</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;numsim&#39;</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="c1"># If creating an ensemble, check that the file hasn&#39;t already been generated</span>
-        <span class="k">if</span> <span class="n">ensemble</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">],</span> <span class="s1">&#39;real_</span><span class="si">{:03d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sim</span><span class="p">))):</span>
-                <span class="k">continue</span>
 
         <span class="c1"># Generate facies</span>
         <span class="n">props</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">facies</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">mg</span><span class="p">)</span>
@@ -624,7 +622,7 @@
     <span class="k">if</span> <span class="s1">&#39;h5&#39;</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">h5py</span>
-            <span class="c1"># HDF5 format</span>
+            <span class="c1"># H5 format</span>
             <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">realdir</span><span class="p">,</span> <span class="n">realname</span> <span class="o">+</span> <span class="s1">&#39;.h5&#39;</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hf</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">outdict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="n">hf</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">outdict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">compression</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1721,11 +1719,15 @@
     <span class="n">set_no</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>  <span class="c1"># Initialise set number array</span>
     <span class="n">z_dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_dip</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">znow</span>
 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>                                               <span class="c1"># Get indices of selected model nodes</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xtemp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>
+
     <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">xtemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ytemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ztemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>      <span class="c1"># Cartesian coordinates of model grid nodes</span>
     <span class="n">plp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x_dip</span><span class="p">,</span> <span class="n">y_dip</span><span class="p">,</span> <span class="n">z_dip</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>                                     <span class="c1"># Cartesian coordinates of points on dip planes</span>
     <span class="n">pd</span> <span class="o">=</span> <span class="n">plp</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">points</span><span class="o">.</span><span class="n">T</span>                                                <span class="c1"># subtract grid nodes from plane points</span>
-
-    <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>                                               <span class="c1"># Get indices of selected model nodes</span>
 
     <span class="c1"># Loop over set planes</span>
     <span class="k">for</span> <span class="n">iset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_sets</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -1763,6 +1765,7 @@
         <span class="n">param_file</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1">#channel_checker(param_file, &#39;meander_channel&#39;, no_extpar=5, dist=10000)</span>
         <span class="n">param_file</span> <span class="o">=</span> <span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">testcases</span><span class="se">\\</span><span class="s1">made.ini&#39;</span>
+        <span class="n">param_file</span> <span class="o">=</span> <span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">external</span><span class="se">\\</span><span class="s1">wimmler</span><span class="se">\\</span><span class="s1">sheet_dip.ini&#39;</span>
     <span class="n">run</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span>
 </pre></div>
 

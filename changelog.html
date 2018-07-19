@@ -41,9 +41,9 @@
             
   <div class="section" id="changelog-bug-fixes">
 <h1>Changelog/Bug Fixes<a class="headerlink" href="#changelog-bug-fixes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="hyvr-0-2-2">
-<h2>HyVR 0.2.2<a class="headerlink" href="#hyvr-0-2-2" title="Permalink to this headline">¶</a></h2>
-<p>Release Date: 12 June 2018</p>
+<div class="section" id="hyvr-0-2-3">
+<h2>HyVR 0.2.3<a class="headerlink" href="#hyvr-0-2-3" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: 19 July 2018</p>
 <div class="section" id="contributors">
 <h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -54,26 +54,49 @@
 <div class="section" id="changes">
 <h3>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
+<li>Improvements to file/directory handling, including separation of parameter file parsing and directory setup.</li>
+<li>New name for back-up parameter files.</li>
+<li>Flopy is now an optional dependency.</li>
+<li>Virtual boreholes can now be sampled on grids defined by number of boreholes in x,y-directions, or by a specific grid spacing.</li>
+<li>Journal article references added.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="hyvr-0-2-2">
+<h2>HyVR 0.2.2<a class="headerlink" href="#hyvr-0-2-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: 12 June 2018</p>
+<div class="section" id="id1">
+<h3>Contributors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Jeremy Bennett</li>
+<li>Samuel Scherrer</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
 <li>Removed <code class="docutils literal notranslate"><span class="pre">hyvr.utils.to_vtk</span></code> function.</li>
-<li>HyVR now uses Flopy 3.2.9.</li>
+<li>HyVR now uses Flopy 3.2.9, and incorporates more of that package’s features.</li>
 <li>Some changes to MODFLOW 6 utilities.</li>
 <li>HyVR can now be installed from PyPI using pip</li>
+<li>Improvements to h5 I/O.</li>
+<li>Improvements to <code class="docutils literal notranslate"><span class="pre">hyvr.utils.virtual_boreholes</span></code> function</li>
 </ul>
 </div>
 </div>
 <div class="section" id="hyvr-0-2-1">
 <h2>HyVR 0.2.1<a class="headerlink" href="#hyvr-0-2-1" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: 9 May 2018</p>
-<div class="section" id="id1">
-<h3>Contributors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Contributors<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Jeremy Bennett</li>
 <li>Samuel Scherrer</li>
 <li>Emilio Sanchez</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Changes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Fixed bug in parsing of boolean options: previously all existing boolean
 options were parsed as <code class="docutils literal notranslate"><span class="pre">True</span></code></li>
@@ -90,15 +113,15 @@ options were parsed as <code class="docutils literal notranslate"><span class="p
 <div class="section" id="hyvr-0-2">
 <h2>HyVR 0.2<a class="headerlink" href="#hyvr-0-2" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: April 2018</p>
-<div class="section" id="id3">
-<h3>Contributors<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Contributors<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Jeremy Bennett</li>
 <li>Samuel Scherrer</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h3>Changes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Changes<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>First Release</li>
 </ul>
@@ -123,19 +146,24 @@ options were parsed as <code class="docutils literal notranslate"><span class="p
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">HyVR package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog/Bug Fixes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-2">HyVR 0.2.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-3">HyVR 0.2.3</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changes">Changes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-1">HyVR 0.2.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-2">HyVR 0.2.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Contributors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Changes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2">HyVR 0.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2-1">HyVR 0.2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">Contributors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hyvr-0-2">HyVR 0.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Contributors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Changes</a></li>
 </ul>
 </li>
 </ul>
