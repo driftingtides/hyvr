@@ -19,11 +19,13 @@ Such bedding parameters were required to approximate full hydraulic-conductivity
 tensors for groundwater flow modelling. HyVR is able to simulate these bedding
 parameters and generate spatially distributed parameter fields, including full
 hydraulic-conductivity tensors. More information about HyVR is available in the
-online `technical documentation <https://driftingtides.github.io/hyvr/index.html>`_.
+online *`technical documentation <https://driftingtides.github.io/hyvr/index.html>`_*.
 
 I hope you enjoy using HyVR much more than I enjoyed putting it together! I look
 forward to seeing what kind of funky fields you created in the course of your
 work.
+
+*HyVR can be attributed by citing the following journal article: Bennett, J. P., Haslauer, C. P., Ross, M., & Cirpka, O. A. (2018). An open, object-based framework for generating anisotropy in sedimentary subsurface models. Groundwater. DOI:* `10.1111/gwat.12803 <https://onlinelibrary.wiley.com/doi/abs/10.1111/gwat.12803>`_. *A preprint version of the article is available* `here <https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf>`_.
 
 Installing the HYVR package
 --------------------------------------

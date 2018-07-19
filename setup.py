@@ -59,13 +59,18 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+# get version number from file
+with open('versionnumber', 'r') as f:
+    version = f.read().strip('\n')
+
+
 # copy the made.ini test case to the package directory
 from shutil import copyfile
 copyfile(path.join(here, 'testcases', 'made.ini'), path.join(here, 'hyvr', 'made.ini'))
 
 setup(
     name='hyvr',
-    version='0.2.2',
+    version=version,
     description='A python package for simulating hydrogeological virtual realities',
     long_description=long_description,
     long_description_content_type='text/x-rst',

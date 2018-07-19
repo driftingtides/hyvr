@@ -9,6 +9,9 @@ include testcases/test_aelu.txt
 # Include readme
 include README.rst
 
+# include versionnumber -> this is required for the setup.py
+include versionnumber
+
 # include .c and .pyx file
 include hyvr/optimized.c
 include hyvr/optimized.pyx

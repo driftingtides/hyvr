@@ -5,6 +5,7 @@ validating ini-files.
 :Author: Samuel Scherrer
 """
 
+import sys
 from copy import deepcopy
 
 __all__ = ["Section", "Option", "MissingSectionError", "MissingOptionError", "ShapeError", "assert_exists"]
@@ -13,6 +14,14 @@ __all__ = ["Section", "Option", "MissingSectionError", "MissingOptionError", "Sh
 class Section():
 
     def __init__(self, name, options):
+        """
+        Parameters
+        ----------
+        name : str
+            Name of the section
+        options : list
+            List of Options
+        """
         self.name = name
         self.options = deepcopy(options)
         self.optionnames = [o.name for o in options]
@@ -39,9 +48,22 @@ class Section():
             The same dictionary with parsed and validated values
         """
         self.dict = section_dict
+        for option in section_dict:
+            if option not in self.optionnames:
+                print("Warning: Unknown option: {:s} in section {:s}".format(
+                    option, self.name), file=sys.stderr
+                )
         for option, name in zip(self.options, self.optionnames):
             self.dict[name] = option.parse(self)
         return self.dict
+
+    def __repr__(self):
+        repr =  "Section(name={:s},options=".format(self.name)
+        for name in self.optionnames:
+            repr += name + ','
+        repr += ')'
+        return repr
+
 
 class Option():
     """
@@ -123,6 +145,11 @@ class Option():
                 raise ValueError('Option ' + self.name + ' has type list, but no shape was given.')
             if self.datatype is None:
                 raise ValueError('Option ' + self.name + ' has type list, but no datatype for its elements was given.')
+
+    def __repr__(self):
+        return "Option(name={:s}, dtype={:s}, optional={:s}, default={:s}, shape={:s}, datatype={:})".format(
+            self.name, str(self.dtype), str(self.optional), str(self.default), str(self.shape), str(self.datatype)
+        )
 
     def parse(self, section):
         """

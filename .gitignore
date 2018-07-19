@@ -48,3 +48,4 @@ testcases/small_reference/MODFLOW/*
 .pytest_cache/*
 hyvr/made.ini
 
+hyvr_dev/*

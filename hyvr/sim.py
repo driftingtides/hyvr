@@ -24,18 +24,19 @@ import matplotlib.pyplot as plt
 
 import hyvr.grid as gr
 import hyvr.utils as hu
-from . import optimized as ho
+#from . import optimized as ho
+import hyvr.optimized as ho
 import hyvr.parameters as hp
 
 
-def run(param_file, ensemble=False):
+def run(param_file, flag_ow=None):
     """
     Main function for HYVR generation
 
     Parameters:
         param_file (str): 	Parameter file location
-        ensemble : bool
-            If True, a HyVR simulation run can be run in an existing directory
+        flag_ow : bool
+            If True, an existing run directory is overwritten.
 
     Returns:
 
@@ -44,13 +45,10 @@ def run(param_file, ensemble=False):
     """
 
     # Load parameter file
-    run, model, strata, hydraulics, flowtrans, elements, mg = hp.model_setup(param_file, nodir=ensemble)
+    run, model, strata, hydraulics, flowtrans, elements, mg = hp.model_setup(param_file)
+    hp.set_up_directories(run, param_file, flag_ow)
 
     for sim in range(1, int(run['numsim'])+1):
-        # If creating an ensemble, check that the file hasn't already been generated
-        if ensemble is True:
-            if os.path.exists(os.path.join(run['rundir'], 'real_{:03d}'.format(sim))):
-                continue
 
         # Generate facies
         props, params = facies(run, model, strata, hydraulics, flowtrans, elements, mg)
@@ -585,7 +583,7 @@ def save_outputs(realdir, realname, outputs, mg, outdict, suffix=None):
     if 'h5' in outputs:
         try:
             import h5py
-            # HDF5 format
+            # H5 format
             with h5py.File(os.path.join(realdir, realname + '.h5'), 'w') as hf:
                 for key in outdict.keys():
                     hf.create_dataset(key, data=outdict[key], compression=True)
@@ -1682,11 +1680,15 @@ def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):
     set_no = np.zeros((nx, ny, nz), dtype=np.int)  # Initialise set number array
     z_dip = np.ones(x_dip.shape) * znow
 
+    if len(select) > 0:
+        select_idx = np.where(select)                                               # Get indices of selected model nodes
+    else:
+        select = np.ones_like(xtemp, dtype=bool)
+        select_idx = np.where(select)
+
     points = np.array((xtemp[select].flatten(), ytemp[select].flatten(), ztemp[select].flatten()))      # Cartesian coordinates of model grid nodes
     plp = np.array((x_dip, y_dip, z_dip)).T                                     # Cartesian coordinates of points on dip planes
     pd = plp[:, None] - points.T                                                # subtract grid nodes from plane points
-
-    select_idx = np.where(select)                                               # Get indices of selected model nodes
 
     # Loop over set planes
     for iset in range(n_sets-1):
@@ -1724,4 +1726,5 @@ if __name__ == '__main__':
         param_file = 0
         #channel_checker(param_file, 'meander_channel', no_extpar=5, dist=10000)
         param_file = '..\\testcases\\made.ini'
+        param_file = '..\\external\\wimmler\\sheet_dip.ini'
     run(param_file)

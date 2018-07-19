@@ -613,9 +613,10 @@ def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
             Parameter fields to include
         opts (dict):
             Sampling options
-            opts['noBH'] (int):     Random sampling
-            opts['grid_spacing']:   Grid sample spacing
-            opt['lnK'] (bool):   Natural logarithm of isotropic hydraulic conductivity
+            opts['noBH'] (int):             Random sampling
+            opts['grid_spacing']:           float, or list of floats [x spacing, y spacing] Grid sample spacing
+            opts['grid_n']:                 int, or list of ints [n in x, n in y] Number of grid nodes per x,y dimensions
+            opt['lnK'] (bool):              Natural logarithm of isotropic hydraulic conductivity
 
     Returns:
         bh_df : Pandas DataFrame class
@@ -640,16 +641,32 @@ def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
     zv = np.arange(0.5 * d[2], l[2], d[2])
 
     if 'grid_spacing' in opts.keys():
-        """ Sample over uniform grid """
+        """ Uniform grid with set spacing """
 
         # Get cartesian coordinates in 2D (x,y)
-        range_x = np.arange((opts['grid_spacing'] * 0.5), l[0], opts['grid_spacing'])
-        range_y = np.arange((opts['grid_spacing'] * 0.5), l[1], opts['grid_spacing'])
+        if len(opts['grid_spacing']) == 2:
+            range_x = np.arange((opts['grid_spacing'][0] * 0.5), l[0], opts['grid_spacing'][0])
+            range_y = np.arange((opts['grid_spacing'][1] * 0.5), l[1], opts['grid_spacing'][1])
+        else:
+            range_x = np.arange((opts['grid_spacing'] * 0.5), l[0], opts['grid_spacing'])
+            range_y = np.arange((opts['grid_spacing'] * 0.5), l[1], opts['grid_spacing'])
+
         x_locs, y_locs = np.meshgrid(range_x, range_y)
 
         # Convert to array indices
         x_locs = np.floor(x_locs.flatten()/d[0]).astype(int)
         y_locs = np.floor(y_locs.flatten()/d[1]).astype(int)
+
+    elif 'grid_n' in opts.keys():
+        """ Sample over uniform grid """
+        # Get cartesian coordinates in 2D (x,y)
+        range_x = np.linspace(0, l[0]/d[0] - 1, opts['grid_n'][0])
+        range_y = np.linspace(0, l[1]/d[1] - 1, opts['grid_n'][1]+2)[1:-1]
+        x_locs, y_locs = np.meshgrid(range_x, range_y)
+
+        # Convert to array indices
+        x_locs = np.floor(x_locs.flatten()).astype(int)
+        y_locs = np.floor(y_locs.flatten()).astype(int)
 
     elif 'noBH' in opts.keys():
         """ Randomly sample the xy plane """

@@ -12,6 +12,8 @@ options = {}
 # Run options
 # ===========
 options['run'] = [
+    Option('runname', str, optional=True, default=None),
+    Option('modeldir', str, optional=True, default=None),
     Option('numsim', int, optional=True, default=1),
     Option('anisotropy', bool, optional=True, default=True,
            alternatives='flag_anisotropy'),
@@ -119,6 +121,7 @@ options['sheet'] = element_options + [
     Option('structure', str, optional=False,
            validation_func=lambda x: x in ['massive', 'dip']),
     Option('lens_thickness', float, optional=False),
+    Option('dipset_d', float, optional=True),
     Option('dip', list, optional=True, shape=2, datatype=float,
            alternatives='r_dip'),
     Option('azimuth', list, optional=True, shape=2, datatype=float,
