@@ -1,0 +1,471 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.classes.extpar &#8212; HyVR 0.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hyvr.classes.extpar</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">hyvr.utils</span> <span class="k">as</span> <span class="nn">hu</span>
+
+<div class="viewcode-block" id="gen_extpar"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.extpar.gen_extpar">[docs]</a><span class="k">def</span> <span class="nf">gen_extpar</span><span class="p">(</span><span class="n">channel_type</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ae</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">ani</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate extruded parabola geometries:</span>
+
+<span class="sd">    * Flow regime is assumed to be reasonably constant so the major geometry of the extruded</span>
+<span class="sd">      parabolas doesn&#39;t change so much</span>
+<span class="sd">    * &#39;Migration&#39; of the extruded parabolas according to a shift vector</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    extpar_type : ExtrudedParabolaType</span>
+<span class="sd">    model : Model object</span>
+<span class="sd">    ae : AERealization object</span>
+<span class="sd">    ae : list</span>
+<span class="sd">        AE parameters</span>
+<span class="sd">        TODO: use AERealization instead</span>
+<span class="sd">    count : int</span>
+<span class="sd">        Material number and/or identifier</span>
+<span class="sd">    ani : bool, optional (default: True)</span>
+<span class="sd">        Whether anisotropy should be generated</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    count : int</span>
+<span class="sd">        Material number and/or identifier</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># This is just for convenience</span>
+    <span class="n">ae_arr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ae&#39;</span><span class="p">]</span>
+    <span class="n">ha_arr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ha&#39;</span><span class="p">]</span>
+    <span class="n">hat_arr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;hat&#39;</span><span class="p">]</span>
+    <span class="n">fac</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;fac&#39;</span><span class="p">]</span>
+    <span class="n">azim</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;azim&#39;</span><span class="p">]</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dip&#39;</span><span class="p">]</span>
+
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Y</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># TODO: replace z3 with model.Z</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">z3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">nx</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ny</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>          <span class="c1"># 2-D grid</span>
+
+    <span class="c1"># start location</span>
+    <span class="n">total_extpar</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">channel_type</span><span class="o">.</span><span class="n">channel_no</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="p">:</span>
+        <span class="c1"># Place troughs in domain centre for display features</span>
+        <span class="n">xstart</span> <span class="o">=</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x0</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">lx</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">total_extpar</span><span class="p">)</span>
+        <span class="n">ystart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">y0</span><span class="o">+</span><span class="n">model</span><span class="o">.</span><span class="n">ly</span><span class="p">,</span> <span class="n">total_extpar</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Randomly place curve starting points</span>
+        <span class="c1"># TODO: this was the original setting for xstart, why was this hard-coded?</span>
+        <span class="c1"># xstart = np.random.uniform(-10, 0, total_extpar)</span>
+        <span class="n">xstart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span> <span class="n">total_extpar</span><span class="p">)</span>
+        <span class="n">ystart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ymax</span><span class="p">,</span> <span class="n">total_extpar</span><span class="p">)</span>
+
+    <span class="c1"># loop over extruded parabola top depths</span>
+    <span class="n">ch_bot</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">z_bottom</span>
+    <span class="n">ch_bot</span> <span class="o">+=</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">depth</span> <span class="o">*</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">buffer</span>
+
+    <span class="n">ch_top</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">z_top</span>
+    <span class="n">ch_dz</span> <span class="o">=</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">agg</span>
+    <span class="n">ch_top</span> <span class="o">+=</span> <span class="n">ch_dz</span>
+
+    <span class="k">for</span> <span class="n">znow</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ch_bot</span><span class="p">,</span> <span class="n">ch_top</span><span class="p">,</span> <span class="n">ch_dz</span><span class="p">):</span>
+        <span class="n">hu</span><span class="o">.</span><span class="n">print_to_stdout</span><span class="p">(</span><span class="s1">&#39;z = </span><span class="si">{:2.4f}</span><span class="s1">m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">znow</span><span class="p">))</span>
+        <span class="c1"># Assign linear trend to extruded parabola sizes</span>
+        <span class="k">if</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">geo_ztrend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">zfactor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">znow</span><span class="p">,</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">z0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">z0</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">lz</span><span class="p">],</span> <span class="p">[</span><span class="n">channel_type</span><span class="o">.</span><span class="n">geo_ztrend</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">geo_ztrend</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">zfactor</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">z_ch_width</span> <span class="o">=</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="n">zfactor</span>
+        <span class="n">z_ch_depth</span> <span class="o">=</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">depth</span> <span class="o">*</span> <span class="n">zfactor</span>
+
+        <span class="k">if</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">channel_start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cstart</span> <span class="o">=</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">channel_start</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cstart</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Loop over total extruded parabolas per system</span>
+        <span class="k">for</span> <span class="n">chan</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_extpar</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot; Loop over multiple extruded parabolas at &#39;timestep&#39; &quot;&quot;&quot;</span>
+            <span class="n">aha</span> <span class="o">=</span> <span class="n">ferguson_curve</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>  <span class="n">channel_type</span><span class="o">.</span><span class="n">ds</span><span class="p">,</span>
+                                 <span class="n">channel_type</span><span class="o">.</span><span class="n">eps_factor</span><span class="p">,</span>
+                                 <span class="n">disp</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">display</span><span class="p">,</span>
+                                 <span class="n">ch_start</span><span class="o">=</span><span class="n">cstart</span><span class="p">)</span>
+
+            <span class="sd">&quot;&quot;&quot; Get flow direction in extruded parabolas for azimuth &quot;&quot;&quot;</span>
+            <span class="c1"># For periodicity shift trajectories into model unit cell</span>
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">periodic</span><span class="p">:</span>
+                <span class="n">aha</span><span class="p">[</span><span class="n">aha</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">yvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">ly</span>
+                <span class="n">aha</span><span class="p">[</span><span class="n">aha</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">yvec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">model</span><span class="o">.</span><span class="n">ly</span>
+
+            <span class="c1"># initialize 2-D distance matrix</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="mf">1e20</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+            <span class="c1"># initialize sum of inverse-distance weights</span>
+            <span class="n">sumW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+            <span class="c1"># initialize velocity orientation at this level</span>
+            <span class="n">vx_znow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+            <span class="n">vy_znow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+            <span class="c1"># loop over all points of trajectory</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">aha</span><span class="p">)):</span>
+                <span class="c1"># distance to current point</span>
+                <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x2</span> <span class="o">-</span> <span class="n">aha</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">aha</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+                <span class="c1"># smallest distance of entire grid to all points so far</span>
+                <span class="n">D</span><span class="p">[</span><span class="n">R</span> <span class="o">&lt;</span> <span class="n">D</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">R</span> <span class="o">&lt;</span> <span class="n">D</span><span class="p">]</span>
+
+                <span class="c1"># inverse-distance weight for velocity interpolation</span>
+                <span class="n">W</span><span class="p">[:]</span> <span class="o">=</span> <span class="mf">1e-20</span>
+                <span class="n">W</span><span class="p">[</span><span class="n">R</span> <span class="o">&lt;</span> <span class="n">z_ch_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">R</span> <span class="o">&lt;</span> <span class="n">z_ch_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-20</span><span class="p">)</span>
+
+                <span class="c1"># velocity interpolation in 2-D</span>
+                <span class="n">vx_znow</span> <span class="o">+=</span> <span class="n">aha</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">W</span>
+                <span class="n">vy_znow</span> <span class="o">+=</span> <span class="n">aha</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">W</span>
+                <span class="n">sumW</span> <span class="o">+=</span> <span class="n">W</span>
+
+            <span class="n">vx_znow</span> <span class="o">/=</span> <span class="n">sumW</span>
+            <span class="n">vy_znow</span> <span class="o">/=</span> <span class="n">sumW</span>
+
+            <span class="c1"># Assign facies sets with dip values</span>
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">channel_type</span><span class="o">.</span><span class="n">dip</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">do</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">dv</span><span class="p">,</span> <span class="n">av</span> <span class="o">=</span> <span class="n">hu</span><span class="o">.</span><span class="n">dip_sets</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">channel_type</span><span class="p">,</span> <span class="n">znow</span><span class="p">,</span> <span class="n">curve</span><span class="o">=</span><span class="p">[</span><span class="n">aha</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">aha</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">vx_znow</span><span class="p">,</span> <span class="n">vy_znow</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">do</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">nz</span><span class="p">))</span> <span class="o">+</span> <span class="n">count</span>
+                <span class="n">fd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">channel_type</span><span class="o">.</span><span class="n">facies</span><span class="p">))</span>
+                <span class="n">dv</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">av</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">nz</span><span class="p">))</span>
+
+            <span class="sd">&quot;&quot;&quot; Copy results into 3-D field &quot;&quot;&quot;</span>
+            <span class="c1"># Iterate over all nodes below current top elevation</span>
+            <span class="n">znow_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">((</span><span class="n">znow</span> <span class="o">-</span> <span class="n">model</span><span class="o">.</span><span class="n">z0</span><span class="p">)</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">dz</span><span class="p">))</span> <span class="c1"># TODO: fix around stuff</span>
+            <span class="n">zbelow_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">((</span><span class="n">znow</span> <span class="o">-</span> <span class="n">z_ch_depth</span> <span class="o">-</span> <span class="n">model</span><span class="o">.</span><span class="n">z0</span><span class="p">)</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">dz</span><span class="p">))</span>
+            <span class="n">d_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">zbelow_index</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">znow_index</span><span class="p">))</span>      <span class="c1"># Depth range</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d_range</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>        <span class="c1"># Only compute if extruded parabola depth range is finite</span>
+
+                <span class="c1"># Get mask arrays for each condition</span>
+                <span class="n">in_extpar</span> <span class="o">=</span> <span class="n">D</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">z_ch_width</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">-</span> <span class="p">((</span><span class="n">znow_index</span> <span class="o">-</span> <span class="n">z3</span><span class="p">)</span> <span class="o">*</span> <span class="n">model</span><span class="o">.</span><span class="n">dz</span> <span class="o">*</span> <span class="n">z_ch_width</span> <span class="o">/</span> <span class="p">(</span><span class="n">z_ch_depth</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>     <span class="c1"># is grid cell in extruded parabola</span>
+                <span class="n">finite_v</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">vx_znow</span><span class="p">)</span>            <span class="c1"># Only assign if velocity is finite</span>
+                <span class="n">below_top</span> <span class="o">=</span> <span class="n">ae_arr</span> <span class="o">&lt;=</span> <span class="n">ae</span><span class="o">.</span><span class="n">num</span>          <span class="c1"># Don&#39;t assign values to locations higher than top contact surface</span>
+                <span class="n">chan_mask</span> <span class="o">=</span> <span class="n">in_extpar</span> <span class="o">*</span> <span class="n">finite_v</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">below_top</span>
+                <span class="k">if</span> <span class="n">znow_index</span> <span class="o">&lt;=</span> <span class="n">z3</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">():</span>
+                    <span class="c1"># Set mask above top of extruded parabola to False</span>
+                    <span class="n">chan_mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">znow_index</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="c1"># Assign properties</span>
+                <span class="n">fac</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">fd</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span>
+                <span class="n">ha_arr</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+                <span class="n">hat_arr</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">ae_id</span>
+                <span class="n">ae_arr</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">num</span>
+
+                <span class="k">if</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">lag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">in_lag</span> <span class="o">=</span> <span class="p">(</span><span class="n">znow</span> <span class="o">-</span> <span class="n">z_ch_depth</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">channel_type</span><span class="o">.</span><span class="n">lag</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">&gt;</span> <span class="n">z3</span> <span class="o">*</span> <span class="n">model</span><span class="o">.</span><span class="n">dz</span>   <span class="c1"># Is grid cell in extruded parabola</span>
+                    <span class="n">fac</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">in_extpar</span><span class="p">,</span> <span class="n">in_lag</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">channel_type</span><span class="o">.</span><span class="n">lag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="k">if</span> <span class="n">ani</span><span class="p">:</span>
+                    <span class="c1"># calcuate azimuth, to 1 degree</span>
+                    <span class="n">azim2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">vx_znow</span><span class="p">,</span> <span class="n">vy_znow</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+                    <span class="n">azim3d</span> <span class="o">=</span> <span class="n">azim2d</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">nz</span><span class="p">))</span>
+                    <span class="n">azim</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">azim3d</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span>
+                    <span class="n">dip</span><span class="p">[</span><span class="n">chan_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">dv</span>
+
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Shift starting values with migration vector from parameter file</span>
+        <span class="k">if</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">mig</span><span class="p">:</span> <span class="c1"># TODO: fix this</span>
+            <span class="n">xstart</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">channel_type</span><span class="o">.</span><span class="n">mig</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">mig</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">ystart</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">channel_type</span><span class="o">.</span><span class="n">mig</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">channel_type</span><span class="o">.</span><span class="n">mig</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">count</span></div>
+
+
+<div class="viewcode-block" id="ferguson_curve"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.extpar.ferguson_curve">[docs]</a><span class="k">def</span> <span class="nf">ferguson_curve</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">eps_factor</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">disp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ch_start</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model</span>
+<span class="sd">    Implementation of AR2 autoregressive model</span>
+<span class="sd">    http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model : Model object</span>
+<span class="sd">    h : float</span>
+<span class="sd">        Height</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wave number</span>
+<span class="sd">    ds : float</span>
+<span class="sd">        Curve distance for calculations</span>
+<span class="sd">    eps_factor : float</span>
+<span class="sd">        Random background noise</span>
+<span class="sd">    dist : float, optional (default: 0)</span>
+<span class="sd">        Distance to generate curves - defaults to model.lx (if dist=0)</span>
+<span class="sd">    disp : bool, optional (default: False)</span>
+<span class="sd">        Creating display extruded parabola - extruded parabola begins at (0,0)</span>
+<span class="sd">    ch_start : tuple of floats</span>
+<span class="sd">        Starting location of channel (x,y coordinates)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    outputs : numpy array </span>
+<span class="sd">        Simulated extruded parabola centerlines: storage array containing values for x coordinate, y</span>
+<span class="sd">        coordinate, vx and vy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Parameters</span>
+    <span class="n">ds</span> <span class="o">+=</span> <span class="mf">1e-10</span>
+    <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">dist</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">lx</span><span class="o">*</span><span class="mi">100</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">ds</span><span class="p">)</span>
+
+    <span class="c1"># Centreline starting point</span>
+    <span class="n">xp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">yp</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Calculate curve directions</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">ferguson_theta</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">eps_factor</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+    <span class="c1"># Interpolate curve direction over interval of interest</span>
+    <span class="n">s_interp</span><span class="p">,</span> <span class="n">th_interp</span> <span class="o">=</span> <span class="n">curve_interp</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># Storage array</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">th_interp</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">th_idx</span><span class="p">,</span> <span class="n">th_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">th_interp</span><span class="p">):</span>
+        <span class="n">vx</span> <span class="o">=</span> <span class="n">ds</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th_i</span><span class="p">)</span>
+        <span class="n">vy</span> <span class="o">=</span> <span class="n">ds</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th_i</span><span class="p">)</span>
+        <span class="n">xp</span> <span class="o">+=</span> <span class="n">vx</span>
+        <span class="n">yp</span> <span class="o">+=</span> <span class="n">vy</span>
+
+        <span class="c1"># Assign to storage array</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">xp</span>       <span class="c1"># x coordinate</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">yp</span>       <span class="c1"># y coordinate</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vx</span>       <span class="c1"># vx</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">vy</span>       <span class="c1"># vy</span>
+
+    <span class="c1"># Rotate meanders into mean flow direction</span>
+    <span class="n">mean_th</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">th_interp</span><span class="p">)</span>
+    <span class="n">rotMatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">mean_th</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">mean_th</span><span class="p">)],</span>
+                          <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">mean_th</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">mean_th</span><span class="p">)]])</span>
+    <span class="n">roro</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotMatrix</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotMatrix</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+    <span class="c1"># Move starting location in x-direction</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">roro</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">lx</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">lx</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">roro</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+    <span class="c1"># Remove values before model domain</span>
+    <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indomain</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">model</span><span class="o">.</span><span class="n">x0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">indomain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">model</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model</span><span class="o">.</span><span class="n">lx</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">indomain</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ch_start</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">ch_start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">ch_start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Make sure streamlines begin within domain with respect to y</span>
+    <span class="n">yout</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">model</span><span class="o">.</span><span class="n">ly</span><span class="o">/</span><span class="mi">4</span> <span class="ow">or</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">model</span><span class="o">.</span><span class="n">ly</span><span class="o">/</span><span class="mi">4</span>
+    <span class="k">if</span> <span class="n">disp</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">starty</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">yout</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">starty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">model</span><span class="o">.</span><span class="n">ly</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">ly</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">starty</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">starty</span>
+
+    <span class="k">return</span> <span class="n">outputs</span></div>
+
+
+<div class="viewcode-block" id="ferguson_theta"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.extpar.ferguson_theta">[docs]</a><span class="k">def</span> <span class="nf">ferguson_theta</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">eps_factor</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate curve direction angle</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        s:				    Steps within generated curve distance</span>
+<span class="sd">        eps_factor:		    Random background noise</span>
+<span class="sd">        k:				    Wave number</span>
+<span class="sd">        h:				    Height</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        th_store *(array)* - Curve direction angle</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Storage arrays</span>
+    <span class="n">th_store</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">idex</span><span class="p">,</span> <span class="n">si</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">idex</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">idex</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">()</span><span class="o">*</span><span class="n">eps_factor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">eps_factor</span>
+
+        <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="p">]</span> <span class="o">=</span> <span class="n">thetaAR2</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">th_store</span></div>
+
+
+<div class="viewcode-block" id="thetaAR2"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.extpar.thetaAR2">[docs]</a><span class="k">def</span> <span class="nf">thetaAR2</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)</span>
+<span class="sd">    http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        t1: 	theta(i-1)</span>
+<span class="sd">        t2: 	theta(i-2)</span>
+<span class="sd">        k:		Wavenumber</span>
+<span class="sd">        h:		Height</span>
+<span class="sd">        eps:	Random background noise</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        2nd-order autoregression (AR2)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">h</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="n">h</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eps</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">t1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">t2</span></div>
+
+
+<div class="viewcode-block" id="curve_interp"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.extpar.curve_interp">[docs]</a><span class="k">def</span> <span class="nf">curve_interp</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by &#39;Unutbu&#39; on</span>
+<span class="sd">    http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values (retrieved 17/04/2017)</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        xc:			x coordinates of curve</span>
+<span class="sd">        yc:			y coordinates of curve</span>
+<span class="sd">        spacing:	Spacing between points</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - xn - x coordinates of interpolated points</span>
+<span class="sd">        - yn - y coordinates of interpolated points</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># TODO: what does this function do exactly? Can we use np.interp instead?</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span>
+    <span class="n">xc_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span>
+    <span class="n">yc_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yc</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">N</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">xc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">xc</span><span class="p">)</span>
+    <span class="n">yc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">yc</span><span class="p">)</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="n">spacing</span>
+    <span class="n">ic</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">ic</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
+        <span class="n">total_dist</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ic</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+            <span class="n">total_dist</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">xc</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">yc</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">total_dist</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">:</span>
+                <span class="n">idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="n">ic</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">xn</span> <span class="o">=</span> <span class="n">xc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">yn</span> <span class="o">=</span> <span class="n">yc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xc_in</span><span class="p">,</span> <span class="n">yc_in</span><span class="p">,</span> <span class="s1">&#39;rx-&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xn</span><span class="p">,</span> <span class="n">yn</span><span class="p">)</span>
+    <span class="c1"># ax.set_aspect(&#39;equal&#39;)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">xn</span><span class="p">,</span> <span class="n">yn</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/modules.html">Module Reference</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

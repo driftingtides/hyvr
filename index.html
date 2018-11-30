@@ -6,10 +6,10 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>The Hydrogeological Virtual Reality (HyVR) simulation package &#8212; HYVR 0.2 documentation</title>
+    <title>Contents &#8212; HyVR 0.2 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -30,7 +30,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">HYVR 0.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">HyVR 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -39,24 +39,56 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="the-hydrogeological-virtual-reality-hyvr-simulation-package">
-<h1>The Hydrogeological Virtual Reality (HyVR) simulation package<a class="headerlink" href="#the-hydrogeological-virtual-reality-hyvr-simulation-package" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the Hydrogeological Virtual Reality (HyVR) simulation package.</p>
-<p><strong>HyVR: Turning your geofantasy into reality!</strong></p>
-</div>
-<div class="section" id="contents">
+  <div class="section" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="methods.html">HyVR Computational methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#installing-the-hyvr-package">Installing the HyVR package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#source">Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#development">Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#problems-bugs-unclear-documentation">Problems, Bugs, Unclear Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">HyVR Computational methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#simulation-of-strata-and-architectural-element-contact-surfaces">Simulation of strata and architectural element contact surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#simulation-of-hydrofacies-assemblages-and-hydrofacies-geometries">Simulation of hydrofacies assemblages and hydrofacies geometries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#simulation-of-hydraulic-parameters">Simulation of hydraulic parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inout.html">HyVR inputs and outputs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inout.html#the-ini-configuration-file">The <code class="docutils literal notranslate"><span class="pre">.ini</span></code> configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inout.html#model-setup-sections">Model setup sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inout.html#hydraulics-section"><code class="docutils literal notranslate"><span class="pre">[hydraulics]</span></code> section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inout.html#flowtrans-section"><code class="docutils literal notranslate"><span class="pre">[flowtrans]</span></code> section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inout.html#hyvr-outputs">HyVR outputs</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">HyVR Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="more.html">Extending HyVR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="more.html">Extending HyVR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="more.html#adding-more-geometries">Adding more geometries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="more.html#the-hyvr-wish-list">The HyVR wish list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog/Bug Fixes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#hyvr-0-9-9">HyVR 0.9.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#hyvr-0-2-3">HyVR 0.2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#hyvr-0-2-2">HyVR 0.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#hyvr-0-2-1">HyVR 0.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#hyvr-0-2">HyVR 0.2</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">HyVR package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/modules.html">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/hyvr.html">hyvr package</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="indices-and-tables">
@@ -83,9 +115,9 @@
 <li class="toctree-l1"><a class="reference internal" href="example.html">HyVR Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="more.html">Extending HyVR</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">HyVR package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/modules.html">Module Reference</a></li>
 </ul>
 
   <h4>Next topic</h4>
@@ -126,12 +158,12 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">HYVR 0.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">HyVR 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
     </div>
   </body>
 </html>

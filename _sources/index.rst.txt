@@ -1,22 +1,9 @@
-.. HYVR documentation master file, created by
-   sphinx-quickstart on Tue Nov 14 11:28:41 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-====================================================================
-The Hydrogeological Virtual Reality (HyVR) simulation package
-====================================================================
-
-Welcome to the Hydrogeological Virtual Reality (HyVR) simulation package.
-
-**HyVR: Turning your geofantasy into reality!** 
-
 =========
 Contents
 =========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    
    intro
    methods
@@ -24,17 +11,18 @@ Contents
    example
    more
    troubleshooting
-   references
-   modules
    changelog
+   references
+   modules/modules
 
 
 
+.. only:: html
 
-Indices and tables
-==================
+   Indices and tables
+   ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
 

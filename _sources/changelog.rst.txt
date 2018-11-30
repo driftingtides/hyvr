@@ -2,6 +2,51 @@
 Changelog/Bug Fixes
 ====================
 
+HyVR 0.9.9
+----------
+
+Release Date: 30 November 2018
+
+Contributors
+""""""""""""
+
+* Samuel Scherrer
+* Jeremy Bennett
+
+Changes
+"""""""
+This release introduces major changes to how HyVR works behind the scenes.
+This is a pre-release of the coming version 1.0.0. This will only be published
+on github, since the channel generation code is not yet ported to the new
+version. Version 1.0.0 will also contain a reimplementation of the channel
+generation code and will also be published on PyPI.
+
+These are the most important changes:
+
+* Object oriented code: HyVR is now heavily object oriented. This will hopefully
+  make it easier to add new geometries to HyVR, and will enable us to introduce
+  features like contact surface conditioning in future versions.
+* Better separation of grid and model: A HyVR model is now almost fully
+  independent from the grid on which it should be evaluated. Instead of directly
+  mapping objects onto the grid at the time of object creation, the model is
+  first constructed as list of strata, which again hold lists to their
+  architectural elements.
+  Only after the full model is created we go over all grid points, decide to
+  which object the point belongs, and assign values accordingly.
+  This comes with some performance loss due to python slowness. We'll try to
+  alleviate these in future releases.
+* Changes to ``.ini``-file: Some changes have been made to the parameter file.
+  These were partly necessary, e.g. the new contact models, and are partly only
+  cosmetic changes to get more verbose option names (e.g. ``strata`` instead of
+  ``ssm``, ``ae_in_strata`` instead of ``ssm_ae``, etc.).
+  Old-format ini-files will probably still work, but support for them will be
+  dropped soon, so we urge all users to make the necessary changes to their
+  ini-files. (It's really not that much work.)
+* **No channels**: This version does not yet support channels. This will be part
+  of version 1.0.0.
+
+
+
 HyVR 0.2.3
 ----------
 

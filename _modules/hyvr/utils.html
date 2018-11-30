@@ -6,10 +6,10 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.utils &#8212; HYVR 0.2 documentation</title>
+    <title>hyvr.utils &#8212; HyVR 0.2 documentation</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HYVR 0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -60,43 +60,13 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">errno</span>
-<span class="kn">from</span> <span class="nn">pyevtk.hl</span> <span class="k">import</span> <span class="n">gridToVTK</span>
-<span class="kn">import</span> <span class="nn">flopy</span>
 <span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
-<span class="kn">import</span> <span class="nn">hyvr.grid</span> <span class="k">as</span> <span class="nn">gr</span>
+<span class="kn">import</span> <span class="nn">hyvr.optimized</span> <span class="k">as</span> <span class="nn">ho</span>
 
 
-<span class="sd">&#39;&#39;&#39; File I/O and wrangling&#39;&#39;&#39;</span>
-
-<div class="viewcode-block" id="to_vtr"><a class="viewcode-back" href="../../modules.html#hyvr.utils.to_vtr">[docs]</a><span class="k">def</span> <span class="nf">to_vtr</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Save a numpy array into a ``.vtr`` rectilinear grid of voxels using pyevtk</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        data_dict (numpy array):		e.g. {&#39;fac&#39;: fac, &#39;mat&#39;: mat}</span>
-<span class="sd">        file_name (str):		        Name of the file for the output.</span>
-<span class="sd">        grid (class Grid):		        The information about the grid can be also provided as a grid object.</span>
-<span class="sd">        points (bool), optional:        Set as True for exporting cell-centered points for contouring (e.g., hydraulic heads)</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        A VTK STRUCTURED_POINTS dataset file containing the input numpy data.</span>
-
-<span class="sd">        .. note:</span>
-<span class="sd">            * Only &#39;STRUCTURED_POINTS&#39; output allowed.</span>
-<span class="sd">            * The type of the data is extracted from the input array.</span>
-<span class="sd">            * Only 3D of 2D input data allowed.</span>
-<span class="sd">            * The default output is set to &#39;POINT_DATA&#39;.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">points</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">gvec</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">vec</span><span class="p">()</span>
-        <span class="n">gridToVTK</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">pointData</span><span class="o">=</span><span class="n">data_dict</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">gvec</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">vec_node</span><span class="p">()</span></div>
-        <span class="n">gridToVTK</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">gvec</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">cellData</span><span class="o">=</span><span class="n">data_dict</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="mf6_vtr"><a class="viewcode-back" href="../../modules.html#hyvr.utils.mf6_vtr">[docs]</a><span class="k">def</span> <span class="nf">mf6_vtr</span><span class="p">(</span><span class="n">fhead</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">fout</span><span class="p">):</span>
+<div class="viewcode-block" id="mf6_vtr"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.mf6_vtr">[docs]</a><span class="k">def</span> <span class="nf">mf6_vtr</span><span class="p">(</span><span class="n">fhead</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">fout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a MODFLOW 6 Binary head file into vtr suitable for visualisation in ParaView</span>
 
@@ -106,6 +76,11 @@
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">flopy</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mf output not possible: Flopy not installed.&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
     <span class="n">hfile</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">binaryfile</span><span class="o">.</span><span class="n">HeadFile</span><span class="p">(</span><span class="n">fhead</span><span class="p">)</span>          <span class="c1">#</span>
     <span class="n">hdata</span> <span class="o">=</span> <span class="n">hfile</span><span class="o">.</span><span class="n">get_alldata</span><span class="p">()</span>                             <span class="c1"># Create numpy array with all data</span>
     <span class="n">head_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>                                      <span class="c1"># Initialise dict with the data</span>
@@ -113,11 +88,11 @@
         <span class="n">hf_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">hdata</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:])</span>                <span class="c1"># Get heads at individual time steps</span>
         <span class="n">hf_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">hf_i</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>                <span class="c1"># Permute to be consistent with HyVR grids</span>
         <span class="n">head_dict</span><span class="p">[</span><span class="s1">&#39;head_timestep</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">hf_i</span>
-</div>
-    <span class="n">to_vtr</span><span class="p">(</span><span class="n">head_dict</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">to_vtr</span><span class="p">(</span><span class="n">head_dict</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="dem_load"><a class="viewcode-back" href="../../modules.html#hyvr.utils.dem_load">[docs]</a><span class="k">def</span> <span class="nf">dem_load</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+<div class="viewcode-block" id="dem_load"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.dem_load">[docs]</a><span class="k">def</span> <span class="nf">dem_load</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load data from ESRI-style ASCII-file.</span>
 
@@ -142,11 +117,11 @@
     <span class="c1"># Extract data using pandas</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
-</div>
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">meta</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">meta</span></div>
 
 
-<div class="viewcode-block" id="dem_save"><a class="viewcode-back" href="../../modules.html#hyvr.utils.dem_save">[docs]</a><span class="k">def</span> <span class="nf">dem_save</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">gro</span><span class="p">):</span>
+<div class="viewcode-block" id="dem_save"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.dem_save">[docs]</a><span class="k">def</span> <span class="nf">dem_save</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">gro</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save DEM data to ESRI-style ASCII-file</span>
 
@@ -172,28 +147,12 @@
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span>
                    <span class="n">data</span><span class="p">,</span>
                    <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span>
-                   <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1">&#39;</span><span class="p">,</span></div>
-                   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                   <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1">&#39;</span><span class="p">,</span>
+                   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="matlab_save"><a class="viewcode-back" href="../../modules.html#hyvr.utils.matlab_save">[docs]</a><span class="k">def</span> <span class="nf">matlab_save</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Save numpy array to .mat file for use in matlab.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        fn (str):               File name (ending with .mat)</span>
-<span class="sd">        data (numpy array):     Data to save</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Save a dictionary of names and arrays into a MATLAB-style .mat file.</span>
-<span class="sd">        This saves the array objects in the given dictionary to a MATLAB- style .mat file.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-</div>
-    <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">savemat</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">))</span>
-
-
-<div class="viewcode-block" id="load_gslib"><a class="viewcode-back" href="../../modules.html#hyvr.utils.load_gslib">[docs]</a><span class="k">def</span> <span class="nf">load_gslib</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+<div class="viewcode-block" id="load_gslib"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.load_gslib">[docs]</a><span class="k">def</span> <span class="nf">load_gslib</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load .gslib files. This has been appropriated from the HPGL library</span>
 <span class="sd">    https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py</span>
@@ -238,31 +197,14 @@
         <span class="n">gslib_dict</span><span class="p">[</span><span class="n">dkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">gslib_dict</span><span class="p">[</span><span class="n">dkey</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ly</span><span class="p">,</span> <span class="n">lx</span><span class="p">,</span> <span class="n">lz</span><span class="p">))</span>
 
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</div>
-    <span class="k">return</span> <span class="n">gslib_dict</span>
 
-
-<div class="viewcode-block" id="load_pickle"><a class="viewcode-back" href="../../modules.html#hyvr.utils.load_pickle">[docs]</a><span class="k">def</span> <span class="nf">load_pickle</span><span class="p">(</span><span class="n">pickfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Pickle input file</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        pickfile:		Input file</span>
-
-<span class="sd">    Return:</span>
-<span class="sd">        data *(dict)* - Pickled data of input file</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickfile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">data</span>
+    <span class="k">return</span> <span class="n">gslib_dict</span></div>
 
 
 <span class="sd">&#39;&#39;&#39; HYVR-specific utilities&#39;&#39;&#39;</span>
 
 
-<div class="viewcode-block" id="read_lu"><a class="viewcode-back" href="../../modules.html#hyvr.utils.read_lu">[docs]</a><span class="k">def</span> <span class="nf">read_lu</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">):</span>
+<div class="viewcode-block" id="read_lu"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.read_lu">[docs]</a><span class="k">def</span> <span class="nf">read_lu</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load user-defined strata (architectural element lookup table),</span>
 <span class="sd">    split the data based on a delimiter and return it as a new list</span>
@@ -283,360 +225,12 @@
     <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
         <span class="n">ssm_lu</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
-</div>
-    <span class="k">return</span> <span class="n">ssm_lu</span>
 
+    <span class="k">return</span> <span class="n">ssm_lu</span></div>
 
-<div class="viewcode-block" id="to_modflow"><a class="viewcode-back" href="../../modules.html#hyvr.utils.to_modflow">[docs]</a><span class="k">def</span> <span class="nf">to_modflow</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert HYVR outputs to MODFLOW inputs</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        mfdir:				Directory of MODFLOW model object</span>
-<span class="sd">        mg:					Mesh grid object class</span>
-<span class="sd">        flowtrans (dict):   Flow &amp; transport simulation parameters</span>
-<span class="sd">        props (dict):		Parameter fields as numpy arrays (anirat: Background anistropic ratio (K_h/K_v anisotropy ratio)</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        - mf - MODFLOW model object</span>
-<span class="sd">        - dis - Discretization of modflow object</span>
-<span class="sd">        - bas - BAS package of modflow model</span>
-<span class="sd">        - lpf - LPF package of modflow model</span>
-<span class="sd">        - oc - OC package of modflow model</span>
-<span class="sd">        - pcg - pcg package of modflow model</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">flopy</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mf output not possible: Flopy not installed.&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="c1"># Assign name and create modflow model object</span>
-    <span class="n">mf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">Modflow</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">exe_name</span><span class="o">=</span><span class="s1">&#39;mf2005&#39;</span><span class="p">)</span>
-
-    <span class="c1"># Create the discretization object</span>
-    <span class="n">ztop</span> <span class="o">=</span> <span class="n">mg</span><span class="o">.</span><span class="n">oz</span> <span class="o">+</span> <span class="n">mg</span><span class="o">.</span><span class="n">lz</span>
-    <span class="n">zbot</span> <span class="o">=</span> <span class="n">mg</span><span class="o">.</span><span class="n">oz</span>
-    <span class="n">botm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ztop</span><span class="p">,</span> <span class="n">zbot</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">dis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowDis</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">delr</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">delc</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="p">(</span><span class="n">mg</span><span class="o">.</span><span class="n">oz</span> <span class="o">+</span> <span class="n">mg</span><span class="o">.</span><span class="n">lz</span><span class="p">),</span> <span class="n">botm</span><span class="o">=</span><span class="n">botm</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-
-    <span class="c1"># Variables for the BAS package</span>
-    <span class="n">ibound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-    <span class="n">ibound</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="n">ibound</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-
-    <span class="n">strt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="n">strt</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hin&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">strt</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hout&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="n">bas</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowBas</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span> <span class="n">strt</span><span class="o">=</span><span class="n">strt</span><span class="p">)</span>
-
-    <span class="c1"># Assign hydraulic conductivity</span>
-    <span class="n">hyvr_hk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;k_iso&#39;</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">hyvr_layvka</span> <span class="o">=</span> <span class="mi">1</span>                                           <span class="c1"># VKA dataset is ratio of horizontal K</span>
-    <span class="k">if</span> <span class="s1">&#39;anirat&#39;</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">hyvr_vka</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;anirat&#39;</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-
-        <span class="c1"># Add LPF package to the MODFLOW model</span>
-        <span class="n">lpf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowLpf</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span>                        <span class="c1"># Modflow object</span>
-                                       <span class="n">hk</span><span class="o">=</span><span class="n">hyvr_hk</span><span class="p">,</span>              <span class="c1"># Horizontal hydraulic conductivity</span>
-                                       <span class="n">layvka</span><span class="o">=</span><span class="n">hyvr_layvka</span><span class="p">,</span>      <span class="c1"># Flag for each layer of anisotropic ratio</span>
-                                       <span class="n">vka</span><span class="o">=</span><span class="n">hyvr_vka</span><span class="p">)</span>            <span class="c1"># Anisotropy ratios.</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Add LPF package to the MODFLOW model</span>
-        <span class="n">lpf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowLpf</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span>                        <span class="c1"># Modflow object</span>
-                                       <span class="n">hk</span><span class="o">=</span><span class="n">hyvr_hk</span><span class="p">)</span>              <span class="c1"># Horizontal hydraulic conductivity</span>
-
-    <span class="n">oc</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowOc</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>        <span class="c1"># Add OC package to the MODFLOW model</span>
-    <span class="n">pcg</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowPcg</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>      <span class="c1"># Add PCG package to the MODFLOW model</span>
-    <span class="n">mf</span><span class="o">.</span><span class="n">write_input</span><span class="p">()</span>                        <span class="c1"># Write the MODFLOW model input files</span>
-</div>
-    <span class="k">return</span> <span class="n">mf</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">bas</span><span class="p">,</span> <span class="n">lpf</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">pcg</span>
-
-
-<div class="viewcode-block" id="to_mf6"><a class="viewcode-back" href="../../modules.html#hyvr.utils.to_mf6">[docs]</a><span class="k">def</span> <span class="nf">to_mf6</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">runname</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    .. note:</span>
-
-<span class="sd">        UNDER CONSTRUCTION</span>
-<span class="sd">        https://github.com/modflowpy/flopy/blob/develop/examples/Notebooks/flopy3_mf6_tutorial.ipynb</span>
-
-<span class="sd">    Convert HYVR outputs to MODFLOW6 inputs</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        mfdir:				Directory of MODFLOW model object</span>
-<span class="sd">        runname:            Run name</span>
-<span class="sd">        mg:					Mesh grid object class</span>
-<span class="sd">        flowtrans (dict):   Flow &amp; transport simulation parameters</span>
-<span class="sd">        props (dict):		Parameter fields as numpy arrays (k_iso: Hydraulic conductivity of HYVR, anirat: Background anistropic ratio (K_h/K_v anisotropy ratio))</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - mf - MODFLOW model object</span>
-<span class="sd">        - dis - Discretization of modflow object</span>
-<span class="sd">        - bas - BAS package of modflow model</span>
-<span class="sd">        - lpf - LPF package of modflow model</span>
-<span class="sd">        - oc - OC package of modflow model</span>
-<span class="sd">        - pcg - pcg package of modflow model</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">flopy</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mf6 output not possible: Flopy not installed.&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="c1"># mfdir must be a relative path</span>
-    <span class="c1"># TODO: This still doesn&#39;t really work if the parameter file is not in the current directory</span>
-    <span class="n">mfdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">mfdir</span><span class="p">)</span>
-
-    <span class="c1"># Transpose HyVR arrays for MF6 input</span>
-    <span class="n">transpose_order</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">k_iso</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;k_iso&#39;</span><span class="p">],</span> <span class="n">transpose_order</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;anirat&#39;</span><span class="p">,</span> <span class="s1">&#39;dip&#39;</span><span class="p">,</span> <span class="s1">&#39;azim&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
-        <span class="n">anirat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;anirat&#39;</span><span class="p">],</span> <span class="n">transpose_order</span><span class="p">)</span>
-        <span class="n">dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;dip&#39;</span><span class="p">],</span> <span class="n">transpose_order</span><span class="p">)</span>
-        <span class="n">azim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;azim&#39;</span><span class="p">],</span> <span class="n">transpose_order</span><span class="p">)</span>
-        <span class="n">xt3d</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">xt3d</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="sd">&quot;&quot;&quot; create simulation &quot;&quot;&quot;</span>
-    <span class="n">sim</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFSimulation</span><span class="p">(</span><span class="n">sim_name</span><span class="o">=</span><span class="n">runname</span><span class="p">,</span>
-                                 <span class="n">version</span><span class="o">=</span><span class="s1">&#39;mf6&#39;</span><span class="p">,</span>
-                                 <span class="n">exe_name</span><span class="o">=</span><span class="s1">&#39;mf6&#39;</span><span class="p">,</span>
-                                 <span class="n">sim_ws</span><span class="o">=</span><span class="n">mfdir</span><span class="p">,</span>
-                                 <span class="n">sim_tdis_file</span><span class="o">=</span><span class="s1">&#39;simulation.tdis&#39;</span><span class="p">)</span>
-
-    <span class="sd">&quot;&quot;&quot; Create the Flopy temporal discretization object - STEADY-STATE &quot;&quot;&quot;</span>
-    <span class="n">tdis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mftdis</span><span class="o">.</span><span class="n">ModflowTdis</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span>
-                                                <span class="n">time_units</span><span class="o">=</span><span class="s1">&#39;DAYS&#39;</span><span class="p">)</span>
-
-    <span class="sd">&quot;&quot;&quot; create gwf model &quot;&quot;&quot;</span>
-    <span class="n">gwf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFModel</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">modelname</span><span class="o">=</span><span class="n">runname</span><span class="p">)</span>
-
-
-    <span class="n">ims</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowIms</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span>
-                               <span class="n">print_option</span><span class="o">=</span><span class="s1">&#39;SUMMARY&#39;</span><span class="p">,</span>
-                               <span class="n">complexity</span><span class="o">=</span><span class="s1">&#39;COMPLEX&#39;</span><span class="p">,</span>
-                               <span class="n">outer_hclose</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-                               <span class="n">outer_maximum</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-                               <span class="n">under_relaxation</span><span class="o">=</span><span class="s1">&#39;NONE&#39;</span><span class="p">,</span>
-                               <span class="n">inner_maximum</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                               <span class="n">inner_hclose</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-                               <span class="n">rcloserecord</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-                               <span class="n">linear_acceleration</span><span class="o">=</span><span class="s1">&#39;BICGSTAB&#39;</span><span class="p">,</span>
-                               <span class="n">scaling_method</span><span class="o">=</span><span class="s1">&#39;NONE&#39;</span><span class="p">,</span>
-                               <span class="n">reordering_method</span><span class="o">=</span><span class="s1">&#39;NONE&#39;</span><span class="p">,</span>
-                               <span class="n">relaxation_factor</span><span class="o">=</span><span class="mf">0.97</span><span class="p">)</span>
-    <span class="n">sim</span><span class="o">.</span><span class="n">register_ims_package</span><span class="p">(</span><span class="n">ims</span><span class="p">,</span> <span class="p">[</span><span class="n">gwf</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
-
-    <span class="sd">&quot;&quot;&quot; Create discretization &quot;&quot;&quot;</span>
-    <span class="n">ztop</span> <span class="o">=</span> <span class="n">mg</span><span class="o">.</span><span class="n">oz</span> <span class="o">+</span> <span class="n">mg</span><span class="o">.</span><span class="n">lz</span>
-    <span class="n">zbot</span> <span class="o">=</span> <span class="n">mg</span><span class="o">.</span><span class="n">oz</span>
-    <span class="n">botm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ztop</span><span class="p">,</span> <span class="n">zbot</span><span class="o">-</span><span class="n">mg</span><span class="o">.</span><span class="n">dz</span><span class="p">,</span> <span class="o">-</span><span class="n">mg</span><span class="o">.</span><span class="n">dz</span><span class="p">),</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">dis</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfdis</span><span class="o">.</span><span class="n">ModflowGwfdis</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                                   <span class="n">nlay</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">,</span>
-                                                   <span class="n">delr</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">delc</span><span class="o">=</span><span class="n">mg</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span>
-                                                   <span class="n">top</span><span class="o">=</span><span class="n">ztop</span><span class="p">,</span>
-                                                   <span class="n">botm</span><span class="o">=</span><span class="n">botm</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
-                                                   <span class="n">fname</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.dis&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">))</span>
-
-    <span class="sd">&quot;&quot;&quot; Create Node Property Flow package object &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">xt3d</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">npf_package</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowGwfnpf</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                              <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">icelltype</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xt3doptions</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-                                              <span class="n">k</span><span class="o">=</span><span class="n">k_iso</span><span class="p">,</span>                                  <span class="c1"># within-bedding hydraulic conductivity</span>
-                                              <span class="n">k33</span><span class="o">=</span><span class="n">k_iso</span><span class="o">/</span><span class="n">anirat</span><span class="p">,</span>                         <span class="c1"># across-bedding hydraulic conductivity</span>
-                                              <span class="n">angle1</span><span class="o">=</span><span class="n">azim</span><span class="p">,</span>                              <span class="c1"># azimuth</span>
-                                              <span class="n">angle2</span><span class="o">=</span><span class="n">dip</span><span class="p">,</span>                               <span class="c1"># dip</span>
-                                              <span class="n">angle3</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">)))</span>   <span class="c1"># no rotation</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">npf_package</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowGwfnpf</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                              <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">icelltype</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                              <span class="n">k</span><span class="o">=</span><span class="n">k_iso</span><span class="p">)</span>                                <span class="c1"># within-bedding hydraulic conductivity)</span>
-
-    <span class="sd">&quot;&quot;&quot; Create constant head package &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hin&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">hin</span> <span class="o">=</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hin&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">hout</span> <span class="o">=</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hout&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="k">elif</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;gradh&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">hout</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">hin</span> <span class="o">=</span> <span class="n">hout</span> <span class="o">+</span> <span class="n">mg</span><span class="o">.</span><span class="n">lx</span> <span class="o">*</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;gradh&#39;</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">([</span><span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;hin&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;gradh&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]):</span>
-        <span class="n">chd_rec</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">):</span>
-                <span class="n">chd_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">layer</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">hin</span><span class="p">))</span>         <span class="c1"># Apply at model inlet</span>
-                <span class="n">chd_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">layer</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">hout</span><span class="p">))</span>   <span class="c1"># Apply at model outlet</span>
-        <span class="c1"># chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),</span>
-        <span class="c1">#                                                stress_period_data=chd_rec, save_flows=True)</span>
-
-        <span class="n">chd</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfchd</span><span class="o">.</span><span class="n">ModflowGwfchd</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">maxbound</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chd_rec</span><span class="p">),</span>
-                                                       <span class="n">stress_period_data</span><span class="o">=</span><span class="n">chd_rec</span><span class="p">,</span> <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;q_in&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot; Apply fixed head at model outlet if fixed head at inlet&quot;&quot;&quot;</span>
-        <span class="n">hin</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">hout</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">chd_rec</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">):</span>
-                <span class="n">chd_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">layer</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">hout</span><span class="p">))</span>   <span class="c1"># Apply at model outlet</span>
-
-        <span class="n">chd</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfchd</span><span class="o">.</span><span class="n">ModflowGwfchd</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">maxbound</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chd_rec</span><span class="p">),</span>
-                                                       <span class="n">stress_period_data</span><span class="o">=</span><span class="n">chd_rec</span><span class="p">,</span> <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">hin</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">hout</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="sd">&quot;&quot;&quot; Create the initial conditions package &quot;&quot;&quot;</span>
-    <span class="c1"># Create linear initial condition</span>
-    <span class="c1"># hstart = np.ones_like(k_iso) *(hin - hout)/2</span>
-    <span class="n">hstart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">k_iso</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">hin</span><span class="p">,</span> <span class="n">hout</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nx</span><span class="p">)</span>
-    <span class="n">ic</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfic</span><span class="o">.</span><span class="n">ModflowGwfic</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span> <span class="n">strt</span><span class="o">=</span><span class="n">hstart</span><span class="p">)</span>
-
-
-
-    <span class="sd">&quot;&quot;&quot; Create well package &quot;&quot;&quot;</span>
-    <span class="c1"># Apply constant discharges at model faces</span>
-    <span class="k">if</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;q_in&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;q_in&#39;</span> <span class="ow">in</span> <span class="n">flowtrans</span><span class="p">:</span>
-            <span class="n">q_in</span> <span class="o">=</span> <span class="n">flowtrans</span><span class="p">[</span><span class="s1">&#39;q_in&#39;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">q_in</span> <span class="o">=</span> <span class="mf">0.01</span>
-
-        <span class="c1"># if &#39;q_out&#39; in flowtrans:</span>
-        <span class="c1">#     q_out = flowtrans[&#39;q_out&#39;]</span>
-        <span class="c1"># else:</span>
-        <span class="c1">#     q_out = -q_in</span>
-
-        <span class="n">wel_rec</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">nz</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mg</span><span class="o">.</span><span class="n">ny</span><span class="p">):</span>
-                <span class="n">wel_rec</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">layer</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="n">q_in</span><span class="p">,</span> <span class="s1">&#39;inlet&#39;</span><span class="p">))</span>          <span class="c1"># Apply at model inlet</span>
-                <span class="c1"># wel_rec.append(((layer, row, mg.nx-1), q_out, &#39;outlet&#39;))        # Apply at model outlet</span>
-
-        <span class="c1"># Apply to model</span>
-        <span class="n">wel</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">ModflowGwfwel</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                      <span class="n">print_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                      <span class="n">print_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                      <span class="n">save_flows</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                      <span class="n">boundnames</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                      <span class="n">maxbound</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">wel_rec</span><span class="p">),</span>
-                                      <span class="n">stress_period_data</span><span class="o">=</span><span class="n">wel_rec</span><span class="p">)</span>
-
-
-    <span class="sd">&quot;&quot;&quot; Create the output control package &quot;&quot;&quot;</span>
-    <span class="n">headfile</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.hds&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">)</span>
-    <span class="n">head_filerecord</span> <span class="o">=</span> <span class="p">[</span><span class="n">headfile</span><span class="p">]</span>
-    <span class="n">budgetfile</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.cbc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">)</span>
-    <span class="n">budget_filerecord</span> <span class="o">=</span> <span class="p">[</span><span class="n">budgetfile</span><span class="p">]</span>
-    <span class="n">saverecord</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;ALL&#39;</span><span class="p">),</span>
-                  <span class="p">(</span><span class="s1">&#39;BUDGET&#39;</span><span class="p">,</span> <span class="s1">&#39;ALL&#39;</span><span class="p">)]</span>
-    <span class="n">printrecord</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;LAST&#39;</span><span class="p">)]</span>
-    <span class="n">oc</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">mfgwfoc</span><span class="o">.</span><span class="n">ModflowGwfoc</span><span class="p">(</span><span class="n">gwf</span><span class="p">,</span>
-                                                <span class="n">saverecord</span><span class="o">=</span><span class="n">saverecord</span><span class="p">,</span>
-                                                <span class="n">head_filerecord</span><span class="o">=</span><span class="n">head_filerecord</span><span class="p">,</span>
-                                                <span class="n">budget_filerecord</span><span class="o">=</span><span class="n">budget_filerecord</span><span class="p">,</span>
-                                                <span class="n">printrecord</span><span class="o">=</span><span class="n">printrecord</span><span class="p">)</span>
-
-    <span class="c1"># write simulation</span>
-    <span class="n">sim</span><span class="o">.</span><span class="n">write_simulation</span><span class="p">()</span>
-</div>
-    <span class="k">return</span> <span class="n">sim</span>
-
-
-<div class="viewcode-block" id="to_hgs"><a class="viewcode-back" href="../../modules.html#hyvr.utils.to_hgs">[docs]</a><span class="k">def</span> <span class="nf">to_hgs</span><span class="p">(</span><span class="n">hgspath</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">ktensors</span><span class="p">,</span> <span class="n">poros</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert HYVR outputs to HydroGeoSphere inputs</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        hgspath (str):		Path where to save HGS output file</span>
-<span class="sd">        ktensors:			Array with tensor values of K</span>
-<span class="sd">        poros:				Array with values of porosity</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - val_fmts *(dict)* - Dictionary with values of K tensor and porosity</span>
-<span class="sd">        - val_filepath - file name of HGS output file</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">uid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>                              <span class="c1"># Create list of IDs</span>
-    <span class="n">vals_to_write</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ktensors&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">uid</span><span class="p">,</span>
-                                                  <span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>            <span class="c1"># K_xx</span>
-                                                  <span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>            <span class="c1"># K_yy</span>
-                                                  <span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>            <span class="c1"># K_zz</span>
-                                                  <span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>            <span class="c1"># K_xy</span>
-                                                  <span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>            <span class="c1"># K_xz</span>
-                                                  <span class="n">ktensors</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())),</span>          <span class="c1"># K_yz</span>
-                     <span class="s1">&#39;porosity&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">uid</span><span class="p">,</span>
-                                                  <span class="n">poros</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))}</span>
-    <span class="n">val_fmts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ktensors&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%u</span><span class="s1"> </span><span class="si">%1.3e</span><span class="s1"> </span><span class="si">%1.3e</span><span class="s1"> </span><span class="si">%1.3e</span><span class="s1"> </span><span class="si">%1.3e</span><span class="s1"> </span><span class="si">%1.3e</span><span class="s1"> </span><span class="si">%1.3e</span><span class="s1">&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;porosity&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%u</span><span class="s1"> </span><span class="si">%1.3f</span><span class="s1">&#39;</span><span class="p">}</span>
-
-    <span class="c1"># Loop over properties to write</span>
-    <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">vals_to_write</span><span class="p">:</span>
-        <span class="n">val_filepath</span> <span class="o">=</span> <span class="n">hgspath</span> <span class="o">+</span> <span class="n">val</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span>                      <span class="c1"># File name of HGS output file</span></div>
-        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">val_filepath</span><span class="p">,</span> <span class="n">vals_to_write</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="n">val_fmts</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
-
-
-<div class="viewcode-block" id="round_x"><a class="viewcode-back" href="../../modules.html#hyvr.utils.round_x">[docs]</a><span class="k">def</span> <span class="nf">round_x</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">prec</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Round to the nearest z-increment (Refer to http://stackoverflow.com/questions/2272149/round-to-5-or-other-number-in-python)</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        x (float):		Input parameter</span>
-<span class="sd">        base (int):		Base parameter for avoiding floating-point values</span>
-<span class="sd">        prec:			Precision of rounding</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Rounded value of nearest z-increment</span>
-
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">base</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">base</span><span class="p">),</span> <span class="n">prec</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="rotate_ktensor"><a class="viewcode-back" href="../../modules.html#hyvr.utils.rotate_ktensor">[docs]</a><span class="k">def</span> <span class="nf">rotate_ktensor</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">aniso</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">dip</span><span class="p">,</span> <span class="n">k_in</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a rotated K tensor</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">        count (int): 	Material number and/or identifier</span>
-<span class="sd">        aniso:			Anisotropy</span>
-<span class="sd">        azimuth:		Azimuth angles</span>
-<span class="sd">        dip:			Dipping angles</span>
-<span class="sd">        k_in:</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        k_rotate - Rotated K tensor</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># convert dip and azimuth to radians</span>
-    <span class="n">dip</span> <span class="o">=</span> <span class="n">dip</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-    <span class="n">azimuth</span> <span class="o">=</span> <span class="n">azimuth</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-
-    <span class="n">kplane</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">aniso</span><span class="p">)</span>  <span class="c1"># relative value</span>
-    <span class="n">kperp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">aniso</span><span class="p">)</span>    <span class="c1"># relative value</span>
-
-    <span class="n">k_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
-        <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">],</span>
-                      <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azimuth</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">],</span>
-                      <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span> <span class="o">*</span> <span class="o">...</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dip</span><span class="p">[</span><span class="n">ii</span><span class="p">])],</span>
-                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                  <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">dip</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dip</span><span class="p">[</span><span class="n">ii</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
-        <span class="n">k_rotate</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">kplane</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">kplane</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">kperp</span><span class="p">[</span><span class="n">ii</span><span class="p">]]))</span> <span class="o">*</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
-</div>
-    <span class="k">return</span> <span class="n">k_rotate</span>
-
-
-<div class="viewcode-block" id="virtual_boreholes"><a class="viewcode-back" href="../../modules.html#hyvr.utils.virtual_boreholes">[docs]</a><span class="k">def</span> <span class="nf">virtual_boreholes</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">file_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">opts</span><span class="o">=</span><span class="p">[]):</span>
+<div class="viewcode-block" id="virtual_boreholes"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.virtual_boreholes">[docs]</a><span class="k">def</span> <span class="nf">virtual_boreholes</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">file_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">opts</span><span class="o">=</span><span class="p">[]):</span>
     <span class="sd">&quot;&quot;&quot; Perform &#39;virtual&#39; borehole sampling of parameter field</span>
 
 <span class="sd">    Arguments:</span>
@@ -754,11 +348,11 @@
 
             <span class="n">fmts</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1"> </span><span class="si">%.3f</span><span class="s1"> </span><span class="si">%.3f</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fmtd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]))</span>
             <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">file_out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.gslib&#39;</span><span class="p">,</span> <span class="n">to_write</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">)</span>
-</div>
-    <span class="k">return</span> <span class="n">bh_df</span>
+
+    <span class="k">return</span> <span class="n">bh_df</span></div>
 
 
-<div class="viewcode-block" id="calc_norm"><a class="viewcode-back" href="../../modules.html#hyvr.utils.calc_norm">[docs]</a><span class="k">def</span> <span class="nf">calc_norm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_norm"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.calc_norm">[docs]</a><span class="k">def</span> <span class="nf">calc_norm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate norm (compute the complex conjugate from &#39;x&#39;)</span>
 
@@ -769,11 +363,11 @@
 <span class="sd">        Complex conjugate of x</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">real</span></div>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="try_makefolder"><a class="viewcode-back" href="../../modules.html#hyvr.utils.try_makefolder">[docs]</a><span class="k">def</span> <span class="nf">try_makefolder</span><span class="p">(</span><span class="n">makedir</span><span class="p">):</span>
+<div class="viewcode-block" id="try_makefolder"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.try_makefolder">[docs]</a><span class="k">def</span> <span class="nf">try_makefolder</span><span class="p">(</span><span class="n">makedir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create modflow output folder</span>
 
@@ -783,88 +377,232 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">makedir</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span></div>
-            <span class="k">raise</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+            <span class="k">raise</span></div>
 
 
-<div class="viewcode-block" id="specsim"><a class="viewcode-back" href="../../modules.html#hyvr.utils.specsim">[docs]</a><span class="k">def</span> <span class="nf">specsim</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">corl</span><span class="p">,</span> <span class="n">twod</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">covmod</span><span class="o">=</span><span class="s1">&#39;gau&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="print_to_stdout"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.print_to_stdout">[docs]</a><span class="k">def</span> <span class="nf">print_to_stdout</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate random variables stationary covariance function using spectral techniques of Dietrich &amp; Newsam (1993)</span>
+<span class="sd">    Prints a message to stdout with timestamp.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<span class="c1">####################################################################################################################</span>
+<span class="c1"># Some utilities for generating shapes</span>
+<span class="c1">####################################################################################################################</span>
+
+<div class="viewcode-block" id="planepoint"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.planepoint">[docs]</a><span class="k">def</span> <span class="nf">planepoint</span><span class="p">(</span><span class="n">dip_norm</span><span class="p">,</span> <span class="n">x_dip</span><span class="p">,</span> <span class="n">y_dip</span><span class="p">,</span> <span class="n">znow</span><span class="p">,</span> <span class="n">xtemp</span><span class="p">,</span> <span class="n">ytemp</span><span class="p">,</span> <span class="n">ztemp</span><span class="p">,</span> <span class="n">select</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute number of planes</span>
 
 <span class="sd">    Parameters:</span>
-<span class="sd">        gr:     	Grid class object</span>
-<span class="sd">        var:    	Variance</span>
-<span class="sd">        corl:   	Tuple of correlation length of random variable</span>
-<span class="sd">        twod:   	Flag for two-dimensional simulation</span>
-<span class="sd">        covmod: 	Which covariance model to use (&#39;gau&#39; = Gaussian, &#39;exp&#39; = Exponential).</span>
+<span class="sd">        dip_norm:</span>
+<span class="sd">        x_dip:			X coordinates of points on dip planes</span>
+<span class="sd">        y_dip:			Y coordinates of points on dip planes</span>
+<span class="sd">        znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes</span>
+<span class="sd">        xtemp:			X dimension of model grid nodes</span>
+<span class="sd">        ytemp:			Y dimension of model grid nodes</span>
+<span class="sd">        ztemp:			Z dimension of model grid nodes</span>
+<span class="sd">        select:         Model grid nodes to consider</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        bigy - Random gaussian variable. Real part of a complex array, created via inverse DFT</span>
+<span class="sd">        set_no - Number of planes with selected model grid nodes</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get closest plane to points</span>
+    <span class="n">n_sets</span> <span class="o">=</span> <span class="n">dip_norm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>                   <span class="c1"># Number of planes</span>
+    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="n">xtemp</span><span class="o">.</span><span class="n">shape</span>                       <span class="c1"># Get number of model cells</span>
+    <span class="n">set_no</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>  <span class="c1"># Initialise set number array</span>
+    <span class="n">z_dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_dip</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">znow</span>
 
-    <span class="k">if</span> <span class="n">twod</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">yy</span><span class="p">,</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">ny</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ny</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">dy</span><span class="p">),</span>
-                             <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">nx</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nx</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">dx</span><span class="p">))</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="p">((</span><span class="n">xx</span> <span class="o">/</span> <span class="n">corl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yy</span> <span class="o">/</span> <span class="n">corl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>      <span class="c1"># Compute distance from origin</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>                                               <span class="c1"># Get indices of selected model nodes</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xtemp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>
+
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">xtemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ytemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ztemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>      <span class="c1"># Cartesian coordinates of model grid nodes</span>
+    <span class="n">plp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x_dip</span><span class="p">,</span> <span class="n">y_dip</span><span class="p">,</span> <span class="n">z_dip</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>                                     <span class="c1"># Cartesian coordinates of points on dip planes</span>
+    <span class="n">pd</span> <span class="o">=</span> <span class="n">plp</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">points</span><span class="o">.</span><span class="n">T</span>                                                <span class="c1"># subtract grid nodes from plane points</span>
+
+    <span class="c1"># Loop over set planes</span>
+    <span class="k">for</span> <span class="n">iset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_sets</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">iset</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pd_1</span> <span class="o">=</span> <span class="n">pd_2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">abc_1</span> <span class="o">=</span> <span class="n">dip_norm</span><span class="p">[:,</span> <span class="n">iset</span><span class="p">]</span>                                                           <span class="c1"># Plane normal equation</span>
+            <span class="n">pd_1</span> <span class="o">=</span> <span class="n">abc_1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pd</span><span class="p">[</span><span class="n">iset</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">abc_1</span> <span class="o">*</span> <span class="n">abc_1</span><span class="p">))</span>          <span class="c1"># Distance to plane</span>
+        <span class="n">pd1_c1</span> <span class="o">=</span> <span class="n">pd_1</span> <span class="o">&lt;=</span> <span class="mi">0</span>                                                                  <span class="c1"># pd_1 meeting condition 1</span>
+        <span class="n">pd1_c1_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pd1_c1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">iset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">set_no</span><span class="p">[</span><span class="n">select_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">pd1_c1_idx</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">pd1_c1_idx</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">pd1_c1_idx</span><span class="p">]]</span> <span class="o">=</span> <span class="n">iset</span><span class="o">+</span><span class="mi">1</span>
+        <span class="c1"># elif iset == n_sets: # this never happens</span>
+        <span class="c1">#     pd1_c2_idx = np.where(pd_1 &gt; 0)                     # index of pd_2 meeting condition 1</span>
+        <span class="c1">#     set_no[select_idx[0][pd1_c2_idx], select_idx[1][pd1_c2_idx], select_idx[2][pd1_c2_idx]] = iset+1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">abc_2</span> <span class="o">=</span> <span class="n">dip_norm</span><span class="p">[:,</span> <span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Points on plane</span>
+            <span class="n">pd_2</span> <span class="o">=</span> <span class="n">abc_2</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pd</span><span class="p">[</span><span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">abc_2</span> <span class="o">*</span> <span class="n">abc_2</span><span class="p">))</span>  <span class="c1"># Distance to plane</span>
+            <span class="n">inset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pd_1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pd_2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>                                   <span class="c1"># grid cell between planes</span>
+            <span class="n">set_no</span><span class="p">[</span><span class="n">select_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">inset</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">inset</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">inset</span><span class="p">]]</span> <span class="o">=</span> <span class="n">iset</span><span class="o">+</span><span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">set_no</span></div>
+
+
+<div class="viewcode-block" id="angle"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.angle">[docs]</a><span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return angle between two vectors in [°] between 0° and 180°</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        v1:	Vector 1</span>
+<span class="sd">        v2:	Vector 2</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        angle value *(float)* - Angle between v1 and v2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">cos</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">180</span>
+    <span class="k">return</span> <span class="n">angle</span></div>
+
+<div class="viewcode-block" id="get_alternating_facies"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.get_alternating_facies">[docs]</a><span class="k">def</span> <span class="nf">get_alternating_facies</span><span class="p">(</span><span class="n">num_facies</span><span class="p">,</span> <span class="n">type_params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a vector of alternating facies numbers based on the &#39;altfacies&#39;</span>
+<span class="sd">    setting in the inifile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">facies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_facies</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">facies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+    <span class="c1"># The facies are changing according to the given &#39;altfacies&#39;</span>
+    <span class="k">if</span> <span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_facies</span><span class="p">):</span>
+            <span class="n">fac_idx</span> <span class="o">=</span> <span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">facies</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">facies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;altfacies&#39;</span><span class="p">][</span><span class="n">fac_idx</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_facies</span><span class="p">):</span>
+            <span class="n">facies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">facies</span></div>
+
+<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.norm">[docs]</a><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">v</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="specsim"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.specsim">[docs]</a><span class="k">def</span> <span class="nf">specsim</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">corl</span><span class="p">,</span> <span class="n">selection_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">two_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">covmod</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate random variables with stationary covariance function using spectral</span>
+<span class="sd">    techniques of Dietrich &amp; Newsam (1993)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : Grid instance</span>
+<span class="sd">    var : float</span>
+<span class="sd">        Variance</span>
+<span class="sd">    corl : tuple of floats</span>
+<span class="sd">        Tuple of correlation lengths. 2-tuple for 2-d (x and y), and 3-tuple</span>
+<span class="sd">        for 3-d (x, y, z).</span>
+<span class="sd">    selection_mask : boolean numpy array</span>
+<span class="sd">        This array should have the same size as the model grid and can be used to only generate</span>
+<span class="sd">        random variables for a subset of the model grid. If ``two_dim=True``, it should have</span>
+<span class="sd">        dimensions ``(nx, ny)``, otherwise ``(nx, ny, nz)``.</span>
+<span class="sd">    two_dim : bool, optional (default: False)</span>
+<span class="sd">        Whether to return a two-dimensional or a 3 dimensional field</span>
+<span class="sd">    covmod : str, optional (default: &quot;gaussian&quot;)</span>
+<span class="sd">        Which covariance model to use (&quot;gaussian&quot; or &quot;exp&quot;).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Y : 1d, 2d, or 3d numpy array</span>
+<span class="sd">        Numpy array of random field. If no selection mask was given, this is either a 2d or 3d numpy</span>
+<span class="sd">        array, depending on ``two_dim`` and of the size of the model grid.</span>
+<span class="sd">        If a selection_mask was given, this is a flat array of values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># THINK: If this is called multiple times in a row with the same parameters (i.e. same var,</span>
+    <span class="c1"># corl, covmod), then it is not necessary to recalculate syy, and we even get two fields out.</span>
+    <span class="c1"># Is there a way to use this?</span>
+    <span class="n">mask_given</span> <span class="o">=</span> <span class="n">selection_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">mask_given</span><span class="p">:</span>
+        <span class="c1"># This method only works for rectangular grids, this means we have to find the smallest</span>
+        <span class="c1"># rectangular selection that contains all selected cells</span>
+        <span class="k">if</span> <span class="n">two_dim</span><span class="p">:</span>
+            <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
+            <span class="n">min_x_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="n">max_x_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="n">min_y_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">max_y_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">rectangular_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
+            <span class="n">rectangular_mask</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">selected_X</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">selected_Y</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">selected_X_centered</span> <span class="o">=</span> <span class="n">selected_X</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">selected_X</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">selected_X</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">selected_Y_centered</span> <span class="o">=</span> <span class="n">selected_Y</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">selected_Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">selected_Y</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">selection_mask_small</span> <span class="o">=</span> <span class="n">selection_mask</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">h_square</span> <span class="o">=</span> <span class="p">(</span><span class="n">selected_X_centered</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> \
+                    <span class="o">+</span> <span class="p">(</span><span class="n">selected_Y_centered</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">,</span> <span class="n">z_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">min_x_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+            <span class="n">max_x_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="n">min_y_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">max_y_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">max_z_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">z_idx</span><span class="p">)</span>
+            <span class="n">min_z_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">z_idx</span><span class="p">)</span>
+            <span class="n">rectangular_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
+            <span class="n">rectangular_mask</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">selected_X</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">selected_Y</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">selected_Z</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">selected_X_centered</span> <span class="o">=</span> <span class="n">selected_X</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">selected_X</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">selected_X</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">selected_Y_centered</span> <span class="o">=</span> <span class="n">selected_Y</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">selected_Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">selected_Y</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">selected_Z_centered</span> <span class="o">=</span> <span class="n">selected_Z</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">selected_Z</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">selected_Z</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">selection_mask_small</span> <span class="o">=</span> <span class="n">selection_mask</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">h_square</span> <span class="o">=</span> <span class="p">(</span><span class="n">selected_X_centered</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> \
+                     <span class="o">+</span> <span class="p">(</span><span class="n">selected_Y_centered</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> \
+                     <span class="o">+</span> <span class="p">(</span><span class="n">selected_Z_centered</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">yy</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">ny</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">ny</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">dy</span><span class="p">),</span>
-                                 <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">nx</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nx</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">dx</span><span class="p">),</span>
-                                 <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">gr</span><span class="o">.</span><span class="n">nz</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dz</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">nz</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gr</span><span class="o">.</span><span class="n">dz</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">dz</span><span class="p">))</span>
+        <span class="c1"># full grid</span>
+        <span class="k">if</span> <span class="n">two_dim</span><span class="p">:</span>
+            <span class="n">h_square</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">X_centered</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> \
+                    <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">Y_centered</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">h_square</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">X_centered</span><span class="p">)</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> \
+                     <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">Y_centered</span><span class="p">)</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> \
+                     <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">Z_centered</span><span class="p">)</span><span class="o">/</span><span class="n">corl</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
 
-        <span class="c1"># Compute distance from origin</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="p">((</span><span class="n">xx</span> <span class="o">/</span> <span class="n">corl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yy</span> <span class="o">/</span> <span class="n">corl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">zz</span> <span class="o">/</span> <span class="n">corl</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
-
-    <span class="n">ntot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+    <span class="n">ntot</span> <span class="o">=</span> <span class="n">h_square</span><span class="o">.</span><span class="n">size</span>
 
     <span class="c1"># Covariance matrix of variables</span>
-    <span class="k">if</span> <span class="n">covmod</span> <span class="o">==</span> <span class="s1">&#39;gau&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">covmod</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">:</span>
         <span class="c1"># Gaussian covariance model</span>
-        <span class="n">ryy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">var</span>
+        <span class="n">ryy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">h_square</span><span class="p">)</span> <span class="o">*</span> <span class="n">var</span>
     <span class="k">elif</span> <span class="n">covmod</span> <span class="o">==</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span>
         <span class="c1"># Exponential covariance model</span>
-        <span class="n">ryy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="o">*</span> <span class="n">var</span>
+        <span class="n">ryy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">h_square</span><span class="p">))</span> <span class="o">*</span> <span class="n">var</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid covariance model&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid covariance model&#39;</span><span class="p">)</span>
 
     <span class="c1"># Power spectrum of variable</span>
     <span class="n">syy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">ryy</span><span class="p">))</span> <span class="o">/</span> <span class="n">ntot</span>
     <span class="n">syy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">syy</span><span class="p">)</span>       <span class="c1"># Remove imaginary artifacts</span>
-    <span class="k">if</span> <span class="n">twod</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">syy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">syy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">syy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="c1"># st.norm.rvs calls cost a bit more than np.radom.randn</span>
-    <span class="c1"># real = st.norm.rvs(size=syy.shape)</span>
-    <span class="c1"># imag = st.norm.rvs(size=syy.shape)</span>
     <span class="n">real</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">syy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">imag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">syy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">epsilon</span> <span class="o">=</span> <span class="n">real</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">imag</span>
     <span class="n">rand</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">syy</span><span class="p">)</span>
-    <span class="n">bigy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">rand</span> <span class="o">*</span> <span class="n">ntot</span><span class="p">))</span>
-</div>
-    <span class="k">return</span> <span class="n">bigy</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftn</span><span class="p">(</span><span class="n">rand</span> <span class="o">*</span> <span class="n">ntot</span><span class="p">))</span>
 
+    <span class="k">if</span> <span class="n">mask_given</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Y</span><span class="p">[</span><span class="n">selection_mask_small</span><span class="p">]</span>
 
-<span class="sd">&quot;&quot;&quot; Testing functions &quot;&quot;&quot;</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">hyvr</span>
-
-    <span class="n">ini</span> <span class="o">=</span> <span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">..</span><span class="se">\\</span><span class="s1">fidelity</span><span class="se">\\</span><span class="s1">runfiles</span><span class="se">\\</span><span class="s1">small</span><span class="se">\\</span><span class="s1">braid_vr</span><span class="se">\\</span><span class="s1">braid_vr_parameters.ini&#39;</span>
-    <span class="c1"># Load parameters</span>
-    <span class="n">run</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">ft</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">mg</span> <span class="o">=</span> <span class="n">hyvr</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">model_setup</span><span class="p">(</span><span class="n">ini</span><span class="p">,</span> <span class="n">nodir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="c1"># Load data</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">..</span><span class="se">\\</span><span class="s1">fidelity</span><span class="se">\\</span><span class="s1">runfiles</span><span class="se">\\</span><span class="s1">small</span><span class="se">\\</span><span class="s1">braid_vr</span><span class="se">\\</span><span class="s1">braid_vr.npz&#39;</span><span class="p">)</span>
-
-    <span class="n">sim</span> <span class="o">=</span> <span class="n">to_mf6</span><span class="p">(</span><span class="n">ini</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">ft</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;k_iso&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;anirat&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dip&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;azim&#39;</span><span class="p">])</span>
-    <span class="n">sim</span><span class="o">.</span><span class="n">run_simulation</span><span class="p">()</span>
-
-    <span class="n">hh</span> <span class="o">=</span> <span class="s1">&#39;E:</span><span class="se">\\</span><span class="s1">Repositories</span><span class="se">\\</span><span class="s1">fidelity</span><span class="se">\\</span><span class="s1">runfiles</span><span class="se">\\</span><span class="s1">small</span><span class="se">\\</span><span class="s1">braid_vr</span><span class="se">\\</span><span class="s1">braid_vr_parameters</span><span class="se">\\</span><span class="s1">test.hds&#39;</span>
-    <span class="n">hout</span> <span class="o">=</span> <span class="s1">&#39;E:</span><span class="se">\\</span><span class="s1">Repositories</span><span class="se">\\</span><span class="s1">fidelity</span><span class="se">\\</span><span class="s1">runfiles</span><span class="se">\\</span><span class="s1">small</span><span class="se">\\</span><span class="s1">braid_vr</span><span class="se">\\</span><span class="s1">braid_vr_parameters</span><span class="se">\\</span><span class="s1">test&#39;</span>
-    <span class="n">mf6_vtr</span><span class="p">(</span><span class="n">hh</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">hout</span><span class="p">)</span>
-
+    <span class="k">return</span> <span class="n">Y</span></div>
 </pre></div>
 
           </div>
@@ -880,9 +618,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../example.html">HyVR Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../more.html">Extending HyVR</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">HyVR package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/modules.html">Module Reference</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -910,13 +648,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HYVR 0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
     </div>
   </body>
 </html>

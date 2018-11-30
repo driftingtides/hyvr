@@ -45,16 +45,3 @@ another variation. A google search could be helpful.
 This happens if there's only a source distribution on PyPI and you don't have
 access to a compiler. Contact us if this happens and we'll try to upload a
 pre-built binary.
-
-
------------------------------
-Runtime errors
------------------------------
-
-::
-
-    TypeError: __init__() got an unexpected keyword argument 'tdisrecarray'
-
-This happens because HyVR is currently incompatible with ``flopy 3.2.9``.
-Use ``flopy 3.2.8`` instead. To avoid conflicts with dependencies of other
-package consider using a virtual environment for python.

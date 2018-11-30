@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.classes.stratum &#8212; HyVR 0.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hyvr.classes.stratum</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">hyvr.optimized</span> <span class="k">as</span> <span class="nn">ho</span>
+<span class="kn">import</span> <span class="nn">hyvr.utils</span> <span class="k">as</span> <span class="nn">hu</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.contact_surface</span> <span class="k">import</span> <span class="n">ContactSurface</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.contact_surface_utils</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="prob_choose"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.stratum.prob_choose">[docs]</a><span class="k">def</span> <span class="nf">prob_choose</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="n">probs</span><span class="p">):</span>
+    <span class="c1"># TODO: At the moment the given probabilities are only relative</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">probs</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Stratum"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.stratum.Stratum">[docs]</a><span class="k">class</span> <span class="nc">Stratum</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bottom_surface</span><span class="p">,</span> <span class="n">top_surface</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ae_types</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stratum constructor. This generates the stratum by generating the AEs</span>
+<span class="sd">        within.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bottom_surface : ContactSurface object</span>
+<span class="sd">            The bottom surface of the stratum</span>
+<span class="sd">        top_surface : ContactSurface object</span>
+<span class="sd">            The top surface of the stratum</span>
+<span class="sd">        params : dict</span>
+<span class="sd">            Dictionary with other necessary parameters</span>
+<span class="sd">        ae_types : list of AEType objects</span>
+<span class="sd">            The possible AE types within this stratum</span>
+<span class="sd">        grid : Grid object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span> <span class="o">=</span> <span class="n">bottom_surface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span> <span class="o">=</span> <span class="n">top_surface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;strata&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ae_types</span> <span class="o">=</span> <span class="n">ae_types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ae_type_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">ae_type</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">ae_type</span> <span class="ow">in</span> <span class="n">ae_types</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bg_facies</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bg_azim</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;bg_azim&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bg_dip</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;bg_dip&#39;</span><span class="p">]</span>
+
+        <span class="c1"># generate AEs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="o">.</span><span class="n">zmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span><span class="o">.</span><span class="n">zmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ae_zmins</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ae_zmaxs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># first top is top of stratum</span>
+        <span class="n">ae_top_surface</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span>
+        <span class="c1"># choose type of first AE</span>
+        <span class="n">curr_ae_type</span> <span class="o">=</span> <span class="n">prob_choose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ae_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ae_prob&#39;</span><span class="p">])</span>
+        <span class="n">znow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span><span class="o">.</span><span class="n">zmean</span>
+        <span class="k">while</span> <span class="n">znow</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="o">.</span><span class="n">zmean</span><span class="p">:</span>
+
+            <span class="n">num_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ae_type_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">curr_ae_type</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="n">hu</span><span class="o">.</span><span class="n">print_to_stdout</span><span class="p">(</span><span class="s1">&#39;Generating&#39;</span><span class="p">,</span> <span class="n">curr_ae_type</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;from </span><span class="si">{:2.3f}</span><span class="s1"> m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">znow</span><span class="p">))</span>
+
+            <span class="c1"># find height of AE</span>
+            <span class="n">mean_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ae_z_mean&#39;</span><span class="p">][</span><span class="n">num_type</span><span class="p">]</span>
+            <span class="c1"># TODO: It might be nice to specify the height variance in the inifile</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean_height</span><span class="p">,</span> <span class="n">mean_height</span><span class="o">*</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="c1"># potential avulsion</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;avul_prob&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">dz</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;avul&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dz</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">znow</span> <span class="o">-=</span> <span class="n">height</span> <span class="o">+</span> <span class="n">dz</span>
+
+            <span class="c1"># create bottom contact surface</span>
+            <span class="c1"># -----------------------------</span>
+            <span class="c1"># the type of the bottom surface is determined by the type of the</span>
+            <span class="c1"># AE below, if it is not the lowest AE</span>
+            <span class="n">next_ae_type</span> <span class="o">=</span> <span class="n">prob_choose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ae_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ae_prob&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">znow</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="o">.</span><span class="n">zmean</span><span class="p">:</span>
+                <span class="c1"># limit top surface of uppermost AE to top surface of stratum</span>
+                <span class="n">znow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="o">.</span><span class="n">zmean</span>
+                <span class="n">ae_bottom_surface</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">bottom_surface_params</span> <span class="o">=</span> <span class="n">next_ae_type</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;contact_model&#39;</span><span class="p">]</span>
+                <span class="n">bottom_surface_params</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">znow</span>
+                <span class="n">ae_bottom_surface</span> <span class="o">=</span> <span class="n">ContactSurface</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="o">**</span><span class="n">bottom_surface_params</span><span class="p">)</span>
+
+            <span class="c1"># if the bottom surface is above the top surface, we will assign</span>
+            <span class="c1"># the (lower) top surface values instead</span>
+            <span class="n">use_lower_surface_value</span><span class="p">(</span><span class="n">ae_bottom_surface</span><span class="p">,</span> <span class="n">ae_top_surface</span><span class="p">)</span>
+
+            <span class="c1"># close to the bottom it might also be possible that the ae_bottom</span>
+            <span class="c1"># is below the stratum bottom if the stratum bottom is not flat</span>
+            <span class="c1"># in this case we will assign the (higher) bottom surface value instead</span>
+            <span class="n">use_higher_surface_value</span><span class="p">(</span><span class="n">ae_bottom_surface</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="p">)</span>
+
+            <span class="c1"># generate element: this will place all the objects within an AE</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">curr_ae_type</span><span class="o">.</span><span class="n">generate_realization</span><span class="p">(</span><span class="n">ae_bottom_surface</span><span class="p">,</span> <span class="n">ae_top_surface</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+            <span class="c1"># if the minimum/maximum depth changed, update it</span>
+            <span class="n">ae_zmin</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">zmin</span>
+            <span class="k">if</span> <span class="n">ae_zmin</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span> <span class="o">=</span> <span class="n">ae_zmin</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ae_zmins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ae_zmin</span><span class="p">)</span>
+            <span class="n">ae_zmax</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">zmax</span>
+            <span class="k">if</span> <span class="n">ae_zmax</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span> <span class="o">=</span> <span class="n">ae_zmax</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ae_zmaxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ae_zmax</span><span class="p">)</span>
+
+            <span class="c1"># current bottom is top of next, next ae is new current ae</span>
+            <span class="n">ae_top_surface</span> <span class="o">=</span> <span class="n">ae_bottom_surface</span>
+            <span class="n">curr_ae_type</span> <span class="o">=</span> <span class="n">next_ae_type</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ae</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aes</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Stratum.maybe_assign_facies_azim_dip"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.stratum.Stratum.maybe_assign_facies_azim_dip">[docs]</a>    <span class="k">def</span> <span class="nf">maybe_assign_facies_azim_dip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">facies</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">,</span> <span class="n">aei</span><span class="p">,</span> <span class="n">oi</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assigns facies, azim and dip if the cell is inside this stratum or in</span>
+<span class="sd">        one of it&#39;s elements.</span>
+
+<span class="sd">        Since the objects inside the elements might reach into the domain</span>
+<span class="sd">        below, we can&#39;t just check the top and bottom surface but must check</span>
+<span class="sd">        every object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        facies : np.ndarray[np.int32, dim=1]</span>
+<span class="sd">            Array of length one that hold the facies and will be altered by</span>
+<span class="sd">            this function. If this is -1 afterwards, the cell is not in the</span>
+<span class="sd">            stratum.</span>
+<span class="sd">        angles : np.ndarray[np.float, dim=1]</span>
+<span class="sd">            Array of length 2 that holds the azimuth and dip angles, will also</span>
+<span class="sd">            be altered.</span>
+<span class="sd">        x, y, z : float</span>
+<span class="sd">            x, y, and z positions of the cell in question</span>
+<span class="sd">        x_idx, y_idx : int</span>
+<span class="sd">            indices of x and y cells</span>
+<span class="sd">        aei : int</span>
+<span class="sd">            Index of where to start in the architectural element list. This is</span>
+<span class="sd">            typically the index of the last found element.</span>
+<span class="sd">        oi : int</span>
+<span class="sd">            Geometrical object index, similar to aei</span>
+<span class="sd">        grid : Grid object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        aei, oi : int</span>
+<span class="sd">            Updated indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">oi_orig</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">oi</span><span class="p">)</span>
+        <span class="n">aei_orig</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">aei</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">aei</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ae</span><span class="p">:</span>
+            <span class="c1"># if z &gt; self.ae_zmaxs[aei]:</span>
+                <span class="c1"># if the current z is above the maximum z of the current AE, all other AEs will also</span>
+                <span class="c1"># be below the current cell, so we can stop searching for an AE</span>
+                <span class="c1"># This case should not happen</span>
+                <span class="c1"># break</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ae_zmins</span><span class="p">[</span><span class="n">aei</span><span class="p">]:</span>
+                <span class="c1"># if we&#39;re below the current AE, we can go search in the next one</span>
+                <span class="n">oi</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">aei</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">aes</span><span class="p">[</span><span class="n">aei</span><span class="p">]</span><span class="o">.</span><span class="n">maybe_assign_facies_azim_dip</span><span class="p">(</span>
+                    <span class="n">facies</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">,</span> <span class="n">oi</span><span class="p">,</span> <span class="n">grid</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">facies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># we found something</span>
+                    <span class="k">return</span> <span class="n">aei</span><span class="p">,</span> <span class="n">oi</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># if we didn&#39;t find something here, we check the next AE</span>
+                    <span class="n">aei</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">oi</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">continue</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/modules.html">Module Reference</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

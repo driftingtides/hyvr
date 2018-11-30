@@ -1,0 +1,365 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.classes.ae_realizations &#8212; HyVR 0.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hyvr.classes.ae_realizations</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contains the different AE realizations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.trough</span> <span class="k">import</span> <span class="n">Trough</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.trough_utils</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.sheet</span> <span class="k">import</span> <span class="n">Sheet</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.contact_surface</span> <span class="k">import</span> <span class="n">ContactSurface</span>
+<span class="kn">from</span> <span class="nn">hyvr.classes.contact_surface_utils</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="AERealization"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.AERealization">[docs]</a><span class="k">class</span> <span class="nc">AERealization</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AE realizations are the realization of a certain AE type in a HyVR</span>
+<span class="sd">    simulation. For example, in the &#39;made.ini&#39; test case, the lowest stratum</span>
+<span class="sd">    consists of &#39;clay_sheet&#39; architectural elements.</span>
+<span class="sd">    Each of these sheets is an AE realization.</span>
+
+<span class="sd">    This is the base class for AE realizations. Any instantiated object should</span>
+<span class="sd">    be an instance of one of the (currently) three subtypes: ``TruncEllipAE``,</span>
+<span class="sd">    ``ExtParAE``, and ``SheetAE``.</span>
+
+<span class="sd">    Typically these objects should not be created directly, but via the</span>
+<span class="sd">    ``generate_realization`` method of the respective ``AEType`` object.</span>
+
+<span class="sd">    An AE realization contains a list of geometrical objects that are typical</span>
+<span class="sd">    for this AE. For example, a TruncEllipAE contains a list of Trough objects.</span>
+<span class="sd">    These objects should be implemented in separate files as cython cdef</span>
+<span class="sd">    classes, similar to the Trough class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bottom_surface</span><span class="p">,</span> <span class="n">top_surface</span><span class="p">,</span> <span class="n">type_name</span><span class="p">,</span> <span class="n">type_params</span><span class="p">,</span> <span class="n">stratum</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bottom_surface : ContactSurface object</span>
+<span class="sd">            The bottom surface of the AE.</span>
+<span class="sd">        top_surface : ContactSurface object</span>
+<span class="sd">            The top surface of the AE.</span>
+<span class="sd">        type_name : str</span>
+<span class="sd">            Name of the AE type (e.g. &#39;clay_sheet&#39;).</span>
+<span class="sd">        type_params : dict</span>
+<span class="sd">            Parameters for this AE type. These are the parameters that are read</span>
+<span class="sd">            from the ini-file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span> <span class="o">=</span> <span class="n">bottom_surface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span> <span class="o">=</span> <span class="n">top_surface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span> <span class="o">=</span> <span class="n">type_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="n">type_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type_id</span> <span class="o">=</span> <span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span>
+
+        <span class="c1"># containers for objects and their depths</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_zmins</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_zmaxs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># get initial minimum z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="o">.</span><span class="n">zmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span><span class="o">.</span><span class="n">zmax</span>
+
+        <span class="c1"># get background values</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bg_facies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bg_facies</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">bg_facies</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;bg_azim&#39;</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bg_azim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;bg_azim&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bg_azim</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">bg_azim</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;bg_dip&#39;</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bg_dip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;bg_dip&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bg_dip</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">bg_dip</span>
+
+        <span class="c1"># generate objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_objects</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_objects</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_idx_cached</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="AERealization.generate_objects"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.AERealization.generate_objects">[docs]</a>    <span class="k">def</span> <span class="nf">generate_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is the method that should be used for generating geometrical</span>
+<span class="sd">        objects of the right type. Override this in all of your subclasses.</span>
+
+<span class="sd">        It&#39;s very important that the objects are stored in the order such that</span>
+<span class="sd">        the object with the highest zmax is the first one, i.e. such that we</span>
+<span class="sd">        can go from top to bottom by iterating over the list of objects.</span>
+
+<span class="sd">        To add the objects to the object list, use the _add_object function below</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds an object to the AE object list and updates the zmin and zmax</span>
+<span class="sd">        values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">object_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_zmins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">object_</span><span class="o">.</span><span class="n">zmin</span><span class="p">)</span>
+        <span class="c1"># update zmins if necessary</span>
+        <span class="k">if</span> <span class="n">object_</span><span class="o">.</span><span class="n">zmin</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span> <span class="o">=</span> <span class="n">object_</span><span class="o">.</span><span class="n">zmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_zmaxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">object_</span><span class="o">.</span><span class="n">zmax</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">object_</span><span class="o">.</span><span class="n">zmax</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span> <span class="o">=</span> <span class="n">object_</span><span class="o">.</span><span class="n">zmax</span></div>
+
+
+<div class="viewcode-block" id="TruncEllipAE"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.TruncEllipAE">[docs]</a><span class="k">class</span> <span class="nc">TruncEllipAE</span><span class="p">(</span><span class="n">AERealization</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TruncEllipAE.generate_objects"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.TruncEllipAE.generate_objects">[docs]</a>    <span class="k">def</span> <span class="nf">generate_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate trough objects and place them in the domain.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># get trough positions</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;te_xyz&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">te_xyz</span> <span class="o">=</span> <span class="n">generate_trough_positions</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">,</span> <span class="n">grid</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">te_xyz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;te_xyz&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Generate troughs</span>
+        <span class="k">for</span> <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="ow">in</span> <span class="n">te_xyz</span><span class="p">:</span>
+            <span class="n">trough_params</span> <span class="o">=</span> <span class="n">rand_trough_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">,</span> <span class="n">zc</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+            <span class="n">trough_params</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xc</span>
+            <span class="n">trough_params</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yc</span>
+            <span class="n">trough_params</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zc</span>
+            <span class="n">trough</span> <span class="o">=</span> <span class="n">Trough</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">,</span> <span class="o">**</span><span class="n">trough_params</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_object</span><span class="p">(</span><span class="n">trough</span><span class="p">)</span></div></div>
+
+
+
+
+
+<div class="viewcode-block" id="SheetAE"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.SheetAE">[docs]</a><span class="k">class</span> <span class="nc">SheetAE</span><span class="p">(</span><span class="n">AERealization</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SheetAE.generate_objects"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.SheetAE.generate_objects">[docs]</a>    <span class="k">def</span> <span class="nf">generate_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate sheet objects and place them in the domain.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># A sheet AE can consist of either one massive sheet (i.e. the sheet is</span>
+        <span class="c1"># just the full AE) or of multiple sheets.</span>
+        <span class="c1"># Internally, the sheets can again be homogeneous or consist of dipping</span>
+        <span class="c1"># sets.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Sheets have a bottom and top surface that is generally a flat contact</span>
+        <span class="c1"># surface. Only the topmost and the bottom-most sheets have potentially</span>
+        <span class="c1"># non-flat contact surfaces as they use the contact surface of the AE.</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;lens_thickness&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># massive bedding</span>
+            <span class="n">thickness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;size_ztrend&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">zfactor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">zmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span><span class="p">]),</span>
+                                <span class="p">[</span><span class="n">grid</span><span class="o">.</span><span class="n">z0</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">zmax</span><span class="p">],</span>
+                                <span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;size_ztrend&#39;</span><span class="p">])</span>
+            <span class="n">thickness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;lens_thickness&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">zfactor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">thickness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;lens_thickness&#39;</span><span class="p">]</span>
+
+        <span class="n">zbottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">thickness</span>
+        <span class="n">top_surface</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span>
+        <span class="c1"># create all sheets except the lowest one</span>
+        <span class="n">last_sheet</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">last_sheet</span><span class="p">:</span>
+            <span class="c1"># generate bottom surface</span>
+            <span class="k">if</span> <span class="n">zbottom</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmin</span><span class="p">:</span>
+                <span class="c1"># normal sheet</span>
+                <span class="n">bottom_surface</span> <span class="o">=</span> <span class="n">ContactSurface</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;flat&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">zbottom</span><span class="p">)</span>
+                <span class="c1"># it&#39;s possible that this bottom surface is above the top</span>
+                <span class="c1"># surface if we&#39;re close to the AE top. Then we will use the</span>
+                <span class="c1"># lower value (i.e. the top surface value)</span>
+                <span class="n">use_lower_surface_value</span><span class="p">(</span><span class="n">bottom_surface</span><span class="p">,</span> <span class="n">top_surface</span><span class="p">)</span>
+
+                <span class="c1"># close to the bottom it might also be possible that the AE</span>
+                <span class="c1"># bottom is higher than the current bottom, so we have to use</span>
+                <span class="c1"># the higher value</span>
+                <span class="n">use_higher_surface_value</span><span class="p">(</span><span class="n">bottom_surface</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">last_sheet</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">bottom_surface</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span>
+
+            <span class="c1"># generate sheet object</span>
+            <span class="n">sheet</span> <span class="o">=</span> <span class="n">Sheet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">,</span> <span class="n">bottom_surface</span><span class="p">,</span> <span class="n">top_surface</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_object</span><span class="p">(</span><span class="n">sheet</span><span class="p">)</span>
+
+            <span class="c1"># use current bottom as new top, zbottom decreases</span>
+            <span class="n">zbottom</span> <span class="o">-=</span> <span class="n">thickness</span>
+            <span class="n">top_surface</span> <span class="o">=</span> <span class="n">bottom_surface</span></div></div>
+
+
+<div class="viewcode-block" id="ExtParAE"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.ExtParAE">[docs]</a><span class="k">class</span> <span class="nc">ExtParAE</span><span class="p">(</span><span class="n">AERealization</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="ExtParAE.generate_objects"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.ae_realizations.ExtParAE.generate_objects">[docs]</a>    <span class="k">def</span> <span class="nf">generate_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate channel objects and place them in the domain.</span>
+
+
+<span class="sd">        The following was just an idea I had, ignore it.</span>
+
+<span class="sd">        The channels follow a mean flow angle that is given in the parameter</span>
+<span class="sd">        file. From this angle, a flow axis is constructed as the &quot;center axis&quot;</span>
+<span class="sd">        in direction of the flow angle. (This means the flow axis is chosen such</span>
+<span class="sd">        that the projection of the (x-y-)domain onto the axis perpendicular to</span>
+<span class="sd">        the flow axis is cut in half by the flow axis.)</span>
+
+<span class="sd">        The channels are then created as random 1-d functions of the position</span>
+<span class="sd">        on the flow axis, with random starting points (within the projection of</span>
+<span class="sd">        the domain onto the axis perpendicular to the flow axis).</span>
+<span class="sd">        This can then be rotated to get an approximation of the channel curve</span>
+<span class="sd">        (a set of points which lie on the curve).</span>
+
+<span class="sd">        On every level, &#39;channel_no&#39; channels are constructed. They share the</span>
+<span class="sd">        same flow angle but are shifted w.r.t. the flow axis.</span>
+
+<span class="sd">        Its also possible to let the channels migrate in time, i.e. slightly</span>
+<span class="sd">        change the flow angle and the distance between the channels (by</span>
+<span class="sd">        changing their starting points).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">n_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;channel_no&#39;</span><span class="p">]</span>
+
+        <span class="c1"># get flow axis and starting points</span>
+        <span class="c1"># TODO: get flow angle</span>
+        <span class="c1"># TODO: get flow axis</span>
+        <span class="c1"># TODO: get starting y-values for curve</span>
+
+
+        <span class="c1"># get number of layers</span>
+        <span class="n">dz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;agg&#39;</span><span class="p">]</span>
+        <span class="c1"># TODO: this is a bit inconsistent when using size_ztrend</span>
+        <span class="n">zbottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bottom_surface</span><span class="o">.</span><span class="n">zmean</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;buffer&#39;</span><span class="p">]</span>
+        <span class="n">ztop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_surface</span><span class="o">.</span><span class="n">zmean</span>
+
+        <span class="n">z</span> <span class="o">=</span> <span class="n">ztop</span> <span class="o">-</span> <span class="n">dz</span>
+        <span class="k">while</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">zbottom</span><span class="p">:</span>
+
+
+            <span class="c1"># IMPORTANT TODO: generate centerline</span>
+            <span class="c1"># This function has to be written for channels to work</span>
+            <span class="n">x_center</span><span class="p">,</span> <span class="n">y_center</span> <span class="o">=</span> <span class="n">generate_centerline</span><span class="p">(</span><span class="n">xstart</span><span class="p">,</span> <span class="n">ystart</span><span class="p">,</span> <span class="n">mean_direction</span><span class="p">,</span> <span class="n">some_params</span><span class="p">)</span>
+
+            <span class="c1"># get current width and depth</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;size_ztrend&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">zfactor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">[</span><span class="n">grid</span><span class="o">.</span><span class="n">z0</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">zmax</span><span class="p">],</span> <span class="o">*</span><span class="n">ch_par</span><span class="p">[</span><span class="s1">&#39;size_ztrend&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">zfactor</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">zfactor</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">zfactor</span>
+
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_channels</span><span class="p">):</span>
+                <span class="c1"># TODO: channel constructor</span>
+                <span class="n">channel</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="n">type_params</span><span class="p">,</span> <span class="n">x_center</span><span class="p">,</span> <span class="n">y_center</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_object</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+
+
+            <span class="c1"># TODO: document this feature</span>
+            <span class="c1"># TODO: use normal distribution instead?</span>
+            <span class="c1"># TODO: change only ystart and flowangle</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;mig&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">xstart</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;mig&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;mig&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">ystart</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;mig&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;mig&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span></div></div>
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/modules.html">Module Reference</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

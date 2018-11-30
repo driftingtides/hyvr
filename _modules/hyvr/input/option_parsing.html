@@ -1,0 +1,562 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.input.option_parsing &#8212; HyVR 0.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hyvr.input.option_parsing</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains the classes Section and Option to simplify parsing and</span>
+<span class="sd">validating ini-files.</span>
+
+<span class="sd">:Author: Samuel Scherrer</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Section&quot;</span><span class="p">,</span> <span class="s2">&quot;Option&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingSectionError&quot;</span><span class="p">,</span> <span class="s2">&quot;MissingOptionError&quot;</span><span class="p">,</span> <span class="s2">&quot;ShapeError&quot;</span><span class="p">,</span> <span class="s2">&quot;assert_exists&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Section"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Section">[docs]</a><span class="k">class</span> <span class="nc">Section</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the section</span>
+<span class="sd">        options : list</span>
+<span class="sd">            List of Options</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">options</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Section.parse"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Section.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parses and validates options of the section given a dictionary</span>
+<span class="sd">        containing key-value pairs of the options. If options are not present,</span>
+<span class="sd">        default values might be set.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        section_dict : dictionary</span>
+<span class="sd">            Dictionary of section values. This can for example be obtained</span>
+<span class="sd">            using ``configparser``::</span>
+
+<span class="sd">                p = configparser.ConfigParser()</span>
+<span class="sd">                p.read(filename)</span>
+<span class="sd">                section_dict = dict(p[section_name])</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        section_dict : dictionary</span>
+<span class="sd">            The same dictionary with parsed and validated values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dict</span> <span class="o">=</span> <span class="n">section_dict</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">section_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Unknown option: </span><span class="si">{:s}</span><span class="s2"> in section </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">option</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+                <span class="p">)</span>
+        <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">repr</span> <span class="o">=</span>  <span class="s2">&quot;Section(name=</span><span class="si">{:s}</span><span class="s2">,options=&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">optionnames</span><span class="p">:</span>
+            <span class="nb">repr</span> <span class="o">+=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+        <span class="nb">repr</span> <span class="o">+=</span> <span class="s1">&#39;)&#39;</span>
+        <span class="k">return</span> <span class="nb">repr</span></div>
+
+
+<div class="viewcode-block" id="Option"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Option">[docs]</a><span class="k">class</span> <span class="nc">Option</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : string</span>
+<span class="sd">        name of the option</span>
+<span class="sd">    dtype : type</span>
+<span class="sd">        type of the value of the option, e.g. float, str, int, or list.</span>
+<span class="sd">        If dtype is list, every entry of the list must have the same type.</span>
+<span class="sd">    optional : bool, optional (default: False)</span>
+<span class="sd">        whether the option is optional or not</span>
+<span class="sd">    default : optional, (default: None)</span>
+<span class="sd">        if optional=True, this default value will be used if this option is not</span>
+<span class="sd">        given.</span>
+<span class="sd">    shape : int or string or list/tuple of ints and/or strings, optional (only</span>
+<span class="sd">        required for lists, default: None)</span>
+<span class="sd">        If dtype is ``list``, this is the shape of the list.</span>
+<span class="sd">        There are several possibilities how to use this option:</span>
+
+<span class="sd">        * if ``shape=n`` where n is a nonnegative integer, the value must be</span>
+<span class="sd">          a list with length ``n``.</span>
+<span class="sd">        * if ``shape=-1`` the value can have an arbitrary shape.</span>
+<span class="sd">        * if ``shape=&quot;option1&quot;``, the value of this option must have the same</span>
+<span class="sd">          shape as &quot;option1&quot;. This is especially useful if the shape of</span>
+<span class="sd">          &quot;option1&quot; is set to -1.</span>
+<span class="sd">        * if ``shape=[2, 3]``, the value must be a list of lists, where the</span>
+<span class="sd">          outermost list has length 2 and the inner lists all have length 3.</span>
+<span class="sd">          This also works for more than 2 dimensions.</span>
+<span class="sd">        * if ``shape=[2, -1, 3]``, the value must be a list of lists of lists.</span>
+<span class="sd">          The outermost list must again have length 2, the innermost lists must</span>
+<span class="sd">          have length 3, and the lists at the intermediate level can have any</span>
+<span class="sd">          length (even different lengths).</span>
+<span class="sd">        * if ``shape=[2, &quot;option1&quot;, 3]``, the values must again be a list of</span>
+<span class="sd">          lists similar to above, but now the lists at the intermediate level</span>
+<span class="sd">          must have the same length as &quot;option1&quot;.</span>
+<span class="sd">        * if ``shape=[2, [1, 2], [[3], [3, 3]]]``, the value must be a list</span>
+<span class="sd">          of lists of lists. The outermost list must again have length 2. The</span>
+<span class="sd">          two lists it contains have length 1 and length 2. The innermost lists</span>
+<span class="sd">          all must have length 3.</span>
+
+<span class="sd">        It&#39;s also possible to only give the innermost value(s), e.g. for a list</span>
+<span class="sd">        with ``shape=[2, 3]`` only the value ``18``. This will then be expanded</span>
+<span class="sd">        to ``[[18, 18, 18], [18, 18, 18]]``. Similarly, ``[18, 19, 20]`` would</span>
+<span class="sd">        be expanded to ``[[18, 19, 20], [18, 19, 20]]``.</span>
+<span class="sd">        This expansion obviously doesn&#39;t work if ``shape=-1``.</span>
+<span class="sd">        If ``shape=[2, -1, 3]``, expansion is possible if the given value is</span>
+<span class="sd">        e.g. ``[[1, 2, 3], [1, 2, 3], [1, 2, 3]]``, but not if only ``[1, 2, 3]``</span>
+<span class="sd">        is given, since the length of the second dimension must be determined</span>
+<span class="sd">        from the given value.</span>
+<span class="sd">    datatype: int, float or string, optional (only required for lists, default: None)</span>
+<span class="sd">        Type of the innermost elements of the option in case the option is a list.</span>
+<span class="sd">    validation_func: function of one argument that returns a boolean, optional.</span>
+<span class="sd">        Returns true if the value (for lists or lists of lists this applies to</span>
+<span class="sd">        all values) is valid.</span>
+<span class="sd">    alternatives: list of strings</span>
+<span class="sd">        List of alternative names for this option. If the option is not found</span>
+<span class="sd">        in the given dictionary while parsing, these alternatives are used if</span>
+<span class="sd">        they exist. If an alternative is found (searching happens in the</span>
+<span class="sd">        supplied order), the option is stored under it&#39;s standard name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">datatype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alternatives</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optional</span> <span class="o">=</span> <span class="n">optional</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span> <span class="o">=</span> <span class="n">datatype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validation_func</span> <span class="o">=</span> <span class="n">validation_func</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alternatives</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">alternatives</span> <span class="o">=</span> <span class="p">[</span><span class="n">alternatives</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alternatives</span> <span class="o">=</span> <span class="n">alternatives</span>
+
+        <span class="c1"># make sure we have shape and datatype for lists</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has type list, but no shape was given.&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has type list, but no datatype for its elements was given.&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Option(name=</span><span class="si">{:s}</span><span class="s2">, dtype=</span><span class="si">{:s}</span><span class="s2">, optional=</span><span class="si">{:s}</span><span class="s2">, default=</span><span class="si">{:s}</span><span class="s2">, shape=</span><span class="si">{:s}</span><span class="s2">, datatype=</span><span class="si">{:}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optional</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datatype</span><span class="p">)</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Option.parse"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Option.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parses the option based on it&#39;s attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># try to find alternatives if they exist</span>
+        <span class="n">alternatives</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alternatives</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">alternatives</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">:</span>
+            <span class="n">other_name</span> <span class="o">=</span> <span class="n">alternatives</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">other_name</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">:</span>
+                <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">other_name</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">other_name</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">optional</span><span class="p">:</span>
+            <span class="n">assert_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+                    <span class="c1"># this is necessary since ``bool(&quot;False&quot;)`` returns ``True``.</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">parse_bool</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_func</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid input for option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span>
+                                    <span class="s1">&#39; in section &#39;</span> <span class="o">+</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">value</span> <span class="o">=</span> <span class="n">parse_list</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span><span class="p">)</span>
+
+                <span class="c1"># value validation</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">all_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validation_func</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid input for option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span>
+                                    <span class="s1">&#39; in section &#39;</span> <span class="o">+</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+                <span class="n">shape</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+                <span class="c1"># now we need to get the correct shape</span>
+                <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># we don&#39;t care for the shape of this</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="n">value</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="c1"># in this case we simply use the shape of the option with this name</span>
+                    <span class="k">if</span> <span class="n">shape</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; in &#39;</span> <span class="o">+</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has an invalid &#39;</span> <span class="o">+</span>\
+                                         <span class="s1">&#39;shape because the options whose shape it should have &#39;</span> <span class="o">+</span>\
+                                         <span class="s1">&#39;does not exist. Check your option definitions!&#39;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="n">get_shape</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">shape</span><span class="p">])</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape</span><span class="p">]</span>
+                <span class="c1"># shape is now a list, but it might still contain strings</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+
+
+
+                <span class="c1"># shape is now either a &#39;flat&#39; shape, i.e. something like [2, 3, 2],</span>
+                <span class="c1"># or an expanded shape, e.g. [2, [3, 3], [[2, 2, 2],[2, 2, 2]]]</span>
+                <span class="c1"># if it&#39;s flat, it might contain dimensions with -1 that cannot be</span>
+                <span class="c1"># autoexpanded. We first need to determine the shape of this dimension.</span>
+                <span class="k">if</span> <span class="n">is_flat</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+                    <span class="n">real_shape</span> <span class="o">=</span> <span class="n">get_shape</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">real_shape</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                        <span class="c1"># if it&#39;s just a single number we can expand it</span>
+                        <span class="c1"># Here I&#39;m trying to find the flat shape of the value that was</span>
+                        <span class="c1"># given in the configuration file.</span>
+                        <span class="n">flat_shape_value</span> <span class="o">=</span> <span class="n">try_flattening_shape</span><span class="p">(</span><span class="n">real_shape</span><span class="p">)</span>
+                        <span class="c1"># It might happen that we cannot flatten the shape, in this</span>
+                        <span class="c1"># case there are negative values remaining in flat_shape_value.</span>
+                        <span class="c1"># If there are, this means that there is a dimension</span>
+                        <span class="c1"># containing lists of different lengths.</span>
+                        <span class="c1"># In any case I will try to replace any -1 in ``shape``</span>
+                        <span class="c1"># with the value in ``flat_shape_value``.</span>
+                        <span class="n">shape</span> <span class="o">=</span> <span class="n">get_positive_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">flat_shape_value</span><span class="p">)</span>
+                        <span class="c1"># Now we do a test for equality of the asserted shape and</span>
+                        <span class="c1"># the shape of the value found in the config file. Keep in</span>
+                        <span class="c1"># mind that there might be -1 values left.</span>
+                        <span class="k">if</span> <span class="n">flat_shape_value</span> <span class="o">!=</span> <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">flat_shape_value</span><span class="p">):]:</span>
+                            <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                        <span class="c1"># If there are -1&#39;s left we must ensure that the &quot;depth&quot; of</span>
+                        <span class="c1"># the given value, i.e. the number of dimensions, is higher</span>
+                        <span class="c1"># than the ``number of dimensions after the value preceding</span>
+                        <span class="c1"># the first -1`` + 1 .</span>
+                        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="p">)):</span>
+                            <span class="n">depth</span> <span class="o">=</span> <span class="n">numdim</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                            <span class="n">mindepth</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="n">shape</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                            <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="n">mindepth</span><span class="p">:</span>
+                                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Option &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; in section &#39;</span> <span class="o">+</span>
+                                                <span class="n">section</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; can not be expanded!&#39;</span><span class="p">)</span>
+                        <span class="n">shape</span> <span class="o">=</span> <span class="n">expand_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+                <span class="c1"># Now we have an expanded shape, so only two tasks remain:</span>
+                <span class="c1"># * auto-expansion</span>
+                <span class="c1"># * shape validation</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">expand_to_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_shapes</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">get_shape</span><span class="p">(</span><span class="n">value</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">value</span></div></div>
+
+
+
+<span class="k">def</span> <span class="nf">numdim</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns number or dimensions of the list, assuming it has the same depth</span>
+<span class="sd">    everywhere.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">numdim</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_get_shape</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">numdim</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_get_shape</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_shape</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the expanded shape of a nested list, e.g.:</span>
+
+<span class="sd">    &gt;&gt;&gt; get_shape(42)</span>
+<span class="sd">    1</span>
+<span class="sd">    &gt;&gt;&gt; get_shape([1, 2])</span>
+<span class="sd">    [2]</span>
+<span class="sd">    &gt;&gt;&gt; get_shape([[1, 2], [3, 4, 5]])</span>
+<span class="sd">    [2, [2, 3]]</span>
+<span class="sd">    &gt;&gt;&gt; get_shape([ [[1, 2], [3, 4]] , [[5, 6, 7], [8]] ])</span>
+<span class="sd">    [2, [2, 2], [[2, 2], [3, 1]]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">_get_shape</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numdim</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">_get_shape</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">shape</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">is_flat</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">numdim</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">try_flattening_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">numdim</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">flat</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+        <span class="n">flat_list</span> <span class="o">=</span> <span class="n">unroll</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">all_true</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">flat_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">flat_list</span><span class="p">):</span>
+            <span class="n">flat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flat_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">flat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">flat</span>
+
+<span class="k">def</span> <span class="nf">get_positive_shape</span><span class="p">(</span><span class="n">shape_in_option</span><span class="p">,</span> <span class="n">shape_in_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a flat shape without -1, replacing the first part with the given</span>
+<span class="sd">    shape in the option if it&#39;s only partially given in the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">shape_in_option</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape_in_file</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">shape</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">shape</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shape_in_file</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">shape_in_file</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">shape</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">unroll</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">numdim</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">numdim</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">l</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unrolled</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">unrolled</span> <span class="o">+=</span> <span class="n">unroll</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">unrolled</span>
+
+
+<span class="k">def</span> <span class="nf">expand_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Expands a flat shape to an expanded shape</span>
+
+<span class="sd">    &gt;&gt;&gt; expand_shape([2, 3])</span>
+<span class="sd">    [2, [3, 3]]</span>
+<span class="sd">    &gt;&gt;&gt; expand_shape([2, 3, 4])</span>
+<span class="sd">    [2, [3, 3], [[4, 4, 4], [4, 4, 4]]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">expanded</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)):</span>
+        <span class="nb">next</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">]</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">expanded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">next</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">expanded</span>
+
+<span class="k">def</span> <span class="nf">expand_to_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">numdim</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">_expand_to_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">depth</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+<span class="k">def</span> <span class="nf">_expand_to_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">*</span> <span class="n">shape</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_expand_to_shape</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">compare_shapes</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">numdim</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">numdim</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d1</span> <span class="o">!=</span> <span class="n">d2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">l1</span> <span class="o">=</span> <span class="n">unroll</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+        <span class="n">l2</span> <span class="o">=</span> <span class="n">unroll</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">l2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l1</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">l1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">l2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="n">l1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">l2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+
+
+<div class="viewcode-block" id="assert_exists"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.assert_exists">[docs]</a><span class="k">def</span> <span class="nf">assert_exists</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">,</span> <span class="n">section_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MissingOptionError</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">section_name</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">all_true</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">all_true</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">l</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">parse_list</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses string of form ``&#39;[as, df]&#39;`` to list of type ``dtype``, e.g. for</span>
+<span class="sd">    ``dtype=str`` it returns `[&#39;as&#39;, &#39;df&#39;]``. This works also for a list of lists.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    string : string</span>
+<span class="sd">        Has form ``&#39;[some, entries]``. All entries in the list must have the same type.</span>
+<span class="sd">    dtype : type converter</span>
+<span class="sd">        Converter to the type the entries should have, e.g. ``str`` or ``int``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of elements of type ``dtype`` or list of lists of elements of type</span>
+<span class="sd">    ``dtype``. Returns a single value if only a single value is given.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># l =  string.replace(&#39;[&#39;, &#39;&#39;).replace(&#39;]&#39;, &#39;&#39;).replace(&#39; &#39;, &#39;&#39;).split(&#39;,&#39;)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># remove all spaces first</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span> <span class="c1"># it&#39;s not only a single item</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># remove [ and ] from start and end only</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># it&#39;s just a single item</span>
+        <span class="k">return</span> <span class="n">dtype</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span> <span class="c1"># it&#39;s a list of lists</span>
+        <span class="n">splitted</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;],&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">splitted</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">splitted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;]&#39;</span> <span class="c1"># splitting removed the closing bracket from all but the last item</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">parse_list</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="p">),</span> <span class="n">splitted</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">splitted</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">splitted</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">l</span>
+
+<span class="k">def</span> <span class="nf">parse_bool</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">optionname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses a string option as bool. Possible options are &quot;True&quot;/&quot;False&quot;,</span>
+<span class="sd">    &quot;yes&quot;/&quot;no&quot;, &quot;1&quot;/&quot;0&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">optionname</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span> <span class="ow">or</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span> <span class="ow">or</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">string</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span>
+                         <span class="o">+</span> <span class="s2">&quot; is not a valid boolean!&quot;</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="ShapeError"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.ShapeError">[docs]</a><span class="k">class</span> <span class="nc">ShapeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optionname</span><span class="p">,</span> <span class="n">sectionname</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; has wrong shape!&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MissingOptionError"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.MissingOptionError">[docs]</a><span class="k">class</span> <span class="nc">MissingOptionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optionname</span><span class="p">,</span> <span class="n">sectionname</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Option &quot;</span> <span class="o">+</span> <span class="n">optionname</span> <span class="o">+</span> <span class="s2">&quot; in section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; is missing!&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MissingSectionError"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.MissingSectionError">[docs]</a><span class="k">class</span> <span class="nc">MissingSectionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sectionname</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Section &quot;</span> <span class="o">+</span> <span class="n">sectionname</span> <span class="o">+</span> <span class="s2">&quot; is missing!&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/modules.html">Module Reference</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>
