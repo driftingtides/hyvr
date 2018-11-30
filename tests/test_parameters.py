@@ -1,6 +1,6 @@
 import os
 import configparser as cp
-from hyvr.option_parsing import Option, Section, ShapeError
+from hyvr.input.option_parsing import Option, Section, ShapeError
 
 def test_configfile():
     filename = os.path.join(os.path.dirname(__file__), 'configtest.ini')

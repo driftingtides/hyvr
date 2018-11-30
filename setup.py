@@ -45,7 +45,14 @@ class sdist(_sdist):
 
 # Extensions
 # ----------
-extensions = [Extension("hyvr.optimized", sources=["hyvr/optimized"+ext])]
+extensions = [Extension("hyvr.optimized", sources=["hyvr/optimized"+ext]),
+              Extension("hyvr.classes.grid", sources=["hyvr/classes/grid"+ext]),
+              Extension("hyvr.classes.contact_surface", sources=["hyvr/classes/contact_surface"+ext]),
+              Extension("hyvr.classes.trough", sources=["hyvr/classes/trough"+ext]),
+              Extension("hyvr.classes.sheet", sources=["hyvr/classes/sheet"+ext]),
+              Extension("hyvr.classes.channel", sources=["hyvr/classes/channel"+ext]),
+              Extension("hyvr.assign_facies", sources=["hyvr/assign_facies"+ext]),
+              ]
                          # include_dirs=[np.get_include()])]
 if use_cython:
     ext_modules = cythonize(extensions)
@@ -99,12 +106,16 @@ setup(
         'scipy',
         'matplotlib',
         'pandas',
-        'pyevtk',
-        # 'h5py',
         ],
+    extras_require = {
+        'HDF5': ['h5py'],
+        'MODFLOW': ['flopy'],
+        'VTR': ['pyevtk'],
+        },
 
     # include testcase config file
     package_data={
         'hyvr': ['made.ini'],
     },
+    zip_safe=False, # Due to the .pxd files
 )

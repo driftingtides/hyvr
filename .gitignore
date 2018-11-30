@@ -34,7 +34,6 @@ hyvr/tests/test_lu/mf6/test_lu_hyvr.dis.grb
 *.lst
 *npf
 external/*
-*.c
 *.so
 *.pyd
 .orig
@@ -45,7 +44,10 @@ testcases/small/*
 testcases/small_reference/HGS*
 testcases/small_reference/*.h5
 testcases/small_reference/MODFLOW/*
+testcases/simple_cases/trough/*
 .pytest_cache/*
 hyvr/made.ini
-
+hyvr/small/*
 hyvr_dev/*
+hyvr_backup/*
+*.profile

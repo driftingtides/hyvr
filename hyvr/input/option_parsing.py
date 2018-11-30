@@ -198,6 +198,11 @@ class Option():
 
                 if isinstance(shape, str):
                     # in this case we simply use the shape of the option with this name
+                    if shape not in section.dict:
+                        raise ValueError(self.name + ' in ' + section.name + ' has an invalid ' +\
+                                         'shape because the options whose shape it should have ' +\
+                                         'does not exist. Check your option definitions!')
+                        raise ShapeError(self.name, section.name)
                     shape = get_shape(section.dict[shape])
                 if isinstance(shape, int):
                     shape = [shape]
@@ -213,32 +218,35 @@ class Option():
                 # if it's flat, it might contain dimensions with -1 that cannot be
                 # autoexpanded. We first need to determine the shape of this dimension.
                 if is_flat(shape):
-                    # Here I'm trying to find the flat shape of the value that was
-                    # given in the configuration file.
-                    flat_shape_value = try_flattening_shape(get_shape(value))
-                    # It might happen that we cannot flatten the shape, in this
-                    # case there are negative values remaining in flat_shape_value.
-                    # If there are, this means that there is a dimension
-                    # containing lists of different lengths.
-                    # In any case I will try to replace any -1 in ``shape``
-                    # with the value in ``flat_shape_value``.
-                    shape = get_positive_shape(shape, flat_shape_value)
-                    # Now we do a test for equality of the asserted shape and
-                    # the shape of the value found in the config file. Keep in
-                    # mind that there might be -1 values left.
-                    if flat_shape_value != shape[-len(flat_shape_value):]:
-                        raise ShapeError(self.name, section.name)
-                    # If there are -1's left we must ensure that the "depth" of
-                    # the given value, i.e. the number of dimensions, is higher
-                    # than the ``number of dimensions after the value preceding
-                    # the first -1`` + 1 .
-                    if any(map(lambda x: x == -1, shape)):
-                        depth = numdim(value)
-                        mindepth = len(shape) - shape.index(-1) + 1
-                        if depth < mindepth:
-                            raise ValueError('Option ' + self.name + ' in section ' +
-                                            section.name + ' can not be expanded!')
-                    shape = expand_shape(shape)
+                    real_shape = get_shape(value)
+                    if isinstance(real_shape, (list, tuple)):
+                        # if it's just a single number we can expand it
+                        # Here I'm trying to find the flat shape of the value that was
+                        # given in the configuration file.
+                        flat_shape_value = try_flattening_shape(real_shape)
+                        # It might happen that we cannot flatten the shape, in this
+                        # case there are negative values remaining in flat_shape_value.
+                        # If there are, this means that there is a dimension
+                        # containing lists of different lengths.
+                        # In any case I will try to replace any -1 in ``shape``
+                        # with the value in ``flat_shape_value``.
+                        shape = get_positive_shape(shape, flat_shape_value)
+                        # Now we do a test for equality of the asserted shape and
+                        # the shape of the value found in the config file. Keep in
+                        # mind that there might be -1 values left.
+                        if flat_shape_value != shape[-len(flat_shape_value):]:
+                            raise ShapeError(self.name, section.name)
+                        # If there are -1's left we must ensure that the "depth" of
+                        # the given value, i.e. the number of dimensions, is higher
+                        # than the ``number of dimensions after the value preceding
+                        # the first -1`` + 1 .
+                        if any(map(lambda x: x == -1, shape)):
+                            depth = numdim(value)
+                            mindepth = len(shape) - shape.index(-1) + 1
+                            if depth < mindepth:
+                                raise ValueError('Option ' + self.name + ' in section ' +
+                                                section.name + ' can not be expanded!')
+                        shape = expand_shape(shape)
 
                 # Now we have an expanded shape, so only two tasks remain:
                 # * auto-expansion
@@ -265,6 +273,8 @@ def numdim(l):
 
 def _get_shape(l):
     depth = numdim(l)
+    if depth == 0:
+        return -1
     if depth == 1:
         return len(l)
     else:
@@ -274,6 +284,8 @@ def get_shape(l):
     """
     Returns the expanded shape of a nested list, e.g.:
 
+    >>> get_shape(42)
+    1
     >>> get_shape([1, 2])
     [2]
     >>> get_shape([[1, 2], [3, 4, 5]])
@@ -282,6 +294,8 @@ def get_shape(l):
     [2, [2, 2], [[2, 2], [3, 1]]]
     """
     s = _get_shape(l)
+    if s == -1:
+        return 1
     shape = [s]
     for i in range(numdim(s)):
         s = _get_shape(s)

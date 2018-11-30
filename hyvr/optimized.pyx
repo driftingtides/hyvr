@@ -5,6 +5,7 @@ This module contains optimized versions of routines that were once in sim or uti
 """
 
 import numpy as np
+import math
 cimport numpy as np
 cimport cython
 
@@ -33,47 +34,60 @@ def reindex(inray):
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def scale_rotate(np.ndarray[np.float_t, ndim=3] x,
-                 np.ndarray[np.float_t, ndim=3] y,
-                 np.ndarray[np.float_t, ndim=3] z,
-                 np.float_t alpha=0.0, np.float_t a=1.0,
-                 np.float_t b=1.0, np.float_t c=1.0):
+def select_trough(np.ndarray[np.float_t, ndim=3] Xd,
+                  np.ndarray[np.float_t, ndim=3] Yd,
+                  np.ndarray[np.float_t, ndim=3] Zd,
+                  np.float_t a=1.0, np.float_t b=1.0, np.float_t c=1.0,
+                  np.float_t alpha=0.0):
     """
-    Scale and rotate three-dimensional trough
+    Select cells that belong to the trough.
 
-    Parameters:
-        x, y, z (float):	Spatial coordinates
-        alpha (float):		Rotation angle about the z-axis
-        a, b, c (float):	Axis lengths in x, y, z directions (ellipsoid length, width, depth)
+    Parameters
+    ----------
+    Xd, Yd, Zd : np.ndarray[np.float_t, ndim=3]
+        x, y, and z distances of grid cells to trough center
+    a, b, c : np.float
+        Trough parameters (principal semi-axes lengths)
+    alpha : np.float
+        Rotation angle in degree
 
-    Returns:
-        - select - Grid cells within ellipsoid
-        - R2 - Grid of scaled and rotated values
-
+    Returns
+    -------
+    select : np.ndarray[np.bool, ndim=3]
+        Mask that selects only points inside the trough
     """
+    cdef np.float_t xi, yi, zi, cos, sin, alpha_rad, r2, max_ab
+    cdef np.int_t nx, ny, nz
+    nx = Xd.shape[0]
+    ny = Xd.shape[1]
+    nz = Xd.shape[2]
 
-    cdef np.float_t xi, yi, zi, cos, sin, alpha_rad
+    # calculate cos and sin
     alpha_rad = alpha/180*np.pi
     cos = np.cos(alpha_rad)
     sin = np.sin(alpha_rad)
-    cdef np.int_t imax, jmax, kmax
-    imax = x.shape[0]
-    jmax = x.shape[1]
-    kmax = x.shape[2]
-    cdef np.ndarray[np.float_t, ndim=3] R2 = np.empty((imax, jmax, kmax), dtype=np.float)
-    cdef np.ndarray[np.uint8_t, ndim=3, cast=True] select = np.empty((imax, jmax, kmax), dtype=np.bool)
-    for i in range(imax):
-        for j in range(jmax):
-            for k in range(kmax):
-                xi = x[i,j,k]
-                yi = y[i,j,k]
-                zi = z[i,j,k]
-                R2[i,j,k] = (xi**2*cos**2 + 2*xi*yi*cos*sin + yi**2*sin**2)/a**2
-                R2[i,j,k] += (xi**2*sin**2 - 2*xi*yi*cos*sin + yi**2*cos**2)/b**2
-                R2[i,j,k] += zi**2/c**2
-                select[i,j,k] = (R2[i,j,k] <= 1 and zi <= 0)
 
-    return select, R2
+    # The trough is at most max(a, b) from the center
+    max_ab = max(a, b)
+
+    # assign mask
+    cdef np.ndarray[np.uint8_t, ndim=3, cast=True] select = np.empty((nx, ny, nz), dtype=np.bool)
+    for i in range(nx):
+        for j in range(ny):
+            for k in range(nz):
+                xi = Xd[i,j,k]
+                yi = Yd[i,j,k]
+                zi = Zd[i,j,k]
+                if zi <= 0 and abs(xi) <= max_ab and abs(yi) <= max_ab:
+                    r2 = (xi**2*cos**2 + 2*xi*yi*cos*sin + yi**2*sin**2)/a**2
+                    r2 += (xi**2*sin**2 - 2*xi*yi*cos*sin + yi**2*cos**2)/b**2
+                    r2 += zi**2/c**2
+                    select[i,j,k] = (r2 <= 1)
+                else:
+                    select[i,j,k] = 0
+
+    return select
+
 
 
 @cython.boundscheck(False)
@@ -97,7 +111,7 @@ def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
     dip : np.ndarray, dtype = np.float, shape = (nx, ny, nz)
         The matrix of dip angles (in radians)
     anirat : np.ndarray, dtype = np.float, shape = (nx, ny, nz)
-        The matrix of TODO: what exactly is this?
+        The matrix of anisotropy ratios
 
     Returns
     -------
@@ -138,3 +152,68 @@ def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
                 ktensors[i,j,k,2,1] = a12
                 ktensors[i,j,k,2,2] = a22
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def assign_between(np.ndarray[np.int16_t, ndim=3] strata_number,
+                   np.ndarray[np.float_t, ndim=2] cs_z_bottom,
+                   np.ndarray[np.float_t, ndim=2] cs_z_top,
+                   np.int_t n_strata,
+                   np.float_t z0, np.float_t dz):
+    """
+    Assigns all points below the contact surface to the strata by decreasing
+    its strata number by 1.
+
+    Parameters
+    ----------
+    strata_number : np.npdarray[np.int16_t, ndim=3]
+        Array of strata numbers. This will be altered.
+    cs_z_bottom : np.ndarray[np.float_t, ndim=2]
+        z-coordinate of the bottom contact surface at every point in the x-y-plane
+    cs_z : np.ndarray[np.float_t, ndim=2]
+        z-coordinate of the top contact surface at every point in the x-y-plane
+    n_strata : int
+        number that should be assigned
+    z0: np.float
+        z-coordinate of the lowest grid layer
+    dz : np.float
+        distance between grid layers
+    """
+    cdef np.int_t imax, jmax, kmax, below_idx, above_idx
+    cdef np.int16_t n_strata_16
+    imax = strata_number.shape[0]
+    jmax = strata_number.shape[1]
+    kmax = strata_number.shape[2]
+    n_strata_16 = np.int16(n_strata)
+    for i in range(imax):
+        for j in range(jmax):
+            z_bottom = cs_z_bottom[i,j]
+            z_top = cs_z_top[i,j]
+            # find index that is below/above contact surface
+            bottom_idx = int(math.ceil((z_bottom - (z0+0.5*dz))/dz))
+            top_idx = int(math.floor((z_top - (z0+0.5*dz))/dz))
+            for k in range(bottom_idx,top_idx+1):
+                strata_number[i,j,k] = n_strata_16
+
+
+
+# @cython.boundscheck(False)
+# @cython.wraparound(False)
+# def trough_normalized_distance_squared(np.float_t x, np.float_t y, np.float_t z,
+#                                        np.float_t a, np.float_t b, np.float_t c,
+#                                        np.float_t sin, np.float_t cos):
+#     return ((x*cos + y*sin)/a)**2 + ((-x*sin+y*cos)/b)**2 + (z/c)**2
+
+# @cython.boundscheck(False)
+# @cython.wraparound(False)
+# def trough_normalized_vector(np.float_t x, np.float_t y, np.float_t z,
+#                              np.float_t a, np.float_t b, np.float_t c,
+#                              np.float_t sin, np.float_t cos):
+#     cdef np.ndarray[np.float_t, ndim=1] d = np.empty(3, dtype=np.float)
+#     d[0] = (x*cos + y*sin)/a
+#     d[1] = (-x*sin + y*cos)/b
+#     d[2] = z/c
+#     return d
+
+
+cdef int sign(double x):
+    return (x > 0) - (x < 0)

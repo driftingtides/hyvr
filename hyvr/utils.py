@@ -21,40 +21,10 @@ import scipy.spatial as sp
 import os
 import shutil
 import errno
-from pyevtk.hl import gridToVTK
-import flopy
 import scipy.stats as st
-import hyvr.grid as gr
+import hyvr.optimized as ho
 
 
-''' File I/O and wrangling'''
-
-def to_vtr(data_dict, file_name, grid, points=None):
-    """
-    Save a numpy array into a ``.vtr`` rectilinear grid of voxels using pyevtk
-
-    Parameters:
-        data_dict (numpy array):		e.g. {'fac': fac, 'mat': mat}
-        file_name (str):		        Name of the file for the output.
-        grid (class Grid):		        The information about the grid can be also provided as a grid object.
-        points (bool), optional:        Set as True for exporting cell-centered points for contouring (e.g., hydraulic heads)
-
-    Returns:
-        A VTK STRUCTURED_POINTS dataset file containing the input numpy data.
-
-        .. note:
-            * Only 'STRUCTURED_POINTS' output allowed.
-            * The type of the data is extracted from the input array.
-            * Only 3D of 2D input data allowed.
-            * The default output is set to 'POINT_DATA'.
-
-    """
-    if points is True:
-        gvec = grid.vec()
-        gridToVTK(file_name, gvec[0], gvec[1], gvec[2], pointData=data_dict)
-    else:
-        gvec = grid.vec_node()
-        gridToVTK(file_name, gvec[0], gvec[1], gvec[2], cellData=data_dict)
 
 
 def mf6_vtr(fhead, mg, fout):
@@ -67,6 +37,11 @@ def mf6_vtr(fhead, mg, fout):
 
 
     """
+    try:
+        import flopy
+    except ImportError:
+        print('mf output not possible: Flopy not installed.')
+        return
     hfile = flopy.utils.binaryfile.HeadFile(fhead)          #
     hdata = hfile.get_alldata()                             # Create numpy array with all data
     head_dict = dict()                                      # Initialise dict with the data
@@ -137,22 +112,6 @@ def dem_save(fn, data, gro):
                    comments='')
 
 
-def matlab_save(fn, data):
-    """
-    Save numpy array to .mat file for use in matlab.
-
-    Parameters:
-        fn (str):               File name (ending with .mat)
-        data (numpy array):     Data to save
-
-    Returns:
-        Save a dictionary of names and arrays into a MATLAB-style .mat file.
-        This saves the array objects in the given dictionary to a MATLAB- style .mat file.
-
-    """
-
-    scipy.io.savemat(fn, dict(data=data))
-
 
 def load_gslib(fn):
     """
@@ -203,23 +162,6 @@ def load_gslib(fn):
     return gslib_dict
 
 
-def load_pickle(pickfile):
-    """
-    Pickle input file
-
-    Parameters:
-        pickfile:		Input file
-
-    Return:
-        data *(dict)* - Pickled data of input file
-
-    """
-    with open(pickfile, 'rb') as f:
-        data = pickle.load(f)
-
-    return data
-
-
 ''' HYVR-specific utilities'''
 
 
@@ -247,354 +189,6 @@ def read_lu(sq_fp):
 
     return ssm_lu
 
-
-def to_modflow(mfdir, mg, flowtrans, props):
-    """
-    Convert HYVR outputs to MODFLOW inputs
-
-    Parameters:
-        mfdir:				Directory of MODFLOW model object
-        mg:					Mesh grid object class
-        flowtrans (dict):   Flow & transport simulation parameters
-        props (dict):		Parameter fields as numpy arrays (anirat: Background anistropic ratio (K_h/K_v anisotropy ratio)
-
-    Returns:
-        - mf - MODFLOW model object
-        - dis - Discretization of modflow object
-        - bas - BAS package of modflow model
-        - lpf - LPF package of modflow model
-        - oc - OC package of modflow model
-        - pcg - pcg package of modflow model
-
-    """
-
-    try:
-        import flopy
-    except ImportError:
-        print('mf output not possible: Flopy not installed.')
-        return
-
-    # Assign name and create modflow model object
-    mf = flopy.modflow.Modflow(mfdir, exe_name='mf2005')
-
-    # Create the discretization object
-    ztop = mg.oz + mg.lz
-    zbot = mg.oz
-    botm = np.linspace(ztop, zbot, mg.nz + 1)
-    dis = flopy.modflow.ModflowDis(mf, mg.nz, mg.nx, mg.ny, delr=mg.dx, delc=mg.dy, top=(mg.oz + mg.lz), botm=botm[1:])
-
-    # Variables for the BAS package
-    ibound = np.ones((mg.nz, mg.nx, mg.ny), dtype=np.int32)
-    ibound[:, :, 0] = -1
-    ibound[:, :, -1] = -1
-
-    strt = np.ones((mg.nz, mg.nx, mg.ny), dtype=np.float32)
-    strt[:, :, 0] = flowtrans['hin'][0]
-    strt[:, :, -1] = flowtrans['hout'][0]
-
-    bas = flopy.modflow.ModflowBas(mf, ibound=ibound, strt=strt)
-
-    # Assign hydraulic conductivity
-    hyvr_hk = np.transpose(props['k_iso'], (2, 0, 1))
-    hyvr_layvka = 1                                           # VKA dataset is ratio of horizontal K
-    if 'anirat' in props.keys():
-        hyvr_vka = np.transpose(props['anirat'], (2, 0, 1))
-
-        # Add LPF package to the MODFLOW model
-        lpf = flopy.modflow.ModflowLpf(mf,                        # Modflow object
-                                       hk=hyvr_hk,              # Horizontal hydraulic conductivity
-                                       layvka=hyvr_layvka,      # Flag for each layer of anisotropic ratio
-                                       vka=hyvr_vka)            # Anisotropy ratios.
-    else:
-        # Add LPF package to the MODFLOW model
-        lpf = flopy.modflow.ModflowLpf(mf,                        # Modflow object
-                                       hk=hyvr_hk)              # Horizontal hydraulic conductivity
-
-    oc = flopy.modflow.ModflowOc(mf)        # Add OC package to the MODFLOW model
-    pcg = flopy.modflow.ModflowPcg(mf)      # Add PCG package to the MODFLOW model
-    mf.write_input()                        # Write the MODFLOW model input files
-
-    return mf, dis, bas, lpf, oc, pcg
-
-
-def to_mf6(mfdir, runname, mg, flowtrans, props):
-    """
-    .. note:
-
-        UNDER CONSTRUCTION
-        https://github.com/modflowpy/flopy/blob/develop/examples/Notebooks/flopy3_mf6_tutorial.ipynb
-
-    Convert HYVR outputs to MODFLOW6 inputs
-
-    Parameters:
-        mfdir:				Directory of MODFLOW model object
-        runname:            Run name
-        mg:					Mesh grid object class
-        flowtrans (dict):   Flow & transport simulation parameters
-        props (dict):		Parameter fields as numpy arrays (k_iso: Hydraulic conductivity of HYVR, anirat: Background anistropic ratio (K_h/K_v anisotropy ratio))
-
-    Returns:
-        - mf - MODFLOW model object
-        - dis - Discretization of modflow object
-        - bas - BAS package of modflow model
-        - lpf - LPF package of modflow model
-        - oc - OC package of modflow model
-        - pcg - pcg package of modflow model
-
-    """
-
-    try:
-        import flopy
-    except ImportError:
-        print('mf6 output not possible: Flopy not installed.')
-        return
-
-    # mfdir must be a relative path
-    # TODO: This still doesn't really work if the parameter file is not in the current directory
-    mfdir = os.path.relpath(mfdir)
-
-    # Transpose HyVR arrays for MF6 input
-    transpose_order = (2, 1, 0)
-    k_iso = np.transpose(props['k_iso'], transpose_order)
-    if set(['anirat', 'dip', 'azim']).issubset(props.keys()):
-        anirat = np.transpose(props['anirat'], transpose_order)
-        dip = np.transpose(props['dip'], transpose_order)
-        azim = np.transpose(props['azim'], transpose_order)
-        xt3d = True
-    else:
-        xt3d = False
-
-    """ create simulation """
-    sim = flopy.mf6.MFSimulation(sim_name=runname,
-                                 version='mf6',
-                                 exe_name='mf6',
-                                 sim_ws=mfdir,
-                                 sim_tdis_file='simulation.tdis')
-
-    """ Create the Flopy temporal discretization object - STEADY-STATE """
-    tdis = flopy.mf6.modflow.mftdis.ModflowTdis(sim,
-                                                time_units='DAYS')
-
-    """ create gwf model """
-    gwf = flopy.mf6.MFModel(sim, modelname=runname)
-
-
-    ims = flopy.mf6.ModflowIms(sim,
-                               print_option='SUMMARY',
-                               complexity='COMPLEX',
-                               outer_hclose=1e-3,
-                               outer_maximum=500,
-                               under_relaxation='NONE',
-                               inner_maximum=100,
-                               inner_hclose=1e-4,
-                               rcloserecord=0.001,
-                               linear_acceleration='BICGSTAB',
-                               scaling_method='NONE',
-                               reordering_method='NONE',
-                               relaxation_factor=0.97)
-    sim.register_ims_package(ims, [gwf.name])
-
-    """ Create discretization """
-    ztop = mg.oz + mg.lz
-    zbot = mg.oz
-    botm = np.around(np.arange(ztop, zbot-mg.dz, -mg.dz), decimals=3)
-    dis = flopy.mf6.modflow.mfgwfdis.ModflowGwfdis(gwf,
-                                                   nlay=mg.nz, nrow=mg.ny, ncol=mg.nx,
-                                                   delr=mg.dy, delc=mg.dx,
-                                                   top=ztop,
-                                                   botm=botm[1:],
-                                                   fname='{}.dis'.format(runname))
-
-    """ Create Node Property Flow package object """
-    if xt3d is True:
-        npf_package = flopy.mf6.ModflowGwfnpf(gwf,
-                                              save_flows=True, icelltype=0, xt3doptions='',
-                                              k=k_iso,                                  # within-bedding hydraulic conductivity
-                                              k33=k_iso/anirat,                         # across-bedding hydraulic conductivity
-                                              angle1=azim,                              # azimuth
-                                              angle2=dip,                               # dip
-                                              angle3=np.zeros((mg.nz, mg.ny, mg.nx)))   # no rotation
-    else:
-        npf_package = flopy.mf6.ModflowGwfnpf(gwf,
-                                              save_flows=True, icelltype=0,
-                                              k=k_iso)                                # within-bedding hydraulic conductivity)
-
-    """ Create constant head package """
-    if flowtrans['hin'] is not None:
-        hin = flowtrans['hin'][0]
-        hout = flowtrans['hout'][0]
-
-    elif flowtrans['gradh'] is not None:
-        hout = 1
-        hin = hout + mg.lx * flowtrans['gradh']
-
-    if np.any([flowtrans['hin'] is not None, flowtrans['gradh'] is not None]):
-        chd_rec = []
-        for layer in range(0, mg.nz):
-            for row in range(0, mg.ny):
-                chd_rec.append(((layer, row, 0), hin))         # Apply at model inlet
-                chd_rec.append(((layer, row, mg.nx-1), hout))   # Apply at model outlet
-        # chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
-        #                                                stress_period_data=chd_rec, save_flows=True)
-
-        chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
-                                                       stress_period_data=chd_rec, save_flows=True)
-    elif flowtrans['q_in'] is not None:
-        """ Apply fixed head at model outlet if fixed head at inlet"""
-        hin = 1
-        hout = 1
-        chd_rec = []
-        for layer in range(0, mg.nz):
-            for row in range(0, mg.ny):
-                chd_rec.append(((layer, row, mg.nx-1), hout))   # Apply at model outlet
-
-        chd = flopy.mf6.modflow.mfgwfchd.ModflowGwfchd(gwf, maxbound=len(chd_rec),
-                                                       stress_period_data=chd_rec, save_flows=True)
-    else:
-        hin = 1
-        hout = 1
-
-    """ Create the initial conditions package """
-    # Create linear initial condition
-    # hstart = np.ones_like(k_iso) *(hin - hout)/2
-    hstart = np.ones_like(k_iso) * np.linspace(hin, hout, mg.nx)
-    ic = flopy.mf6.modflow.mfgwfic.ModflowGwfic(gwf, strt=hstart)
-
-
-
-    """ Create well package """
-    # Apply constant discharges at model faces
-    if flowtrans['q_in'] is not None:
-        if 'q_in' in flowtrans:
-            q_in = flowtrans['q_in']
-        else:
-            q_in = 0.01
-
-        # if 'q_out' in flowtrans:
-        #     q_out = flowtrans['q_out']
-        # else:
-        #     q_out = -q_in
-
-        wel_rec = []
-        for layer in range(0, mg.nz):
-            for row in range(0, mg.ny):
-                wel_rec.append(((layer, row, 0),  q_in, 'inlet'))          # Apply at model inlet
-                # wel_rec.append(((layer, row, mg.nx-1), q_out, 'outlet'))        # Apply at model outlet
-
-        # Apply to model
-        wel = flopy.mf6.ModflowGwfwel(gwf,
-                                      print_input=True,
-                                      print_flows=True,
-                                      save_flows=True,
-                                      boundnames=True,
-                                      maxbound=len(wel_rec),
-                                      stress_period_data=wel_rec)
-
-
-    """ Create the output control package """
-    headfile = '{}.hds'.format(runname)
-    head_filerecord = [headfile]
-    budgetfile = '{}.cbc'.format(runname)
-    budget_filerecord = [budgetfile]
-    saverecord = [('HEAD', 'ALL'),
-                  ('BUDGET', 'ALL')]
-    printrecord = [('HEAD', 'LAST')]
-    oc = flopy.mf6.modflow.mfgwfoc.ModflowGwfoc(gwf,
-                                                saverecord=saverecord,
-                                                head_filerecord=head_filerecord,
-                                                budget_filerecord=budget_filerecord,
-                                                printrecord=printrecord)
-
-    # write simulation
-    sim.write_simulation()
-
-    return sim
-
-
-def to_hgs(hgspath, mg, flowtrans, ktensors, poros):
-    """
-    Convert HYVR outputs to HydroGeoSphere inputs
-
-    Parameters:
-        hgspath (str):		Path where to save HGS output file
-        ktensors:			Array with tensor values of K
-        poros:				Array with values of porosity
-
-    Returns:
-        - val_fmts *(dict)* - Dictionary with values of K tensor and porosity
-        - val_filepath - file name of HGS output file
-
-    """
-
-    uid = np.arange(1, len(ktensors[:, :, :, 1, 2].flatten()) + 1)                              # Create list of IDs
-    vals_to_write = {'ktensors': np.column_stack((uid,
-                                                  ktensors[:, :, :, 0, 0].flatten(),            # K_xx
-                                                  ktensors[:, :, :, 1, 1].flatten(),            # K_yy
-                                                  ktensors[:, :, :, 2, 2].flatten(),            # K_zz
-                                                  ktensors[:, :, :, 0, 1].flatten(),            # K_xy
-                                                  ktensors[:, :, :, 0, 2].flatten(),            # K_xz
-                                                  ktensors[:, :, :, 1, 2].flatten())),          # K_yz
-                     'porosity': np.column_stack((uid,
-                                                  poros.flatten()))}
-    val_fmts = {'ktensors': '%u %1.3e %1.3e %1.3e %1.3e %1.3e %1.3e',
-                'porosity': '%u %1.3f'}
-
-    # Loop over properties to write
-    for val in vals_to_write:
-        val_filepath = hgspath + val + '.txt'                      # File name of HGS output file
-        np.savetxt(val_filepath, vals_to_write[val], fmt=val_fmts[val])
-
-
-def round_x(x, base=1, prec=2):
-    """
-    Round to the nearest z-increment (Refer to http://stackoverflow.com/questions/2272149/round-to-5-or-other-number-in-python)
-
-    Parameters:
-        x (float):		Input parameter
-        base (int):		Base parameter for avoiding floating-point values
-        prec:			Precision of rounding
-
-    Returns:
-        Rounded value of nearest z-increment
-
-    """
-    return np.round(base * np.round(x/base), prec)
-
-
-def rotate_ktensor(count, aniso, azimuth, dip, k_in):
-    """
-    Create a rotated K tensor
-
-    Parameters:
-        count (int): 	Material number and/or identifier
-        aniso:			Anisotropy
-        azimuth:		Azimuth angles
-        dip:			Dipping angles
-        k_in:
-
-    Returns:
-        k_rotate - Rotated K tensor
-
-    """
-
-    # convert dip and azimuth to radians
-    dip = dip * np.pi / 180
-    azimuth = azimuth * np.pi / 180
-
-    kplane = np.ones(1, count) * np.sqrt(aniso)  # relative value
-    kperp = np.ones(1, count) / np.sqrt(aniso)    # relative value
-
-    k_rotate = np.empty((3, 3, count), dtype=np.float16)
-    for ii in np.arange(0, count):
-        R = np.array([[np.cos(azimuth[ii]), np.sin(azimuth[ii]), 0],
-                      [-np.sin(azimuth[ii]), np.cos(azimuth[ii]), 0],
-                      [0, 0, 1]], dtype=np.float16) * ...
-        np.array([[np.cos(dip[ii]), 0, np.sin(dip[ii])],
-                  [0, 1, 0],
-                  [-np.sin(dip[ii]), 0, np.cos(dip[ii])]], dtype=np.float16)
-        k_rotate[:, :, ii] = R * np.diag(np.array([kplane[ii], kplane[ii], kperp[ii]])) * R.T
-
-    return k_rotate
 
 
 def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
@@ -748,81 +342,225 @@ def try_makefolder(makedir):
             raise
 
 
-def specsim(gr, var, corl, twod=False, covmod='gau'):
+def print_to_stdout(*args):
     """
-    Generate random variables stationary covariance function using spectral techniques of Dietrich & Newsam (1993)
+    Prints a message to stdout with timestamp.
+    """
+    print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ':', *args)
+
+
+####################################################################################################################
+# Some utilities for generating shapes
+####################################################################################################################
+
+def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):
+    """
+    Compute number of planes
 
     Parameters:
-        gr:     	Grid class object
-        var:    	Variance
-        corl:   	Tuple of correlation length of random variable
-        twod:   	Flag for two-dimensional simulation
-        covmod: 	Which covariance model to use ('gau' = Gaussian, 'exp' = Exponential).
+        dip_norm:
+        x_dip:			X coordinates of points on dip planes
+        y_dip:			Y coordinates of points on dip planes
+        znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes
+        xtemp:			X dimension of model grid nodes
+        ytemp:			Y dimension of model grid nodes
+        ztemp:			Z dimension of model grid nodes
+        select:         Model grid nodes to consider
 
     Returns:
-        bigy - Random gaussian variable. Real part of a complex array, created via inverse DFT
+        set_no - Number of planes with selected model grid nodes
 
     """
+    # Get closest plane to points
+    n_sets = dip_norm.shape[1]                   # Number of planes
+    nx, ny, nz = xtemp.shape                       # Get number of model cells
+    set_no = np.zeros((nx, ny, nz), dtype=np.int)  # Initialise set number array
+    z_dip = np.ones(x_dip.shape) * znow
 
-    if twod is True:
-        yy, xx = np.meshgrid(np.arange(-gr.ny*0.5*gr.dy, gr.ny*0.5*gr.dy, gr.dy),
-                             np.arange(-gr.nx*0.5*gr.dx, gr.nx*0.5*gr.dx, gr.dx))
-        h = ((xx / corl[0]) ** 2 + (yy / corl[1]) ** 2) ** 0.5      # Compute distance from origin
+    if len(select) > 0:
+        select_idx = np.where(select)                                               # Get indices of selected model nodes
+    else:
+        select = np.ones_like(xtemp, dtype=bool)
+        select_idx = np.where(select)
+
+    points = np.array((xtemp[select].flatten(), ytemp[select].flatten(), ztemp[select].flatten()))      # Cartesian coordinates of model grid nodes
+    plp = np.array((x_dip, y_dip, z_dip)).T                                     # Cartesian coordinates of points on dip planes
+    pd = plp[:, None] - points.T                                                # subtract grid nodes from plane points
+
+    # Loop over set planes
+    for iset in range(n_sets-1):
+        if iset > 1:
+            pd_1 = pd_2
+        else:
+            abc_1 = dip_norm[:, iset]                                                           # Plane normal equation
+            pd_1 = abc_1.dot(pd[iset, :, :].squeeze().T) / np.sqrt(sum(abc_1 * abc_1))          # Distance to plane
+        pd1_c1 = pd_1 <= 0                                                                  # pd_1 meeting condition 1
+        pd1_c1_idx = np.where(pd1_c1)
+
+        if iset == 0:
+            set_no[select_idx[0][pd1_c1_idx], select_idx[1][pd1_c1_idx], select_idx[2][pd1_c1_idx]] = iset+1
+        # elif iset == n_sets: # this never happens
+        #     pd1_c2_idx = np.where(pd_1 > 0)                     # index of pd_2 meeting condition 1
+        #     set_no[select_idx[0][pd1_c2_idx], select_idx[1][pd1_c2_idx], select_idx[2][pd1_c2_idx]] = iset+1
+        else:
+            abc_2 = dip_norm[:, iset+1]
+            # Points on plane
+            pd_2 = abc_2.dot(pd[iset+1, :, :].squeeze().T) / np.sqrt(sum(abc_2 * abc_2))  # Distance to plane
+            inset = np.logical_and(pd_1 <= 0, pd_2 > 0)                                   # grid cell between planes
+            set_no[select_idx[0][inset], select_idx[1][inset], select_idx[2][inset]] = iset+1
+
+    return set_no
+
+
+def angle(v1, v2):
+    """
+    Return angle between two vectors in [°] between 0° and 180°
+
+    Parameters:
+        v1:	Vector 1
+        v2:	Vector 2
+
+    Returns:
+        angle value *(float)* - Angle between v1 and v2
+    """
+    cos = np.dot(v1, v2) / np.sqrt(np.dot(v1, v1) * np.dot(v2, v2))
+    angle = np.arccos(cos)/np.pi*180
+    return angle
+
+def get_alternating_facies(num_facies, type_params):
+    """
+    Returns a vector of alternating facies numbers based on the 'altfacies'
+    setting in the inifile.
+    """
+    facies = np.zeros(num_facies, dtype=np.int32)
+    facies[0] = np.random.choice(type_params['facies'])
+    # The facies are changing according to the given 'altfacies'
+    if type_params['altfacies'] is not None:
+        for i in range(1, num_facies):
+            fac_idx = type_params['facies'].index(facies[i-1])
+            facies[i] = np.random.choice(type_params['altfacies'][fac_idx])
+    else:
+        for i in range(1, num_facies):
+            facies[i] = np.random.choice(type_params['facies'])
+    return facies
+
+def norm(v):
+    return np.sqrt(np.dot(v,v))
+
+
+def specsim(grid, var, corl, selection_mask=None, two_dim=False, covmod='gaussian'):
+    """
+    Generate random variables with stationary covariance function using spectral
+    techniques of Dietrich & Newsam (1993)
+
+    Parameters
+    ----------
+    grid : Grid instance
+    var : float
+        Variance
+    corl : tuple of floats
+        Tuple of correlation lengths. 2-tuple for 2-d (x and y), and 3-tuple
+        for 3-d (x, y, z).
+    selection_mask : boolean numpy array
+        This array should have the same size as the model grid and can be used to only generate
+        random variables for a subset of the model grid. If ``two_dim=True``, it should have
+        dimensions ``(nx, ny)``, otherwise ``(nx, ny, nz)``.
+    two_dim : bool, optional (default: False)
+        Whether to return a two-dimensional or a 3 dimensional field
+    covmod : str, optional (default: "gaussian")
+        Which covariance model to use ("gaussian" or "exp").
+
+    Returns
+    -------
+    Y : 1d, 2d, or 3d numpy array
+        Numpy array of random field. If no selection mask was given, this is either a 2d or 3d numpy
+        array, depending on ``two_dim`` and of the size of the model grid.
+        If a selection_mask was given, this is a flat array of values.
+    """
+
+    # THINK: If this is called multiple times in a row with the same parameters (i.e. same var,
+    # corl, covmod), then it is not necessary to recalculate syy, and we even get two fields out.
+    # Is there a way to use this?
+    mask_given = selection_mask is not None
+    if mask_given:
+        # This method only works for rectangular grids, this means we have to find the smallest
+        # rectangular selection that contains all selected cells
+        if two_dim:
+            x_idx, y_idx = np.where(selection_mask)
+            min_x_idx = min(x_idx)
+            max_x_idx = max(x_idx)
+            min_y_idx = min(y_idx)
+            max_y_idx = max(y_idx)
+            rectangular_mask = np.zeros_like(selection_mask)
+            rectangular_mask[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1] = True
+            selected_X = grid.X[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,0]
+            selected_Y = grid.Y[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,0]
+            selected_X_centered = selected_X - (np.min(selected_X) + np.max(selected_X))/2
+            selected_Y_centered = selected_Y - (np.min(selected_Y) + np.max(selected_Y))/2
+            selection_mask_small = selection_mask[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1]
+
+            h_square = (selected_X_centered/corl[0])**2 \
+                    + (selected_Y_centered/corl[1])**2
+
+        else:
+            x_idx, y_idx, z_idx = np.where(selection_mask)
+            try:
+                min_x_idx = min(x_idx)
+            except:
+                import pdb; pdb.set_trace()
+            max_x_idx = max(x_idx)
+            min_y_idx = min(y_idx)
+            max_y_idx = max(y_idx)
+            max_z_idx = max(z_idx)
+            min_z_idx = min(z_idx)
+            rectangular_mask = np.zeros_like(selection_mask)
+            rectangular_mask[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1] = True
+            selected_X = grid.X[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1]
+            selected_Y = grid.Y[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1]
+            selected_Z = grid.Z[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1]
+            selected_X_centered = selected_X - (np.min(selected_X) + np.max(selected_X))/2
+            selected_Y_centered = selected_Y - (np.min(selected_Y) + np.max(selected_Y))/2
+            selected_Z_centered = selected_Z - (np.min(selected_Z) + np.max(selected_Z))/2
+            selection_mask_small = selection_mask[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1]
+
+            h_square = (selected_X_centered/corl[0])**2 \
+                     + (selected_Y_centered/corl[1])**2 \
+                     + (selected_Z_centered/corl[2])**2
 
     else:
-        yy, xx, zz = np.meshgrid(np.arange(-gr.ny*0.5*gr.dy, gr.ny*0.5*gr.dy, gr.dy),
-                                 np.arange(-gr.nx*0.5*gr.dx, gr.nx*0.5*gr.dx, gr.dx),
-                                 np.arange(-gr.nz*0.5*gr.dz, gr.nz*0.5*gr.dz, gr.dz))
+        # full grid
+        if two_dim:
+            h_square = (np.asarray(grid.X_centered[:,:,0])/corl[0])**2 \
+                    + (np.asarray(grid.Y_centered[:,:,0])/corl[1])**2
+        else:
+            h_square = (np.asarray(grid.X_centered)/corl[0])**2 \
+                     + (np.asarray(grid.Y_centered)/corl[1])**2 \
+                     + (np.asarray(grid.Z_centered)/corl[2])**2
 
-        # Compute distance from origin
-        h = ((xx / corl[0]) ** 2 + (yy / corl[1]) ** 2 + (zz / corl[2]) ** 2) ** 0.5
-
-    ntot = np.size(xx)
+    ntot = h_square.size
 
     # Covariance matrix of variables
-    if covmod == 'gau':
+    if covmod == 'gaussian':
         # Gaussian covariance model
-        ryy = np.exp(-h**2) * var
+        ryy = np.exp(-h_square) * var
     elif covmod == 'exp':
         # Exponential covariance model
-        ryy = np.exp(-np.abs(h)) * var
+        ryy = np.exp(-np.sqrt(h_square)) * var
     else:
-        ValueError('Invalid covariance model')
+        raise ValueError('Invalid covariance model')
 
     # Power spectrum of variable
     syy = np.fft.fftn(np.fft.fftshift(ryy)) / ntot
     syy = np.abs(syy)       # Remove imaginary artifacts
-    if twod is True:
-        syy[0, 0] = 0
-    else:
-        syy[0, 0, 0] = 0
+    syy[0] = 0
 
-    # st.norm.rvs calls cost a bit more than np.radom.randn
-    # real = st.norm.rvs(size=syy.shape)
-    # imag = st.norm.rvs(size=syy.shape)
     real = np.random.randn(*syy.shape)
     imag = np.random.randn(*syy.shape)
     epsilon = real + 1j*imag
     rand = epsilon * np.sqrt(syy)
-    bigy = np.real(np.fft.ifftn(rand * ntot))
+    Y = np.real(np.fft.ifftn(rand * ntot))
 
-    return bigy
+    if mask_given:
+        return Y[selection_mask_small]
 
-
-""" Testing functions """
-if __name__ == '__main__':
-    import hyvr
-
-    ini = '..\\..\\fidelity\\runfiles\\small\\braid_vr\\braid_vr_parameters.ini'
-    # Load parameters
-    run, mod, strata, hydraulics, ft, elements, mg = hyvr.parameters.model_setup(ini, nodir=True)
-    # Load data
-    data = np.load('..\\..\\fidelity\\runfiles\\small\\braid_vr\\braid_vr.npz')
-
-    sim = to_mf6(ini[:-4], 'test', mg, ft, data['k_iso'], data['anirat'], data['dip'], data['azim'])
-    sim.run_simulation()
-
-    hh = 'E:\\Repositories\\fidelity\\runfiles\\small\\braid_vr\\braid_vr_parameters\\test.hds'
-    hout = 'E:\\Repositories\\fidelity\\runfiles\\small\\braid_vr\\braid_vr_parameters\\test'
-    mf6_vtr(hh, mg, hout)
-
+    return Y

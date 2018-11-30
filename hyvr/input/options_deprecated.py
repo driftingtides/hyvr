@@ -5,7 +5,7 @@ This module contains all options for the ini-files. If you want to add an option
 """
 
 
-from hyvr.option_parsing import Option
+from hyvr.input.option_parsing import Option
 
 options = {}
 
@@ -32,6 +32,9 @@ options['run'] = [
 # Model options
 # =============
 options['model'] = [
+    Option('x0', float, optional=True, default=0.0),
+    Option('y0', float, optional=True, default=0.0),
+    Option('z0', float, optional=True, default=0.0),
     Option('dx', float, optional=False),
     Option('dy', float, optional=True), # use value of 'dx' if 'dy' is missing
     Option('dz', float, optional=True),
@@ -72,8 +75,7 @@ options['strata'] = [
            alternatives='ll_avul_prob'),
     Option('avul', list, optional=False, shape=['ssm', 2], datatype=float,
            alternatives='ll_avul'),
-    Option('bg', list, optional=False, shape=3, datatype=float,
-           alternatives='r_bg'),
+    Option('bg', list, optional=False, shape=3, datatype=float),
 ]
 
 
@@ -85,14 +87,12 @@ element_options = [
     Option('structure', str, optional=False),
     Option('contact', str, optional=False,
            validation_func=lambda x: x in ['flat', 'random']),
-    Option('contact_model', list, optional=True, shape=3, datatype=float,
+    Option('contact_model', list, optional=True, shape=[3], datatype=float,
            alternatives='r_contact_model'),
     Option('facies', list, optional=False, shape=[-1], datatype=int,
            alternatives='l_facies'),
     Option('altfacies', list, optional=True, shape=['facies', -1], datatype=int,
            alternatives='ll_altfacies'),
-    Option('bg', list, optional=True, shape=3, datatype=float,
-           alternatives='r_bg'),
     Option('geo_ztrend', list, optional=True, shape=2, datatype=float,
            alternatives='r_geo_ztrend'),
     Option('k_ztrend', list, optional=True, shape=2, datatype=float,
@@ -103,11 +103,12 @@ element_options = [
            alternatives='r_n_xtrend'),
     Option('n_ztrend', list, optional=True, shape=2, datatype=float,
            alternatives='r_n_ztrend'),
+    Option('bg', list, optional=True, shape=3, datatype=float)
 ]
 
 erosive_element_options = [
     Option('agg', float, optional=False),
-    Option('buffer', float, optional=True),
+    Option('buffer', float, optional=True, default=0.0),
     Option('dipset_d', float, optional=True),
     Option('migrate', list, optional=True, shape=4, datatype=float,
            alternatives='r_migrate'),
@@ -115,6 +116,7 @@ erosive_element_options = [
            alternatives='r_lag'),
     Option('dip', list, optional=False, shape=2, datatype=float,
            alternatives='r_dip'),
+
 ]
 
 options['sheet'] = element_options + [
@@ -122,9 +124,9 @@ options['sheet'] = element_options + [
            validation_func=lambda x: x in ['massive', 'dip']),
     Option('lens_thickness', float, optional=False),
     Option('dipset_d', float, optional=True),
-    Option('dip', list, optional=True, shape=2, datatype=float,
+    Option('dip', list, optional=True, shape=2, datatype=float, default=[0., 0.],
            alternatives='r_dip'),
-    Option('azimuth', list, optional=True, shape=2, datatype=float,
+    Option('azimuth', list, optional=True, shape=2, datatype=float, default=[0., 0.],
            alternatives='r_azimuth'),
 ]
 
