@@ -2,6 +2,21 @@
 Changelog/Bug Fixes
 ====================
 
+HyVR 1.0.0
+----------
+
+Release Date: 06 December 2018
+
+Contributors
+""""""""""""
+
+* Samuel Scherrer
+
+Changes
+"""""""
+Channels ported to new code (introduced in version 0.9.9).
+
+
 HyVR 0.9.9
 ----------
 

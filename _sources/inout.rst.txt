@@ -139,7 +139,7 @@ and which parameters should be generated.
   ``dy`` or ``dz`` are not given, ``dx`` will be used instead.
 - ``lx``, ``ly``, ``lz``: *(required)* Model domain dimensions.
 - ``periodic``: *(optional, default: false)* Periodic model domain?
-  (works for sheets/truncated ellipsoids only)
+  (works for sheets/truncated ellipsoids only, not with channels)
 - ``anisotropy``: *(optional, default: true)* Generate anisotropy parameters?
 - ``hydraulics``: *(optional, default: true)* Generate hydraulic parameters?
 - ``heterogeneity``: *(optional, default: true)* If ``hydraulics`` is ``true``,
@@ -265,10 +265,6 @@ Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)
 - ``buffer``: *(optional, default: 0.0)* Buffer to reduce erosion of underlying units (see
   :ref:`methods <temethod>`). This will start generating geometrical objects
   (i.e. troughs or channels) only ``buffer * depth`` above the bottom surface.
-- ``migrate``: *(optional)* Lateral migration of ellipsoid centrepoints drawn
-  from a random normal distribution, given as mean and variance in :math:`x` and
-  :math:`y` directions :math:`[\overline{\Delta x}, \sigma^2_{\Delta x},
-  \overline{\Delta y}, \sigma^2_{\Delta y}]`.
 - ``lag_height``: *(optional, default: 0.0)* It's possible to include a lag surface at the bottom of
   the trough, which means that the trough/channel is filled up to this height with another hydrofacies
   (without dip).
@@ -302,6 +298,10 @@ Truncated ellipsoid parameters
   centrepoint of truncated ellipsoids. This should be a list of lists. The inner
   lists must have length 3. Example: ``te_xyz = [[0, 0, 0]]``. This option is
   mostly for debugging purposes.
+- ``migrate``: *(optional)* Lateral migration of ellipsoid centrepoints drawn
+  from a random normal distribution, given as mean and variance in :math:`x` and
+  :math:`y` directions :math:`[\overline{\Delta x}, \sigma^2_{\Delta x},
+  \overline{\Delta y}, \sigma^2_{\Delta y}]`.
 
 .. _chparams:
 
@@ -314,6 +314,10 @@ Extruded parabola parameters
 - ``ds``: *(required)* Distance between centreline points along trajectory
 - ``eps_factor``: *(required)* Variance of random fluctuations of channel centreline.
 - ``channel_no``: *(required)* Number of Extruded parabolas to generate at each elevation
+- ``mig``: *(optional)* Length scale on which the channel start should migrate
+  between different levels. 
+- ``flow_angle``: *(optional)* Angle of mean flow with respect to the x-axis in degree. Will be 0 by
+  default.
 
 .. _shparams:
 

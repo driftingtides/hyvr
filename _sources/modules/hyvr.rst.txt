@@ -13,6 +13,7 @@ Subpackages
 
     hyvr.classes
     hyvr.input
+    hyvr.postprocess
 
 Submodules
 ----------

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>HyVR inputs and outputs &#8212; HyVR 0.2 documentation</title>
+    <title>HyVR inputs and outputs &#8212; HyVR 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="methods.html" title="HyVR Computational methods"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 0.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -170,7 +170,7 @@ and which parameters should be generated.</p>
 <code class="docutils literal notranslate"><span class="pre">dy</span></code> or <code class="docutils literal notranslate"><span class="pre">dz</span></code> are not given, <code class="docutils literal notranslate"><span class="pre">dx</span></code> will be used instead.</li>
 <li><code class="docutils literal notranslate"><span class="pre">lx</span></code>, <code class="docutils literal notranslate"><span class="pre">ly</span></code>, <code class="docutils literal notranslate"><span class="pre">lz</span></code>: <em>(required)</em> Model domain dimensions.</li>
 <li><code class="docutils literal notranslate"><span class="pre">periodic</span></code>: <em>(optional, default: false)</em> Periodic model domain?
-(works for sheets/truncated ellipsoids only)</li>
+(works for sheets/truncated ellipsoids only, not with channels)</li>
 <li><code class="docutils literal notranslate"><span class="pre">anisotropy</span></code>: <em>(optional, default: true)</em> Generate anisotropy parameters?</li>
 <li><code class="docutils literal notranslate"><span class="pre">hydraulics</span></code>: <em>(optional, default: true)</em> Generate hydraulic parameters?</li>
 <li><code class="docutils literal notranslate"><span class="pre">heterogeneity</span></code>: <em>(optional, default: true)</em> If <code class="docutils literal notranslate"><span class="pre">hydraulics</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>,
@@ -292,10 +292,6 @@ channel and the next channel above.</li>
 <li><code class="docutils literal notranslate"><span class="pre">buffer</span></code>: <em>(optional, default: 0.0)</em> Buffer to reduce erosion of underlying units (see
 <a class="reference internal" href="methods.html#temethod"><span class="std std-ref">methods</span></a>). This will start generating geometrical objects
 (i.e. troughs or channels) only <code class="docutils literal notranslate"><span class="pre">buffer</span> <span class="pre">*</span> <span class="pre">depth</span></code> above the bottom surface.</li>
-<li><code class="docutils literal notranslate"><span class="pre">migrate</span></code>: <em>(optional)</em> Lateral migration of ellipsoid centrepoints drawn
-from a random normal distribution, given as mean and variance in <span class="math notranslate nohighlight">\(x\)</span> and
-<span class="math notranslate nohighlight">\(y\)</span> directions <span class="math notranslate nohighlight">\([\overline{\Delta x}, \sigma^2_{\Delta x},
-\overline{\Delta y}, \sigma^2_{\Delta y}]\)</span>.</li>
 <li><code class="docutils literal notranslate"><span class="pre">lag_height</span></code>: <em>(optional, default: 0.0)</em> It’s possible to include a lag surface at the bottom of
 the trough, which means that the trough/channel is filled up to this height with another hydrofacies
 (without dip).</li>
@@ -328,6 +324,10 @@ ellipsoid.</li>
 centrepoint of truncated ellipsoids. This should be a list of lists. The inner
 lists must have length 3. Example: <code class="docutils literal notranslate"><span class="pre">te_xyz</span> <span class="pre">=</span> <span class="pre">[[0,</span> <span class="pre">0,</span> <span class="pre">0]]</span></code>. This option is
 mostly for debugging purposes.</li>
+<li><code class="docutils literal notranslate"><span class="pre">migrate</span></code>: <em>(optional)</em> Lateral migration of ellipsoid centrepoints drawn
+from a random normal distribution, given as mean and variance in <span class="math notranslate nohighlight">\(x\)</span> and
+<span class="math notranslate nohighlight">\(y\)</span> directions <span class="math notranslate nohighlight">\([\overline{\Delta x}, \sigma^2_{\Delta x},
+\overline{\Delta y}, \sigma^2_{\Delta y}]\)</span>.</li>
 </ul>
 </div>
 <div class="section" id="extruded-parabola-parameters">
@@ -339,6 +339,10 @@ mostly for debugging purposes.</li>
 <li><code class="docutils literal notranslate"><span class="pre">ds</span></code>: <em>(required)</em> Distance between centreline points along trajectory</li>
 <li><code class="docutils literal notranslate"><span class="pre">eps_factor</span></code>: <em>(required)</em> Variance of random fluctuations of channel centreline.</li>
 <li><code class="docutils literal notranslate"><span class="pre">channel_no</span></code>: <em>(required)</em> Number of Extruded parabolas to generate at each elevation</li>
+<li><code class="docutils literal notranslate"><span class="pre">mig</span></code>: <em>(optional)</em> Length scale on which the channel start should migrate
+between different levels.</li>
+<li><code class="docutils literal notranslate"><span class="pre">flow_angle</span></code>: <em>(optional)</em> Angle of mean flow with respect to the x-axis in degree. Will be 0 by
+default.</li>
 </ul>
 </div>
 <div class="section" id="sheet-parameters">
@@ -536,7 +540,7 @@ been tested for use in the above-named packages.</p>
         <li class="right" >
           <a href="methods.html" title="HyVR Computational methods"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 0.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

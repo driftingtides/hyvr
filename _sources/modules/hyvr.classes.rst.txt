@@ -24,6 +24,11 @@ Submodules
     :undoc-members:
     :show-inheritance:
 
+.. automodule:: hyvr.classes.channel_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 .. automodule:: hyvr.classes.contact_surface
     :members:
     :undoc-members:

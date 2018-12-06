@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.postprocess.plotting &#8212; HyVR 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hyvr.postprocess.plotting</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<div class="viewcode-block" id="cross_section_pcolor"><a class="viewcode-back" href="../../../modules/hyvr.postprocess.html#hyvr.postprocess.plotting.cross_section_pcolor">[docs]</a><span class="k">def</span> <span class="nf">cross_section_pcolor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">xlim_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylim_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">xlim_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylim_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a pcolor plot of a cross section of the specified field.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model : Model object</span>
+<span class="sd">    field : str</span>
+<span class="sd">        The field to be shown, e.g. &#39;ae&#39;, &#39;fac&#39;, &#39;hat&#39;, &#39;k_iso&#39;, etc.</span>
+<span class="sd">    y : sequence of values or None, optional (default: None)</span>
+<span class="sd">        If a sequence of values or a single value is given, cross section at this y-value will be</span>
+<span class="sd">        plotted.</span>
+<span class="sd">        If it is None, a y-cross section through the center of the model domain will be plotted.</span>
+<span class="sd">        If it is an empty list, no y-cross section will be plotted.</span>
+<span class="sd">    x : sequence of values or None, optional (default: None)</span>
+<span class="sd">        If a sequence of values or a single value is given, cross section at this x-value will be</span>
+<span class="sd">        plotted.</span>
+<span class="sd">        If it is None, a x-cross section through the center of the model domain will be plotted.</span>
+<span class="sd">        If it is an empty list, no x-cross section will be plotted.</span>
+<span class="sd">    log : bool, optional (default: False)</span>
+<span class="sd">        Whether to plot the logarithm of the field.</span>
+<span class="sd">    xlim_y, ylim_y : lists/tuples, optional (default: None)</span>
+<span class="sd">        Axis limits for the y-cross-sections</span>
+<span class="sd">    xlim_x, ylim_x : lists/tuples, optional (default: None)</span>
+<span class="sd">        Axis limits for the x-cross-sections</span>
+<span class="sd">    cmap : matplotlib colormap, optional (default: None)</span>
+<span class="sd">        Colormap to use for the plot, e.g. &#39;prism&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">y0</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">ly</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">x0</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">lx</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">y_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">yi</span><span class="o">-</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">y0</span><span class="o">+</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dy</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dy</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">y_index</span> <span class="ow">and</span> <span class="n">y_index</span> <span class="o">&lt;</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">ny</span><span class="p">:</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">X</span><span class="p">[:,</span><span class="n">y_index</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">Z</span><span class="p">[:,</span><span class="n">y_index</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">][:,</span><span class="n">y_index</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;, y = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yi</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">xlim_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ylim_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: y = </span><span class="si">{:.2f}</span><span class="s2"> not in model domain&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yi</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">x_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">xi</span><span class="o">-</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">x0</span><span class="o">+</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dx</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dx</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">x_index</span> <span class="ow">and</span> <span class="n">x_index</span> <span class="o">&lt;</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">nx</span><span class="p">:</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">x_index</span><span class="p">,:,:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">Z</span><span class="p">[</span><span class="n">x_index</span><span class="p">,:,:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">][</span><span class="n">x_index</span><span class="p">,:,:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;, x = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xi</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">xlim_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ylim_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: x = </span><span class="si">{:.2f}</span><span class="s2"> not in model domain&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></div>
+
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/modules.html">Module Reference</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

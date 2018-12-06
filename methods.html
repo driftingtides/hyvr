@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>HyVR Computational methods &#8212; HyVR 0.2 documentation</title>
+    <title>HyVR Computational methods &#8212; HyVR 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 0.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -213,12 +213,12 @@ described in Equation 15 of <a class="reference internal" href="references.html#
 depositional features. Model grid cells are assigned to the extruded parabola if
 the following conditions are met:</p>
 <div class="math notranslate nohighlight">
-\[D^2 \leqslant \frac{w^2_{ch}}{4} - \left[ \frac{(z_{ch} - z_{cell})\cdot\Delta z \cdot w_{ch}}{d_{ch}} \right] ^2 \; \wedge \; z_{cell} \leqslant z_{ch}\]</div>
+\[D^2 \leq \frac{w_{ch}^2}{4} + \frac{w_{ch}^2 (z_{cell} - z_{ch})}{4 d_{ch}}\quad\text{and }\quad z_{cell} \leq z_{ch}\]</div>
 <p>where <span class="math notranslate nohighlight">\(D^2\)</span> is the two-dimensional (<span class="math notranslate nohighlight">\(x,y\)</span>) distance from the cell to
 the extruded parabola centerline, <span class="math notranslate nohighlight">\(w_{ch}\)</span> and <span class="math notranslate nohighlight">\(d_{ch}\)</span> are the
 extruded parabola width and depth respectively, <span class="math notranslate nohighlight">\(z_{ch}\)</span> and
 <span class="math notranslate nohighlight">\(z_{cell}\)</span> are the elevations of the extruded parabola top and node
-respectively, and <span class="math notranslate nohighlight">\(\Delta z\)</span> is the model grid cell <span class="math notranslate nohighlight">\(z\)</span> dimension.
+respectively.
 Two-dimensional ‘channel velocities’ <span class="math notranslate nohighlight">\(\vec{v}\)</span> are evaluated at the
 centerline and then interpolated to grid cells using an
 inverse-distance-weighted interpolation. Azimuth values are calculated by taking
@@ -450,7 +450,7 @@ are saved and can be used for groundwater flow and solute transport simulations.
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 0.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

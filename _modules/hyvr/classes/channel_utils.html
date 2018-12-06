@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.classes.channel_utils &#8212; HyVR 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hyvr.classes.channel_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">hyvr.optimized</span> <span class="k">import</span> <span class="n">curve_interp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<div class="viewcode-block" id="ferguson_curve"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.channel_utils.ferguson_curve">[docs]</a><span class="k">def</span> <span class="nf">ferguson_curve</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">eps_factor</span><span class="p">,</span> <span class="n">flow_angle</span><span class="p">,</span> <span class="n">domain_length</span><span class="p">,</span> <span class="n">xstart</span><span class="p">,</span> <span class="n">ystart</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model</span>
+<span class="sd">    Implementation of AR2 autoregressive model</span>
+<span class="sd">    http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid : Grid object</span>
+<span class="sd">    h : float</span>
+<span class="sd">        Height (Ferguson model parameter)</span>
+<span class="sd">    k : float</span>
+<span class="sd">        Wave number (Ferguson model parameter)</span>
+<span class="sd">    ds : float</span>
+<span class="sd">        Curve distance for calculations (Ferguson model parameter)</span>
+<span class="sd">    eps_factor : float</span>
+<span class="sd">        Random background noise (Ferguson model parameter)</span>
+<span class="sd">    flow_angle : float</span>
+<span class="sd">        Angle of mean flow direction, in radians</span>
+<span class="sd">    domain_length : float</span>
+<span class="sd">        Length of the domain in mean flow direction</span>
+<span class="sd">    xstart, ystart : float</span>
+<span class="sd">        Starting coordinates of the channel centerline</span>
+<span class="sd">    width : float</span>
+<span class="sd">        Width of the channel</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    outputs : float matrix</span>
+<span class="sd">        Simulated extruded parabola centerlines: storage array containing values for x coordinate, y</span>
+<span class="sd">        coordinate, vx and vy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Parameters</span>
+    <span class="n">ds</span> <span class="o">+=</span> <span class="mf">1e-10</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">domain_length</span><span class="o">*</span><span class="mi">2</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">ds</span><span class="p">)</span>
+
+    <span class="c1"># Centreline starting point</span>
+    <span class="n">xp</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">yp</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Calculate curve directions</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">ferguson_theta</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">eps_factor</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+    <span class="c1"># Interpolate curve direction over interval of interest</span>
+    <span class="n">s_interp</span><span class="p">,</span> <span class="n">th_interp</span> <span class="o">=</span> <span class="n">curve_interp</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># Storage array</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">th_interp</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">th_idx</span><span class="p">,</span> <span class="n">th_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">th_interp</span><span class="p">):</span>
+        <span class="n">vx</span> <span class="o">=</span> <span class="n">ds</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">th_i</span><span class="p">)</span>
+        <span class="n">vy</span> <span class="o">=</span> <span class="n">ds</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">th_i</span><span class="p">)</span>
+
+        <span class="c1"># Assign to storage array</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">xp</span>       <span class="c1"># x coordinate</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">yp</span>       <span class="c1"># y coordinate</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vx</span>       <span class="c1"># vx</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="n">th_idx</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">vy</span>       <span class="c1"># vy</span>
+
+        <span class="c1"># go to next point</span>
+        <span class="n">xp</span> <span class="o">+=</span> <span class="n">vx</span>
+        <span class="n">yp</span> <span class="o">+=</span> <span class="n">vy</span>
+
+    <span class="c1"># Rotate meanders into mean flow direction</span>
+    <span class="n">rot_angle</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">th_interp</span><span class="p">)</span> <span class="o">+</span> <span class="n">flow_angle</span>
+    <span class="n">rotMatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">)],</span>
+                          <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">)]])</span>
+    <span class="n">roro</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotMatrix</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotMatrix</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">roro</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">roro</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+    <span class="c1"># move to channel start</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">xstart</span>
+    <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">ystart</span>
+
+    <span class="c1"># plt.plot(outputs[:,0], outputs[:,1])</span>
+    <span class="c1"># plt.axhline(y=grid.y0, xmin=grid.x0, xmax=grid.xmax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.axhline(y=grid.ymax, xmin=grid.x0, xmax=grid.xmax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.axvline(x=grid.x0, ymin=grid.y0, ymax=grid.ymax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.axvline(x=grid.lx, ymin=grid.y0, ymax=grid.ymax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.show()</span>
+
+    <span class="c1"># Remove values before model domain</span>
+    <span class="n">indomain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">grid</span><span class="o">.</span><span class="n">x0</span><span class="o">-</span><span class="n">width</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">grid</span><span class="o">.</span><span class="n">xmax</span><span class="o">+</span><span class="n">width</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">indomain</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="c1"># plt.plot(outputs[:,0], outputs[:,1])</span>
+    <span class="c1"># plt.axhline(y=grid.y0, xmin=grid.x0, xmax=grid.xmax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.axhline(y=grid.ymax, xmin=grid.x0, xmax=grid.xmax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.axvline(x=grid.x0, ymin=grid.y0, ymax=grid.ymax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.axvline(x=grid.lx, ymin=grid.y0, ymax=grid.ymax, color=&#39;r&#39;)</span>
+    <span class="c1"># plt.show()</span>
+
+    <span class="k">return</span> <span class="n">outputs</span></div>
+
+
+<div class="viewcode-block" id="ferguson_theta"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.channel_utils.ferguson_theta">[docs]</a><span class="k">def</span> <span class="nf">ferguson_theta</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">eps_factor</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate curve direction angle</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        s:				    Steps within generated curve distance</span>
+<span class="sd">        eps_factor:		    Random background noise</span>
+<span class="sd">        k:				    Wave number</span>
+<span class="sd">        h:				    Height</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        th_store *(array)* - Curve direction angle</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Storage arrays</span>
+    <span class="n">th_store</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">idex</span><span class="p">,</span> <span class="n">si</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">idex</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">idex</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">()</span><span class="o">*</span><span class="n">eps_factor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">eps_factor</span>
+
+        <span class="n">th_store</span><span class="p">[</span><span class="n">idex</span><span class="p">]</span> <span class="o">=</span> <span class="n">thetaAR2</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">th_store</span></div>
+
+
+<div class="viewcode-block" id="thetaAR2"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.channel_utils.thetaAR2">[docs]</a><span class="k">def</span> <span class="nf">thetaAR2</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)</span>
+<span class="sd">    http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        t1: 	theta(i-1)</span>
+<span class="sd">        t2: 	theta(i-2)</span>
+<span class="sd">        k:		Wavenumber</span>
+<span class="sd">        h:		Height</span>
+<span class="sd">        eps:	Random background noise</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        2nd-order autoregression (AR2)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">h</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="n">h</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eps</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">t1</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">t2</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/modules.html">Module Reference</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,341 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hyvr.postprocess package &#8212; HyVR 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="hyvr.input package" href="hyvr.input.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hyvr.input.html" title="hyvr.input package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="hyvr.html" accesskey="U">hyvr package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hyvr.postprocess">
+<span id="hyvr-postprocess-package"></span><h1>hyvr.postprocess package<a class="headerlink" href="#module-hyvr.postprocess" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-hyvr.postprocess.output">
+<span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-hyvr.postprocess.output" title="Permalink to this headline">¶</a></h2>
+<p>This file contains functions to convert the internal representation of a HyVR
+model output (a dictionary of arrays) to common data or model input formats.</p>
+<p>The functions should be named <cite>to_&lt;format&gt;</cite> and take the following parameters:</p>
+<dl class="docutils">
+<dt>model <span class="classifier-delimiter">:</span> <span class="classifier">Model instance (see model.py)</span></dt>
+<dd>The model object holding all the data arrays</dd>
+<dt>fname <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Where to save the file</dd>
+</dl>
+<p>If you want to add an output format, add a function in the same style and link
+the inifile-name of the format with the function and the file extension in the
+<code class="docutils literal notranslate"><span class="pre">create_outputs</span></code> function below (in the dictionary <code class="docutils literal notranslate"><span class="pre">output_desc</span></code>).</p>
+<dl class="function">
+<dt id="hyvr.postprocess.output.create_outputs">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">create_outputs</code><span class="sig-paren">(</span><em>model</em>, <em>realization_dir</em>, <em>runname</em>, <em>formats</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#create_outputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.create_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions creates output files based on the model output in the
+current run directory.</p>
+<p>This calls mainly the functions defined below for the different datatypes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>realization_dir</strong> (<em>str</em>) – Directory where the current realization results should be stored.</li>
+<li><strong>runname</strong> (<em>str</em>) – Name of the model run</li>
+<li><strong>formats</strong> (<em>list of str</em>) – List of output formats</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_hdf5">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_hdf5</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_hdf5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_hdf5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output as .h5 file. This requires h5py.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_hgs">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_hgs</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_hgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_hgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output in the HydroGeoSphere format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_mat">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_mat</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_mat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output as .mat file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_mf6">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_mf6</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_mf6"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_mf6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output in mf6 format. This requires flopy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_modflow">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_modflow</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_modflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_modflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output in modflow format. This requires flopy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_npz">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_npz</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_npz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_npz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output as .npz file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_pickle">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_pickle</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_pickle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_pickle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output as .pickle file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.postprocess.output.to_vtr">
+<code class="descclassname">hyvr.postprocess.output.</code><code class="descname">to_vtr</code><span class="sig-paren">(</span><em>model</em>, <em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/output.html#to_vtr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.output.to_vtr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves model output as .vtr file. This requires pyevtk</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em><em> (</em><em>see model.py</em><em>)</em>) – The model object holding all the data arrays</li>
+<li><strong>fname</strong> (<em>str</em>) – Where to save the file (without file format extension)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-hyvr.postprocess.plotting"></span><dl class="function">
+<dt id="hyvr.postprocess.plotting.cross_section_pcolor">
+<code class="descclassname">hyvr.postprocess.plotting.</code><code class="descname">cross_section_pcolor</code><span class="sig-paren">(</span><em>model</em>, <em>field</em>, <em>y=None</em>, <em>x=None</em>, <em>log=False</em>, <em>xlim_y=None</em>, <em>ylim_y=None</em>, <em>xlim_x=None</em>, <em>ylim_x=None</em>, <em>cmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/plotting.html#cross_section_pcolor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.plotting.cross_section_pcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a pcolor plot of a cross section of the specified field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model object</em>) – </li>
+<li><strong>field</strong> (<em>str</em>) – The field to be shown, e.g. ‘ae’, ‘fac’, ‘hat’, ‘k_iso’, etc.</li>
+<li><strong>y</strong> (<em>sequence of values</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – If a sequence of values or a single value is given, cross section at this y-value will be
+plotted.
+If it is None, a y-cross section through the center of the model domain will be plotted.
+If it is an empty list, no y-cross section will be plotted.</li>
+<li><strong>x</strong> (<em>sequence of values</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – If a sequence of values or a single value is given, cross section at this x-value will be
+plotted.
+If it is None, a x-cross section through the center of the model domain will be plotted.
+If it is an empty list, no x-cross section will be plotted.</li>
+<li><strong>log</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: False</em><em>)</em>) – Whether to plot the logarithm of the field.</li>
+<li><strong>ylim_y</strong> (<em>xlim_y</em><em>,</em>) – Axis limits for the y-cross-sections</li>
+<li><strong>ylim_x</strong> (<em>xlim_x</em><em>,</em>) – Axis limits for the x-cross-sections</li>
+<li><strong>cmap</strong> (<em>matplotlib colormap</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – Colormap to use for the plot, e.g. ‘prism’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Module Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyvr.html">hyvr package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyvr.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hyvr.classes.html">hyvr.classes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyvr.input.html">hyvr.input package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyvr.postprocess package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.postprocess.output">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.assign_facies">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="hyvr.input.html"
+                        title="previous chapter">hyvr.input package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/hyvr.postprocess.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hyvr.input.html" title="hyvr.input package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="hyvr.html" >hyvr package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

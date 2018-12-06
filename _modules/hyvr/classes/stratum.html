@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.classes.stratum &#8212; HyVR 0.2 documentation</title>
+    <title>hyvr.classes.stratum &#8212; HyVR 1.0.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -146,67 +146,67 @@
             <span class="n">ae_top_surface</span> <span class="o">=</span> <span class="n">ae_bottom_surface</span>
             <span class="n">curr_ae_type</span> <span class="o">=</span> <span class="n">next_ae_type</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_ae</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ae</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aes</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Stratum.maybe_assign_facies_azim_dip"><a class="viewcode-back" href="../../../modules/hyvr.classes.html#hyvr.classes.stratum.Stratum.maybe_assign_facies_azim_dip">[docs]</a>    <span class="k">def</span> <span class="nf">maybe_assign_facies_azim_dip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">facies</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">,</span> <span class="n">aei</span><span class="p">,</span> <span class="n">oi</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Assigns facies, azim and dip if the cell is inside this stratum or in</span>
-<span class="sd">        one of it&#39;s elements.</span>
+    <span class="c1"># def maybe_assign_facies_azim_dip(self, facies, angles, x, y, z, x_idx, y_idx, aei, oi, grid):</span>
+        <span class="c1"># &quot;&quot;&quot;</span>
+        <span class="c1"># Assigns facies, azim and dip if the cell is inside this stratum or in</span>
+        <span class="c1"># one of it&#39;s elements.</span>
 
-<span class="sd">        Since the objects inside the elements might reach into the domain</span>
-<span class="sd">        below, we can&#39;t just check the top and bottom surface but must check</span>
-<span class="sd">        every object.</span>
+        <span class="c1"># Since the objects inside the elements might reach into the domain</span>
+        <span class="c1"># below, we can&#39;t just check the top and bottom surface but must check</span>
+        <span class="c1"># every object.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        facies : np.ndarray[np.int32, dim=1]</span>
-<span class="sd">            Array of length one that hold the facies and will be altered by</span>
-<span class="sd">            this function. If this is -1 afterwards, the cell is not in the</span>
-<span class="sd">            stratum.</span>
-<span class="sd">        angles : np.ndarray[np.float, dim=1]</span>
-<span class="sd">            Array of length 2 that holds the azimuth and dip angles, will also</span>
-<span class="sd">            be altered.</span>
-<span class="sd">        x, y, z : float</span>
-<span class="sd">            x, y, and z positions of the cell in question</span>
-<span class="sd">        x_idx, y_idx : int</span>
-<span class="sd">            indices of x and y cells</span>
-<span class="sd">        aei : int</span>
-<span class="sd">            Index of where to start in the architectural element list. This is</span>
-<span class="sd">            typically the index of the last found element.</span>
-<span class="sd">        oi : int</span>
-<span class="sd">            Geometrical object index, similar to aei</span>
-<span class="sd">        grid : Grid object</span>
+        <span class="c1"># Parameters</span>
+        <span class="c1"># ----------</span>
+        <span class="c1"># facies : np.ndarray[np.int32, dim=1]</span>
+            <span class="c1"># Array of length one that hold the facies and will be altered by</span>
+            <span class="c1"># this function. If this is -1 afterwards, the cell is not in the</span>
+            <span class="c1"># stratum.</span>
+        <span class="c1"># angles : np.ndarray[np.float, dim=1]</span>
+            <span class="c1"># Array of length 2 that holds the azimuth and dip angles, will also</span>
+            <span class="c1"># be altered.</span>
+        <span class="c1"># x, y, z : float</span>
+            <span class="c1"># x, y, and z positions of the cell in question</span>
+        <span class="c1"># x_idx, y_idx : int</span>
+            <span class="c1"># indices of x and y cells</span>
+        <span class="c1"># aei : int</span>
+            <span class="c1"># Index of where to start in the architectural element list. This is</span>
+            <span class="c1"># typically the index of the last found element.</span>
+        <span class="c1"># oi : int</span>
+            <span class="c1"># Geometrical object index, similar to aei</span>
+        <span class="c1"># grid : Grid object</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        aei, oi : int</span>
-<span class="sd">            Updated indices</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">oi_orig</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">oi</span><span class="p">)</span>
-        <span class="n">aei_orig</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">aei</span><span class="p">)</span>
-        <span class="k">while</span> <span class="n">aei</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ae</span><span class="p">:</span>
-            <span class="c1"># if z &gt; self.ae_zmaxs[aei]:</span>
-                <span class="c1"># if the current z is above the maximum z of the current AE, all other AEs will also</span>
-                <span class="c1"># be below the current cell, so we can stop searching for an AE</span>
-                <span class="c1"># This case should not happen</span>
-                <span class="c1"># break</span>
-            <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ae_zmins</span><span class="p">[</span><span class="n">aei</span><span class="p">]:</span>
-                <span class="c1"># if we&#39;re below the current AE, we can go search in the next one</span>
-                <span class="n">oi</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">aei</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">continue</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">aes</span><span class="p">[</span><span class="n">aei</span><span class="p">]</span><span class="o">.</span><span class="n">maybe_assign_facies_azim_dip</span><span class="p">(</span>
-                    <span class="n">facies</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span><span class="p">,</span> <span class="n">oi</span><span class="p">,</span> <span class="n">grid</span>
-                <span class="p">)</span>
-                <span class="k">if</span> <span class="n">facies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                    <span class="c1"># we found something</span>
-                    <span class="k">return</span> <span class="n">aei</span><span class="p">,</span> <span class="n">oi</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># if we didn&#39;t find something here, we check the next AE</span>
-                    <span class="n">aei</span> <span class="o">+=</span> <span class="mi">1</span>
-                    <span class="n">oi</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="k">continue</span></div></div>
+        <span class="c1"># Returns</span>
+        <span class="c1"># -------</span>
+        <span class="c1"># aei, oi : int</span>
+            <span class="c1"># Updated indices</span>
+        <span class="c1"># &quot;&quot;&quot;</span>
+        <span class="c1"># oi_orig = int(oi)</span>
+        <span class="c1"># aei_orig = int(aei)</span>
+        <span class="c1"># while aei &lt; self.n_ae:</span>
+            <span class="c1"># # if z &gt; self.ae_zmaxs[aei]:</span>
+                <span class="c1"># # if the current z is above the maximum z of the current AE, all other AEs will also</span>
+                <span class="c1"># # be below the current cell, so we can stop searching for an AE</span>
+                <span class="c1"># # This case should not happen</span>
+                <span class="c1"># # break</span>
+            <span class="c1"># if z &lt; self.ae_zmins[aei]:</span>
+                <span class="c1"># # if we&#39;re below the current AE, we can go search in the next one</span>
+                <span class="c1"># oi = 0</span>
+                <span class="c1"># aei += 1</span>
+                <span class="c1"># continue</span>
+            <span class="c1"># else:</span>
+                <span class="c1"># self.aes[aei].maybe_assign_facies_azim_dip(</span>
+                    <span class="c1"># facies, angles, x, y, z, x_idx, y_idx, oi, grid</span>
+                <span class="c1"># )</span>
+                <span class="c1"># if facies[0] != -1:</span>
+                    <span class="c1"># # we found something</span>
+                    <span class="c1"># return aei, oi</span>
+                <span class="c1"># else:</span>
+                    <span class="c1"># # if we didn&#39;t find something here, we check the next AE</span>
+                    <span class="c1"># aei += 1</span>
+                    <span class="c1"># oi = 0</span>
+                    <span class="c1"># continue</span>
 </pre></div>
 
           </div>
@@ -252,7 +252,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

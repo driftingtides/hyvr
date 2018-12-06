@@ -216,13 +216,13 @@ depositional features. Model grid cells are assigned to the extruded parabola if
 the following conditions are met:
 
 .. math::
-  D^2 \leqslant \frac{w^2_{ch}}{4} - \left[ \frac{(z_{ch} - z_{cell})\cdot\Delta z \cdot w_{ch}}{d_{ch}} \right] ^2 \; \wedge \; z_{cell} \leqslant z_{ch}
+  D^2 \leq \frac{w_{ch}^2}{4} + \frac{w_{ch}^2 (z_{cell} - z_{ch})}{4 d_{ch}}\quad\text{and }\quad z_{cell} \leq z_{ch}
 
 where :math:`D^2` is the two-dimensional (:math:`x,y`) distance from the cell to
 the extruded parabola centerline, :math:`w_{ch}` and :math:`d_{ch}` are the
 extruded parabola width and depth respectively, :math:`z_{ch}` and
 :math:`z_{cell}` are the elevations of the extruded parabola top and node
-respectively, and :math:`\Delta z` is the model grid cell :math:`z` dimension.
+respectively.
 Two-dimensional 'channel velocities' :math:`\vec{v}` are evaluated at the
 centerline and then interpolated to grid cells using an
 inverse-distance-weighted interpolation. Azimuth values are calculated by taking

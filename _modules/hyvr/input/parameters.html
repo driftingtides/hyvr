@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.input.parameters &#8212; HyVR 0.2 documentation</title>
+    <title>hyvr.input.parameters &#8212; HyVR 1.0.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -215,7 +215,10 @@
     <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;contact_models&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">parse_contact_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;strata_contact_models&#39;</span><span class="p">]</span>
     <span class="p">]</span>
-    <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_facies</span><span class="p">(</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">],</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">])</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_facies</span><span class="p">(</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">],</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid facies string in strata section in option bg_facies: &#39;</span> <span class="o">+</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">])</span>
 
 
     <span class="c1"># flowtrans section</span>
@@ -243,17 +246,27 @@
         <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="n">Section</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="n">geometry</span><span class="p">])</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">section</span><span class="p">]))</span>
         <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;contact_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_contact_model</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;contact_model&#39;</span><span class="p">],</span> <span class="n">depth</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="c1"># get facies number</span>
-        <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_facies</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;facies&#39;</span><span class="p">],</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_facies</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;facies&#39;</span><span class="p">],</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid facies string in section &#39;</span> <span class="o">+</span> <span class="n">section</span> <span class="o">+</span> <span class="s1">&#39; in option facies!&#39;</span><span class="p">)</span>
         <span class="c1"># get altfacies</span>
         <span class="k">if</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">parse_facies</span><span class="p">(</span><span class="n">facies_list</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">facies_list</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span>
-            <span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">parse_facies</span><span class="p">(</span><span class="n">facies_list</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">facies_list</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;altfacies&#39;</span><span class="p">]</span>
+                <span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid facies string in section &#39;</span> <span class="o">+</span> <span class="n">section</span> <span class="o">+</span> <span class="s1">&#39; in option altfacies!&#39;</span><span class="p">)</span>
         <span class="c1"># get bg_facies number</span>
         <span class="k">if</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hydraulics</span><span class="p">[</span><span class="s1">&#39;hydrofacies&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid facies in section &#39;</span> <span class="o">+</span> <span class="n">section</span> <span class="o">+</span> <span class="s1">&#39; in option bg_facies: &#39;</span><span class="p">,</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;bg_facies&#39;</span><span class="p">])</span>
+
 
         <span class="c1"># if structure is &#39;dip&#39;, require &#39;dipset_dist&#39;</span>
         <span class="k">if</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;structure&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dip&#39;</span> <span class="ow">or</span> <span class="n">elements</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="s1">&#39;structure&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span><span class="p">:</span>
@@ -537,7 +550,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
