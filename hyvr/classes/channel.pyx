@@ -2,7 +2,7 @@ import numpy as np
 cimport numpy as np
 cimport cython
 from hyvr.classes.grid cimport Grid
-from libc.math cimport sqrt, sin, cos
+from libc.math cimport sqrt, sin, cos, atan2
 import hyvr.utils as hu
 
 cdef class Channel:
@@ -13,22 +13,27 @@ cdef class Channel:
     """
 
     cdef public:
-        double[:] x_center, y_center
+        double[:] x_center, y_center, vx, vy
         int[:,:] dont_check
         double a, width, depth, min_dx_dy
         int len_centerline
         double zmin, zmax, ztop
-        double dip, azim
+        double dip, azim, sin_dip, cos_dip
         double shift, layer_dist
-        double normvec_x, normvec_y, normvec_z
-        int facies, num_ha
+        double lag_height
+        int facies, num_ha, lag_facies, num_facies
         int [:] facies_array
+        int dipsets
 
 
-    def __init__(self, type_params, x_center, y_center, z, width, depth, grid):
+    def __init__(self, type_params, x_center, y_center, vx, vy, z, width, depth, grid):
         # x_center and y_center should be coordinates of points on the centerline.
+        cdef int i
+        cdef double dist_along_curve
         self.x_center = x_center
         self.y_center = y_center
+        self.vx = vx
+        self.vy = vy
         self.len_centerline = len(x_center)
 
         # we need this to reduce the amount of distance checks
@@ -59,60 +64,51 @@ cdef class Channel:
         self.width = width
         self.a = 4*self.depth/self.width**2
 
+        # lag
+        self.lag_height = type_params['lag_height']
+        self.lag_facies = type_params['lag_facies']
+
 
         # Get facies, dip, and azimuth
         self.dipsets = type_params['structure'] == 'dip'
         if self.dipsets:
-            # the dipsets are layers of planes with distance dipset_dist such that
-            # the 'zero plane' goes through the center of the domain (at the
-            # top of the channel).
+            # the dipsets are layers of planes along the channel centerline
+            # with distance 'dipset_dist'
+            # To find which layer a point belongs to we will calculate its
+            # distance along the centerline.
+            # Since the layers are dipping, the real distance is longer than
+            # the distance that we would go if we would go orthogonal to the
+            # planes. Therefore the distance along the curve has to be
+            # multiplied by the sin of the dip angle
+            self.layer_dist = type_params['dipset_dist']
+            self.dip = np.random.uniform(*type_params['dip'])
+            self.sin_dip = sin(self.dip*np.pi/180)
+            self.cos_dip = cos(self.dip*np.pi/180)
+            # a random shift to be added to the distance
+            self.shift = np.random.uniform(0, self.layer_dist)
+
             # The respective facies will be stored in an array such
             # that the zero-plane is in the center.
-            self.layer_dist = type_params['dipset_dist']
-
-            # The plane is defined by a normal vector:
-            self.azim = np.random.uniform(*type_params['azimuth'])
-            self.dip = np.random.uniform(*type_params['dip'])
-            sin_dip = sin(self.dip*np.pi/180)
-            cos_dip = cos(self.dip*np.pi/180)
-            sin_azim = sin(self.azim*np.pi/180)
-            cos_azim = cos(self.azim*np.pi/180)
-            self.normvec_x = -sin_dip*cos_azim
-            self.normvec_y = sin_dip*sin_azim
-            self.normvec_z = cos_dip
-
-
-            # The distance of a point to the zero-plane is:
-            #
-            # d(x, y, z) = nx*x + ny*y + nz*z - d
-            #
-            # and the distance of the center point is zero:
-            #
-            # d(xc, yc, zc) = nx*xc + ny*yc + nz*zc - d = 0
-            #
-            # or
-            #
-            # d = nx*xc + ny*y + nz*z
-            xc = grid.x0 + grid.lx/2
-            yc = grid.y0 + grid.ly/2
-            zc = self.ztop
-            self.shift = self.normvec_x * xc + self.normvec_y * yc + self.normvec_z * zc
-            self.shift += np.random.rand() * self.layer_dist
-
-
-            # The maximum amount of necessary layers is max(lx, ly, lz)/layer_dist
-            # 10 is added just to be sure
-            self.num_facies = int(np.ceil((max(grid.ly, grid.ly, grid.lz) + self.shift)/self.layer_dist)) + 10
+            # To find out how long the list has to be we have to find the length of the curve
+            dist_along_curve = 0
+            for i in range(1, self.len_centerline):
+                dist_along_curve += sqrt((self.x_center[i] - self.x_center[i-1])**2
+                                            +(self.y_center[i] - self.y_center[i-1])**2
+                )
+            self.num_facies = int(
+                np.ceil(dist_along_curve*self.sin_dip/self.layer_dist + self.shift)
+                + np.ceil(self.depth/self.layer_dist)
+            )
+            self.num_facies += 10  # just to be sure
             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
         else:
             # massive internal structure
-            self.azim = np.random.uniform(*type_params['azimuth'])
             self.dip = np.random.uniform(*type_params['dip'])
             self.facies = np.random.choice(type_params['facies'])
 
 
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
+    # @cython.boundscheck(False)
+    # @cython.wraparound(False)
     cpdef maybe_assign_facies_azim_dip(self, int [:] facies, double [:] angles, int[:] ids,
                                      double x, double y, double z,
                                      int x_idx, int y_idx, Grid grid):
@@ -138,8 +134,9 @@ cdef class Channel:
             indices of x and y position in grid.
         grid : Grid object
         """
-        cdef double xy_dist, dz, radius, dist_sq
-        cdef int nx, ny, i, j
+        cdef double xy_dist, dz, radius, dist, weight, sum_weights, vx_now, vy_now
+        cdef double dist_along_curve, dist_along_curve_tmp
+        cdef int nx, ny, i, j, closest_idx
 
 
         # if the point is above the channel top, don't consider it
@@ -163,12 +160,39 @@ cdef class Channel:
 
 
         # Otherwise, get the distance to the centerline in xy-plane and z-direction
+        # If we have dipsets, we will also directly calculate the velocity
+        # (inverse distance weighting) and the distance along the curve
+        sum_weights = 0
+        vx_now = 0
+        vy_now = 0
+        dist_along_curve_tmp = 0
+        dist_along_curve = 0
         xy_dist = 1e100
-        for i in range(self.len_centerline):
-            dist_sq = (x - self.x_center[i])**2 + (y - self.y_center[i])**2
-            if dist_sq < xy_dist:
-                xy_dist = dist_sq
-        xy_dist = sqrt(xy_dist)
+        if self.dipsets:
+            for i in range(self.len_centerline):
+                if i > 0:
+                    dist_along_curve_tmp += sqrt((self.x_center[i] - self.x_center[i-1])**2
+                                                +(self.y_center[i] - self.y_center[i-1])**2
+                    )
+                dist = sqrt((x - self.x_center[i])**2 + (y - self.y_center[i])**2)
+                weight = 1/(dist + 1e-20)
+                vx_now += self.vx[i] * weight
+                vy_now += self.vy[i] * weight
+                sum_weights += weight
+                if dist < xy_dist:
+                    dist_along_curve = dist_along_curve_tmp
+                    xy_dist = dist
+                    closest_idx = i
+            vx_now /= sum_weights
+            vy_now /= sum_weights
+        else:
+            # we only need the distance
+            for i in range(self.len_centerline):
+                dist = (x - self.x_center[i])**2 + (y - self.y_center[i])**2
+                if dist < xy_dist:
+                    xy_dist = dist
+            xy_dist = sqrt(xy_dist)
+
 
         # Find other cells that are also not close enough
         radius = xy_dist - self.width
@@ -177,30 +201,49 @@ cdef class Channel:
             # and find y-directions for those.
             nx = int(radius/grid.dx)
             for i in range(nx):
-                # 'height' of the circle at distance x = i*dx from the center:
-                #
-                #     y(x) = sqrt(radius**2 - x**2)
-                #
-                ny = int(sqrt(radius**2 - (i*grid.dx)**2))
-                for j in range(ny):
-                    self.dont_check[x_idx+i, y_idx+j] = 1
-                    self.dont_check[x_idx+i, y_idx-j] = 1
-                    self.dont_check[x_idx-i, y_idx+j] = 1
-                    self.dont_check[x_idx-i, y_idx-j] = 1
+                if x_idx-i >= 0 and x_idx+i < grid.nx:
+                    # 'height' of the circle at distance x = i*dx from the center:
+                    #
+                    #     y(x) = sqrt(radius**2 - x**2)
+                    #
+                    ny = int(sqrt(radius**2 - (i*grid.dx)**2))
+                    for j in range(ny):
+                        if y_idx-j >= 0 and y_idx+j < grid.ny:
+                            self.dont_check[x_idx+i, y_idx+j] = 1
+                            self.dont_check[x_idx+i, y_idx-j] = 1
+                            self.dont_check[x_idx-i, y_idx+j] = 1
+                            self.dont_check[x_idx-i, y_idx-j] = 1
 
         # Now we calculate the value of the shape curve and check whether the
         # point is really inside (i.e. is above the parabola)
         if dz >= self.a*xy_dist**2 - self.depth:
             # it's inside: assign stuff
-            angles[0] = self.azim
-            angles[1] = self.dip
             ids[1] = self.num_ha
+            if z < self.ztop - self.depth + self.lag_height:
+                angles[0] = 0
+                angles[1] = 0
+                facies[0] = self.lag_facies
+                return
+
             if self.dipsets:
-                d = self.normvec_x*x + self.normvec_y*y + self.normvec_z*z - self.shift
-                n = int(d/self.layer_dist) + self.num_facies//2
+                # azimuth from inverse distance weighted velocity
+                angles[0] = atan2(vy_now, vx_now)/np.pi*180
+                # dip as assigned
+                angles[1] = self.dip
+
+                # TODO: the distance along the curve is actually a bit
+                # different, as the point is not directly orthogonal to the closest point.
+                # However, if the point density on the centerline is high
+                # enough, it won't really matter.
+                # To correct for the distance in z-direction we subtract |dz| * cos(dip)
+                # note that dz is negative here
+                d = dist_along_curve * self.sin_dip + dz*self.cos_dip + self.shift
+                n = int(d/self.layer_dist)
                 facies[0] = self.facies_array[n]
                 return
             else:
+                angles[0] = self.azim
+                angles[1] = self.dip
                 facies[0] = self.facies
                 return
 

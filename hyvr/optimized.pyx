@@ -57,7 +57,7 @@ def select_trough(np.ndarray[np.float_t, ndim=3] Xd,
         Mask that selects only points inside the trough
     """
     cdef np.float_t xi, yi, zi, cos, sin, alpha_rad, r2, max_ab
-    cdef np.int_t nx, ny, nz
+    cdef np.int_t nx, ny, nz, i, j, k
     nx = Xd.shape[0]
     ny = Xd.shape[1]
     nz = Xd.shape[2]
@@ -120,7 +120,7 @@ def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
     cdef np.float_t kappa, psi, a, sink, cosk, sinp, cosp
     cdef np.float_t a11, a12, a13, a22, a23, a33
     cdef np.float_t kiso
-    cdef np.int_t imax, jmax, kmax
+    cdef np.int_t imax, jmax, kmax, i, j, k
     imax = k_iso.shape[0]
     jmax = k_iso.shape[1]
     kmax = k_iso.shape[2]
@@ -152,47 +152,47 @@ def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
                 ktensors[i,j,k,2,1] = a12
                 ktensors[i,j,k,2,2] = a22
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-def assign_between(np.ndarray[np.int16_t, ndim=3] strata_number,
-                   np.ndarray[np.float_t, ndim=2] cs_z_bottom,
-                   np.ndarray[np.float_t, ndim=2] cs_z_top,
-                   np.int_t n_strata,
-                   np.float_t z0, np.float_t dz):
-    """
-    Assigns all points below the contact surface to the strata by decreasing
-    its strata number by 1.
+# @cython.boundscheck(False)
+# @cython.wraparound(False)
+# def assign_between(np.ndarray[np.int16_t, ndim=3] strata_number,
+                   # np.ndarray[np.float_t, ndim=2] cs_z_bottom,
+                   # np.ndarray[np.float_t, ndim=2] cs_z_top,
+                   # np.int_t n_strata,
+                   # np.float_t z0, np.float_t dz):
+    # """
+    # Assigns all points below the contact surface to the strata by decreasing
+    # its strata number by 1.
 
-    Parameters
-    ----------
-    strata_number : np.npdarray[np.int16_t, ndim=3]
-        Array of strata numbers. This will be altered.
-    cs_z_bottom : np.ndarray[np.float_t, ndim=2]
-        z-coordinate of the bottom contact surface at every point in the x-y-plane
-    cs_z : np.ndarray[np.float_t, ndim=2]
-        z-coordinate of the top contact surface at every point in the x-y-plane
-    n_strata : int
-        number that should be assigned
-    z0: np.float
-        z-coordinate of the lowest grid layer
-    dz : np.float
-        distance between grid layers
-    """
-    cdef np.int_t imax, jmax, kmax, below_idx, above_idx
-    cdef np.int16_t n_strata_16
-    imax = strata_number.shape[0]
-    jmax = strata_number.shape[1]
-    kmax = strata_number.shape[2]
-    n_strata_16 = np.int16(n_strata)
-    for i in range(imax):
-        for j in range(jmax):
-            z_bottom = cs_z_bottom[i,j]
-            z_top = cs_z_top[i,j]
-            # find index that is below/above contact surface
-            bottom_idx = int(math.ceil((z_bottom - (z0+0.5*dz))/dz))
-            top_idx = int(math.floor((z_top - (z0+0.5*dz))/dz))
-            for k in range(bottom_idx,top_idx+1):
-                strata_number[i,j,k] = n_strata_16
+    # Parameters
+    # ----------
+    # strata_number : np.npdarray[np.int16_t, ndim=3]
+        # Array of strata numbers. This will be altered.
+    # cs_z_bottom : np.ndarray[np.float_t, ndim=2]
+        # z-coordinate of the bottom contact surface at every point in the x-y-plane
+    # cs_z : np.ndarray[np.float_t, ndim=2]
+        # z-coordinate of the top contact surface at every point in the x-y-plane
+    # n_strata : int
+        # number that should be assigned
+    # z0: np.float
+        # z-coordinate of the lowest grid layer
+    # dz : np.float
+        # distance between grid layers
+    # """
+    # cdef np.int_t imax, jmax, kmax, below_idx, above_idx, i, j
+    # cdef np.int16_t n_strata_16
+    # imax = strata_number.shape[0]
+    # jmax = strata_number.shape[1]
+    # kmax = strata_number.shape[2]
+    # n_strata_16 = np.int16(n_strata)
+    # for i in range(imax):
+        # for j in range(jmax):
+            # z_bottom = cs_z_bottom[i,j]
+            # z_top = cs_z_top[i,j]
+            # # find index that is below/above contact surface
+            # bottom_idx = int(math.ceil((z_bottom - (z0+0.5*dz))/dz))
+            # top_idx = int(math.floor((z_top - (z0+0.5*dz))/dz))
+            # for k in range(bottom_idx,top_idx+1):
+                # strata_number[i,j,k] = n_strata_16
 
 
 
@@ -217,3 +217,52 @@ def assign_between(np.ndarray[np.int16_t, ndim=3] strata_number,
 
 cdef int sign(double x):
     return (x > 0) - (x < 0)
+
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def curve_interp(double [:] xc, double [:] yc, double spacing):
+    """
+    Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by 'Unutbu' on
+    http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values (retrieved 17/04/2017)
+
+    Parameters:
+        xc:			x coordinates of curve
+        yc:			y coordinates of curve
+        spacing:	Spacing between points
+
+    Returns:
+        - xn - x coordinates of interpolated points
+        - yn - y coordinates of interpolated points
+
+    """
+    cdef int ic, j, i
+    cdef double total_dist, tol
+    cdef double [:] t
+    cdef double [:] xn
+    cdef double [:] yn
+    cdef list idx
+
+    t = np.arange(xc[0], len(xc), spacing * 0.1)
+    xc = np.interp(t, np.arange(len(xc)), xc)
+    yc = np.interp(t, np.arange(len(yc)), yc)
+    tol = spacing
+    ic, idx = 0, [0]
+    while ic < len(xc):
+        total_dist = 0
+        j = ic + 1 # this is to make sure j is initialized
+        for j in range(ic+1, len(xc)):
+            total_dist += math.sqrt((xc[j] - xc[j-1]) ** 2 + (yc[j] - yc[j-1]) ** 2)
+            if total_dist > tol:
+                idx.append(j)
+                break
+        ic = j + 1
+
+    xn = np.zeros(len(idx))
+    yn = np.zeros(len(idx))
+    for i, ic in enumerate(idx):
+        xn[i] = xc[ic]
+        yn[i] = yc[ic]
+
+    return xn, yn

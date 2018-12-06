@@ -27,7 +27,7 @@ import subprocess
 
 GITHUB_REPO_ADDRESS = "git@github.com:driftingtides/hyvr.git"
 BITBUCKET_REPO_ADDRESS = "ssh://hg@bitbucket.org/jpbennett/hyvr"
-GHPAGES_SOURCES = ["hyvr", "docs", "README.rst", "testcases"]
+GHPAGES_SOURCES = ["hyvr", "docs", "README.rst", "testcases", "versionnumber"]
 REPO_NAME = "hyvr"
 
 

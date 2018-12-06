@@ -34,10 +34,12 @@ def plot_slices(outputdir, var, log):
     plt.title('y = ' + str(ny))
     plt.colorbar()
 
-    fig.suptitle(outputdir)
+    fig.suptitle(outputdir + ': ' + var)
     plt.tight_layout()
     plt.draw()
 
 plot_slices('small', 'facies', False)
+plot_slices('small', 'azim', False)
 plot_slices('small', 'dip', False)
+plot_slices('small', 'ha', False)
 plt.show()

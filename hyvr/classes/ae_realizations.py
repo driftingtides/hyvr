@@ -6,8 +6,10 @@ import numpy as np
 from hyvr.classes.trough import Trough
 from hyvr.classes.trough_utils import *
 from hyvr.classes.sheet import Sheet
+from hyvr.classes.channel import Channel
 from hyvr.classes.contact_surface import ContactSurface
 from hyvr.classes.contact_surface_utils import *
+from hyvr.classes.channel_utils import ferguson_curve
 
 class AERealization:
     """
@@ -225,25 +227,25 @@ class ExtParAE(AERealization):
 
         n_channels = self.type_params['channel_no']
 
-        # get flow axis and starting points
-        # TODO: get flow angle
-        # TODO: get flow axis
-        # TODO: get starting y-values for curve
+        flow_angle = self.type_params['flow_angle']*np.pi/180
+        domain_width = np.abs(grid.lx * np.sin(flow_angle)) + np.abs(grid.ly * np.cos(flow_angle))
+        domain_length = np.abs(grid.lx * np.cos(flow_angle)) + np.abs(grid.ly * np.sin(flow_angle))
+        ystart = np.random.uniform(-domain_width/2, domain_width/2, n_channels)
 
 
         # get number of layers
         dz = self.type_params['agg']
-        # TODO: this is a bit inconsistent when using size_ztrend
-        zbottom = self.bottom_surface.zmean + self.type_params['depth']*self.type_params['buffer']
+        if self.type_params['size_ztrend'] is not None:
+            zfactor = np.interp(z, [grid.z0, grid.zmax], *ch_par['size_ztrend'])
+        else:
+            zfactor = 1
+        depth = self.type_params['depth'] * zfactor
+        zbottom = self.bottom_surface.zmean + depth*self.type_params['buffer']
         ztop = self.top_surface.zmean
 
         z = ztop - dz
         while z > zbottom:
 
-
-            # IMPORTANT TODO: generate centerline
-            # This function has to be written for channels to work
-            x_center, y_center = generate_centerline(xstart, ystart, mean_direction, some_params)
 
             # get current width and depth
             if self.type_params['size_ztrend'] is not None:
@@ -253,19 +255,33 @@ class ExtParAE(AERealization):
             width = self.type_params['width'] * zfactor
             depth = self.type_params['depth'] * zfactor
 
-
             for i in range(n_channels):
-                # TODO: channel constructor
-                channel = Channel(type_params, x_center, y_center, z, width, depth, grid)
+                # get start of channel
+                ystart_grid = (grid.y0 + grid.ly)/2 - (domain_length+width)/2 * np.sin(flow_angle) + ystart[i] * np.cos(flow_angle)
+                xstart_grid = (grid.x0 + grid.lx)/2 - (domain_length+width)/2 * np.cos(flow_angle) - ystart[i] * np.sin(flow_angle)
+                # generate centerline
+                outputs = ferguson_curve(grid,
+                                         self.type_params['h'],
+                                         self.type_params['k'],
+                                         self.type_params['ds'],
+                                         self.type_params['eps_factor'],
+                                         flow_angle,
+                                         domain_length,
+                                         xstart_grid,
+                                         ystart_grid,
+                                         width,
+                )
+                x_center = outputs[:,0]
+                y_center = outputs[:,1]
+                vx = outputs[:,2]
+                vy = outputs[:,3]
+
+
+                # generate channels
+                channel = Channel(self.type_params, x_center, y_center, vx, vy, z, width, depth, grid)
                 self._add_object(channel)
 
+                if self.type_params['mig'] is not None:
+                    ystart[i] -= np.random.uniform(-self.type_params['mig'], self.type_params['mig'])
 
-            # TODO: document this feature
-            # TODO: use normal distribution instead?
-            # TODO: change only ystart and flowangle
-            if self.type_params['mig'] is not None:
-                xstart -= np.random.uniform(-self.type_params['mig'][0], self.type_params['mig'][0])
-                ystart -= np.random.uniform(-self.type_params['mig'][1], self.type_params['mig'][1])
-
-
-
+            z -= dz

@@ -106,6 +106,7 @@ If you want to use HyVR in a script, you can import it and use the ``run`` funct
 Examples can be found in the ``testcases`` directory of the `github repository
 <https://github.com/driftingtides/hyvr/>`_, the general setup and possible
 options of the config-file are described in the documentation.
+Currently only ``made.ini`` is ported to version 1.0.0.
 
 Source
 ------

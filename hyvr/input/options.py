@@ -83,7 +83,6 @@ element_options = [
 erosive_element_options = [
     Option('agg', float, optional=False),
     Option('buffer', float, optional=True, default=0.0),
-    Option('migrate', list, optional=True, shape=4, datatype=float),
     Option('lag', list, optional=True, shape=2, datatype=float),
     Option('lag_height', float, optional=True, default=0.0),
     Option('lag_facies', str, optional=True, default=None),
@@ -108,10 +107,11 @@ options['trough'] = element_options + erosive_element_options + [
     Option('trough_density', float, optional=False),
     Option('paleoflow', list, optional=False, shape=2, datatype=float),
     Option('te_xyz', list, optional=True, shape=[-1, 3], datatype=float),
+    Option('migrate', list, optional=True, shape=4, datatype=float),
 ]
 
 
-options['ext_par'] = element_options + erosive_element_options + [
+options['channel'] = element_options + erosive_element_options + [
     Option('structure', str, optional=False,
            validation_func=lambda x: x in ['massive', 'dip']),
     Option('dipset_dist', float, optional=True),
@@ -121,7 +121,9 @@ options['ext_par'] = element_options + erosive_element_options + [
     Option('k', float, optional=False),
     Option('ds', float, optional=False),
     Option('eps_factor', float, optional=False),
-    Option('channel_no', float, optional=False),
+    Option('channel_no', int, optional=False),
+    Option('mig', float, optional=True, datatype=float, default=0.),
+    Option('flow_angle', float, optional=True, default=0.),
 ]
 
 

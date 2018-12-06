@@ -176,7 +176,10 @@ def parse_inifile(p):
     strata['contact_models'] = [
         parse_contact_model(model, depth=True) for model in strata['strata_contact_models']
     ]
-    strata['bg_facies'] = parse_facies(strata['bg_facies'], hydraulics['hydrofacies'])
+    try:
+        strata['bg_facies'] = parse_facies(strata['bg_facies'], hydraulics['hydrofacies'])
+    except:
+        raise ValueError('Invalid facies string in strata section in option bg_facies: ' + strata['bg_facies'])
 
 
     # flowtrans section
@@ -204,17 +207,27 @@ def parse_inifile(p):
         elements[section] = Section(section, options[geometry]).parse(dict(p[section]))
         elements[section]['contact_model'] = parse_contact_model(elements[section]['contact_model'], depth=False)
         # get facies number
-        elements[section]['facies'] = parse_facies(elements[section]['facies'], hydraulics['hydrofacies'])
+        try:
+            elements[section]['facies'] = parse_facies(elements[section]['facies'], hydraulics['hydrofacies'])
+        except:
+            raise ValueError('Invalid facies string in section ' + section + ' in option facies!')
         # get altfacies
         if elements[section]['altfacies'] is not None:
-            elements[section]['altfacies'] = [
-                parse_facies(facies_list, hydraulics['hydrofacies']) for facies_list in elements[section]['altfacies']
-            ]
+            try:
+                elements[section]['altfacies'] = [
+                    parse_facies(facies_list, hydraulics['hydrofacies']) for facies_list in elements[section]['altfacies']
+                ]
+            except:
+                raise ValueError('Invalid facies string in section ' + section + ' in option altfacies!')
         # get bg_facies number
         if elements[section]['bg_facies'] == None:
             elements[section]['bg_facies'] = -1
         else:
-            elements[section]['bg_facies'] = hydraulics['hydrofacies'].index(elements[section]['bg_facies'])
+            try:
+                elements[section]['bg_facies'] = hydraulics['hydrofacies'].index(elements[section]['bg_facies'])
+            except:
+                raise ValueError('Invalid facies in section ' + section + ' in option bg_facies: ', elements[section]['bg_facies'])
+
 
         # if structure is 'dip', require 'dipset_dist'
         if elements[section]['structure'] == 'dip' or elements[section]['structure'] == 'random':
