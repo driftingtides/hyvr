@@ -45,13 +45,14 @@ class sdist(_sdist):
 
 # Extensions
 # ----------
-extensions = [Extension("hyvr.optimized", sources=[path.join("hyvr", "optimized"+ext)]),
-              Extension("hyvr.classes.grid", sources=[path.join("hyvr", "classes", "grid"+ext)]),
-              Extension("hyvr.classes.contact_surface", sources=[path.join("hyvr", "classes", "contact_surface"+ext)]),
-              Extension("hyvr.classes.trough", sources=[path.join("hyvr", "classes", "trough"+ext)]),
-              Extension("hyvr.classes.sheet", sources=[path.join("hyvr", "classes", "sheet"+ext)]),
-              Extension("hyvr.classes.channel", sources=[path.join("hyvr", "classes", "channel"+ext)]),
-              Extension("hyvr.assign_facies", sources=[path.join("hyvr", "assign_facies"+ext)]),
+package_path = path.join(path.dirname(__file__), "hyvr")
+extensions = [Extension("hyvr.optimized", sources=[path.join(package_path, "optimized"+ext)]),
+              Extension("hyvr.classes.grid", sources=[path.join(package_path, "classes", "grid"+ext)]),
+              Extension("hyvr.classes.contact_surface", sources=[path.join(package_path, "classes", "contact_surface"+ext)]),
+              Extension("hyvr.classes.trough", sources=[path.join(package_path, "classes", "trough"+ext)]),
+              Extension("hyvr.classes.sheet", sources=[path.join(package_path, "classes", "sheet"+ext)]),
+              Extension("hyvr.classes.channel", sources=[path.join(package_path, "classes", "channel"+ext)]),
+              Extension("hyvr.assign_facies", sources=[path.join(package_path, "assign_facies"+ext)]),
               ]
                          # include_dirs=[np.get_include()])]
 if use_cython:
