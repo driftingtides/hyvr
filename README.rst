@@ -80,8 +80,8 @@ install HyVR from github::
     git clone https://github.com/driftingtides/hyvr.git
     pip install hyvr
 
-To install from source you need a C compiler. On Windows you can get one by
-installing Build Tools for Visual Studio
+To install from source you need a C/C++ compiler. On Windows you can get one by
+installing Build Tools for Visual Studio.
 
 Installation from conda-forge will (hopefully) be coming soon.
 

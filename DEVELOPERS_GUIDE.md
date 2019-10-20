@@ -55,7 +55,7 @@ python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 To test if it worked, create a new virtual python environment, e.g. named test,
 and then install the package from PyPI test:
 ```
-pip install --index-url https://test.pypi.org/simple/
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple hyvr
 ```
 
 If everything worked, you can upload it using the correct versionnumber (i.e. in
