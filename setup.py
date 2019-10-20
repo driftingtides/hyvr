@@ -45,14 +45,14 @@ class sdist(_sdist):
 
 # Extensions
 # ----------
-package_path = path.join(path.dirname(__file__), "hyvr")
-extensions = [Extension("hyvr.optimized", sources=[path.join(package_path, "optimized"+ext)]),
-              Extension("hyvr.classes.grid", sources=[path.join(package_path, "classes", "grid"+ext)]),
-              Extension("hyvr.classes.contact_surface", sources=[path.join(package_path, "classes", "contact_surface"+ext)]),
-              Extension("hyvr.classes.trough", sources=[path.join(package_path, "classes", "trough"+ext)]),
-              Extension("hyvr.classes.sheet", sources=[path.join(package_path, "classes", "sheet"+ext)]),
-              Extension("hyvr.classes.channel", sources=[path.join(package_path, "classes", "channel"+ext)]),
-              Extension("hyvr.assign_facies", sources=[path.join(package_path, "assign_facies"+ext)]),
+here = path.abspath(path.dirname(__file__))
+extensions = [Extension("hyvr.optimized", sources=[path.join(here, "hyvr", "optimized"+ext)]),
+              Extension("hyvr.classes.grid", sources=[path.join(here, "hyvr", "classes", "grid"+ext)]),
+              Extension("hyvr.classes.contact_surface", sources=[path.join(here, "hyvr", "classes", "contact_surface"+ext)]),
+              Extension("hyvr.classes.trough", sources=[path.join(here, "hyvr", "classes", "trough"+ext)]),
+              Extension("hyvr.classes.sheet", sources=[path.join(here, "hyvr", "classes", "sheet"+ext)]),
+              Extension("hyvr.classes.channel", sources=[path.join(here, "hyvr", "classes", "channel"+ext)]),
+              Extension("hyvr.assign_facies", sources=[path.join(here, "hyvr", "assign_facies"+ext)]),
               ]
                          # include_dirs=[np.get_include()])]
 if use_cython:
@@ -63,7 +63,6 @@ else:
 
 
 # Get the long description from the README file
-here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 

@@ -63,14 +63,14 @@ If you choose the latter, you probably already have Python 3 installed. If not,
 you can install it using your package manager (e.g. ``apt`` on Ubuntu/Debian).
 
 In any way we recommend using a virtual environment. Non-conda users can use for
-example `virtualenvwrapper
-<https://virtualenvwrapper.readthedocs.io/en/latest/>`_.
+example `virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/en/latest/>`_.
 
 
 Installing HyVR
 ^^^^^^^^^^^^^^^
 
-Once you have activated your virtual environment, you can install HyVR from PyPI using ``pip``::
+Once you have activated your virtual environment, you can install HyVR from PyPI
+using ``pip``::
 
     pip install hyvr
 
@@ -80,7 +80,8 @@ install HyVR from github::
     git clone https://github.com/driftingtides/hyvr.git
     pip install hyvr
 
-To install from source you need a C compiler. On Windows you can get one by installing Build Tools for Visual Studio
+To install from source you need a C compiler. On Windows you can get one by
+installing Build Tools for Visual Studio
 
 Installation from conda-forge will (hopefully) be coming soon.
 
@@ -103,17 +104,14 @@ If you want to use HyVR in a script, you can import it and use the ``run`` funct
     import hyvr
     hyvr.run('my_configfile.ini')
     
-Examples can be found in the ``testcases`` directory of the `github repository
-<https://github.com/driftingtides/hyvr/>`_, the general setup and possible
-options of the config-file are described in the documentation.
-Currently only ``made.ini`` is ported to version 1.0.0.
+Examples can be found in the ``testcases`` directory of the `github repository <https://github.com/driftingtides/hyvr/>`_,
+the general setup and possible options of the config-file are described in the
+documentation.  Currently only ``made.ini`` is ported to version 1.0.0.
 
 Source
 ------
-The most current version of HyVR will be available at this `github repository
-<https://github.com/driftingtides/hyvr/>`_; a version will also be available on
-the `PyPI index <https://pypi.python.org/pypi/hyvr/>`_ which can be installed
-using ``pip``.
+The most current version of HyVR will be available at this `github repository <https://github.com/driftingtides/hyvr/>`_;
+a version will also be available on the `PyPI index <https://pypi.python.org/pypi/hyvr/>`_ which can be installed using ``pip``.
 
 
 Requirements
@@ -138,10 +136,9 @@ Dependencies
 
 Development
 -----------
-HyVR has been developed by Jeremy
-Bennett (`website <https://jeremypaulbennett.weebly.com>`_) as part of his
-doctoral research at the University of Tübingen and by Samuel Scherrer as a
-student assistant.
+HyVR has been developed by Jeremy Bennett (`website <https://jeremypaulbennett.weebly.com>`_)
+as part of his doctoral research at the University of Tübingen and by Samuel
+Scherrer as a student assistant.
 
 You can contact the developer(s) of HyVR by `email <mailto:hyvr.sim@gmail.com>`_
 or via github.
@@ -149,8 +146,7 @@ or via github.
 Problems, Bugs, Unclear Documentation
 -------------------------------------
 
-If you have problems with HyVR have a look at the `troubleshooting
-<https://driftingtides.github.io/hyvr/troubleshooting.html>`_ section. If this
+If you have problems with HyVR have a look at the `troubleshooting <https://driftingtides.github.io/hyvr/troubleshooting.html>`_ section. If this
 doesn't help, don't hesitate to contact us via email or at github.
 
 If you find that the documentation is unclear, lacking, or wrong, please also contact us.
