@@ -62,9 +62,9 @@ the former, follow the same steps as for Windows.
 If you choose the latter, you probably already have Python 3 installed. If not,
 you can install it using your package manager (e.g. ``apt`` on Ubuntu/Debian).
 
-In any way we recommend using a virtual environment. Non-conda users can use
-`virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/en/latest/>`_ or
-`pipenv <https://docs.pipenv.org/>`_.
+In any way we recommend using a virtual environment. Non-conda users can use for
+example `virtualenvwrapper
+<https://virtualenvwrapper.readthedocs.io/en/latest/>`_.
 
 
 Installing HyVR
@@ -80,7 +80,7 @@ install HyVR from github::
     git clone https://github.com/driftingtides/hyvr.git
     pip install hyvr
 
-To install from source you need a C compiler.
+To install from source you need a C compiler. On Windows you can get one by installing Build Tools for Visual Studio
 
 Installation from conda-forge will (hopefully) be coming soon.
 

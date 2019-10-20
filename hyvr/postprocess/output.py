@@ -144,7 +144,7 @@ def to_vtr(model, fname):
         zv = np.arange(model.grid.z0, model.grid.zmax+model.grid.dz, model.grid.dz)
         gridToVTK(fname, xv, yv, zv, cellData=data_dict)
     except ImportError:
-        raise ValueError('vtr output not possible: pyevtk not found.')
+        raise ValueError('VTR output not possible: pyevtk not found. Remove the vtr output in the *.ini file or install pyevtk.')
 
 def to_modflow(model, fname):
     """

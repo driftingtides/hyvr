@@ -15,6 +15,5 @@ if args.overwrite == False:
 try:
     hyvr.run(args.filename, args.overwrite)
 except Exception as e:
-    raise e
     print("Something went wrong:", e, file=sys.stderr)
     sys.exit(1)
