@@ -2,40 +2,43 @@ hyvr package
 ============
 
 .. automodule:: hyvr
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    hyvr.classes
-    hyvr.input
-    hyvr.postprocess
+   hyvr.classes
+   hyvr.input
+   hyvr.postprocess
 
 Submodules
 ----------
 
+
 .. automodule:: hyvr.assign_facies
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 .. automodule:: hyvr.optimized
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 .. automodule:: hyvr.sim
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 .. automodule:: hyvr.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 

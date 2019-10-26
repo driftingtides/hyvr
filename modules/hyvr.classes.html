@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.classes package &#8212; HyVR 1.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>hyvr.classes package &#8212; HyVR 1.0.3 documentation</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyvr.input package" href="hyvr.input.html" />
@@ -34,7 +33,7 @@
         <li class="right" >
           <a href="hyvr.html" title="hyvr package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" accesskey="U">hyvr package</a> &#187;</li> 
       </ul>
@@ -52,7 +51,7 @@
 <p>Contains the different AE realizations.</p>
 <dl class="class">
 <dt id="hyvr.classes.ae_realizations.AERealization">
-<em class="property">class </em><code class="descclassname">hyvr.classes.ae_realizations.</code><code class="descname">AERealization</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>type_name</em>, <em>type_params</em>, <em>stratum</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#AERealization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.AERealization" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.ae_realizations.</code><code class="sig-name descname">AERealization</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">type_name</em>, <em class="sig-param">type_params</em>, <em class="sig-param">stratum</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#AERealization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.AERealization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>AE realizations are the realization of a certain AE type in a HyVR
 simulation. For example, in the ‘made.ini’ test case, the lowest stratum
@@ -69,7 +68,7 @@ These objects should be implemented in separate files as cython cdef
 classes, similar to the Trough class.</p>
 <dl class="method">
 <dt id="hyvr.classes.ae_realizations.AERealization.generate_objects">
-<code class="descname">generate_objects</code><span class="sig-paren">(</span><em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#AERealization.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.AERealization.generate_objects" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#AERealization.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.AERealization.generate_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the method that should be used for generating geometrical
 objects of the right type. Override this in all of your subclasses.</p>
 <p>It’s very important that the objects are stored in the order such that
@@ -82,11 +81,11 @@ can go from top to bottom by iterating over the list of objects.</p>
 
 <dl class="class">
 <dt id="hyvr.classes.ae_realizations.ExtParAE">
-<em class="property">class </em><code class="descclassname">hyvr.classes.ae_realizations.</code><code class="descname">ExtParAE</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>type_name</em>, <em>type_params</em>, <em>stratum</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#ExtParAE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.ExtParAE" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.ae_realizations.</code><code class="sig-name descname">ExtParAE</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">type_name</em>, <em class="sig-param">type_params</em>, <em class="sig-param">stratum</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#ExtParAE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.ExtParAE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyvr.classes.ae_realizations.AERealization" title="hyvr.classes.ae_realizations.AERealization"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.classes.ae_realizations.AERealization</span></code></a></p>
 <dl class="method">
 <dt id="hyvr.classes.ae_realizations.ExtParAE.generate_objects">
-<code class="descname">generate_objects</code><span class="sig-paren">(</span><em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#ExtParAE.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.ExtParAE.generate_objects" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#ExtParAE.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.ExtParAE.generate_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate channel objects and place them in the domain.</p>
 <p>The following was just an idea I had, ignore it.</p>
 <p>The channels follow a mean flow angle that is given in the parameter
@@ -110,11 +109,11 @@ changing their starting points).</p>
 
 <dl class="class">
 <dt id="hyvr.classes.ae_realizations.SheetAE">
-<em class="property">class </em><code class="descclassname">hyvr.classes.ae_realizations.</code><code class="descname">SheetAE</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>type_name</em>, <em>type_params</em>, <em>stratum</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#SheetAE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.SheetAE" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.ae_realizations.</code><code class="sig-name descname">SheetAE</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">type_name</em>, <em class="sig-param">type_params</em>, <em class="sig-param">stratum</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#SheetAE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.SheetAE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyvr.classes.ae_realizations.AERealization" title="hyvr.classes.ae_realizations.AERealization"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.classes.ae_realizations.AERealization</span></code></a></p>
 <dl class="method">
 <dt id="hyvr.classes.ae_realizations.SheetAE.generate_objects">
-<code class="descname">generate_objects</code><span class="sig-paren">(</span><em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#SheetAE.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.SheetAE.generate_objects" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#SheetAE.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.SheetAE.generate_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate sheet objects and place them in the domain.</p>
 </dd></dl>
 
@@ -122,11 +121,11 @@ changing their starting points).</p>
 
 <dl class="class">
 <dt id="hyvr.classes.ae_realizations.TruncEllipAE">
-<em class="property">class </em><code class="descclassname">hyvr.classes.ae_realizations.</code><code class="descname">TruncEllipAE</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>type_name</em>, <em>type_params</em>, <em>stratum</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#TruncEllipAE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.TruncEllipAE" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.ae_realizations.</code><code class="sig-name descname">TruncEllipAE</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">type_name</em>, <em class="sig-param">type_params</em>, <em class="sig-param">stratum</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#TruncEllipAE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.TruncEllipAE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hyvr.classes.ae_realizations.AERealization" title="hyvr.classes.ae_realizations.AERealization"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.classes.ae_realizations.AERealization</span></code></a></p>
 <dl class="method">
 <dt id="hyvr.classes.ae_realizations.TruncEllipAE.generate_objects">
-<code class="descname">generate_objects</code><span class="sig-paren">(</span><em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#TruncEllipAE.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.TruncEllipAE.generate_objects" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_realizations.html#TruncEllipAE.generate_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_realizations.TruncEllipAE.generate_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate trough objects and place them in the domain.</p>
 </dd></dl>
 
@@ -135,7 +134,7 @@ changing their starting points).</p>
 <span class="target" id="module-hyvr.classes.ae_types"></span><p>This module contains the architectural element types.</p>
 <dl class="class">
 <dt id="hyvr.classes.ae_types.AEType">
-<em class="property">class </em><code class="descclassname">hyvr.classes.ae_types.</code><code class="descname">AEType</code><span class="sig-paren">(</span><em>ae_section</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_types.html#AEType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_types.AEType" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.ae_types.</code><code class="sig-name descname">AEType</code><span class="sig-paren">(</span><em class="sig-param">ae_section</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_types.html#AEType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_types.AEType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Architectural element types are the kind of things that are read from the
 supplied ini-file. For example, in the <code class="docutils literal notranslate"><span class="pre">made.ini</span></code> testcase, there are the
@@ -148,591 +147,551 @@ In HyVR, these are instances of the <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">generate_realization</span></code> method of a type instance.</p>
 <dl class="method">
 <dt id="hyvr.classes.ae_types.AEType.generate_realization">
-<code class="descname">generate_realization</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>stratum</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_types.html#AEType.generate_realization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_types.AEType.generate_realization" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_realization</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">stratum</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/ae_types.html#AEType.generate_realization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.ae_types.AEType.generate_realization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a realization of the AE type.</p>
 <p>For example, if the AE geometry is ‘trunc_ellip’, this generates a
 <code class="docutils literal notranslate"><span class="pre">TruncEllip</span></code> object, i.e. a sub-layer containing trough features
 within a stratum.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>bottom_surface</strong> (<em>ContactSurface object</em>) – The bottom surface of the AE.</li>
-<li><strong>top_surface</strong> (<em>ContactSurface object</em>) – The top surface of the AE.</li>
-<li><strong>model</strong> (<em>Model object</em>) – </li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bottom_surface</strong> (<em>ContactSurface object</em>) – The bottom surface of the AE.</p></li>
+<li><p><strong>top_surface</strong> (<em>ContactSurface object</em>) – The top surface of the AE.</p></li>
+<li><p><strong>model</strong> (<em>Model object</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.channel"></span><dl class="class">
 <dt id="hyvr.classes.channel.Channel">
-<em class="property">class </em><code class="descclassname">hyvr.classes.channel.</code><code class="descname">Channel</code><a class="headerlink" href="#hyvr.classes.channel.Channel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.channel.</code><code class="sig-name descname">Channel</code><a class="headerlink" href="#hyvr.classes.channel.Channel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Channel implementation.</p>
 <p>This is work in progress, as we currently lack a centerline construction method.</p>
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.a">
-<code class="descname">a</code><a class="headerlink" href="#hyvr.classes.channel.Channel.a" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">a</code><a class="headerlink" href="#hyvr.classes.channel.Channel.a" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.azim">
-<code class="descname">azim</code><a class="headerlink" href="#hyvr.classes.channel.Channel.azim" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">azim</code><a class="headerlink" href="#hyvr.classes.channel.Channel.azim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.cos_dip">
-<code class="descname">cos_dip</code><a class="headerlink" href="#hyvr.classes.channel.Channel.cos_dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cos_dip</code><a class="headerlink" href="#hyvr.classes.channel.Channel.cos_dip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.depth">
-<code class="descname">depth</code><a class="headerlink" href="#hyvr.classes.channel.Channel.depth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">depth</code><a class="headerlink" href="#hyvr.classes.channel.Channel.depth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.dip">
-<code class="descname">dip</code><a class="headerlink" href="#hyvr.classes.channel.Channel.dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dip</code><a class="headerlink" href="#hyvr.classes.channel.Channel.dip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.dipsets">
-<code class="descname">dipsets</code><a class="headerlink" href="#hyvr.classes.channel.Channel.dipsets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dipsets</code><a class="headerlink" href="#hyvr.classes.channel.Channel.dipsets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.dont_check">
-<code class="descname">dont_check</code><a class="headerlink" href="#hyvr.classes.channel.Channel.dont_check" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dont_check</code><a class="headerlink" href="#hyvr.classes.channel.Channel.dont_check" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.facies">
-<code class="descname">facies</code><a class="headerlink" href="#hyvr.classes.channel.Channel.facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">facies</code><a class="headerlink" href="#hyvr.classes.channel.Channel.facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.facies_array">
-<code class="descname">facies_array</code><a class="headerlink" href="#hyvr.classes.channel.Channel.facies_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">facies_array</code><a class="headerlink" href="#hyvr.classes.channel.Channel.facies_array" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.lag_facies">
-<code class="descname">lag_facies</code><a class="headerlink" href="#hyvr.classes.channel.Channel.lag_facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lag_facies</code><a class="headerlink" href="#hyvr.classes.channel.Channel.lag_facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.lag_height">
-<code class="descname">lag_height</code><a class="headerlink" href="#hyvr.classes.channel.Channel.lag_height" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lag_height</code><a class="headerlink" href="#hyvr.classes.channel.Channel.lag_height" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.layer_dist">
-<code class="descname">layer_dist</code><a class="headerlink" href="#hyvr.classes.channel.Channel.layer_dist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">layer_dist</code><a class="headerlink" href="#hyvr.classes.channel.Channel.layer_dist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.len_centerline">
-<code class="descname">len_centerline</code><a class="headerlink" href="#hyvr.classes.channel.Channel.len_centerline" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">len_centerline</code><a class="headerlink" href="#hyvr.classes.channel.Channel.len_centerline" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hyvr.classes.channel.Channel.maybe_assign_facies_azim_dip">
-<code class="descname">maybe_assign_facies_azim_dip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.classes.channel.Channel.maybe_assign_facies_azim_dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">maybe_assign_facies_azim_dip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.classes.channel.Channel.maybe_assign_facies_azim_dip" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function checks whether the current grid cell with given
 coordinates is inside the trough and assigns facies, azimuth and dip by
 altering the passed arrays.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>facies</strong> (<em>int array</em>) – array of size 1 that holds the facies. This will be altered during
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>facies</strong> (<em>int array</em>) – array of size 1 that holds the facies. This will be altered during
 the course of this function to either be -1 if the cell is not in
-the trough, or it is set to the facies number of the cell.</li>
-<li><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
-will also be altered.</li>
-<li><strong>ids</strong> (<em>np.ndarray</em><em>[</em><em>np.int32</em><em>, </em><em>dim=1</em><em>]</em>) – Array of length three that holds AERealization-ID, ha, and hat</li>
-<li><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</li>
-<li><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</li>
-<li><strong>grid</strong> (<em>Grid object</em>) – </li>
+the trough, or it is set to the facies number of the cell.</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>ids</strong> (<em>np.ndarray</em><em>[</em><em>np.int32</em><em>, </em><em>dim=1</em><em>]</em>) – Array of length three that holds AERealization-ID, ha, and hat</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.min_dx_dy">
-<code class="descname">min_dx_dy</code><a class="headerlink" href="#hyvr.classes.channel.Channel.min_dx_dy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">min_dx_dy</code><a class="headerlink" href="#hyvr.classes.channel.Channel.min_dx_dy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.num_facies">
-<code class="descname">num_facies</code><a class="headerlink" href="#hyvr.classes.channel.Channel.num_facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">num_facies</code><a class="headerlink" href="#hyvr.classes.channel.Channel.num_facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.num_ha">
-<code class="descname">num_ha</code><a class="headerlink" href="#hyvr.classes.channel.Channel.num_ha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">num_ha</code><a class="headerlink" href="#hyvr.classes.channel.Channel.num_ha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.shift">
-<code class="descname">shift</code><a class="headerlink" href="#hyvr.classes.channel.Channel.shift" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">shift</code><a class="headerlink" href="#hyvr.classes.channel.Channel.shift" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.sin_dip">
-<code class="descname">sin_dip</code><a class="headerlink" href="#hyvr.classes.channel.Channel.sin_dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sin_dip</code><a class="headerlink" href="#hyvr.classes.channel.Channel.sin_dip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.vx">
-<code class="descname">vx</code><a class="headerlink" href="#hyvr.classes.channel.Channel.vx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">vx</code><a class="headerlink" href="#hyvr.classes.channel.Channel.vx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.vy">
-<code class="descname">vy</code><a class="headerlink" href="#hyvr.classes.channel.Channel.vy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">vy</code><a class="headerlink" href="#hyvr.classes.channel.Channel.vy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.width">
-<code class="descname">width</code><a class="headerlink" href="#hyvr.classes.channel.Channel.width" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">width</code><a class="headerlink" href="#hyvr.classes.channel.Channel.width" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.x_center">
-<code class="descname">x_center</code><a class="headerlink" href="#hyvr.classes.channel.Channel.x_center" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">x_center</code><a class="headerlink" href="#hyvr.classes.channel.Channel.x_center" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.y_center">
-<code class="descname">y_center</code><a class="headerlink" href="#hyvr.classes.channel.Channel.y_center" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">y_center</code><a class="headerlink" href="#hyvr.classes.channel.Channel.y_center" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.zmax">
-<code class="descname">zmax</code><a class="headerlink" href="#hyvr.classes.channel.Channel.zmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.classes.channel.Channel.zmax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.zmin">
-<code class="descname">zmin</code><a class="headerlink" href="#hyvr.classes.channel.Channel.zmin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.classes.channel.Channel.zmin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.channel.Channel.ztop">
-<code class="descname">ztop</code><a class="headerlink" href="#hyvr.classes.channel.Channel.ztop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ztop</code><a class="headerlink" href="#hyvr.classes.channel.Channel.ztop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.channel_utils"></span><dl class="function">
 <dt id="hyvr.classes.channel_utils.ferguson_curve">
-<code class="descclassname">hyvr.classes.channel_utils.</code><code class="descname">ferguson_curve</code><span class="sig-paren">(</span><em>grid</em>, <em>h</em>, <em>k</em>, <em>ds</em>, <em>eps_factor</em>, <em>flow_angle</em>, <em>domain_length</em>, <em>xstart</em>, <em>ystart</em>, <em>width</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/channel_utils.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.channel_utils.ferguson_curve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.channel_utils.</code><code class="sig-name descname">ferguson_curve</code><span class="sig-paren">(</span><em class="sig-param">grid</em>, <em class="sig-param">h</em>, <em class="sig-param">k</em>, <em class="sig-param">ds</em>, <em class="sig-param">eps_factor</em>, <em class="sig-param">flow_angle</em>, <em class="sig-param">domain_length</em>, <em class="sig-param">xstart</em>, <em class="sig-param">ystart</em>, <em class="sig-param">width</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/channel_utils.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.channel_utils.ferguson_curve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model
 Implementation of AR2 autoregressive model
 <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>grid</strong> (<em>Grid object</em>) – </li>
-<li><strong>h</strong> (<em>float</em>) – Height (Ferguson model parameter)</li>
-<li><strong>k</strong> (<em>float</em>) – Wave number (Ferguson model parameter)</li>
-<li><strong>ds</strong> (<em>float</em>) – Curve distance for calculations (Ferguson model parameter)</li>
-<li><strong>eps_factor</strong> (<em>float</em>) – Random background noise (Ferguson model parameter)</li>
-<li><strong>flow_angle</strong> (<em>float</em>) – Angle of mean flow direction, in radians</li>
-<li><strong>domain_length</strong> (<em>float</em>) – Length of the domain in mean flow direction</li>
-<li><strong>ystart</strong> (<em>xstart</em><em>,</em>) – Starting coordinates of the channel centerline</li>
-<li><strong>width</strong> (<em>float</em>) – Width of the channel</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Height (Ferguson model parameter)</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – Wave number (Ferguson model parameter)</p></li>
+<li><p><strong>ds</strong> (<em>float</em>) – Curve distance for calculations (Ferguson model parameter)</p></li>
+<li><p><strong>eps_factor</strong> (<em>float</em>) – Random background noise (Ferguson model parameter)</p></li>
+<li><p><strong>flow_angle</strong> (<em>float</em>) – Angle of mean flow direction, in radians</p></li>
+<li><p><strong>domain_length</strong> (<em>float</em>) – Length of the domain in mean flow direction</p></li>
+<li><p><strong>ystart</strong> (<em>xstart</em><em>,</em>) – Starting coordinates of the channel centerline</p></li>
+<li><p><strong>width</strong> (<em>float</em>) – Width of the channel</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputs</strong> – Simulated extruded parabola centerlines: storage array containing values for x coordinate, y
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>outputs</strong> – Simulated extruded parabola centerlines: storage array containing values for x coordinate, y
 coordinate, vx and vy</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float matrix</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float matrix</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.channel_utils.ferguson_theta">
-<code class="descclassname">hyvr.classes.channel_utils.</code><code class="descname">ferguson_theta</code><span class="sig-paren">(</span><em>s</em>, <em>eps_factor</em>, <em>k</em>, <em>h</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/channel_utils.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.channel_utils.ferguson_theta" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.channel_utils.</code><code class="sig-name descname">ferguson_theta</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">eps_factor</em>, <em class="sig-param">k</em>, <em class="sig-param">h</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/channel_utils.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.channel_utils.ferguson_theta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate curve direction angle</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>s</strong> – Steps within generated curve distance</li>
-<li><strong>eps_factor</strong> – Random background noise</li>
-<li><strong>k</strong> – Wave number</li>
-<li><strong>h</strong> – Height</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – Steps within generated curve distance</p></li>
+<li><p><strong>eps_factor</strong> – Random background noise</p></li>
+<li><p><strong>k</strong> – Wave number</p></li>
+<li><p><strong>h</strong> – Height</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">th_store <em>(array)</em> - Curve direction angle</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>th_store <em>(array)</em> - Curve direction angle</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.channel_utils.thetaAR2">
-<code class="descclassname">hyvr.classes.channel_utils.</code><code class="descname">thetaAR2</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>k</em>, <em>h</em>, <em>eps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/channel_utils.html#thetaAR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.channel_utils.thetaAR2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.channel_utils.</code><code class="sig-name descname">thetaAR2</code><span class="sig-paren">(</span><em class="sig-param">t1</em>, <em class="sig-param">t2</em>, <em class="sig-param">k</em>, <em class="sig-param">h</em>, <em class="sig-param">eps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/channel_utils.html#thetaAR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.channel_utils.thetaAR2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)
 <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>t1</strong> – theta(i-1)</li>
-<li><strong>t2</strong> – theta(i-2)</li>
-<li><strong>k</strong> – Wavenumber</li>
-<li><strong>h</strong> – Height</li>
-<li><strong>eps</strong> – Random background noise</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t1</strong> – theta(i-1)</p></li>
+<li><p><strong>t2</strong> – theta(i-2)</p></li>
+<li><p><strong>k</strong> – Wavenumber</p></li>
+<li><p><strong>h</strong> – Height</p></li>
+<li><p><strong>eps</strong> – Random background noise</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">2nd-order autoregression (AR2)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2nd-order autoregression (AR2)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.contact_surface"></span><dl class="class">
 <dt id="hyvr.classes.contact_surface.ContactSurface">
-<em class="property">class </em><code class="descclassname">hyvr.classes.contact_surface.</code><code class="descname">ContactSurface</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.contact_surface.</code><code class="sig-name descname">ContactSurface</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hyvr.classes.contact_surface.ContactSurface.surface">
-<code class="descname">surface</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.surface" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">surface</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.surface" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.contact_surface.ContactSurface.z">
-<code class="descname">z</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.z" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">z</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.contact_surface.ContactSurface.zmax">
-<code class="descname">zmax</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.zmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.zmax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.contact_surface.ContactSurface.zmean">
-<code class="descname">zmean</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.zmean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmean</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.zmean" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.contact_surface.ContactSurface.zmin">
-<code class="descname">zmin</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.zmin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.classes.contact_surface.ContactSurface.zmin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.contact_surface_utils"></span><dl class="function">
 <dt id="hyvr.classes.contact_surface_utils.parse_contact_model">
-<code class="descclassname">hyvr.classes.contact_surface_utils.</code><code class="descname">parse_contact_model</code><span class="sig-paren">(</span><em>param_list</em>, <em>depth=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/contact_surface_utils.html#parse_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.contact_surface_utils.parse_contact_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.contact_surface_utils.</code><code class="sig-name descname">parse_contact_model</code><span class="sig-paren">(</span><em class="sig-param">param_list</em>, <em class="sig-param">depth=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/contact_surface_utils.html#parse_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.contact_surface_utils.parse_contact_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.contact_surface_utils.use_higher_surface_value">
-<code class="descclassname">hyvr.classes.contact_surface_utils.</code><code class="descname">use_higher_surface_value</code><span class="sig-paren">(</span><em>target_surface</em>, <em>other_surface</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/contact_surface_utils.html#use_higher_surface_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.contact_surface_utils.use_higher_surface_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.contact_surface_utils.</code><code class="sig-name descname">use_higher_surface_value</code><span class="sig-paren">(</span><em class="sig-param">target_surface</em>, <em class="sig-param">other_surface</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/contact_surface_utils.html#use_higher_surface_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.contact_surface_utils.use_higher_surface_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.contact_surface_utils.use_lower_surface_value">
-<code class="descclassname">hyvr.classes.contact_surface_utils.</code><code class="descname">use_lower_surface_value</code><span class="sig-paren">(</span><em>target_surface</em>, <em>other_surface</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/contact_surface_utils.html#use_lower_surface_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.contact_surface_utils.use_lower_surface_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.contact_surface_utils.</code><code class="sig-name descname">use_lower_surface_value</code><span class="sig-paren">(</span><em class="sig-param">target_surface</em>, <em class="sig-param">other_surface</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/contact_surface_utils.html#use_lower_surface_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.contact_surface_utils.use_lower_surface_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <span class="target" id="module-hyvr.classes.extpar"></span><dl class="function">
 <dt id="hyvr.classes.extpar.curve_interp">
-<code class="descclassname">hyvr.classes.extpar.</code><code class="descname">curve_interp</code><span class="sig-paren">(</span><em>xc</em>, <em>yc</em>, <em>spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#curve_interp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.curve_interp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.extpar.</code><code class="sig-name descname">curve_interp</code><span class="sig-paren">(</span><em class="sig-param">xc</em>, <em class="sig-param">yc</em>, <em class="sig-param">spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#curve_interp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.curve_interp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by ‘Unutbu’ on
 <a class="reference external" href="http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values">http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values</a> (retrieved 17/04/2017)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xc</strong> – x coordinates of curve</li>
-<li><strong>yc</strong> – y coordinates of curve</li>
-<li><strong>spacing</strong> – Spacing between points</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xc</strong> – x coordinates of curve</p></li>
+<li><p><strong>yc</strong> – y coordinates of curve</p></li>
+<li><p><strong>spacing</strong> – Spacing between points</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li>xn - x coordinates of interpolated points</li>
-<li>yn - y coordinates of interpolated points</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>xn - x coordinates of interpolated points</p></li>
+<li><p>yn - y coordinates of interpolated points</p></li>
 </ul>
 </p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.extpar.ferguson_curve">
-<code class="descclassname">hyvr.classes.extpar.</code><code class="descname">ferguson_curve</code><span class="sig-paren">(</span><em>model</em>, <em>h</em>, <em>k</em>, <em>ds</em>, <em>eps_factor</em>, <em>dist=0</em>, <em>disp=False</em>, <em>ch_start=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.ferguson_curve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.extpar.</code><code class="sig-name descname">ferguson_curve</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">h</em>, <em class="sig-param">k</em>, <em class="sig-param">ds</em>, <em class="sig-param">eps_factor</em>, <em class="sig-param">dist=0</em>, <em class="sig-param">disp=False</em>, <em class="sig-param">ch_start=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.ferguson_curve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model
 Implementation of AR2 autoregressive model
 <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model</strong> (<em>Model object</em>) – </li>
-<li><strong>h</strong> (<em>float</em>) – Height</li>
-<li><strong>k</strong> (<em>float</em>) – Wave number</li>
-<li><strong>ds</strong> (<em>float</em>) – Curve distance for calculations</li>
-<li><strong>eps_factor</strong> (<em>float</em>) – Random background noise</li>
-<li><strong>dist</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default: 0</em><em>)</em>) – Distance to generate curves - defaults to model.lx (if dist=0)</li>
-<li><strong>disp</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: False</em><em>)</em>) – Creating display extruded parabola - extruded parabola begins at (0,0)</li>
-<li><strong>ch_start</strong> (<em>tuple of floats</em>) – Starting location of channel (x,y coordinates)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model object</em>) – </p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Height</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – Wave number</p></li>
+<li><p><strong>ds</strong> (<em>float</em>) – Curve distance for calculations</p></li>
+<li><p><strong>eps_factor</strong> (<em>float</em>) – Random background noise</p></li>
+<li><p><strong>dist</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default: 0</em><em>)</em>) – Distance to generate curves - defaults to model.lx (if dist=0)</p></li>
+<li><p><strong>disp</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: False</em><em>)</em>) – Creating display extruded parabola - extruded parabola begins at (0,0)</p></li>
+<li><p><strong>ch_start</strong> (<em>tuple of floats</em>) – Starting location of channel (x,y coordinates)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputs</strong> – Simulated extruded parabola centerlines: storage array containing values for x coordinate, y
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>outputs</strong> – Simulated extruded parabola centerlines: storage array containing values for x coordinate, y
 coordinate, vx and vy</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.extpar.ferguson_theta">
-<code class="descclassname">hyvr.classes.extpar.</code><code class="descname">ferguson_theta</code><span class="sig-paren">(</span><em>s</em>, <em>eps_factor</em>, <em>k</em>, <em>h</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.ferguson_theta" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.extpar.</code><code class="sig-name descname">ferguson_theta</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">eps_factor</em>, <em class="sig-param">k</em>, <em class="sig-param">h</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.ferguson_theta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate curve direction angle</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>s</strong> – Steps within generated curve distance</li>
-<li><strong>eps_factor</strong> – Random background noise</li>
-<li><strong>k</strong> – Wave number</li>
-<li><strong>h</strong> – Height</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – Steps within generated curve distance</p></li>
+<li><p><strong>eps_factor</strong> – Random background noise</p></li>
+<li><p><strong>k</strong> – Wave number</p></li>
+<li><p><strong>h</strong> – Height</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">th_store <em>(array)</em> - Curve direction angle</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>th_store <em>(array)</em> - Curve direction angle</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.extpar.gen_extpar">
-<code class="descclassname">hyvr.classes.extpar.</code><code class="descname">gen_extpar</code><span class="sig-paren">(</span><em>channel_type</em>, <em>model</em>, <em>ae</em>, <em>count</em>, <em>ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#gen_extpar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.gen_extpar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.extpar.</code><code class="sig-name descname">gen_extpar</code><span class="sig-paren">(</span><em class="sig-param">channel_type</em>, <em class="sig-param">model</em>, <em class="sig-param">ae</em>, <em class="sig-param">count</em>, <em class="sig-param">ani=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#gen_extpar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.gen_extpar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate extruded parabola geometries:</p>
 <ul class="simple">
-<li>Flow regime is assumed to be reasonably constant so the major geometry of the extruded
-parabolas doesn’t change so much</li>
-<li>‘Migration’ of the extruded parabolas according to a shift vector</li>
+<li><p>Flow regime is assumed to be reasonably constant so the major geometry of the extruded
+parabolas doesn’t change so much</p></li>
+<li><p>‘Migration’ of the extruded parabolas according to a shift vector</p></li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>extpar_type</strong> (<em>ExtrudedParabolaType</em>) – </li>
-<li><strong>model</strong> (<em>Model object</em>) – </li>
-<li><strong>ae</strong> (<em>list</em>) – </li>
-<li><strong>ae</strong> – AE parameters
-TODO: use AERealization instead</li>
-<li><strong>count</strong> (<em>int</em>) – Material number and/or identifier</li>
-<li><strong>ani</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: True</em><em>)</em>) – Whether anisotropy should be generated</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>extpar_type</strong> (<em>ExtrudedParabolaType</em>) – </p></li>
+<li><p><strong>model</strong> (<em>Model object</em>) – </p></li>
+<li><p><strong>ae</strong> (<em>list</em>) – </p></li>
+<li><p><strong>ae</strong> – AE parameters
+TODO: use AERealization instead</p></li>
+<li><p><strong>count</strong> (<em>int</em>) – Material number and/or identifier</p></li>
+<li><p><strong>ani</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: True</em><em>)</em>) – Whether anisotropy should be generated</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>count</strong> – Material number and/or identifier</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>count</strong> – Material number and/or identifier</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.extpar.thetaAR2">
-<code class="descclassname">hyvr.classes.extpar.</code><code class="descname">thetaAR2</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>k</em>, <em>h</em>, <em>eps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#thetaAR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.thetaAR2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.extpar.</code><code class="sig-name descname">thetaAR2</code><span class="sig-paren">(</span><em class="sig-param">t1</em>, <em class="sig-param">t2</em>, <em class="sig-param">k</em>, <em class="sig-param">h</em>, <em class="sig-param">eps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/extpar.html#thetaAR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.extpar.thetaAR2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)
 <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>t1</strong> – theta(i-1)</li>
-<li><strong>t2</strong> – theta(i-2)</li>
-<li><strong>k</strong> – Wavenumber</li>
-<li><strong>h</strong> – Height</li>
-<li><strong>eps</strong> – Random background noise</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t1</strong> – theta(i-1)</p></li>
+<li><p><strong>t2</strong> – theta(i-2)</p></li>
+<li><p><strong>k</strong> – Wavenumber</p></li>
+<li><p><strong>h</strong> – Height</p></li>
+<li><p><strong>eps</strong> – Random background noise</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">2nd-order autoregression (AR2)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2nd-order autoregression (AR2)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.grid"></span><dl class="class">
 <dt id="hyvr.classes.grid.Grid">
-<em class="property">class </em><code class="descclassname">hyvr.classes.grid.</code><code class="descname">Grid</code><a class="headerlink" href="#hyvr.classes.grid.Grid" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.grid.</code><code class="sig-name descname">Grid</code><a class="headerlink" href="#hyvr.classes.grid.Grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Simple grid class for access from cython functions</p>
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.X">
-<code class="descname">X</code><a class="headerlink" href="#hyvr.classes.grid.Grid.X" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">X</code><a class="headerlink" href="#hyvr.classes.grid.Grid.X" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.X_centered">
-<code class="descname">X_centered</code><a class="headerlink" href="#hyvr.classes.grid.Grid.X_centered" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">X_centered</code><a class="headerlink" href="#hyvr.classes.grid.Grid.X_centered" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.Y">
-<code class="descname">Y</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Y" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Y</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.Y_centered">
-<code class="descname">Y_centered</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Y_centered" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Y_centered</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Y_centered" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.Z">
-<code class="descname">Z</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Z" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Z</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.Z_centered">
-<code class="descname">Z_centered</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Z_centered" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Z_centered</code><a class="headerlink" href="#hyvr.classes.grid.Grid.Z_centered" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.dx">
-<code class="descname">dx</code><a class="headerlink" href="#hyvr.classes.grid.Grid.dx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dx</code><a class="headerlink" href="#hyvr.classes.grid.Grid.dx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.dy">
-<code class="descname">dy</code><a class="headerlink" href="#hyvr.classes.grid.Grid.dy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dy</code><a class="headerlink" href="#hyvr.classes.grid.Grid.dy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.dz">
-<code class="descname">dz</code><a class="headerlink" href="#hyvr.classes.grid.Grid.dz" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dz</code><a class="headerlink" href="#hyvr.classes.grid.Grid.dz" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.lx">
-<code class="descname">lx</code><a class="headerlink" href="#hyvr.classes.grid.Grid.lx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lx</code><a class="headerlink" href="#hyvr.classes.grid.Grid.lx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.ly">
-<code class="descname">ly</code><a class="headerlink" href="#hyvr.classes.grid.Grid.ly" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ly</code><a class="headerlink" href="#hyvr.classes.grid.Grid.ly" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.lz">
-<code class="descname">lz</code><a class="headerlink" href="#hyvr.classes.grid.Grid.lz" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lz</code><a class="headerlink" href="#hyvr.classes.grid.Grid.lz" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.nx">
-<code class="descname">nx</code><a class="headerlink" href="#hyvr.classes.grid.Grid.nx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">nx</code><a class="headerlink" href="#hyvr.classes.grid.Grid.nx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.ny">
-<code class="descname">ny</code><a class="headerlink" href="#hyvr.classes.grid.Grid.ny" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ny</code><a class="headerlink" href="#hyvr.classes.grid.Grid.ny" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.nz">
-<code class="descname">nz</code><a class="headerlink" href="#hyvr.classes.grid.Grid.nz" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">nz</code><a class="headerlink" href="#hyvr.classes.grid.Grid.nz" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.periodic">
-<code class="descname">periodic</code><a class="headerlink" href="#hyvr.classes.grid.Grid.periodic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">periodic</code><a class="headerlink" href="#hyvr.classes.grid.Grid.periodic" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.x">
-<code class="descname">x</code><a class="headerlink" href="#hyvr.classes.grid.Grid.x" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">x</code><a class="headerlink" href="#hyvr.classes.grid.Grid.x" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.x0">
-<code class="descname">x0</code><a class="headerlink" href="#hyvr.classes.grid.Grid.x0" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">x0</code><a class="headerlink" href="#hyvr.classes.grid.Grid.x0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.xmax">
-<code class="descname">xmax</code><a class="headerlink" href="#hyvr.classes.grid.Grid.xmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">xmax</code><a class="headerlink" href="#hyvr.classes.grid.Grid.xmax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.y">
-<code class="descname">y</code><a class="headerlink" href="#hyvr.classes.grid.Grid.y" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">y</code><a class="headerlink" href="#hyvr.classes.grid.Grid.y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.y0">
-<code class="descname">y0</code><a class="headerlink" href="#hyvr.classes.grid.Grid.y0" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">y0</code><a class="headerlink" href="#hyvr.classes.grid.Grid.y0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.ymax">
-<code class="descname">ymax</code><a class="headerlink" href="#hyvr.classes.grid.Grid.ymax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ymax</code><a class="headerlink" href="#hyvr.classes.grid.Grid.ymax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.z">
-<code class="descname">z</code><a class="headerlink" href="#hyvr.classes.grid.Grid.z" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">z</code><a class="headerlink" href="#hyvr.classes.grid.Grid.z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.z0">
-<code class="descname">z0</code><a class="headerlink" href="#hyvr.classes.grid.Grid.z0" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">z0</code><a class="headerlink" href="#hyvr.classes.grid.Grid.z0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.grid.Grid.zmax">
-<code class="descname">zmax</code><a class="headerlink" href="#hyvr.classes.grid.Grid.zmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.classes.grid.Grid.zmax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -740,42 +699,39 @@ TODO: use AERealization instead</li>
 <span class="target" id="module-hyvr.classes.model"></span><p>This class holds the abstraction of a HyVR model.
 It can be broadly structured in two parts:</p>
 <ul class="simple">
-<li><strong>Model description</strong>: This consists of all info about the model that is read
-from the ini-file.</li>
-<li><dl class="first docutils">
-<dt><strong>Model realization</strong>: This consists of several 3-d arrays which hold the</dt>
-<dd>data for the different variables on the grid. This is what get’s put out in
-the end. The data is stored in a dictionary of arrays.</dd>
+<li><p><strong>Model description</strong>: This consists of all info about the model that is read
+from the ini-file.</p></li>
+<li><dl class="simple">
+<dt><strong>Model realization</strong>: This consists of several 3-d arrays which hold the</dt><dd><p>data for the different variables on the grid. This is what get’s put out in
+the end. The data is stored in a dictionary of arrays.</p>
+</dd>
 </dl>
 </li>
 </ul>
 <dl class="class">
 <dt id="hyvr.classes.model.Model">
-<em class="property">class </em><code class="descclassname">hyvr.classes.model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>model_dict</em>, <em>strata_dict</em>, <em>elements</em>, <em>flowtrans_section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.model.</code><code class="sig-name descname">Model</code><span class="sig-paren">(</span><em class="sig-param">model_dict</em>, <em class="sig-param">strata_dict</em>, <em class="sig-param">elements</em>, <em class="sig-param">flowtrans_section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="hyvr.classes.model.Model.generate_ae_types">
-<code class="descname">generate_ae_types</code><span class="sig-paren">(</span><em>elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.generate_ae_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.generate_ae_types" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_ae_types</code><span class="sig-paren">(</span><em class="sig-param">elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.generate_ae_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.generate_ae_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read in elements sections and generate type objects</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyvr.classes.model.Model.generate_hydraulic_parameters">
-<code class="descname">generate_hydraulic_parameters</code><span class="sig-paren">(</span><em>hydraulics</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.generate_hydraulic_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.generate_hydraulic_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_hydraulic_parameters</code><span class="sig-paren">(</span><em class="sig-param">hydraulics</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.generate_hydraulic_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.generate_hydraulic_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates (heterogeneous) hydraulic parameters</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hydraulics</strong> (<em>dictionary</em>) – parsed hydraulics section of the ini-file</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hydraulics</strong> (<em>dictionary</em>) – parsed hydraulics section of the ini-file</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="hyvr.classes.model.Model.generate_model">
-<code class="descname">generate_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.generate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.generate_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.generate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.generate_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates the model.</p>
 <p>This function generates the full model by creating all strata, the AEs
 within the strata and the geometrical objects within these.</p>
@@ -786,7 +742,7 @@ architectural elements.</p>
 
 <dl class="method">
 <dt id="hyvr.classes.model.Model.print_model">
-<code class="descname">print_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.print_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.print_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/model.html#Model.print_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.model.Model.print_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prints a long description of the model. This is mainly for debugging.</p>
 </dd></dl>
 
@@ -794,132 +750,128 @@ architectural elements.</p>
 
 <span class="target" id="module-hyvr.classes.sheet"></span><dl class="class">
 <dt id="hyvr.classes.sheet.Sheet">
-<em class="property">class </em><code class="descclassname">hyvr.classes.sheet.</code><code class="descname">Sheet</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.sheet.</code><code class="sig-name descname">Sheet</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class holds parameters for single sheet objects.</p>
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.azim">
-<code class="descname">azim</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.azim" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">azim</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.azim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.bottom_surface">
-<code class="descname">bottom_surface</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.bottom_surface" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">bottom_surface</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.bottom_surface" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.dip">
-<code class="descname">dip</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dip</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.dip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.dipsets">
-<code class="descname">dipsets</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.dipsets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dipsets</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.dipsets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.facies">
-<code class="descname">facies</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">facies</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.facies_array">
-<code class="descname">facies_array</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.facies_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">facies_array</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.facies_array" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.layer_dist">
-<code class="descname">layer_dist</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.layer_dist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">layer_dist</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.layer_dist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hyvr.classes.sheet.Sheet.maybe_assign_facies_azim_dip">
-<code class="descname">maybe_assign_facies_azim_dip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.classes.sheet.Sheet.maybe_assign_facies_azim_dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">maybe_assign_facies_azim_dip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.classes.sheet.Sheet.maybe_assign_facies_azim_dip" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function checks whether the current grid cell with given
 coordinates is inside the sheet and assigns facies, azimuth and dip by
 altering the passed arrays.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>facies</strong> (<em>int array</em>) – array of size 1 that holds the facies. This will be altered during
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>facies</strong> (<em>int array</em>) – array of size 1 that holds the facies. This will be altered during
 the course of this function to either be -1 if the cell is not in
-the trough, or it is set to the facies number of the cell.</li>
-<li><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
-will also be altered.</li>
-<li><strong>ids</strong> (<em>np.ndarray</em><em>[</em><em>np.int32</em><em>, </em><em>dim=1</em><em>]</em>) – Array of length three that holds AERealization-ID, ha, and hat</li>
-<li><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</li>
-<li><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</li>
-<li><strong>grid</strong> (<em>Grid object</em>) – </li>
+the trough, or it is set to the facies number of the cell.</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>ids</strong> (<em>np.ndarray</em><em>[</em><em>np.int32</em><em>, </em><em>dim=1</em><em>]</em>) – Array of length three that holds AERealization-ID, ha, and hat</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.normvec_x">
-<code class="descname">normvec_x</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.normvec_x" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normvec_x</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.normvec_x" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.normvec_y">
-<code class="descname">normvec_y</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.normvec_y" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normvec_y</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.normvec_y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.normvec_z">
-<code class="descname">normvec_z</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.normvec_z" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normvec_z</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.normvec_z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.num_facies">
-<code class="descname">num_facies</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.num_facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">num_facies</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.num_facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.num_ha">
-<code class="descname">num_ha</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.num_ha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">num_ha</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.num_ha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.shift">
-<code class="descname">shift</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.shift" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">shift</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.shift" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.top_surface">
-<code class="descname">top_surface</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.top_surface" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">top_surface</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.top_surface" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.zmax">
-<code class="descname">zmax</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.zmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.zmax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.sheet.Sheet.zmin">
-<code class="descname">zmin</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.zmin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.classes.sheet.Sheet.zmin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.stratum"></span><dl class="class">
 <dt id="hyvr.classes.stratum.Stratum">
-<em class="property">class </em><code class="descclassname">hyvr.classes.stratum.</code><code class="descname">Stratum</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>params</em>, <em>ae_types</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/stratum.html#Stratum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.stratum.Stratum" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.stratum.</code><code class="sig-name descname">Stratum</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">params</em>, <em class="sig-param">ae_types</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/stratum.html#Stratum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.stratum.Stratum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.stratum.prob_choose">
-<code class="descclassname">hyvr.classes.stratum.</code><code class="descname">prob_choose</code><span class="sig-paren">(</span><em>types</em>, <em>probs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/stratum.html#prob_choose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.stratum.prob_choose" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.stratum.</code><code class="sig-name descname">prob_choose</code><span class="sig-paren">(</span><em class="sig-param">types</em>, <em class="sig-param">probs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/stratum.html#prob_choose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.stratum.prob_choose" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <span class="target" id="module-hyvr.classes.trough"></span><dl class="class">
 <dt id="hyvr.classes.trough.Trough">
-<em class="property">class </em><code class="descclassname">hyvr.classes.trough.</code><code class="descname">Trough</code><a class="headerlink" href="#hyvr.classes.trough.Trough" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.classes.trough.</code><code class="sig-name descname">Trough</code><a class="headerlink" href="#hyvr.classes.trough.Trough" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class holds all parameters of a geometrical trough object.</p>
 <p>It has two methods: a constructor, that sets all parameters, e.g. dip set
@@ -927,176 +879,172 @@ facies, etc., and a <code class="docutils literal notranslate"><span class="pre"
 whether a given cell is inside the trough and returns its properties.</p>
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.a">
-<code class="descname">a</code><a class="headerlink" href="#hyvr.classes.trough.Trough.a" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">a</code><a class="headerlink" href="#hyvr.classes.trough.Trough.a" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.alpha">
-<code class="descname">alpha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.alpha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">alpha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.alpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.azim">
-<code class="descname">azim</code><a class="headerlink" href="#hyvr.classes.trough.Trough.azim" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">azim</code><a class="headerlink" href="#hyvr.classes.trough.Trough.azim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.b">
-<code class="descname">b</code><a class="headerlink" href="#hyvr.classes.trough.Trough.b" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">b</code><a class="headerlink" href="#hyvr.classes.trough.Trough.b" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.c">
-<code class="descname">c</code><a class="headerlink" href="#hyvr.classes.trough.Trough.c" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">c</code><a class="headerlink" href="#hyvr.classes.trough.Trough.c" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.cosalpha">
-<code class="descname">cosalpha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.cosalpha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cosalpha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.cosalpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.cosdip">
-<code class="descname">cosdip</code><a class="headerlink" href="#hyvr.classes.trough.Trough.cosdip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cosdip</code><a class="headerlink" href="#hyvr.classes.trough.Trough.cosdip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.dip">
-<code class="descname">dip</code><a class="headerlink" href="#hyvr.classes.trough.Trough.dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dip</code><a class="headerlink" href="#hyvr.classes.trough.Trough.dip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.facies">
-<code class="descname">facies</code><a class="headerlink" href="#hyvr.classes.trough.Trough.facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">facies</code><a class="headerlink" href="#hyvr.classes.trough.Trough.facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.facies_array">
-<code class="descname">facies_array</code><a class="headerlink" href="#hyvr.classes.trough.Trough.facies_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">facies_array</code><a class="headerlink" href="#hyvr.classes.trough.Trough.facies_array" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.lag">
-<code class="descname">lag</code><a class="headerlink" href="#hyvr.classes.trough.Trough.lag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lag</code><a class="headerlink" href="#hyvr.classes.trough.Trough.lag" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.lag_facies">
-<code class="descname">lag_facies</code><a class="headerlink" href="#hyvr.classes.trough.Trough.lag_facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lag_facies</code><a class="headerlink" href="#hyvr.classes.trough.Trough.lag_facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.layer_dist">
-<code class="descname">layer_dist</code><a class="headerlink" href="#hyvr.classes.trough.Trough.layer_dist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">layer_dist</code><a class="headerlink" href="#hyvr.classes.trough.Trough.layer_dist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.max_ab">
-<code class="descname">max_ab</code><a class="headerlink" href="#hyvr.classes.trough.Trough.max_ab" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">max_ab</code><a class="headerlink" href="#hyvr.classes.trough.Trough.max_ab" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hyvr.classes.trough.Trough.maybe_assign_facies_azim_dip">
-<code class="descname">maybe_assign_facies_azim_dip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.classes.trough.Trough.maybe_assign_facies_azim_dip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">maybe_assign_facies_azim_dip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.classes.trough.Trough.maybe_assign_facies_azim_dip" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function checks whether the current grid cell with given
 coordinates is inside the trough and assigns facies, azimuth and dip by
 altering the passed arrays.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>facies</strong> (<em>int array</em>) – array of size 1 that holds the facies. This will be altered during
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>facies</strong> (<em>int array</em>) – array of size 1 that holds the facies. This will be altered during
 the course of this function to either be -1 if the cell is not in
-the trough, or it is set to the facies number of the cell.</li>
-<li><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
-will also be altered.</li>
-<li><strong>ids</strong> (<em>np.ndarray</em><em>[</em><em>np.int32</em><em>, </em><em>dim=1</em><em>]</em>) – Array of length three that holds AERealization-ID, ha, and hat</li>
-<li><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</li>
-<li><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</li>
-<li><strong>grid</strong> (<em>Grid object</em>) – </li>
+the trough, or it is set to the facies number of the cell.</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>ids</strong> (<em>np.ndarray</em><em>[</em><em>np.int32</em><em>, </em><em>dim=1</em><em>]</em>) – Array of length three that holds AERealization-ID, ha, and hat</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.normvec_x">
-<code class="descname">normvec_x</code><a class="headerlink" href="#hyvr.classes.trough.Trough.normvec_x" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normvec_x</code><a class="headerlink" href="#hyvr.classes.trough.Trough.normvec_x" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.normvec_y">
-<code class="descname">normvec_y</code><a class="headerlink" href="#hyvr.classes.trough.Trough.normvec_y" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normvec_y</code><a class="headerlink" href="#hyvr.classes.trough.Trough.normvec_y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.normvec_z">
-<code class="descname">normvec_z</code><a class="headerlink" href="#hyvr.classes.trough.Trough.normvec_z" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normvec_z</code><a class="headerlink" href="#hyvr.classes.trough.Trough.normvec_z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.num_facies">
-<code class="descname">num_facies</code><a class="headerlink" href="#hyvr.classes.trough.Trough.num_facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">num_facies</code><a class="headerlink" href="#hyvr.classes.trough.Trough.num_facies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.num_ha">
-<code class="descname">num_ha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.num_ha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">num_ha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.num_ha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.shift">
-<code class="descname">shift</code><a class="headerlink" href="#hyvr.classes.trough.Trough.shift" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">shift</code><a class="headerlink" href="#hyvr.classes.trough.Trough.shift" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.sinalpha">
-<code class="descname">sinalpha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.sinalpha" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sinalpha</code><a class="headerlink" href="#hyvr.classes.trough.Trough.sinalpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.structure">
-<code class="descname">structure</code><a class="headerlink" href="#hyvr.classes.trough.Trough.structure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">structure</code><a class="headerlink" href="#hyvr.classes.trough.Trough.structure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.x">
-<code class="descname">x</code><a class="headerlink" href="#hyvr.classes.trough.Trough.x" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">x</code><a class="headerlink" href="#hyvr.classes.trough.Trough.x" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.y">
-<code class="descname">y</code><a class="headerlink" href="#hyvr.classes.trough.Trough.y" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">y</code><a class="headerlink" href="#hyvr.classes.trough.Trough.y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.z">
-<code class="descname">z</code><a class="headerlink" href="#hyvr.classes.trough.Trough.z" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">z</code><a class="headerlink" href="#hyvr.classes.trough.Trough.z" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.zmax">
-<code class="descname">zmax</code><a class="headerlink" href="#hyvr.classes.trough.Trough.zmax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.classes.trough.Trough.zmax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hyvr.classes.trough.Trough.zmin">
-<code class="descname">zmin</code><a class="headerlink" href="#hyvr.classes.trough.Trough.zmin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.classes.trough.Trough.zmin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <span class="target" id="module-hyvr.classes.trough_utils"></span><dl class="function">
 <dt id="hyvr.classes.trough_utils.generate_trough_positions">
-<code class="descclassname">hyvr.classes.trough_utils.</code><code class="descname">generate_trough_positions</code><span class="sig-paren">(</span><em>bottom_surface</em>, <em>top_surface</em>, <em>type_params</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/trough_utils.html#generate_trough_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.trough_utils.generate_trough_positions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.trough_utils.</code><code class="sig-name descname">generate_trough_positions</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">type_params</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/trough_utils.html#generate_trough_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.trough_utils.generate_trough_positions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.classes.trough_utils.rand_trough_params">
-<code class="descclassname">hyvr.classes.trough_utils.</code><code class="descname">rand_trough_params</code><span class="sig-paren">(</span><em>type_params</em>, <em>z</em>, <em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/trough_utils.html#rand_trough_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.trough_utils.rand_trough_params" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.classes.trough_utils.</code><code class="sig-name descname">rand_trough_params</code><span class="sig-paren">(</span><em class="sig-param">type_params</em>, <em class="sig-param">z</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/classes/trough_utils.html#rand_trough_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.classes.trough_utils.rand_trough_params" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1108,7 +1056,7 @@ will also be altered.</li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../methods.html">HyVR Computational methods</a></li>
@@ -1150,13 +1098,11 @@ will also be altered.</li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -1180,14 +1126,14 @@ will also be altered.</li>
         <li class="right" >
           <a href="hyvr.html" title="hyvr package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" >hyvr package</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>

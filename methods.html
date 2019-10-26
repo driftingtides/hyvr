@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>HyVR Computational methods &#8212; HyVR 1.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>HyVR Computational methods &#8212; HyVR 1.0.3 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="HyVR inputs and outputs" href="inout.html" />
@@ -34,7 +33,7 @@
         <li class="right" >
           <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -61,7 +60,7 @@ conductivity, full hydraulic conductivity tensor) are assigned, and potentially
 heterogeneity in these parameters on the given level.</p>
 <div class="figure align-center" id="id10">
 <span id="hfm"></span><a class="reference internal image-reference" href="_images/hfm.png"><img alt="_images/hfm.png" src="_images/hfm.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text"><em>Hierarchical modeling framework implemented in HyVR.</em></span></p>
+<p class="caption"><span class="caption-text"><em>Hierarchical modeling framework implemented in HyVR.</em></span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </div>
 <p><em>Note that in this section model input parameters are denoted in the following manner:</em> <code class="docutils literal notranslate"><span class="pre">parameter-section.parameter</span></code>.</p>
 <div class="section" id="simulation-of-strata-and-architectural-element-contact-surfaces">
@@ -73,7 +72,7 @@ and lower contact surface (which is the top of the next stratum) are assigned
 to the stratum.</p>
 <p>Contact surfaces can either be flat or random. Multi-Gaussian random contact
 surfaces are generated using the spectral methods outlined by
-<a class="reference internal" href="references.html#dietrich1993" id="id1">[DN93]</a>. These methods require structural statistical parameters
+<a class="bibtex reference internal" href="references.html#dietrich1993" id="id1">[DN93]</a>. These methods require structural statistical parameters
 (i.e. mean and variance) for the quantity of interest, and a geostatistical
 covariance model. We used a Gaussian covariance model in the present study to
 produce smoothly varying surfaces:</p>
@@ -105,7 +104,7 @@ stratum- and architectural-element-wise, beginning with the top-most
 architectural element in the top stratum. The simulation of individual
 hydrofacies assemblages is object-based, with random placement of features
 within the architectural element. Object-based methods have been implemented
-widely in subsurface simulation <a class="reference internal" href="references.html#jussel1994" id="id2">[JSD94]</a><a class="reference internal" href="references.html#bennett2017" id="id3">[BHC17]</a> as they are
+widely in subsurface simulation <a class="bibtex reference internal" href="references.html#jussel1994" id="id2">[JSD94]</a><a class="bibtex reference internal" href="references.html#bennett2017" id="id3">[BHC17]</a> as they are
 generally computationally efficient and relatively easy to parameterize. The
 HyVR program approximates hydrofacies assemblages with simple geometric shapes.
 Currently, three <a class="reference internal" href="#shapes">shapes</a> are supported: troughs (truncated ellipsoids), channels (extruded
@@ -115,7 +114,7 @@ they are able to erode underlying units, and therefore the architectural element
 (and strata) boundaries may be altered during the course of the simulation.</p>
 <div class="figure align-center" id="id11">
 <span id="shapes"></span><a class="reference internal image-reference" href="_images/hyvr_geometries.png"><img alt="_images/hyvr_geometries.png" src="_images/hyvr_geometries.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text"><em>Geometries implemented in HyVR.</em></span></p>
+<p class="caption"><span class="caption-text"><em>Geometries implemented in HyVR.</em></span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </div>
 <p>Four properties are assigned to each model grid cell during this simulation
 step: <em>ae</em>, <em>ha_arr</em>, <em>hat_arr</em>, <em>facies</em>, <em>azimuth</em>, and <em>dip</em>. The <em>ae</em>
@@ -131,7 +130,7 @@ bedding plane from the mean direction of flow and horizontal, respectively.</p>
 <span id="temethod"></span><h3>Truncated ellipsoids<a class="headerlink" href="#truncated-ellipsoids" title="Permalink to this headline">¶</a></h3>
 <p>Truncated ellipsoids are generated as a proxy for trough-like features. The
 method for generating the boundaries of these features has been described
-previously in <a class="reference internal" href="references.html#bennett2017" id="id4">[BHC17]</a>. Generation starts at <span class="math notranslate nohighlight">\(z^{bot}_{AE unit}
+previously in <a class="bibtex reference internal" href="references.html#bennett2017" id="id4">[BHC17]</a>. Generation starts at <span class="math notranslate nohighlight">\(z^{bot}_{AE unit}
 +AE_{depth}\cdot\beta\)</span> where <span class="math notranslate nohighlight">\(AE_{depth}\)</span> is the depth of the truncated
 ellipsoid geometry, and <span class="math notranslate nohighlight">\(\beta\)</span> is a buffer term that allows the user to
 control how much of the underlying unit is eroded. The centre of the truncated
@@ -140,18 +139,18 @@ major ellipsoid axis orientation) are drawn from a random uniform distribution
 and the boundary of the truncated ellipsoid is simulated. The <a class="reference internal" href="#internal-structure">internal
 structure</a> of truncated ellipsoids can be defined in the following ways:</p>
 <ul class="simple">
-<li>trough-wise homogeneous, with constant azimuth and dip;</li>
-<li>bulb-dip, with azimuth and dip values based on the three-dimensional gradient
-at the ellipsoid boundary (‘bulb dip’);</li>
-<li>bulb-sets, comprising nested alternating hydrofacies with <span class="math notranslate nohighlight">\(\kappa\)</span> and
-<span class="math notranslate nohighlight">\(\psi\)</span> values generated as for bulb-type;</li>
-<li>dip-sets internal structure, where the features have a constant <span class="math notranslate nohighlight">\(\kappa\)</span>
+<li><p>trough-wise homogeneous, with constant azimuth and dip;</p></li>
+<li><p>bulb-dip, with azimuth and dip values based on the three-dimensional gradient
+at the ellipsoid boundary (‘bulb dip’);</p></li>
+<li><p>bulb-sets, comprising nested alternating hydrofacies with <span class="math notranslate nohighlight">\(\kappa\)</span> and
+<span class="math notranslate nohighlight">\(\psi\)</span> values generated as for bulb-type;</p></li>
+<li><p>dip-sets internal structure, where the features have a constant <span class="math notranslate nohighlight">\(\kappa\)</span>
 and <span class="math notranslate nohighlight">\(\psi\)</span> but the assigned hydrofacies alternate throughout the
-truncated ellipsoid.</li>
+truncated ellipsoid.</p></li>
 </ul>
 <div class="figure align-center" id="id12">
 <span id="structure"></span><a class="reference internal image-reference" href="_images/internal_structure_lowres.png"><img alt="_images/internal_structure_lowres.png" src="_images/internal_structure_lowres.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text"><em>Internal structure of truncated ellipsoid hydrofacies assemblages.</em></span></p>
+<p class="caption"><span class="caption-text"><em>Internal structure of truncated ellipsoid hydrofacies assemblages.</em></span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <p>Once a truncated ellipsoid has been generated, an aggradation thickness
 (<code class="docutils literal notranslate"><span class="pre">trunc_ellip.agg</span></code>) is added to the current simulation elevation
@@ -194,14 +193,14 @@ three-dimension gradient at the nested-ellipsoid boundary.</p>
 <h3>Extruded parabolas<a class="headerlink" href="#extruded-parabolas" title="Permalink to this headline">¶</a></h3>
 <p>Parabolas extruded along arbitrary curves with variable sinuosity are useful to
 represent channels. Extruded parabola centrelines in HyVR are parameterized
-using the disturbed periodic model implemented by <a class="reference internal" href="references.html#ferguson1976" id="id5">[Fer76]</a>:</p>
+using the disturbed periodic model implemented by <a class="bibtex reference internal" href="references.html#ferguson1976" id="id5">[Fer76]</a>:</p>
 <div class="math notranslate nohighlight">
 \[\theta + \frac{2h}{k} \frac{d\theta}{ds} + \frac{1}{k^2} \frac{d^2\theta}{ds^2}  = \epsilon(s)\]</div>
 <p>with curve direction <span class="math notranslate nohighlight">\(\theta\)</span>, damping factor <span class="math notranslate nohighlight">\(h \in [0,1]\)</span>,
 <span class="math notranslate nohighlight">\(k = 2\pi/\lambda\)</span> is the wavenumber with <span class="math notranslate nohighlight">\(\lambda\)</span> the frequency of
 the undamped sine wave, and <span class="math notranslate nohighlight">\(s\)</span> is the distance along the curve. This
 model can be approximated using the following second-order autoregressive model
-described in Equation 15 of <a class="reference internal" href="references.html#ferguson1976" id="id6">[Fer76]</a>:</p>
+described in Equation 15 of <a class="bibtex reference internal" href="references.html#ferguson1976" id="id6">[Fer76]</a>:</p>
 <div class="math notranslate nohighlight">
 \[\theta_i - b_1 \theta_{i-1} - b_2\theta{i-2} = \epsilon_i\]</div>
 <p>with:</p>
@@ -209,7 +208,7 @@ described in Equation 15 of <a class="reference internal" href="references.html#
 \[b_1 = 2 e^{-kh}\cos(k\arcsin(h))\]</div>
 <div class="math notranslate nohighlight">
 \[b_2 = -e^{-2kh}\]</div>
-<p>This method was also used by <a class="reference internal" href="references.html#pyrcz2009" id="id7">[PBD09]</a> for the simulation of alluvial
+<p>This method was also used by <a class="bibtex reference internal" href="references.html#pyrcz2009" id="id7">[PBD09]</a> for the simulation of alluvial
 depositional features. Model grid cells are assigned to the extruded parabola if
 the following conditions are met:</p>
 <div class="math notranslate nohighlight">
@@ -281,8 +280,8 @@ assigned a hydrofacies value.</p>
 <p>Lag surfaces can be set for erosive hydrofacies assemblages by setting the
 <code class="docutils literal notranslate"><span class="pre">element.lag</span></code> parameter. This parameter consists of two values:</p>
 <ul class="simple">
-<li>The thickness of the lag surface from the element base; and</li>
-<li>The hydrofacies identifier to be assigned.</li>
+<li><p>The thickness of the lag surface from the element base; and</p></li>
+<li><p>The hydrofacies identifier to be assigned.</p></li>
 </ul>
 <p>Lag surfaces cannot have any internal dipping structure.</p>
 </div>
@@ -301,7 +300,7 @@ in the <code class="docutils literal notranslate"><span class="pre">element.altf
 figure below gives three examples of different input parameters.</p>
 <div class="figure align-center" id="id13">
 <span id="altfac"></span><a class="reference internal image-reference" href="_images/altfac.png"><img alt="_images/altfac.png" src="_images/altfac.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text"><em>Variations on alternating hydrofacies in architectural elements</em></span></p>
+<p class="caption"><span class="caption-text"><em>Variations on alternating hydrofacies in architectural elements</em></span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
@@ -356,7 +355,7 @@ anisotropy matrix <span class="math notranslate nohighlight">\(\textbf{M}\)</spa
 structures (dip and azimuth, respectively). The anisotropy matrix
 <span class="math notranslate nohighlight">\(\textbf{M}_i\)</span> is diagonal with lateral terms set as equivalent (i.e.
 <span class="math notranslate nohighlight">\(K_{xx} = K_{yy}\)</span>). This approach is identical to that of
-<a class="reference internal" href="references.html#bennett2017" id="id9">[BHC17]</a>. Once this has been completed, the simulated parameter files
+<a class="bibtex reference internal" href="references.html#bennett2017" id="id9">[BHC17]</a>. Once this has been completed, the simulated parameter files
 are saved and can be used for groundwater flow and solute transport simulations.</p>
 </div>
 </div>
@@ -368,7 +367,7 @@ are saved and can be used for groundwater flow and solute transport simulations.
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">HyVR Computational methods</a><ul>
@@ -420,13 +419,11 @@ are saved and can be used for groundwater flow and solute transport simulations.
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -450,12 +447,12 @@ are saved and can be used for groundwater flow and solute transport simulations.
         <li class="right" >
           <a href="intro.html" title="Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>

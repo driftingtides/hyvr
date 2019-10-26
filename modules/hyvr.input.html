@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>hyvr.input package &#8212; HyVR 1.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>hyvr.input package &#8212; HyVR 1.0.3 documentation</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyvr.postprocess package" href="hyvr.postprocess.html" />
@@ -34,7 +33,7 @@
         <li class="right" >
           <a href="hyvr.classes.html" title="hyvr.classes package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" accesskey="U">hyvr package</a> &#187;</li> 
       </ul>
@@ -51,86 +50,80 @@
 <span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-hyvr.input.option_parsing" title="Permalink to this headline">¶</a></h2>
 <p>This module contains the classes Section and Option to simplify parsing and
 validating ini-files.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Samuel Scherrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Author</dt>
+<dd class="field-odd"><p>Samuel Scherrer</p>
+</dd>
+</dl>
 <dl class="class">
 <dt id="hyvr.input.option_parsing.Section">
-<em class="property">class </em><code class="descclassname">hyvr.input.option_parsing.</code><code class="descname">Section</code><span class="sig-paren">(</span><em>name</em>, <em>options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Section" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">Section</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Section" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="hyvr.input.option_parsing.Section.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>section_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Section.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Section.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">section_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Section.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Section.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses and validates options of the section given a dictionary
 containing key-value pairs of the options. If options are not present,
 default values might be set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>section_dict</strong> (<em>dictionary</em>) – <p>Dictionary of section values. This can for example be obtained
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>section_dict</strong> (<em>dictionary</em>) – <p>Dictionary of section values. This can for example be obtained
 using <code class="docutils literal notranslate"><span class="pre">configparser</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
 <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 <span class="n">section_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">section_name</span><span class="p">])</span>
 </pre></div>
 </div>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>section_dict</strong> – The same dictionary with parsed and validated values</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
-</tr>
-</tbody>
-</table>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>section_dict</strong> – The same dictionary with parsed and validated values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="hyvr.input.option_parsing.Option">
-<em class="property">class </em><code class="descclassname">hyvr.input.option_parsing.</code><code class="descname">Option</code><span class="sig-paren">(</span><em>name</em>, <em>dtype</em>, <em>optional=False</em>, <em>default=None</em>, <em>shape=-1</em>, <em>datatype=None</em>, <em>validation_func=&lt;function Option.&lt;lambda&gt;&gt;</em>, <em>alternatives=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Option" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">Option</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">dtype</em>, <em class="sig-param">optional=False</em>, <em class="sig-param">default=None</em>, <em class="sig-param">shape=-1</em>, <em class="sig-param">datatype=None</em>, <em class="sig-param">validation_func=&lt;function Option.&lt;lambda&gt;&gt;</em>, <em class="sig-param">alternatives=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Option" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> (<em>string</em>) – name of the option</li>
-<li><strong>dtype</strong> (<em>type</em>) – type of the value of the option, e.g. float, str, int, or list.
-If dtype is list, every entry of the list must have the same type.</li>
-<li><strong>optional</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: False</em><em>)</em>) – whether the option is optional or not</li>
-<li><strong>default</strong> (<em>optional</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – if optional=True, this default value will be used if this option is not
-given.</li>
-<li><strong>shape</strong> (<em>int</em><em> or </em><em>string</em><em> or </em><em>list/tuple of ints and/or strings</em><em>, </em><em>optional</em><em> (</em><em>only</em>) – <p>required for lists, default: None)
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) – name of the option</p></li>
+<li><p><strong>dtype</strong> (<em>type</em>) – type of the value of the option, e.g. float, str, int, or list.
+If dtype is list, every entry of the list must have the same type.</p></li>
+<li><p><strong>optional</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: False</em><em>)</em>) – whether the option is optional or not</p></li>
+<li><p><strong>default</strong> (<em>optional</em><em>, </em><em>(</em><em>default: None</em><em>)</em>) – if optional=True, this default value will be used if this option is not
+given.</p></li>
+<li><p><strong>shape</strong> (<em>int</em><em> or </em><em>string</em><em> or </em><em>list/tuple of ints and/or strings</em><em>, </em><em>optional</em><em> (</em><em>only</em>) – <p>required for lists, default: None)
 If dtype is <code class="docutils literal notranslate"><span class="pre">list</span></code>, this is the shape of the list.
 There are several possibilities how to use this option:</p>
 <ul>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=n</span></code> where n is a nonnegative integer, the value must be
-a list with length <code class="docutils literal notranslate"><span class="pre">n</span></code>.</li>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=-1</span></code> the value can have an arbitrary shape.</li>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=&quot;option1&quot;</span></code>, the value of this option must have the same
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=n</span></code> where n is a nonnegative integer, the value must be
+a list with length <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=-1</span></code> the value can have an arbitrary shape.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=&quot;option1&quot;</span></code>, the value of this option must have the same
 shape as “option1”. This is especially useful if the shape of
-“option1” is set to -1.</li>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">3]</span></code>, the value must be a list of lists, where the
+“option1” is set to -1.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">3]</span></code>, the value must be a list of lists, where the
 outermost list has length 2 and the inner lists all have length 3.
-This also works for more than 2 dimensions.</li>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">-1,</span> <span class="pre">3]</span></code>, the value must be a list of lists of lists.
+This also works for more than 2 dimensions.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">-1,</span> <span class="pre">3]</span></code>, the value must be a list of lists of lists.
 The outermost list must again have length 2, the innermost lists must
 have length 3, and the lists at the intermediate level can have any
-length (even different lengths).</li>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">&quot;option1&quot;,</span> <span class="pre">3]</span></code>, the values must again be a list of
+length (even different lengths).</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">&quot;option1&quot;,</span> <span class="pre">3]</span></code>, the values must again be a list of
 lists similar to above, but now the lists at the intermediate level
-must have the same length as “option1”.</li>
-<li>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">[1,</span> <span class="pre">2],</span> <span class="pre">[[3],</span> <span class="pre">[3,</span> <span class="pre">3]]]</span></code>, the value must be a list
+must have the same length as “option1”.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">[1,</span> <span class="pre">2],</span> <span class="pre">[[3],</span> <span class="pre">[3,</span> <span class="pre">3]]]</span></code>, the value must be a list
 of lists of lists. The outermost list must again have length 2. The
 two lists it contains have length 1 and length 2. The innermost lists
-all must have length 3.</li>
+all must have length 3.</p></li>
 </ul>
 <p>It’s also possible to only give the innermost value(s), e.g. for a list
 with <code class="docutils literal notranslate"><span class="pre">shape=[2,</span> <span class="pre">3]</span></code> only the value <code class="docutils literal notranslate"><span class="pre">18</span></code>. This will then be expanded
@@ -141,22 +134,20 @@ If <code class="docutils literal notranslate"><span class="pre">shape=[2,</span>
 e.g. <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]]</span></code>, but not if only <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>
 is given, since the length of the second dimension must be determined
 from the given value.</p>
-</li>
-<li><strong>datatype</strong> (<em>int</em><em>, </em><em>float</em><em> or </em><em>string</em><em>, </em><em>optional</em><em> (</em><em>only required for lists</em><em>, </em><em>default: None</em><em>)</em>) – Type of the innermost elements of the option in case the option is a list.</li>
-<li><strong>validation_func</strong> (<em>function of one argument that returns a boolean</em><em>, </em><em>optional.</em>) – Returns true if the value (for lists or lists of lists this applies to
-all values) is valid.</li>
-<li><strong>alternatives</strong> (<em>list of strings</em>) – List of alternative names for this option. If the option is not found
+</p></li>
+<li><p><strong>datatype</strong> (<em>int</em><em>, </em><em>float</em><em> or </em><em>string</em><em>, </em><em>optional</em><em> (</em><em>only required for lists</em><em>, </em><em>default: None</em><em>)</em>) – Type of the innermost elements of the option in case the option is a list.</p></li>
+<li><p><strong>validation_func</strong> (<em>function of one argument that returns a boolean</em><em>, </em><em>optional.</em>) – Returns true if the value (for lists or lists of lists this applies to
+all values) is valid.</p></li>
+<li><p><strong>alternatives</strong> (<em>list of strings</em>) – List of alternative names for this option. If the option is not found
 in the given dictionary while parsing, these alternatives are used if
 they exist. If an alternative is found (searching happens in the
-supplied order), the option is stored under it’s standard name.</li>
+supplied order), the option is stored under it’s standard name.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="hyvr.input.option_parsing.Option.parse">
-<code class="descname">parse</code><span class="sig-paren">(</span><em>section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Option.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Option.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Option.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Option.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the option based on it’s attributes.</p>
 </dd></dl>
 
@@ -164,165 +155,148 @@ supplied order), the option is stored under it’s standard name.</li>
 
 <dl class="exception">
 <dt id="hyvr.input.option_parsing.MissingSectionError">
-<em class="property">exception </em><code class="descclassname">hyvr.input.option_parsing.</code><code class="descname">MissingSectionError</code><span class="sig-paren">(</span><em>sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#MissingSectionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.MissingSectionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">MissingSectionError</code><span class="sig-paren">(</span><em class="sig-param">sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#MissingSectionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.MissingSectionError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="hyvr.input.option_parsing.MissingOptionError">
-<em class="property">exception </em><code class="descclassname">hyvr.input.option_parsing.</code><code class="descname">MissingOptionError</code><span class="sig-paren">(</span><em>optionname</em>, <em>sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#MissingOptionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.MissingOptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">MissingOptionError</code><span class="sig-paren">(</span><em class="sig-param">optionname</em>, <em class="sig-param">sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#MissingOptionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.MissingOptionError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="hyvr.input.option_parsing.ShapeError">
-<em class="property">exception </em><code class="descclassname">hyvr.input.option_parsing.</code><code class="descname">ShapeError</code><span class="sig-paren">(</span><em>optionname</em>, <em>sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#ShapeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.ShapeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">ShapeError</code><span class="sig-paren">(</span><em class="sig-param">optionname</em>, <em class="sig-param">sectionname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#ShapeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.ShapeError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.option_parsing.assert_exists">
-<code class="descclassname">hyvr.input.option_parsing.</code><code class="descname">assert_exists</code><span class="sig-paren">(</span><em>option</em>, <em>dictionary</em>, <em>section_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#assert_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.assert_exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">assert_exists</code><span class="sig-paren">(</span><em class="sig-param">option</em>, <em class="sig-param">dictionary</em>, <em class="sig-param">section_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#assert_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.assert_exists" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <span class="target" id="module-hyvr.input.options"></span><p>This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Samuel Scherrer, Jeremy P. Bennett</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><p>Samuel Scherrer, Jeremy P. Bennett</p>
+</dd>
+</dl>
 <span class="target" id="module-hyvr.input.options_deprecated"></span><p>This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Samuel Scherrer, Jeremy P. Bennett</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><p>Samuel Scherrer, Jeremy P. Bennett</p>
+</dd>
+</dl>
 <span class="target" id="module-hyvr.input.parameters"></span><p>This is the main module for parsing the parameter file. There are two other
 modules strongly linked ot this one:</p>
 <ul class="simple">
-<li>options: contains definitions of the possible options of a parameter file</li>
-<li>option_parsing: provides the classes Section and Option for simpler parsing and validation.</li>
+<li><p>options: contains definitions of the possible options of a parameter file</p></li>
+<li><p>option_parsing: provides the classes Section and Option for simpler parsing and validation.</p></li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Jeremy P. Bennett, Samuel Scherrer</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><p>Jeremy P. Bennett, Samuel Scherrer</p>
+</dd>
+</dl>
 <dl class="function">
 <dt id="hyvr.input.parameters.get_new_facies_list">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">get_new_facies_list</code><span class="sig-paren">(</span><em>facies_list</em>, <em>hydrofacies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#get_new_facies_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.get_new_facies_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">get_new_facies_list</code><span class="sig-paren">(</span><em class="sig-param">facies_list</em>, <em class="sig-param">hydrofacies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#get_new_facies_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.get_new_facies_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.get_new_parameters_from_deprecated">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">get_new_parameters_from_deprecated</code><span class="sig-paren">(</span><em>run</em>, <em>model</em>, <em>strata</em>, <em>hydraulics</em>, <em>flowtrans</em>, <em>elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#get_new_parameters_from_deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.get_new_parameters_from_deprecated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">get_new_parameters_from_deprecated</code><span class="sig-paren">(</span><em class="sig-param">run</em>, <em class="sig-param">model</em>, <em class="sig-param">strata</em>, <em class="sig-param">hydraulics</em>, <em class="sig-param">flowtrans</em>, <em class="sig-param">elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#get_new_parameters_from_deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.get_new_parameters_from_deprecated" title="Permalink to this definition">¶</a></dt>
 <dd><p>This applies the necessary changes to parsed sections of an old-format inifile.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.model_setup">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">model_setup</code><span class="sig-paren">(</span><em>pf</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">model_setup</code><span class="sig-paren">(</span><em class="sig-param">pf</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up model using grid.Grid() class and assign parameters</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pf</strong> (<em>str</em>) – Parameter file path</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li>run <em>(dict)</em> - Model run parameters</li>
-<li>mod <em>(dict)</em> - Model domain parameters</li>
-<li>sequences <em>(dict)</em> - Sequence parameters</li>
-<li>hydraulics <em>(dict)</em> - Hydraulic properties parameters</li>
-<li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
-<li>elements <em>(dict)</em> - Architectural elements and parameters</li>
-<li>model_grid <em>(object class)</em> - Grid object class</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pf</strong> (<em>str</em>) – Parameter file path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>run <em>(dict)</em> - Model run parameters</p></li>
+<li><p>mod <em>(dict)</em> - Model domain parameters</p></li>
+<li><p>sequences <em>(dict)</em> - Sequence parameters</p></li>
+<li><p>hydraulics <em>(dict)</em> - Hydraulic properties parameters</p></li>
+<li><p>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</p></li>
+<li><p>elements <em>(dict)</em> - Architectural elements and parameters</p></li>
+<li><p>model_grid <em>(object class)</em> - Grid object class</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parameters">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">parameters</code><span class="sig-paren">(</span><em>inifile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parameters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parameters</code><span class="sig-paren">(</span><em class="sig-param">inifile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters for hierarchical facies modelling from a .ini-file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inifile</strong> (<em>str</em>) – Parameter file path</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li>run <em>(dict)</em> - Model run parameters</li>
-<li>model <em>(dict)</em> - Model domain parameters</li>
-<li>sequences <em>(dict)</em> - Sequence parameters</li>
-<li>hydraulics <em>(dict)</em> - Hydraulic properties parameters</li>
-<li>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</li>
-<li>elements <em>(dict)</em> - Architectural elements and parameters</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>inifile</strong> (<em>str</em>) – Parameter file path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>run <em>(dict)</em> - Model run parameters</p></li>
+<li><p>model <em>(dict)</em> - Model domain parameters</p></li>
+<li><p>sequences <em>(dict)</em> - Sequence parameters</p></li>
+<li><p>hydraulics <em>(dict)</em> - Hydraulic properties parameters</p></li>
+<li><p>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</p></li>
+<li><p>elements <em>(dict)</em> - Architectural elements and parameters</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_deprecated_inifile">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">parse_deprecated_inifile</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_deprecated_inifile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_deprecated_inifile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parse_deprecated_inifile</code><span class="sig-paren">(</span><em class="sig-param">p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_deprecated_inifile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_deprecated_inifile" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_facies">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">parse_facies</code><span class="sig-paren">(</span><em>facies_list</em>, <em>hydrofacies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_facies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_facies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parse_facies</code><span class="sig-paren">(</span><em class="sig-param">facies_list</em>, <em class="sig-param">hydrofacies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_facies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_facies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a list of facies strings (facies_list) and returns the corresponding
 indices in the hydrofacies list.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_inifile">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">parse_inifile</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_inifile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_inifile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parse_inifile</code><span class="sig-paren">(</span><em class="sig-param">p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_inifile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_inifile" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_old_elem_contact_model">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">parse_old_elem_contact_model</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_old_elem_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_old_elem_contact_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parse_old_elem_contact_model</code><span class="sig-paren">(</span><em class="sig-param">elem</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_old_elem_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_old_elem_contact_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_old_strata_contact_model">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">parse_old_strata_contact_model</code><span class="sig-paren">(</span><em>strata</em>, <em>i</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_old_strata_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_old_strata_contact_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parse_old_strata_contact_model</code><span class="sig-paren">(</span><em class="sig-param">strata</em>, <em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_old_strata_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_old_strata_contact_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.set_up_directories">
-<code class="descclassname">hyvr.input.parameters.</code><code class="descname">set_up_directories</code><span class="sig-paren">(</span><em>run</em>, <em>configfile</em>, <em>overwrite_old_output=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#set_up_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.set_up_directories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">set_up_directories</code><span class="sig-paren">(</span><em class="sig-param">run</em>, <em class="sig-param">configfile</em>, <em class="sig-param">overwrite_old_output=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#set_up_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.set_up_directories" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions creates the necessary directories (modeldir, rundir). It also stores the used
 ini-file in the rundir.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>run</strong> (<em>dict</em>) – parsed run-section of the config file</li>
-<li><strong>configfile</strong> (<em>str</em>) – path to config file</li>
-<li><strong>overwrite_old_output</strong> (<em>bool</em>) – Whether to overwrite the old run directory. If it is None, the option
-from the config file will be chosen instead (default in configfile: False)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run</strong> (<em>dict</em>) – parsed run-section of the config file</p></li>
+<li><p><strong>configfile</strong> (<em>str</em>) – path to config file</p></li>
+<li><p><strong>overwrite_old_output</strong> (<em>bool</em>) – Whether to overwrite the old run directory. If it is None, the option
+from the config file will be chosen instead (default in configfile: False)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -334,7 +308,7 @@ from the config file will be chosen instead (default in configfile: False)</li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../methods.html">HyVR Computational methods</a></li>
@@ -376,13 +350,11 @@ from the config file will be chosen instead (default in configfile: False)</li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -406,14 +378,14 @@ from the config file will be chosen instead (default in configfile: False)</li>
         <li class="right" >
           <a href="hyvr.classes.html" title="hyvr.classes package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" >hyvr package</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>

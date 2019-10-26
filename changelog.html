@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Changelog/Bug Fixes &#8212; HyVR 1.0.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>Changelog/Bug Fixes &#8212; HyVR 1.0.3 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="References" href="references.html" />
@@ -34,7 +33,7 @@
         <li class="right" >
           <a href="troubleshooting.html" title="Troubleshooting"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -51,7 +50,7 @@
 <div class="section" id="contributors">
 <h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Samuel Scherrer</li>
+<li><p>Samuel Scherrer</p></li>
 </ul>
 </div>
 <div class="section" id="changes">
@@ -65,8 +64,8 @@
 <div class="section" id="id1">
 <h3>Contributors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Samuel Scherrer</li>
-<li>Jeremy Bennett</li>
+<li><p>Samuel Scherrer</p></li>
+<li><p>Jeremy Bennett</p></li>
 </ul>
 </div>
 <div class="section" id="id2">
@@ -78,10 +77,10 @@ version. Version 1.0.0 will also contain a reimplementation of the channel
 generation code and will also be published on PyPI.</p>
 <p>These are the most important changes:</p>
 <ul class="simple">
-<li>Object oriented code: HyVR is now heavily object oriented. This will hopefully
+<li><p>Object oriented code: HyVR is now heavily object oriented. This will hopefully
 make it easier to add new geometries to HyVR, and will enable us to introduce
-features like contact surface conditioning in future versions.</li>
-<li>Better separation of grid and model: A HyVR model is now almost fully
+features like contact surface conditioning in future versions.</p></li>
+<li><p>Better separation of grid and model: A HyVR model is now almost fully
 independent from the grid on which it should be evaluated. Instead of directly
 mapping objects onto the grid at the time of object creation, the model is
 first constructed as list of strata, which again hold lists to their
@@ -89,16 +88,16 @@ architectural elements.
 Only after the full model is created we go over all grid points, decide to
 which object the point belongs, and assign values accordingly.
 This comes with some performance loss due to python slowness. We’ll try to
-alleviate these in future releases.</li>
-<li>Changes to <code class="docutils literal notranslate"><span class="pre">.ini</span></code>-file: Some changes have been made to the parameter file.
+alleviate these in future releases.</p></li>
+<li><p>Changes to <code class="docutils literal notranslate"><span class="pre">.ini</span></code>-file: Some changes have been made to the parameter file.
 These were partly necessary, e.g. the new contact models, and are partly only
 cosmetic changes to get more verbose option names (e.g. <code class="docutils literal notranslate"><span class="pre">strata</span></code> instead of
 <code class="docutils literal notranslate"><span class="pre">ssm</span></code>, <code class="docutils literal notranslate"><span class="pre">ae_in_strata</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ssm_ae</span></code>, etc.).
 Old-format ini-files will probably still work, but support for them will be
 dropped soon, so we urge all users to make the necessary changes to their
-ini-files. (It’s really not that much work.)</li>
-<li><strong>No channels</strong>: This version does not yet support channels. This will be part
-of version 1.0.0.</li>
+ini-files. (It’s really not that much work.)</p></li>
+<li><p><strong>No channels</strong>: This version does not yet support channels. This will be part
+of version 1.0.0.</p></li>
 </ul>
 </div>
 </div>
@@ -108,18 +107,18 @@ of version 1.0.0.</li>
 <div class="section" id="id3">
 <h3>Contributors<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Jeremy Bennett</li>
-<li>Samuel Scherrer</li>
+<li><p>Jeremy Bennett</p></li>
+<li><p>Samuel Scherrer</p></li>
 </ul>
 </div>
 <div class="section" id="id4">
 <h3>Changes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Improvements to file/directory handling, including separation of parameter file parsing and directory setup.</li>
-<li>New name for back-up parameter files.</li>
-<li>Flopy is now an optional dependency.</li>
-<li>Virtual boreholes can now be sampled on grids defined by number of boreholes in x,y-directions, or by a specific grid spacing.</li>
-<li>Journal article references added.</li>
+<li><p>Improvements to file/directory handling, including separation of parameter file parsing and directory setup.</p></li>
+<li><p>New name for back-up parameter files.</p></li>
+<li><p>Flopy is now an optional dependency.</p></li>
+<li><p>Virtual boreholes can now be sampled on grids defined by number of boreholes in x,y-directions, or by a specific grid spacing.</p></li>
+<li><p>Journal article references added.</p></li>
 </ul>
 </div>
 </div>
@@ -129,19 +128,19 @@ of version 1.0.0.</li>
 <div class="section" id="id5">
 <h3>Contributors<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Jeremy Bennett</li>
-<li>Samuel Scherrer</li>
+<li><p>Jeremy Bennett</p></li>
+<li><p>Samuel Scherrer</p></li>
 </ul>
 </div>
 <div class="section" id="id6">
 <h3>Changes<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Removed <code class="docutils literal notranslate"><span class="pre">hyvr.utils.to_vtk</span></code> function.</li>
-<li>HyVR now uses Flopy 3.2.9, and incorporates more of that package’s features.</li>
-<li>Some changes to MODFLOW 6 utilities.</li>
-<li>HyVR can now be installed from PyPI using pip</li>
-<li>Improvements to h5 I/O.</li>
-<li>Improvements to <code class="docutils literal notranslate"><span class="pre">hyvr.utils.virtual_boreholes</span></code> function</li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">hyvr.utils.to_vtk</span></code> function.</p></li>
+<li><p>HyVR now uses Flopy 3.2.9, and incorporates more of that package’s features.</p></li>
+<li><p>Some changes to MODFLOW 6 utilities.</p></li>
+<li><p>HyVR can now be installed from PyPI using pip</p></li>
+<li><p>Improvements to h5 I/O.</p></li>
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">hyvr.utils.virtual_boreholes</span></code> function</p></li>
 </ul>
 </div>
 </div>
@@ -151,23 +150,23 @@ of version 1.0.0.</li>
 <div class="section" id="id7">
 <h3>Contributors<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Jeremy Bennett</li>
-<li>Samuel Scherrer</li>
-<li>Emilio Sanchez</li>
+<li><p>Jeremy Bennett</p></li>
+<li><p>Samuel Scherrer</p></li>
+<li><p>Emilio Sanchez</p></li>
 </ul>
 </div>
 <div class="section" id="id8">
 <h3>Changes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Fixed bug in parsing of boolean options: previously all existing boolean
-options were parsed as <code class="docutils literal notranslate"><span class="pre">True</span></code></li>
-<li>Outputs for ParaView .vtr files are now specified with <code class="docutils literal notranslate"><span class="pre">vtr</span></code> instead of <code class="docutils literal notranslate"><span class="pre">vtk</span></code> as in previous versions.</li>
-<li>Some small changes to the testcase parameter file examples.</li>
-<li>Trends in porosity microstructure are now working.</li>
-<li>Architectural element lookup tables can now be saved to text files following simulation.</li>
-<li>Addition of <code class="docutils literal notranslate"><span class="pre">virtual_boreholes</span></code> function to <code class="docutils literal notranslate"><span class="pre">HyVR.utils</span></code> module. This can be used for generating borehole data from HyVR simulations.</li>
-<li>Some improvements to creation of MODFLOW 6 input files, including linear hydraulic head initial condition.</li>
-<li>Added testing functions.</li>
+<li><p>Fixed bug in parsing of boolean options: previously all existing boolean
+options were parsed as <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p>Outputs for ParaView .vtr files are now specified with <code class="docutils literal notranslate"><span class="pre">vtr</span></code> instead of <code class="docutils literal notranslate"><span class="pre">vtk</span></code> as in previous versions.</p></li>
+<li><p>Some small changes to the testcase parameter file examples.</p></li>
+<li><p>Trends in porosity microstructure are now working.</p></li>
+<li><p>Architectural element lookup tables can now be saved to text files following simulation.</p></li>
+<li><p>Addition of <code class="docutils literal notranslate"><span class="pre">virtual_boreholes</span></code> function to <code class="docutils literal notranslate"><span class="pre">HyVR.utils</span></code> module. This can be used for generating borehole data from HyVR simulations.</p></li>
+<li><p>Some improvements to creation of MODFLOW 6 input files, including linear hydraulic head initial condition.</p></li>
+<li><p>Added testing functions.</p></li>
 </ul>
 </div>
 </div>
@@ -177,14 +176,14 @@ options were parsed as <code class="docutils literal notranslate"><span class="p
 <div class="section" id="id9">
 <h3>Contributors<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Jeremy Bennett</li>
-<li>Samuel Scherrer</li>
+<li><p>Jeremy Bennett</p></li>
+<li><p>Samuel Scherrer</p></li>
 </ul>
 </div>
 <div class="section" id="id10">
 <h3>Changes<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>First Release</li>
+<li><p>First Release</p></li>
 </ul>
 </div>
 </div>
@@ -196,7 +195,7 @@ options were parsed as <code class="docutils literal notranslate"><span class="p
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="methods.html">HyVR Computational methods</a></li>
@@ -255,13 +254,11 @@ options were parsed as <code class="docutils literal notranslate"><span class="p
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -285,12 +282,12 @@ options were parsed as <code class="docutils literal notranslate"><span class="p
         <li class="right" >
           <a href="troubleshooting.html" title="Troubleshooting"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2018, Jeremy Bennett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
     </div>
   </body>
 </html>
