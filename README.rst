@@ -74,6 +74,7 @@ using ``pip``::
 
     pip install hyvr
 
+It might be necessary to install numpy separately before installing HyVR.
 The version on PyPI should always be up to date. If it's not, you can also
 install HyVR from github::
 

@@ -1,8 +1,6 @@
 from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 from setuptools.command.sdist import sdist as _sdist
-# To use a consistent encoding
-from codecs import open
 from os import path
 
 
@@ -63,7 +61,7 @@ else:
 
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 # get version number from file
