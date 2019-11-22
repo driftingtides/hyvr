@@ -8,6 +8,7 @@ import numpy as np
 import math
 cimport numpy as np
 cimport cython
+from libc.math cimport sin, cos
 
 
 @cython.boundscheck(False)
@@ -92,7 +93,9 @@ def select_trough(np.ndarray[np.float_t, ndim=3] Xd,
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
+@cython.nonecheck(False)
+@cython.cdivision(True)
+cpdef set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
             np.ndarray[np.float_t, ndim=3] k_iso,
             np.ndarray[np.float_t, ndim=3] azim,
             np.ndarray[np.float_t, ndim=3] dip,
@@ -117,10 +120,10 @@ def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
     -------
     None
     """
-    cdef np.float_t kappa, psi, a, sink, cosk, sinp, cosp
-    cdef np.float_t a11, a12, a13, a22, a23, a33
-    cdef np.float_t kiso
-    cdef np.int_t imax, jmax, kmax, i, j, k
+    cdef double kappa, psi, a, sink, cosk, sinp, cosp
+    cdef double a11, a12, a13, a22, a23, a33
+    cdef double kiso
+    cdef int imax, jmax, kmax, i, j, k
     imax = k_iso.shape[0]
     jmax = k_iso.shape[1]
     kmax = k_iso.shape[2]
@@ -130,16 +133,16 @@ def set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
                 kappa = azim[i,j,k]
                 psi = dip[i,j,k]
                 a = 1/anirat[i,j,k]
-                sink = np.sin(kappa)
-                cosk = np.cos(kappa)
-                sinp = np.sin(psi)
-                cosp = np.cos(psi)
+                sink = sin(kappa)
+                cosk = cos(kappa)
+                sinp = sin(psi)
+                cosp = cos(psi)
                 kiso = k_iso[i,j,k]
                 a00 = kiso*(sink**2 + cosk**2*(cosp**2 + a*sinp**2))
                 a01 = kiso*(1-a)*sink*cosk*sinp**2
-                a02 = kiso*((a-1)*(np.sin(kappa+2*psi)-np.sin(kappa-2*psi)))/4
+                a02 = kiso*((a-1)*(sin(kappa+2*psi)-sin(kappa-2*psi)))/4
                 a11 = kiso*((a-1)*sink**2*sinp**2+1)
-                a12 = kiso*((1-a)*(np.cos(kappa-2*psi)-np.cos(kappa+2*psi)))/4
+                a12 = kiso*((1-a)*(cos(kappa-2*psi)-cos(kappa+2*psi)))/4
                 a22 = kiso*(a*cosp**2+sinp**2)
 
                 ktensors[i,j,k,0,0] = a00
