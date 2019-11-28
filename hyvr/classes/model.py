@@ -134,6 +134,9 @@ class Model:
             # use old top as bottom
             top_surface = bottom_surface
 
+        # stratum boundaries as arrays
+        self.strata_zmins = np.array([stratum.zmin for stratum in self.strata])
+        self.strata_zmaxs = np.array([stratum.zmax for stratum in self.strata])
 
         # enumerate all objects and AEs
         num_ae = 0

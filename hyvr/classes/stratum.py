@@ -109,6 +109,10 @@ class Stratum:
 
         self.n_ae = len(self.aes)
 
+        # convert lists to arrays
+        self.ae_zmaxs = np.array(self.ae_zmaxs)
+        self.ae_zmins = np.array(self.ae_zmins)
+
     # def maybe_assign_facies_azim_dip(self, facies, angles, x, y, z, x_idx, y_idx, aei, oi, grid):
         # """
         # Assigns facies, azim and dip if the cell is inside this stratum or in

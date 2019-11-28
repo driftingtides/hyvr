@@ -1,20 +1,22 @@
+# cython: profile=True
 import numpy as np
 from hyvr.classes.grid cimport Grid
 from hyvr.classes.contact_surface cimport ContactSurface
+from hyvr.classes.geometrical_object cimport GeometricalObject
 import hyvr.utils as hu
 from libc.math cimport sin, cos, ceil, acos, sqrt
 cimport cython
 cimport numpy as np
 
 
-cdef class Sheet:
+cdef class Sheet(GeometricalObject):
     """
     This class holds parameters for single sheet objects.
     """
 
     cdef public:
         int dipsets, num_facies
-        double zmin, zmax
+        # double zmin, zmax
         double dip, azim
         double shift, layer_dist
         double normvec_x, normvec_y, normvec_z
@@ -81,7 +83,8 @@ cdef class Sheet:
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    cpdef maybe_assign_facies_azim_dip(self, int [:] facies, double [:] angles, int[:] ids,
+    @cython.nonecheck(False)
+    cpdef maybe_assign_facies_azim_dip(self, np.int32_t [:] facies, np.float_t [:] angles, np.int32_t [:] ids,
                                        double x, double y, double z,
                                        int x_idx, int y_idx, Grid grid):
         """

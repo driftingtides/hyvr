@@ -79,6 +79,10 @@ class AERealization:
         self.n_objects = len(self.objects)
         self.y_idx_cached = None
 
+        # get object zmins and zmaxs as arrays
+        self.object_zmins = np.array(self.object_zmins)
+        self.object_zmaxs = np.array(self.object_zmaxs)
+
 
     def generate_objects(self, grid):
         """

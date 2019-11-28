@@ -1,12 +1,14 @@
+# cython: profile=True
 import numpy as np
 cimport hyvr.optimized as ho
 import hyvr.utils as hu
 from libc.math cimport sin, cos, ceil, acos, sqrt
 cimport numpy as np
 from hyvr.classes.grid cimport Grid
+from hyvr.classes.geometrical_object cimport GeometricalObject
 cimport cython
 
-cdef class Trough:
+cdef class Trough(GeometricalObject):
     """
     This class holds all parameters of a geometrical trough object.
 
@@ -18,7 +20,7 @@ cdef class Trough:
         double x, y, z
         double a, b, c
         double max_ab
-        double zmin, zmax
+        # double zmin, zmax
         double alpha
         double sinalpha, cosalpha
         double lag, shift
@@ -189,7 +191,8 @@ cdef class Trough:
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    cpdef maybe_assign_facies_azim_dip(self, int [:] facies, double [:] angles, int[:] ids,
+    @cython.nonecheck(False)
+    cpdef maybe_assign_facies_azim_dip(self, np.int32_t [:] facies, np.float_t [:] angles, np.int32_t [:] ids,
                                      double x, double y, double z,
                                      int x_idx, int y_idx, Grid grid):
         """

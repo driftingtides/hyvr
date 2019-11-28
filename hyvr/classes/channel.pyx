@@ -1,11 +1,13 @@
+# cython: profile=True
 import numpy as np
 cimport numpy as np
 cimport cython
 from hyvr.classes.grid cimport Grid
+from hyvr.classes.geometrical_object cimport GeometricalObject
 from libc.math cimport sqrt, sin, cos, atan2
 import hyvr.utils as hu
 
-cdef class Channel:
+cdef class Channel(GeometricalObject):
     """
     Channel implementation.
 
@@ -17,7 +19,8 @@ cdef class Channel:
         int[:,:] dont_check
         double a, width, depth, min_dx_dy
         int len_centerline
-        double zmin, zmax, ztop
+        # double zmin, zmax
+        double ztop
         double dip, azim, sin_dip, cos_dip
         double shift, layer_dist
         double lag_height
@@ -107,9 +110,10 @@ cdef class Channel:
             self.facies = np.random.choice(type_params['facies'])
 
 
-    # @cython.boundscheck(False)
-    # @cython.wraparound(False)
-    cpdef maybe_assign_facies_azim_dip(self, int [:] facies, double [:] angles, int[:] ids,
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    cpdef maybe_assign_facies_azim_dip(self, np.int32_t [:] facies, np.float_t [:] angles, np.int32_t [:] ids,
                                      double x, double y, double z,
                                      int x_idx, int y_idx, Grid grid):
         """
@@ -136,7 +140,7 @@ cdef class Channel:
         """
         cdef double xy_dist, dz, radius, dist, weight, sum_weights, vx_now, vy_now
         cdef double dist_along_curve, dist_along_curve_tmp
-        cdef int nx, ny, i, j, closest_idx
+        cdef int nx, ny, i, j, n, closest_idx
 
 
         # if the point is above the channel top, don't consider it

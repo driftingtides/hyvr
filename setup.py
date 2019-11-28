@@ -54,7 +54,7 @@ extensions = [Extension("hyvr.optimized", sources=[path.join(here, "hyvr", "opti
               ]
                          # include_dirs=[np.get_include()])]
 if use_cython:
-    ext_modules = cythonize(extensions)
+    ext_modules = cythonize(extensions, language_level=3)
 else:
     ext_modules = extensions
 
