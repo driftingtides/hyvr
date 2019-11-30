@@ -20,21 +20,3 @@ def parse_contact_model(param_list, depth=False):
         return cm
     else:
         raise ValueError("This is not a valid contact model: " + str(param_list))
-
-
-def use_lower_surface_value(target_surface, other_surface):
-    nx, ny = np.shape(target_surface.surface)
-    for i in range(nx):
-        for j in range(ny):
-            if target_surface.surface[i,j] > other_surface.surface[i,j]:
-                target_surface.surface[i,j] = other_surface.surface[i,j]
-    target_surface.zmax = np.max(target_surface.surface)
-
-def use_higher_surface_value(target_surface, other_surface):
-    nx, ny = np.shape(target_surface.surface)
-    for i in range(nx):
-        for j in range(ny):
-            if target_surface.surface[i,j] < other_surface.surface[i,j]:
-                target_surface.surface[i,j] = other_surface.surface[i,j]
-    target_surface.zmax = np.max(target_surface.surface)
-

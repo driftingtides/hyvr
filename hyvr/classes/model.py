@@ -13,7 +13,6 @@ import numpy as np
 import hyvr.utils as hu
 import hyvr.optimized as ho
 from hyvr.classes.contact_surface import ContactSurface
-from hyvr.classes.contact_surface_utils import *
 from hyvr.classes.stratum import Stratum
 from hyvr.classes.ae_types import AEType
 from hyvr.classes.grid import Grid
@@ -116,7 +115,7 @@ class Model:
                 bottom_surface = ContactSurface(self.grid, **strata_dict['contact_models'][-1-si])
             # if the bottom surface is above the top surface, we will assign
             # the top surface values instead
-            use_lower_surface_value(bottom_surface, top_surface)
+            bottom_surface.use_lower_surface_value(top_surface)
 
             stratum_params = {name:strata_dict[name][-1-si] for name in param_names}
             ae_types = [self.ae_types[ae_type] for ae_type in strata_dict['ae_in_strata'][-1-si]]

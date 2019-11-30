@@ -2,7 +2,6 @@ import numpy as np
 import hyvr.optimized as ho
 import hyvr.utils as hu
 from hyvr.classes.contact_surface import ContactSurface
-from hyvr.classes.contact_surface_utils import *
 
 def prob_choose(types, probs):
     # TODO: At the moment the given probabilities are only relative
@@ -82,12 +81,12 @@ class Stratum:
 
             # if the bottom surface is above the top surface, we will assign
             # the (lower) top surface values instead
-            use_lower_surface_value(ae_bottom_surface, ae_top_surface)
+            ae_bottom_surface.use_lower_surface_value(ae_top_surface)
 
             # close to the bottom it might also be possible that the ae_bottom
             # is below the stratum bottom if the stratum bottom is not flat
             # in this case we will assign the (higher) bottom surface value instead
-            use_higher_surface_value(ae_bottom_surface, self.bottom_surface)
+            ae_bottom_surface.use_higher_surface_value(self.bottom_surface)
 
             # generate element: this will place all the objects within an AE
             element = curr_ae_type.generate_realization(ae_bottom_surface, ae_top_surface, self, grid)

@@ -41,7 +41,7 @@ class sdist(_sdist):
         cythonize(extensions,
                   language_level=3,
                   annotate=True,
-                  compiler_directives={'profile':True})
+                  compiler_directives={'profile':False})
         _sdist.run(self)
 
 # Extensions
@@ -64,7 +64,7 @@ if use_cython:
     ext_modules = cythonize(extensions,
                             language_level=3,
                             annotate=True,
-                            compiler_directives={'profile':False})
+                            compiler_directives={'profile':True})
 else:
     ext_modules = extensions
 

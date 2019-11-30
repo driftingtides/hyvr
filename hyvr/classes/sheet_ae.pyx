@@ -1,7 +1,6 @@
 
 import numpy as np
 from hyvr.classes.sheet import Sheet
-from hyvr.classes.contact_surface_utils import use_lower_surface_value, use_higher_surface_value
 
 cimport cython
 cimport numpy as np
@@ -14,6 +13,8 @@ cdef class SheetAE(AERealization):
     cpdef create_object_arrays(self):
         # This is super ugly :(
         cdef int i, nx, ny, j, k
+        cdef np.float_t [:,:] top_surface, bottom_surface
+
         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
@@ -37,10 +38,12 @@ cdef class SheetAE(AERealization):
             self.object_normvec_z[i] = obj.normvec_z
             self.object_bottom_surface_zmean[i] = obj.bottom_surface.zmean
             self.object_dipsets[i] = obj.dipsets
+            top_surface = obj.top_surface.surface
+            bottom_surface = obj.bottom_surface.surface
             for j in range(nx):
                 for k in range(ny):
-                    self.object_top_surface[i,j,k] = obj.top_surface.surface[j,k]
-                    self.object_bottom_surface[i,j,k] = obj.bottom_surface.surface[j,k]
+                    self.object_top_surface[i,j,k] = top_surface[j,k]
+                    self.object_bottom_surface[i,j,k] = bottom_surface[j,k]
 
 
     def generate_objects(self, grid):
@@ -80,12 +83,12 @@ cdef class SheetAE(AERealization):
                 # it's possible that this bottom surface is above the top
                 # surface if we're close to the AE top. Then we will use the
                 # lower value (i.e. the top surface value)
-                use_lower_surface_value(bottom_surface, top_surface)
+                bottom_surface.use_lower_surface_value(top_surface)
 
                 # close to the bottom it might also be possible that the AE
                 # bottom is higher than the current bottom, so we have to use
                 # the higher value
-                use_higher_surface_value(bottom_surface, self.bottom_surface)
+                top_surface.use_higher_surface_value(self.bottom_surface)
 
             else:
                 last_sheet = True
@@ -104,10 +107,11 @@ cdef class SheetAE(AERealization):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     @cython.nonecheck(False)
+    @cython.cdivision(True)
     cpdef maybe_assign_points_to_object(self, int oi,
                                         np.int32_t [:] geo_ids,
                                         np.float_t [:] angles,
-                                        double x, double y, double z,
+                                        np.float_t x, np.float_t y, np.float_t z,
                                         int x_idx, int y_idx,
                                         Grid grid):
         """
@@ -132,8 +136,15 @@ cdef class SheetAE(AERealization):
             indices of x and y position in grid.
         grid : Grid object
         """
-        cdef double z_above, z_below, d
-        cdef int n
+        cdef np.float_t z_above, z_below, d
+        cdef np.float_t normvec_x, normvec_y, normvec_z
+        cdef np.float_t shift, azim, dip
+        cdef np.int32_t n, num_facies
+
+        normvec_x = self.object_normvec_x[oi]
+        normvec_y = self.object_normvec_y[oi]
+        normvec_z = self.object_normvec_z[oi]
+
         # if we reach this functions, we now that we are within [zmin, zmax]
         # the only way how this could be outside the domain is when the top or
         # bottom surfaces are not flat

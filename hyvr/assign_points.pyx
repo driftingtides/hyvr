@@ -80,8 +80,8 @@ cpdef assign_points(model):
         x_idx = loop_idx // ny
         y_idx = loop_idx % ny
         
-        percentage_done = int(np.round(100*loop_idx/total_n))
-        sys.stdout.write("Currently done: {:>3d} %\r".format(percentage_done))
+        # percentage_done = int(np.round(100*loop_idx/total_n))
+        # sys.stdout.write("Currently done: {:>3d} %\r".format(percentage_done))
 
         # Here we start to go through one tower from top to bottom
         x = gridX[x_idx, y_idx, 0]
@@ -279,11 +279,11 @@ cpdef int maybe_assign_points_to_ae(
     oi_orig = int(oi)
     n_objects = ae.n_objects
 
-    cdef np.float_t [:] object_zmaxs = ae.object_zmaxs
-    cdef np.float_t [:] object_zmins = ae.object_zmins
+    cdef const np.float_t [:] object_zmaxs = ae.object_zmaxs
+    cdef const np.float_t [:] object_zmins = ae.object_zmins
 
-    cdef np.float_t [:,:] top_surface = ae.top_surface.surface
-    cdef np.float_t [:,:] bottom_surface = ae.bottom_surface.surface
+    cdef const np.float_t [:,:] top_surface = ae.top_surface.surface
+    cdef const np.float_t [:,:] bottom_surface = ae.bottom_surface.surface
     cdef np.float_t z_above, z_below
 
     # First we check if the current point is already below the current

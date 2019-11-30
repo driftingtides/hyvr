@@ -18,6 +18,6 @@ cdef class SheetAE(AERealization):
     cpdef maybe_assign_points_to_object(self, int oi,
                                         np.int32_t [:] geo_ids,
                                         np.float_t [:] angles,
-                                        double x, double y, double z,
+                                        np.float_t x, np.float_t y, np.float_t z,
                                         int x_idx, int y_idx,
                                         Grid grid)

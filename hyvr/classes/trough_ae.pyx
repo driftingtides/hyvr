@@ -5,7 +5,7 @@ from hyvr.classes.trough import Trough
 
 cimport cython
 cimport numpy as np
-from libc.math cimport sqrt, ceil, acos
+from libc.math cimport sqrt, ceil, acos, pi
 from hyvr.classes.ae_realization cimport AERealization
 cimport hyvr.optimized as ho
 
@@ -87,10 +87,11 @@ cdef class TroughAE(AERealization):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     @cython.nonecheck(False)
+    @cython.cdivision(True)
     cpdef maybe_assign_points_to_object(self, int oi,
                                         np.int32_t [:] geo_ids,
                                         np.float_t [:] angles,
-                                        double x, double y, double z,
+                                        np.float_t x, np.float_t y, np.float_t z,
                                         int x_idx, int y_idx,
                                         Grid grid):
         """
@@ -115,12 +116,17 @@ cdef class TroughAE(AERealization):
             indices of x and y position in grid.
         grid : Grid object
         """
-        cdef double dx, dy, dz
-        cdef double normalized_dx, normalized_dy, normalized_dz
-        cdef double l2, plane_dist, aaa, bbb, ccc, len_tanvec
-        cdef double tanvec_x, tanvec_y, tanvec_z
-        cdef int n
-        cdef dip, cos_azim, azim
+        cdef np.float_t dx, dy, dz
+        cdef np.float_t normalized_dx, normalized_dy, normalized_dz
+        cdef np.float_t l2, plane_dist, aaa, bbb, ccc, len_tanvec
+        cdef np.float_t tanvec_x, tanvec_y, tanvec_z
+        cdef np.int32_t n, structure
+        cdef np.float_t dip, cos_azim, azim
+
+        cdef np.float_t object_x = self.object_x[oi]
+        cdef np.float_t object_y = self.object_y[oi]
+        cdef np.float_t object_z = self.object_z[oi]
+
 
         # Beware: This function is called a lot, so it should really be fast
 
@@ -131,9 +137,9 @@ cdef class TroughAE(AERealization):
         # At first, we check whether the cell is inside the domain. To keep the
         # number of calculations short, we first use very broad criterions
         # before calculating whether it's inside.
-        dx = x - self.object_x[oi]
-        dy = y - self.object_y[oi]
-        dz = z - self.object_z[oi]
+        dx = x - object_x
+        dy = y - object_y
+        dz = z - object_z
         if grid.periodic:
             if dx > grid.lx/2:
                 dx -= grid.lx
@@ -144,14 +150,17 @@ cdef class TroughAE(AERealization):
             elif dy < -grid.ly/2:
                 dy += grid.ly
         # it seems to me that this is a bit faster than abs, and speed here is critical
-        if dx > self.object_max_ab[oi] or -dx > self.object_max_ab[oi] or dy > self.object_max_ab[oi] or -dy > self.object_max_ab[oi] or dz > 0:
+        cdef np.float_t max_ab = self.object_max_ab[oi]
+        if dx > max_ab or -dx > max_ab or dy > max_ab or -dy > max_ab or dz > 0:
             geo_ids[0] = -1
             return
 
         # To decide whether the point is inside, we can just use the normalized
         # distance. Therefore we first calculate the normalized distance vector
-        normalized_dx = (dx*self.object_cosalpha[oi] + dy*self.object_sinalpha[oi])/self.object_a[oi]
-        normalized_dy = (-dx*self.object_sinalpha[oi] + dy*self.object_cosalpha[oi])/self.object_b[oi]
+        cdef np.float_t cosalpha = self.object_cosalpha[oi]
+        cdef np.float_t sinalpha = self.object_sinalpha[oi]
+        normalized_dx = (dx*cosalpha + dy*sinalpha)/self.object_a[oi]
+        normalized_dy = (-dx*sinalpha + dy*cosalpha)/self.object_b[oi]
         normalized_dz = dz/self.object_c[oi]
         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
         if l2 > 1:
@@ -162,7 +171,7 @@ cdef class TroughAE(AERealization):
         # assign values
 
         # check whether it's below the lag surface
-        if z < self.object_z[oi] - self.object_c[oi] + self.object_lag[oi]:
+        if z < object_z - self.object_c[oi] + self.object_lag[oi]:
             # is inside lag surface
             geo_ids[0] = self.object_lag_facies[oi]
             angles[0] = 0 # no azimuth
@@ -170,13 +179,14 @@ cdef class TroughAE(AERealization):
             geo_ids[2] = self.object_num_ha[oi]
             return
 
-        if self.object_structure[oi] == 0: # flat
+        structure = self.object_structure[oi]
+        if structure == 0: # flat
             geo_ids[0] = self.object_facies[oi]
             angles[0] = self.object_azim[oi]
             angles[1] = self.object_dip[oi]
             geo_ids[2] = self.object_num_ha[oi]
             return
-        elif self.object_structure[oi] == 1: # dip
+        elif structure == 1: # dip
             # get distance from zero-plane
             plane_dist = dx*self.object_normvec_x[oi] +\
                          dy*self.object_normvec_y[oi] +\
@@ -188,7 +198,7 @@ cdef class TroughAE(AERealization):
             angles[1] = self.object_dip[oi]
             geo_ids[2] = self.object_num_ha[oi]
             return
-        elif self.object_structure[oi] == 2 or self.object_structure[oi] == 3: # bulb or bulb_sets
+        elif structure == 2 or structure == 3: # bulb or bulb_sets
             # Since ellipsoids are isosurfaces of quadratic functions, we can
             # get the tangential vector by taking the (negative) gradient of
             # the quadratic function that has our ellipsoid as iso-surface.
@@ -212,7 +222,7 @@ cdef class TroughAE(AERealization):
                 # plane and the normal vector of the x-y-plane.
                 # this means the cosine of the dip is dot(tanvec, [0, 0, 1]),
                 # i.e. the third component of norm_vec
-                dip = acos(tanvec_z)/np.pi*180
+                dip = acos(tanvec_z)/pi*180
                 # The angle is positive if the x-component of the normal vector is
                 # positive
                 # the normal vector projected and normalized to the x-y-plane,
@@ -222,7 +232,7 @@ cdef class TroughAE(AERealization):
                     azim = 0
                 else:
                     cos_azim = tanvec_y/len_tanvec_xy
-                    azim = ho.sign(tanvec_x)*acos(cos_azim)/np.pi*180
+                    azim = ho.sign(tanvec_x)*acos(cos_azim)/pi*180
                 if dip > 90:
                     # if the dip is bigger than 90° we can also just rotate the azimuth
                     dip = 180 - dip
@@ -238,7 +248,7 @@ cdef class TroughAE(AERealization):
             if dip > self.object_dip[oi]:
                 dip = self.object_dip[oi]
 
-            if self.object_structure[oi] == 2: # bulb
+            if structure == 2: # bulb
                 geo_ids[0] = self.object_facies[oi]
                 angles[0] = azim
                 angles[1] = dip
@@ -255,5 +265,5 @@ cdef class TroughAE(AERealization):
                 geo_ids[2] = self.object_num_ha[oi]
                 return
         else:
-            print('Structure:', self.object_structure[oi])
+            print('Structure:', structure)
             raise NotImplementedError('This structure is not implemented yet')
