@@ -1,13 +1,11 @@
-# cython: profile=True
 import numpy as np
 cimport numpy as np
 cimport cython
 from hyvr.classes.grid cimport Grid
-from hyvr.classes.geometrical_object cimport GeometricalObject
 from libc.math cimport sqrt, sin, cos, atan2
 import hyvr.utils as hu
 
-cdef class Channel(GeometricalObject):
+cdef class Channel:
     """
     Channel implementation.
 
@@ -19,7 +17,7 @@ cdef class Channel(GeometricalObject):
         int[:,:] dont_check
         double a, width, depth, min_dx_dy
         int len_centerline
-        # double zmin, zmax
+        double zmin, zmax
         double ztop
         double dip, azim, sin_dip, cos_dip
         double shift, layer_dist
@@ -113,25 +111,26 @@ cdef class Channel(GeometricalObject):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     @cython.nonecheck(False)
-    cpdef maybe_assign_facies_azim_dip(self, np.int32_t [:] facies, np.float_t [:] angles, np.int32_t [:] ids,
-                                     double x, double y, double z,
-                                     int x_idx, int y_idx, Grid grid):
+    cpdef maybe_assign_points(self,
+                              np.int32_t [:] geo_ids,
+                              np.float_t [:] angles,
+                              double x, double y, double z,
+                              int x_idx, int y_idx,
+                              Grid grid):
         """
         This function checks whether the current grid cell with given
-        coordinates is inside the trough and assigns facies, azimuth and dip by
+        coordinates is inside the channel and assigns facies, azimuth and dip by
         altering the passed arrays.
 
         Parameters
         ----------
-        facies : int array
-            array of size 1 that holds the facies. This will be altered during
-            the course of this function to either be -1 if the cell is not in
-            the trough, or it is set to the facies number of the cell.
+        geo_ids : np.int32 array of size 4
+            This holds the geological indices, i.e. facies number, architectural
+            element number, hydrofacies assemblage (ha) and hydrofacies assemblage
+            type (hat).
         angles : double array
             array of size 2 that holds the azimuth and dip of the cell. This
             will also be altered.
-        ids : np.ndarray[np.int32, dim=1]
-            Array of length three that holds AERealization-ID, ha, and hat
         x, y, z : double
             cell coordinates
         x_idx, y_idx : int
@@ -146,7 +145,7 @@ cdef class Channel(GeometricalObject):
         # if the point is above the channel top, don't consider it
         dz = z - self.ztop
         if dz > 0:
-            facies[0] = -1
+            geo_ids[0] = -1
             return
 
         # To check whether a point is inside the channel, we have to calculate
@@ -159,7 +158,7 @@ cdef class Channel(GeometricalObject):
         # check for these.
 
         if self.dont_check[x_idx, y_idx]:
-            facies[0] = -1
+            geo_ids[0] = -1
             return
 
 
@@ -222,11 +221,11 @@ cdef class Channel(GeometricalObject):
         # point is really inside (i.e. is above the parabola)
         if dz >= self.a*xy_dist**2 - self.depth:
             # it's inside: assign stuff
-            ids[1] = self.num_ha
+            geo_ids[2] = self.num_ha
             if z < self.ztop - self.depth + self.lag_height:
                 angles[0] = 0
                 angles[1] = 0
-                facies[0] = self.lag_facies
+                geo_ids[0] = self.lag_facies
                 return
 
             if self.dipsets:
@@ -243,18 +242,18 @@ cdef class Channel(GeometricalObject):
                 # note that dz is negative here
                 d = dist_along_curve * self.sin_dip + dz*self.cos_dip + self.shift
                 n = int(d/self.layer_dist)
-                facies[0] = self.facies_array[n]
+                geo_ids[0] = self.facies_array[n]
                 return
             else:
                 angles[0] = self.azim
                 angles[1] = self.dip
-                facies[0] = self.facies
+                geo_ids[0] = self.facies
                 return
 
         else:
             # it's not inside. This means lower points will also not be inside
             self.dont_check[x_idx, y_idx] = 1
-            facies[0] = -1
+            geo_ids[0] = -1
             return
 
 

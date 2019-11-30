@@ -26,7 +26,7 @@ import hyvr.optimized as ho
 import hyvr.input.parameters as hp
 from hyvr.postprocess.output import create_outputs
 from hyvr.classes.model import Model
-from hyvr.assign_facies import assign_facies_azim_dip
+from hyvr.assign_points import assign_points
 
 
 def run(param_file, flag_ow=None):
@@ -54,7 +54,7 @@ def run(param_file, flag_ow=None):
         # Generate facies
         model.generate_model()
         # model.assign_facies_azim_dip()
-        assign_facies_azim_dip(model)
+        assign_points(model)
         # return
 
         if model.generate_hydraulics is True:

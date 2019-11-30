@@ -50,11 +50,14 @@ extensions = [Extension("hyvr.optimized", sources=[path.join(here, "hyvr", "opti
               Extension("hyvr.classes.trough", sources=[path.join(here, "hyvr", "classes", "trough"+ext)]),
               Extension("hyvr.classes.sheet", sources=[path.join(here, "hyvr", "classes", "sheet"+ext)]),
               Extension("hyvr.classes.channel", sources=[path.join(here, "hyvr", "classes", "channel"+ext)]),
-              Extension("hyvr.assign_facies", sources=[path.join(here, "hyvr", "assign_facies"+ext)]),
+              Extension("hyvr.assign_points", sources=[path.join(here, "hyvr", "assign_points"+ext)]),
               ]
                          # include_dirs=[np.get_include()])]
 if use_cython:
-    ext_modules = cythonize(extensions, language_level=3)
+    ext_modules = cythonize(extensions,
+                            language_level=3,
+                            annotate=True,
+                            compiler_directives={'profile':False})
 else:
     ext_modules = extensions
 

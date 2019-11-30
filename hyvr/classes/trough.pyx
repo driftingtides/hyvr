@@ -1,14 +1,12 @@
-# cython: profile=True
 import numpy as np
 cimport hyvr.optimized as ho
 import hyvr.utils as hu
 from libc.math cimport sin, cos, ceil, acos, sqrt
 cimport numpy as np
 from hyvr.classes.grid cimport Grid
-from hyvr.classes.geometrical_object cimport GeometricalObject
 cimport cython
 
-cdef class Trough(GeometricalObject):
+cdef class Trough:
     """
     This class holds all parameters of a geometrical trough object.
 
@@ -20,7 +18,7 @@ cdef class Trough(GeometricalObject):
         double x, y, z
         double a, b, c
         double max_ab
-        # double zmin, zmax
+        double zmin, zmax
         double alpha
         double sinalpha, cosalpha
         double lag, shift
@@ -192,25 +190,26 @@ cdef class Trough(GeometricalObject):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     @cython.nonecheck(False)
-    cpdef maybe_assign_facies_azim_dip(self, np.int32_t [:] facies, np.float_t [:] angles, np.int32_t [:] ids,
-                                     double x, double y, double z,
-                                     int x_idx, int y_idx, Grid grid):
+    cpdef maybe_assign_points(self,
+                              np.int32_t [:] geo_ids,
+                              np.float_t [:] angles,
+                              double x, double y, double z,
+                              int x_idx, int y_idx,
+                              Grid grid):
         """
         This function checks whether the current grid cell with given
-        coordinates is inside the trough and assigns facies, azimuth and dip by
+        coordinates is inside the channel and assigns facies, azimuth and dip by
         altering the passed arrays.
 
         Parameters
         ----------
-        facies : int array
-            array of size 1 that holds the facies. This will be altered during
-            the course of this function to either be -1 if the cell is not in
-            the trough, or it is set to the facies number of the cell.
+        geo_ids : np.int32 array of size 4
+            This holds the geological indices, i.e. facies number, architectural
+            element number, hydrofacies assemblage (ha) and hydrofacies assemblage
+            type (hat).
         angles : double array
             array of size 2 that holds the azimuth and dip of the cell. This
             will also be altered.
-        ids : np.ndarray[np.int32, dim=1]
-            Array of length three that holds AERealization-ID, ha, and hat
         x, y, z : double
             cell coordinates
         x_idx, y_idx : int
@@ -247,7 +246,7 @@ cdef class Trough(GeometricalObject):
                 dy += grid.ly
         # it seems to me that this is a bit faster than abs, and speed here is critical
         if dx > self.max_ab or -dx > self.max_ab or dy > self.max_ab or -dy > self.max_ab or dz > 0:
-            facies[0] = -1
+            geo_ids[0] = -1
             return
 
         # To decide whether the point is inside, we can just use the normalized
@@ -257,7 +256,7 @@ cdef class Trough(GeometricalObject):
         normalized_dz = dz/self.c
         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
         if l2 > 1:
-            facies[0] = -1
+            geo_ids[0] = -1
             return
 
         # At this point we know that the point is in the domain, so we have to
@@ -266,17 +265,17 @@ cdef class Trough(GeometricalObject):
         # check whether it's below the lag surface
         if z < self.z - self.c + self.lag:
             # is inside lag surface
-            facies[0] = self.lag_facies
+            geo_ids[0] = self.lag_facies
             angles[0] = 0 # no azimuth
             angles[1] = 0 # no dip
-            ids[1] = self.num_ha
+            geo_ids[2] = self.num_ha
             return
 
         if self.structure == 0: # flat
-            facies[0] = self.facies
+            geo_ids[0] = self.facies
             angles[0] = self.azim
             angles[1] = self.dip
-            ids[1] = self.num_ha
+            geo_ids[2] = self.num_ha
             return
         elif self.structure == 1: # dip
             # get distance from zero-plane
@@ -285,10 +284,10 @@ cdef class Trough(GeometricalObject):
                          dz*self.normvec_z + self.shift
             # get index in facies vector, where n = len(facies)//2 at d=0
             n = int(plane_dist/self.layer_dist) + self.num_facies//2
-            facies[0] = self.facies_array[n]
+            geo_ids[0] = self.facies_array[n]
             angles[0] = self.azim
             angles[1] = self.dip
-            ids[1] = self.num_ha
+            geo_ids[2] = self.num_ha
             return
         elif self.structure == 2 or self.structure == 3: # bulb or bulb_sets
             # Since ellipsoids are isosurfaces of quadratic functions, we can
@@ -341,20 +340,20 @@ cdef class Trough(GeometricalObject):
                 dip = self.dip
 
             if self.structure == 2: # bulb
-                facies[0] = self.facies
+                geo_ids[0] = self.facies
                 angles[0] = azim
                 angles[1] = dip
-                ids[1] = self.num_ha
+                geo_ids[2] = self.num_ha
                 return
             else:
                 # create bulb sets
                 # The facies can be found by dividing the normalized distance
                 # by the normalized bublset_d:
                 n = int(ceil((sqrt(l2) + self.shift)*self.c/self.layer_dist))
-                facies[0] = self.facies_array[n]
+                geo_ids[0] = self.facies_array[n]
                 angles[0] = azim
                 angles[1] = dip
-                ids[1] = self.num_ha
+                geo_ids[2] = self.num_ha
                 return
         else:
             print('Structure:', self.structure)

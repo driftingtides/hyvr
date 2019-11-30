@@ -51,3 +51,6 @@ hyvr/small/*
 hyvr_dev/*
 hyvr_backup/*
 *.profile
+profile/small
+hyvr/*.html
+hyvr/classes/*.html
