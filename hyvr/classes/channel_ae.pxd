@@ -18,8 +18,8 @@ cdef class ChannelAE(AERealization):
         np.float_t [:] object_shift, object_layer_dist
         np.float_t [:] object_lag_height
         np.int32_t [:] object_lag_facies
-        np.int32_t [:] dipsets
-        np.int32_t [:,:,:] dont_check
+        np.int32_t [:] object_dipsets
+        np.int32_t [:,:,:] object_dont_check
 
 
 

@@ -13,24 +13,24 @@ cdef class Channel:
     """
 
     cdef public:
-        double[:] x_center, y_center, vx, vy
-        int[:,:] dont_check
-        double a, width, depth, min_dx_dy
-        int len_centerline
-        double zmin, zmax
-        double ztop
-        double dip, azim, sin_dip, cos_dip
-        double shift, layer_dist
-        double lag_height
-        int facies, num_ha, lag_facies, num_facies
-        int [:] facies_array
-        int dipsets
+        np.float_t[:] x_center, y_center, vx, vy
+        np.int32_t[:,:] dont_check
+        np.float_t a, width, depth, min_dx_dy
+        np.int32_t len_centerline
+        np.float_t zmin, zmax
+        np.float_t ztop
+        np.float_t dip, azim, sin_dip, cos_dip
+        np.float_t shift, layer_dist
+        np.float_t lag_height
+        np.int32_t facies, num_ha, lag_facies, num_facies
+        np.int32_t [:] facies_array
+        np.int32_t dipsets
 
 
     def __init__(self, type_params, x_center, y_center, vx, vy, z, width, depth, grid):
         # x_center and y_center should be coordinates of points on the centerline.
         cdef int i
-        cdef double dist_along_curve
+        cdef np.float_t dist_along_curve
         self.x_center = x_center
         self.y_center = y_center
         self.vx = vx

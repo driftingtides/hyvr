@@ -610,6 +610,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include <stdio.h>
 #include "numpy/arrayobject.h"
 #include "numpy/ufuncobject.h"
+#include <math.h>
 #include "pythread.h"
 #include <stdlib.h>
 #include "pystate.h"
@@ -1426,18 +1427,19 @@ struct __pyx_memoryviewslice_obj {
  */
 
 struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization {
+  PyObject *(*_create_common_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
   PyObject *(*create_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
   PyObject *(*maybe_assign_points_to_object)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *__pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization;
 
 
-/* "hyvr/classes/trough_ae.pyx":11
+/* "hyvr/classes/trough_ae.pyx":13
  * 
  * 
  * cdef class TroughAE(AERealization):             # <<<<<<<<<<<<<<
  * 
- *     cpdef create_object_arrays(self):
+ *     @cython.boundscheck(False)
  */
 
 struct __pyx_vtabstruct_4hyvr_7classes_9trough_ae_TroughAE {
@@ -1692,9 +1694,6 @@ static CYTHON_INLINE int __pyx_sub_acquisition_count_locked(
 static CYTHON_INLINE void __Pyx_INC_MEMVIEW(__Pyx_memviewslice *, int, int);
 static CYTHON_INLINE void __Pyx_XDEC_MEMVIEW(__Pyx_memviewslice *, int, int);
 
-/* BufferIndexError.proto */
-static void __Pyx_RaiseBufferIndexError(int axis);
-
 /* DictGetItem.proto */
 #if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
 static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key);
@@ -1733,9 +1732,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_FromDouble(double value);
 
 /* None.proto */
 static CYTHON_INLINE long __Pyx_div_long(long, long);
-
-/* PyIntCompare.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, long inplace);
 
 /* PyIntBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -2300,6 +2296,9 @@ static CYTHON_INLINE int __Pyx_StrEq(const char *, const char *);
 /* CheckBinaryVersion.proto */
 static int __Pyx_check_binary_version(void);
 
+/* FunctionImport.proto */
+static int __Pyx_ImportFunction(PyObject *module, const char *funcname, void (**f)(void), const char *sig);
+
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
@@ -2357,6 +2356,11 @@ static PyTypeObject *__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization =
 /* Module declarations from 'cython.view' */
 
 /* Module declarations from 'cython' */
+
+/* Module declarations from 'libc.math' */
+
+/* Module declarations from 'hyvr.optimized' */
+static int (*__pyx_f_4hyvr_9optimized_sign)(double); /*proto*/
 
 /* Module declarations from 'hyvr.classes.trough_ae' */
 static PyTypeObject *__pyx_ptype_4hyvr_7classes_9trough_ae_TroughAE = 0;
@@ -2431,7 +2435,6 @@ static const char __pyx_k_c[] = "c";
 static const char __pyx_k_x[] = "x";
 static const char __pyx_k_y[] = "y";
 static const char __pyx_k_z[] = "z";
-static const char __pyx_k_ho[] = "ho";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_oi[] = "oi";
@@ -2440,9 +2443,7 @@ static const char __pyx_k__27[] = "*";
 static const char __pyx_k_lag[] = "lag";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
-static const char __pyx_k_acos[] = "acos";
 static const char __pyx_k_base[] = "base";
-static const char __pyx_k_ceil[] = "ceil";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_grid[] = "grid";
 static const char __pyx_k_main[] = "__main__";
@@ -2450,9 +2451,7 @@ static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
 static const char __pyx_k_ndim[] = "ndim";
 static const char __pyx_k_pack[] = "pack";
-static const char __pyx_k_sign[] = "sign";
 static const char __pyx_k_size[] = "size";
-static const char __pyx_k_sqrt[] = "sqrt";
 static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
@@ -2608,7 +2607,6 @@ static PyObject *__pyx_n_s_ValueError;
 static PyObject *__pyx_n_s_View_MemoryView;
 static PyObject *__pyx_n_s__27;
 static PyObject *__pyx_n_s_a;
-static PyObject *__pyx_n_s_acos;
 static PyObject *__pyx_n_s_add_object;
 static PyObject *__pyx_n_s_allocate_buffer;
 static PyObject *__pyx_n_s_alpha;
@@ -2617,7 +2615,6 @@ static PyObject *__pyx_n_s_b;
 static PyObject *__pyx_n_s_base;
 static PyObject *__pyx_n_s_c;
 static PyObject *__pyx_n_u_c;
-static PyObject *__pyx_n_s_ceil;
 static PyObject *__pyx_n_s_class;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_kp_s_contiguous_and_direct;
@@ -2641,7 +2638,6 @@ static PyObject *__pyx_n_s_geo_ids;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
 static PyObject *__pyx_n_s_grid;
-static PyObject *__pyx_n_s_ho;
 static PyObject *__pyx_n_s_hyvr_classes_trough;
 static PyObject *__pyx_n_s_hyvr_classes_trough_ae;
 static PyObject *__pyx_n_s_hyvr_classes_trough_utils;
@@ -2696,10 +2692,8 @@ static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_shape;
 static PyObject *__pyx_n_s_shift;
-static PyObject *__pyx_n_s_sign;
 static PyObject *__pyx_n_s_sinalpha;
 static PyObject *__pyx_n_s_size;
-static PyObject *__pyx_n_s_sqrt;
 static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_step;
 static PyObject *__pyx_n_s_stop;
@@ -2863,9 +2857,9 @@ static PyObject *__pyx_codeobj__29;
 static PyObject *__pyx_codeobj__36;
 /* Late includes */
 
-/* "hyvr/classes/trough_ae.pyx":13
- * cdef class TroughAE(AERealization):
- * 
+/* "hyvr/classes/trough_ae.pyx":17
+ *     @cython.boundscheck(False)
+ *     @cython.wraparound(False)
  *     cpdef create_object_arrays(self):             # <<<<<<<<<<<<<<
  *         # This is super ugly :(
  *         cdef int i
@@ -2888,7 +2882,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   Py_ssize_t __pyx_t_9;
   __pyx_t_5numpy_float_t __pyx_t_10;
   Py_ssize_t __pyx_t_11;
-  int __pyx_t_12;
+  Py_ssize_t __pyx_t_12;
   Py_ssize_t __pyx_t_13;
   Py_ssize_t __pyx_t_14;
   Py_ssize_t __pyx_t_15;
@@ -2904,10 +2898,9 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   Py_ssize_t __pyx_t_25;
   Py_ssize_t __pyx_t_26;
   Py_ssize_t __pyx_t_27;
-  Py_ssize_t __pyx_t_28;
-  __pyx_t_5numpy_int32_t __pyx_t_29;
+  __pyx_t_5numpy_int32_t __pyx_t_28;
+  Py_ssize_t __pyx_t_29;
   Py_ssize_t __pyx_t_30;
-  Py_ssize_t __pyx_t_31;
   __Pyx_RefNannySetupContext("create_object_arrays", 0);
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
@@ -2918,7 +2911,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_create_object_arrays); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_create_object_arrays); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_4hyvr_7classes_9trough_ae_8TroughAE_1create_object_arrays)) {
         __Pyx_XDECREF(__pyx_r);
@@ -2935,7 +2928,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_r = __pyx_t_2;
@@ -2956,172 +2949,12 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
     #endif
   }
 
-  /* "hyvr/classes/trough_ae.pyx":16
+  /* "hyvr/classes/trough_ae.pyx":20
  *         # This is super ugly :(
  *         cdef int i
  *         self.object_x = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
  *         self.object_y = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_x, 0);
-  __pyx_v_self->object_x = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hyvr/classes/trough_ae.pyx":17
- *         cdef int i
- *         self.object_x = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_y = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_y, 0);
-  __pyx_v_self->object_y = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hyvr/classes/trough_ae.pyx":18
- *         self.object_x = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_y = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_z = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_z, 0);
-  __pyx_v_self->object_z = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hyvr/classes/trough_ae.pyx":19
- *         self.object_y = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_a = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_a, 0);
-  __pyx_v_self->object_a = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hyvr/classes/trough_ae.pyx":20
- *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_b = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3151,17 +2984,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_b, 0);
-  __pyx_v_self->object_b = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_x, 0);
+  __pyx_v_self->object_x = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":21
+ *         cdef int i
+ *         self.object_x = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_y = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_c = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -3191,17 +3024,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_c, 0);
-  __pyx_v_self->object_c = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_y, 0);
+  __pyx_v_self->object_y = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":22
+ *         self.object_x = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_y = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_z = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -3231,17 +3064,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_max_ab, 0);
-  __pyx_v_self->object_max_ab = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_z, 0);
+  __pyx_v_self->object_z = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":23
+ *         self.object_y = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_a = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3271,17 +3104,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_alpha, 0);
-  __pyx_v_self->object_alpha = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_a, 0);
+  __pyx_v_self->object_a = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":24
+ *         self.object_z = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_b = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3311,17 +3144,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_sinalpha, 0);
-  __pyx_v_self->object_sinalpha = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_b, 0);
+  __pyx_v_self->object_b = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":25
+ *         self.object_a = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_c = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -3351,17 +3184,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_cosalpha, 0);
-  __pyx_v_self->object_cosalpha = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_c, 0);
+  __pyx_v_self->object_c = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":26
+ *         self.object_b = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -3391,17 +3224,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_lag, 0);
-  __pyx_v_self->object_lag = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_max_ab, 0);
+  __pyx_v_self->object_max_ab = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":27
+ *         self.object_c = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3431,17 +3264,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_shift, 0);
-  __pyx_v_self->object_shift = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_alpha, 0);
+  __pyx_v_self->object_alpha = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":28
+ *         self.object_max_ab = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3471,17 +3304,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_cosdip, 0);
-  __pyx_v_self->object_cosdip = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_sinalpha, 0);
+  __pyx_v_self->object_sinalpha = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":29
+ *         self.object_alpha = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -3511,17 +3344,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_layer_dist, 0);
-  __pyx_v_self->object_layer_dist = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_cosalpha, 0);
+  __pyx_v_self->object_cosalpha = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":30
+ *         self.object_sinalpha = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -3551,17 +3384,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_normvec_x, 0);
-  __pyx_v_self->object_normvec_x = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_lag, 0);
+  __pyx_v_self->object_lag = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":31
+ *         self.object_cosalpha = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3591,17 +3424,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_normvec_y, 0);
-  __pyx_v_self->object_normvec_y = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_shift, 0);
+  __pyx_v_self->object_shift = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":32
+ *         self.object_lag = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
- *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
- *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3631,17 +3464,17 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_normvec_z, 0);
-  __pyx_v_self->object_normvec_z = __pyx_t_6;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_cosdip, 0);
+  __pyx_v_self->object_cosdip = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":33
+ *         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)             # <<<<<<<<<<<<<<
- *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)
- * 
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -3659,7 +3492,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
@@ -3669,19 +3502,19 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_lag_facies, 0);
-  __pyx_v_self->object_lag_facies = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_layer_dist, 0);
+  __pyx_v_self->object_layer_dist = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
 
   /* "hyvr/classes/trough_ae.pyx":34
+ *         self.object_cosdip = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
  *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
- *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
- *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)             # <<<<<<<<<<<<<<
- * 
- *         for i, obj in enumerate(self.object_list):
  */
   __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -3699,7 +3532,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int32); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
@@ -3709,14 +3542,174 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_normvec_x, 0);
+  __pyx_v_self->object_normvec_x = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hyvr/classes/trough_ae.pyx":35
+ *         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_normvec_y, 0);
+  __pyx_v_self->object_normvec_y = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hyvr/classes/trough_ae.pyx":36
+ *         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)             # <<<<<<<<<<<<<<
+ *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
+ *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_normvec_z, 0);
+  __pyx_v_self->object_normvec_z = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hyvr/classes/trough_ae.pyx":37
+ *         self.object_normvec_y = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)             # <<<<<<<<<<<<<<
+ *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_lag_facies, 0);
+  __pyx_v_self->object_lag_facies = __pyx_t_7;
+  __pyx_t_7.memview = NULL;
+  __pyx_t_7.data = NULL;
+
+  /* "hyvr/classes/trough_ae.pyx":38
+ *         self.object_normvec_z = np.zeros(self.n_objects, dtype=np.float)
+ *         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
+ *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)             # <<<<<<<<<<<<<<
+ * 
+ *         for i, obj in enumerate(self.object_list):
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->__pyx_base.n_objects); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int32); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->object_structure, 0);
   __pyx_v_self->object_structure = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "hyvr/classes/trough_ae.pyx":36
+  /* "hyvr/classes/trough_ae.pyx":40
  *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)
  * 
  *         for i, obj in enumerate(self.object_list):             # <<<<<<<<<<<<<<
@@ -3728,9 +3721,9 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   for (;;) {
     if (__pyx_t_9 >= PyList_GET_SIZE(__pyx_t_2)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_9); __Pyx_INCREF(__pyx_t_4); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_9); __Pyx_INCREF(__pyx_t_4); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 40, __pyx_L1_error)
     #else
-    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_obj, __pyx_t_4);
@@ -3738,463 +3731,292 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
     __pyx_v_i = __pyx_t_8;
     __pyx_t_8 = (__pyx_t_8 + 1);
 
-    /* "hyvr/classes/trough_ae.pyx":37
+    /* "hyvr/classes/trough_ae.pyx":41
  * 
  *         for i, obj in enumerate(self.object_list):
  *             self.object_x[i] = obj.x             # <<<<<<<<<<<<<<
  *             self.object_y[i] = obj.y
  *             self.object_z[i] = obj.z
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 37, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 41, __pyx_L1_error)}
     __pyx_t_11 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_self->object_x.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_self->object_x.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 37, __pyx_L1_error)
-    }
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_x.data + __pyx_t_11 * __pyx_v_self->object_x.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":38
+    /* "hyvr/classes/trough_ae.pyx":42
  *         for i, obj in enumerate(self.object_list):
  *             self.object_x[i] = obj.x
  *             self.object_y[i] = obj.y             # <<<<<<<<<<<<<<
  *             self.object_z[i] = obj.z
  *             self.object_a[i] = obj.a
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 38, __pyx_L1_error)}
-    __pyx_t_13 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_13 < 0) {
-      __pyx_t_13 += __pyx_v_self->object_y.shape[0];
-      if (unlikely(__pyx_t_13 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_13 >= __pyx_v_self->object_y.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 38, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_y.data + __pyx_t_13 * __pyx_v_self->object_y.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 42, __pyx_L1_error)}
+    __pyx_t_12 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_y.data + __pyx_t_12 * __pyx_v_self->object_y.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":39
+    /* "hyvr/classes/trough_ae.pyx":43
  *             self.object_x[i] = obj.x
  *             self.object_y[i] = obj.y
  *             self.object_z[i] = obj.z             # <<<<<<<<<<<<<<
  *             self.object_a[i] = obj.a
  *             self.object_b[i] = obj.b
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_z); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_z); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 39, __pyx_L1_error)}
-    __pyx_t_14 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_14 < 0) {
-      __pyx_t_14 += __pyx_v_self->object_z.shape[0];
-      if (unlikely(__pyx_t_14 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_14 >= __pyx_v_self->object_z.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 39, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_z.data + __pyx_t_14 * __pyx_v_self->object_z.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 43, __pyx_L1_error)}
+    __pyx_t_13 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_z.data + __pyx_t_13 * __pyx_v_self->object_z.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":40
+    /* "hyvr/classes/trough_ae.pyx":44
  *             self.object_y[i] = obj.y
  *             self.object_z[i] = obj.z
  *             self.object_a[i] = obj.a             # <<<<<<<<<<<<<<
  *             self.object_b[i] = obj.b
  *             self.object_c[i] = obj.c
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_a); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_a); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 40, __pyx_L1_error)}
-    __pyx_t_15 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_15 < 0) {
-      __pyx_t_15 += __pyx_v_self->object_a.shape[0];
-      if (unlikely(__pyx_t_15 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_15 >= __pyx_v_self->object_a.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 40, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_a.data + __pyx_t_15 * __pyx_v_self->object_a.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 44, __pyx_L1_error)}
+    __pyx_t_14 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_a.data + __pyx_t_14 * __pyx_v_self->object_a.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":41
+    /* "hyvr/classes/trough_ae.pyx":45
  *             self.object_z[i] = obj.z
  *             self.object_a[i] = obj.a
  *             self.object_b[i] = obj.b             # <<<<<<<<<<<<<<
  *             self.object_c[i] = obj.c
  *             self.object_max_ab[i] = obj.max_ab
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_b); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_b); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 41, __pyx_L1_error)}
-    __pyx_t_16 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_16 < 0) {
-      __pyx_t_16 += __pyx_v_self->object_b.shape[0];
-      if (unlikely(__pyx_t_16 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_16 >= __pyx_v_self->object_b.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 41, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_b.data + __pyx_t_16 * __pyx_v_self->object_b.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 45, __pyx_L1_error)}
+    __pyx_t_15 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_b.data + __pyx_t_15 * __pyx_v_self->object_b.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":42
+    /* "hyvr/classes/trough_ae.pyx":46
  *             self.object_a[i] = obj.a
  *             self.object_b[i] = obj.b
  *             self.object_c[i] = obj.c             # <<<<<<<<<<<<<<
  *             self.object_max_ab[i] = obj.max_ab
  *             self.object_alpha[i] = obj.alpha
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_c); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_c); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 42, __pyx_L1_error)}
-    __pyx_t_17 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_17 < 0) {
-      __pyx_t_17 += __pyx_v_self->object_c.shape[0];
-      if (unlikely(__pyx_t_17 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_17 >= __pyx_v_self->object_c.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 42, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_17 * __pyx_v_self->object_c.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 46, __pyx_L1_error)}
+    __pyx_t_16 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_16 * __pyx_v_self->object_c.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":43
+    /* "hyvr/classes/trough_ae.pyx":47
  *             self.object_b[i] = obj.b
  *             self.object_c[i] = obj.c
  *             self.object_max_ab[i] = obj.max_ab             # <<<<<<<<<<<<<<
  *             self.object_alpha[i] = obj.alpha
  *             self.object_sinalpha[i] = obj.sinalpha
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_max_ab); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_max_ab); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 43, __pyx_L1_error)}
-    __pyx_t_18 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_18 < 0) {
-      __pyx_t_18 += __pyx_v_self->object_max_ab.shape[0];
-      if (unlikely(__pyx_t_18 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_18 >= __pyx_v_self->object_max_ab.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 43, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_max_ab.data + __pyx_t_18 * __pyx_v_self->object_max_ab.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 47, __pyx_L1_error)}
+    __pyx_t_17 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_max_ab.data + __pyx_t_17 * __pyx_v_self->object_max_ab.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":44
+    /* "hyvr/classes/trough_ae.pyx":48
  *             self.object_c[i] = obj.c
  *             self.object_max_ab[i] = obj.max_ab
  *             self.object_alpha[i] = obj.alpha             # <<<<<<<<<<<<<<
  *             self.object_sinalpha[i] = obj.sinalpha
  *             self.object_cosalpha[i] = obj.cosalpha
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_alpha); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_alpha); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_alpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 44, __pyx_L1_error)}
-    __pyx_t_19 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_19 < 0) {
-      __pyx_t_19 += __pyx_v_self->object_alpha.shape[0];
-      if (unlikely(__pyx_t_19 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_19 >= __pyx_v_self->object_alpha.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 44, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_alpha.data + __pyx_t_19 * __pyx_v_self->object_alpha.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_alpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 48, __pyx_L1_error)}
+    __pyx_t_18 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_alpha.data + __pyx_t_18 * __pyx_v_self->object_alpha.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":45
+    /* "hyvr/classes/trough_ae.pyx":49
  *             self.object_max_ab[i] = obj.max_ab
  *             self.object_alpha[i] = obj.alpha
  *             self.object_sinalpha[i] = obj.sinalpha             # <<<<<<<<<<<<<<
  *             self.object_cosalpha[i] = obj.cosalpha
  *             self.object_lag[i] = obj.lag
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_sinalpha); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_sinalpha); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 45, __pyx_L1_error)}
-    __pyx_t_20 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_20 < 0) {
-      __pyx_t_20 += __pyx_v_self->object_sinalpha.shape[0];
-      if (unlikely(__pyx_t_20 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_20 >= __pyx_v_self->object_sinalpha.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 45, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_20 * __pyx_v_self->object_sinalpha.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 49, __pyx_L1_error)}
+    __pyx_t_19 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_19 * __pyx_v_self->object_sinalpha.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":46
+    /* "hyvr/classes/trough_ae.pyx":50
  *             self.object_alpha[i] = obj.alpha
  *             self.object_sinalpha[i] = obj.sinalpha
  *             self.object_cosalpha[i] = obj.cosalpha             # <<<<<<<<<<<<<<
  *             self.object_lag[i] = obj.lag
  *             self.object_shift[i] = obj.shift
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_cosalpha); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_cosalpha); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 46, __pyx_L1_error)}
-    __pyx_t_21 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_21 < 0) {
-      __pyx_t_21 += __pyx_v_self->object_cosalpha.shape[0];
-      if (unlikely(__pyx_t_21 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_21 >= __pyx_v_self->object_cosalpha.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 46, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_21 * __pyx_v_self->object_cosalpha.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 50, __pyx_L1_error)}
+    __pyx_t_20 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_20 * __pyx_v_self->object_cosalpha.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":47
+    /* "hyvr/classes/trough_ae.pyx":51
  *             self.object_sinalpha[i] = obj.sinalpha
  *             self.object_cosalpha[i] = obj.cosalpha
  *             self.object_lag[i] = obj.lag             # <<<<<<<<<<<<<<
  *             self.object_shift[i] = obj.shift
  *             self.object_cosdip[i] = obj.cosdip
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_lag); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_lag); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_lag.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 47, __pyx_L1_error)}
-    __pyx_t_22 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_22 < 0) {
-      __pyx_t_22 += __pyx_v_self->object_lag.shape[0];
-      if (unlikely(__pyx_t_22 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_22 >= __pyx_v_self->object_lag.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 47, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_lag.data + __pyx_t_22 * __pyx_v_self->object_lag.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_lag.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 51, __pyx_L1_error)}
+    __pyx_t_21 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_lag.data + __pyx_t_21 * __pyx_v_self->object_lag.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":48
+    /* "hyvr/classes/trough_ae.pyx":52
  *             self.object_cosalpha[i] = obj.cosalpha
  *             self.object_lag[i] = obj.lag
  *             self.object_shift[i] = obj.shift             # <<<<<<<<<<<<<<
  *             self.object_cosdip[i] = obj.cosdip
  *             self.object_layer_dist[i] = obj.layer_dist
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_shift); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_shift); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 48, __pyx_L1_error)}
-    __pyx_t_23 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_23 < 0) {
-      __pyx_t_23 += __pyx_v_self->object_shift.shape[0];
-      if (unlikely(__pyx_t_23 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_23 >= __pyx_v_self->object_shift.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 48, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_23 * __pyx_v_self->object_shift.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 52, __pyx_L1_error)}
+    __pyx_t_22 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_22 * __pyx_v_self->object_shift.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":49
+    /* "hyvr/classes/trough_ae.pyx":53
  *             self.object_lag[i] = obj.lag
  *             self.object_shift[i] = obj.shift
  *             self.object_cosdip[i] = obj.cosdip             # <<<<<<<<<<<<<<
  *             self.object_layer_dist[i] = obj.layer_dist
  *             self.object_normvec_x[i] = obj.normvec_x
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_cosdip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_cosdip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_cosdip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 49, __pyx_L1_error)}
-    __pyx_t_24 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_24 < 0) {
-      __pyx_t_24 += __pyx_v_self->object_cosdip.shape[0];
-      if (unlikely(__pyx_t_24 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_24 >= __pyx_v_self->object_cosdip.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 49, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosdip.data + __pyx_t_24 * __pyx_v_self->object_cosdip.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_cosdip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 53, __pyx_L1_error)}
+    __pyx_t_23 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosdip.data + __pyx_t_23 * __pyx_v_self->object_cosdip.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":50
+    /* "hyvr/classes/trough_ae.pyx":54
  *             self.object_shift[i] = obj.shift
  *             self.object_cosdip[i] = obj.cosdip
  *             self.object_layer_dist[i] = obj.layer_dist             # <<<<<<<<<<<<<<
  *             self.object_normvec_x[i] = obj.normvec_x
  *             self.object_normvec_y[i] = obj.normvec_y
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_layer_dist); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_layer_dist); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 50, __pyx_L1_error)}
-    __pyx_t_25 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_25 < 0) {
-      __pyx_t_25 += __pyx_v_self->object_layer_dist.shape[0];
-      if (unlikely(__pyx_t_25 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_25 >= __pyx_v_self->object_layer_dist.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 50, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_25 * __pyx_v_self->object_layer_dist.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 54, __pyx_L1_error)}
+    __pyx_t_24 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_24 * __pyx_v_self->object_layer_dist.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":51
+    /* "hyvr/classes/trough_ae.pyx":55
  *             self.object_cosdip[i] = obj.cosdip
  *             self.object_layer_dist[i] = obj.layer_dist
  *             self.object_normvec_x[i] = obj.normvec_x             # <<<<<<<<<<<<<<
  *             self.object_normvec_y[i] = obj.normvec_y
  *             self.object_normvec_z[i] = obj.normvec_z
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_normvec_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_normvec_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_normvec_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 51, __pyx_L1_error)}
-    __pyx_t_26 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_26 < 0) {
-      __pyx_t_26 += __pyx_v_self->object_normvec_x.shape[0];
-      if (unlikely(__pyx_t_26 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_26 >= __pyx_v_self->object_normvec_x.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 51, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_x.data + __pyx_t_26 * __pyx_v_self->object_normvec_x.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_normvec_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 55, __pyx_L1_error)}
+    __pyx_t_25 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_x.data + __pyx_t_25 * __pyx_v_self->object_normvec_x.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":52
+    /* "hyvr/classes/trough_ae.pyx":56
  *             self.object_layer_dist[i] = obj.layer_dist
  *             self.object_normvec_x[i] = obj.normvec_x
  *             self.object_normvec_y[i] = obj.normvec_y             # <<<<<<<<<<<<<<
  *             self.object_normvec_z[i] = obj.normvec_z
  *             self.object_lag_facies[i] = obj.lag_facies
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_normvec_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_normvec_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 52, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_normvec_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 52, __pyx_L1_error)}
-    __pyx_t_27 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_27 < 0) {
-      __pyx_t_27 += __pyx_v_self->object_normvec_y.shape[0];
-      if (unlikely(__pyx_t_27 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_27 >= __pyx_v_self->object_normvec_y.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 52, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_y.data + __pyx_t_27 * __pyx_v_self->object_normvec_y.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_normvec_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 56, __pyx_L1_error)}
+    __pyx_t_26 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_y.data + __pyx_t_26 * __pyx_v_self->object_normvec_y.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":53
+    /* "hyvr/classes/trough_ae.pyx":57
  *             self.object_normvec_x[i] = obj.normvec_x
  *             self.object_normvec_y[i] = obj.normvec_y
  *             self.object_normvec_z[i] = obj.normvec_z             # <<<<<<<<<<<<<<
  *             self.object_lag_facies[i] = obj.lag_facies
  *             self.object_structure[i] = obj.structure
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_normvec_z); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_normvec_z); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
+    __pyx_t_10 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_10 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 57, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_normvec_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 53, __pyx_L1_error)}
-    __pyx_t_28 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_28 < 0) {
-      __pyx_t_28 += __pyx_v_self->object_normvec_z.shape[0];
-      if (unlikely(__pyx_t_28 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_28 >= __pyx_v_self->object_normvec_z.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 53, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_z.data + __pyx_t_28 * __pyx_v_self->object_normvec_z.strides[0]) )) = __pyx_t_10;
+    if (unlikely(!__pyx_v_self->object_normvec_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 57, __pyx_L1_error)}
+    __pyx_t_27 = __pyx_v_i;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_z.data + __pyx_t_27 * __pyx_v_self->object_normvec_z.strides[0]) )) = __pyx_t_10;
 
-    /* "hyvr/classes/trough_ae.pyx":54
+    /* "hyvr/classes/trough_ae.pyx":58
  *             self.object_normvec_y[i] = obj.normvec_y
  *             self.object_normvec_z[i] = obj.normvec_z
  *             self.object_lag_facies[i] = obj.lag_facies             # <<<<<<<<<<<<<<
  *             self.object_structure[i] = obj.structure
  * 
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_lag_facies); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_lag_facies); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_29 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_29 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L1_error)
+    __pyx_t_28 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_28 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 58, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_lag_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 54, __pyx_L1_error)}
-    __pyx_t_30 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_30 < 0) {
-      __pyx_t_30 += __pyx_v_self->object_lag_facies.shape[0];
-      if (unlikely(__pyx_t_30 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_30 >= __pyx_v_self->object_lag_facies.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 54, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_lag_facies.data + __pyx_t_30 * __pyx_v_self->object_lag_facies.strides[0]) )) = __pyx_t_29;
+    if (unlikely(!__pyx_v_self->object_lag_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 58, __pyx_L1_error)}
+    __pyx_t_29 = __pyx_v_i;
+    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_lag_facies.data + __pyx_t_29 * __pyx_v_self->object_lag_facies.strides[0]) )) = __pyx_t_28;
 
-    /* "hyvr/classes/trough_ae.pyx":55
+    /* "hyvr/classes/trough_ae.pyx":59
  *             self.object_normvec_z[i] = obj.normvec_z
  *             self.object_lag_facies[i] = obj.lag_facies
  *             self.object_structure[i] = obj.structure             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_structure); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_structure); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_29 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_29 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_28 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_28 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 55, __pyx_L1_error)}
-    __pyx_t_31 = __pyx_v_i;
-    __pyx_t_12 = -1;
-    if (__pyx_t_31 < 0) {
-      __pyx_t_31 += __pyx_v_self->object_structure.shape[0];
-      if (unlikely(__pyx_t_31 < 0)) __pyx_t_12 = 0;
-    } else if (unlikely(__pyx_t_31 >= __pyx_v_self->object_structure.shape[0])) __pyx_t_12 = 0;
-    if (unlikely(__pyx_t_12 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_12);
-      __PYX_ERR(0, 55, __pyx_L1_error)
-    }
-    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_31 * __pyx_v_self->object_structure.strides[0]) )) = __pyx_t_29;
+    if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 59, __pyx_L1_error)}
+    __pyx_t_30 = __pyx_v_i;
+    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_30 * __pyx_v_self->object_structure.strides[0]) )) = __pyx_t_28;
 
-    /* "hyvr/classes/trough_ae.pyx":36
+    /* "hyvr/classes/trough_ae.pyx":40
  *         self.object_structure = np.zeros(self.n_objects, dtype=np.int32)
  * 
  *         for i, obj in enumerate(self.object_list):             # <<<<<<<<<<<<<<
@@ -4204,9 +4026,9 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_array
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hyvr/classes/trough_ae.pyx":13
- * cdef class TroughAE(AERealization):
- * 
+  /* "hyvr/classes/trough_ae.pyx":17
+ *     @cython.boundscheck(False)
+ *     @cython.wraparound(False)
  *     cpdef create_object_arrays(self):             # <<<<<<<<<<<<<<
  *         # This is super ugly :(
  *         cdef int i
@@ -4251,7 +4073,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_create_object_arra
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("create_object_arrays", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_arrays(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_arrays(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4268,7 +4090,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_create_object_arra
   return __pyx_r;
 }
 
-/* "hyvr/classes/trough_ae.pyx":58
+/* "hyvr/classes/trough_ae.pyx":62
  * 
  * 
  *     def generate_objects(self, grid):             # <<<<<<<<<<<<<<
@@ -4313,7 +4135,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
   PyObject *(*__pyx_t_12)(PyObject *);
   __Pyx_RefNannySetupContext("generate_objects", 0);
 
-  /* "hyvr/classes/trough_ae.pyx":64
+  /* "hyvr/classes/trough_ae.pyx":68
  * 
  *         # get trough positions
  *         if self.type_params['te_xyz'] is None:             # <<<<<<<<<<<<<<
@@ -4322,26 +4144,26 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
  */
   if (unlikely(__pyx_v_self->__pyx_base.type_params == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 64, __pyx_L1_error)
+    __PYX_ERR(0, 68, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_self->__pyx_base.type_params, __pyx_n_u_te_xyz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_self->__pyx_base.type_params, __pyx_n_u_te_xyz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = (__pyx_t_1 == Py_None);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "hyvr/classes/trough_ae.pyx":65
+    /* "hyvr/classes/trough_ae.pyx":69
  *         # get trough positions
  *         if self.type_params['te_xyz'] is None:
  *             te_xyz = generate_trough_positions(             # <<<<<<<<<<<<<<
  *                 self.bottom_surface, self.top_surface, self.type_params, grid
  *             )
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_generate_trough_positions); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_generate_trough_positions); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
 
-    /* "hyvr/classes/trough_ae.pyx":66
+    /* "hyvr/classes/trough_ae.pyx":70
  *         if self.type_params['te_xyz'] is None:
  *             te_xyz = generate_trough_positions(
  *                 self.bottom_surface, self.top_surface, self.type_params, grid             # <<<<<<<<<<<<<<
@@ -4363,7 +4185,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[5] = {__pyx_t_5, ((PyObject *)__pyx_v_self->__pyx_base.bottom_surface), ((PyObject *)__pyx_v_self->__pyx_base.top_surface), __pyx_v_self->__pyx_base.type_params, __pyx_v_grid};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 4+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 4+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -4371,13 +4193,13 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[5] = {__pyx_t_5, ((PyObject *)__pyx_v_self->__pyx_base.bottom_surface), ((PyObject *)__pyx_v_self->__pyx_base.top_surface), __pyx_v_self->__pyx_base.type_params, __pyx_v_grid};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 4+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_6, 4+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_7 = PyTuple_New(4+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 65, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(4+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       if (__pyx_t_5) {
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -4394,7 +4216,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
       __Pyx_INCREF(__pyx_v_grid);
       __Pyx_GIVEREF(__pyx_v_grid);
       PyTuple_SET_ITEM(__pyx_t_7, 3+__pyx_t_6, __pyx_v_grid);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
@@ -4402,7 +4224,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     __pyx_v_te_xyz = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "hyvr/classes/trough_ae.pyx":64
+    /* "hyvr/classes/trough_ae.pyx":68
  * 
  *         # get trough positions
  *         if self.type_params['te_xyz'] is None:             # <<<<<<<<<<<<<<
@@ -4412,7 +4234,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     goto __pyx_L3;
   }
 
-  /* "hyvr/classes/trough_ae.pyx":69
+  /* "hyvr/classes/trough_ae.pyx":73
  *             )
  *         else:
  *             te_xyz = self.type_params['te_xyz']             # <<<<<<<<<<<<<<
@@ -4422,16 +4244,16 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
   /*else*/ {
     if (unlikely(__pyx_v_self->__pyx_base.type_params == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 69, __pyx_L1_error)
+      __PYX_ERR(0, 73, __pyx_L1_error)
     }
-    __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_self->__pyx_base.type_params, __pyx_n_u_te_xyz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_self->__pyx_base.type_params, __pyx_n_u_te_xyz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_v_te_xyz = __pyx_t_1;
     __pyx_t_1 = 0;
   }
   __pyx_L3:;
 
-  /* "hyvr/classes/trough_ae.pyx":72
+  /* "hyvr/classes/trough_ae.pyx":76
  * 
  *         # Generate troughs
  *         for xc, yc, zc in te_xyz:             # <<<<<<<<<<<<<<
@@ -4442,26 +4264,26 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     __pyx_t_1 = __pyx_v_te_xyz; __Pyx_INCREF(__pyx_t_1); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_te_xyz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_te_xyz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 76, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_9)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 72, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 76, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 72, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 76, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -4471,7 +4293,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 72, __pyx_L1_error)
+          else __PYX_ERR(0, 76, __pyx_L1_error)
         }
         break;
       }
@@ -4483,7 +4305,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 72, __pyx_L1_error)
+        __PYX_ERR(0, 76, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -4499,17 +4321,17 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
       __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(__pyx_t_10);
       #else
-      __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 72, __pyx_L1_error)
+      __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
+      __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_10 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 72, __pyx_L1_error)
+      __pyx_t_10 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       #endif
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_11 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 72, __pyx_L1_error)
+      __pyx_t_11 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_12 = Py_TYPE(__pyx_t_11)->tp_iternext;
@@ -4519,7 +4341,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
       __Pyx_GOTREF(__pyx_t_5);
       index = 2; __pyx_t_10 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_10)) goto __pyx_L6_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_10);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_12(__pyx_t_11), 3) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_12(__pyx_t_11), 3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
       __pyx_t_12 = NULL;
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       goto __pyx_L7_unpacking_done;
@@ -4527,7 +4349,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __pyx_t_12 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 72, __pyx_L1_error)
+      __PYX_ERR(0, 76, __pyx_L1_error)
       __pyx_L7_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_xc, __pyx_t_7);
@@ -4537,14 +4359,14 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     __Pyx_XDECREF_SET(__pyx_v_zc, __pyx_t_10);
     __pyx_t_10 = 0;
 
-    /* "hyvr/classes/trough_ae.pyx":73
+    /* "hyvr/classes/trough_ae.pyx":77
  *         # Generate troughs
  *         for xc, yc, zc in te_xyz:
  *             trough_params = rand_trough_params(self.type_params, zc, grid)             # <<<<<<<<<<<<<<
  *             trough_params['x'] = xc
  *             trough_params['y'] = yc
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_rand_trough_params); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_rand_trough_params); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __pyx_t_5 = NULL;
     __pyx_t_6 = 0;
@@ -4561,7 +4383,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_10)) {
       PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_self->__pyx_base.type_params, __pyx_v_zc, __pyx_v_grid};
-      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
@@ -4569,13 +4391,13 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
       PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_self->__pyx_base.type_params, __pyx_v_zc, __pyx_v_grid};
-      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_6, 3+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
     #endif
     {
-      __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(3+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 77, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       if (__pyx_t_5) {
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -4589,7 +4411,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
       __Pyx_INCREF(__pyx_v_grid);
       __Pyx_GIVEREF(__pyx_v_grid);
       PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_6, __pyx_v_grid);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
@@ -4597,59 +4419,59 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     __Pyx_XDECREF_SET(__pyx_v_trough_params, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "hyvr/classes/trough_ae.pyx":74
+    /* "hyvr/classes/trough_ae.pyx":78
  *         for xc, yc, zc in te_xyz:
  *             trough_params = rand_trough_params(self.type_params, zc, grid)
  *             trough_params['x'] = xc             # <<<<<<<<<<<<<<
  *             trough_params['y'] = yc
  *             trough_params['z'] = zc
  */
-    if (unlikely(PyObject_SetItem(__pyx_v_trough_params, __pyx_n_u_x, __pyx_v_xc) < 0)) __PYX_ERR(0, 74, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_v_trough_params, __pyx_n_u_x, __pyx_v_xc) < 0)) __PYX_ERR(0, 78, __pyx_L1_error)
 
-    /* "hyvr/classes/trough_ae.pyx":75
+    /* "hyvr/classes/trough_ae.pyx":79
  *             trough_params = rand_trough_params(self.type_params, zc, grid)
  *             trough_params['x'] = xc
  *             trough_params['y'] = yc             # <<<<<<<<<<<<<<
  *             trough_params['z'] = zc
  *             trough = Trough(self.type_params, **trough_params)
  */
-    if (unlikely(PyObject_SetItem(__pyx_v_trough_params, __pyx_n_u_y, __pyx_v_yc) < 0)) __PYX_ERR(0, 75, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_v_trough_params, __pyx_n_u_y, __pyx_v_yc) < 0)) __PYX_ERR(0, 79, __pyx_L1_error)
 
-    /* "hyvr/classes/trough_ae.pyx":76
+    /* "hyvr/classes/trough_ae.pyx":80
  *             trough_params['x'] = xc
  *             trough_params['y'] = yc
  *             trough_params['z'] = zc             # <<<<<<<<<<<<<<
  *             trough = Trough(self.type_params, **trough_params)
  *             self._add_object(trough)
  */
-    if (unlikely(PyObject_SetItem(__pyx_v_trough_params, __pyx_n_u_z, __pyx_v_zc) < 0)) __PYX_ERR(0, 76, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_v_trough_params, __pyx_n_u_z, __pyx_v_zc) < 0)) __PYX_ERR(0, 80, __pyx_L1_error)
 
-    /* "hyvr/classes/trough_ae.pyx":77
+    /* "hyvr/classes/trough_ae.pyx":81
  *             trough_params['y'] = yc
  *             trough_params['z'] = zc
  *             trough = Trough(self.type_params, **trough_params)             # <<<<<<<<<<<<<<
  *             self._add_object(trough)
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_Trough); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_Trough); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = PyTuple_New(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __pyx_t_10 = PyTuple_New(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_INCREF(__pyx_v_self->__pyx_base.type_params);
     __Pyx_GIVEREF(__pyx_v_self->__pyx_base.type_params);
     PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_v_self->__pyx_base.type_params);
     if (unlikely(__pyx_v_trough_params == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "argument after ** must be a mapping, not NoneType");
-      __PYX_ERR(0, 77, __pyx_L1_error)
+      __PYX_ERR(0, 81, __pyx_L1_error)
     }
     if (likely(PyDict_CheckExact(__pyx_v_trough_params))) {
-      __pyx_t_7 = PyDict_Copy(__pyx_v_trough_params); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 77, __pyx_L1_error)
+      __pyx_t_7 = PyDict_Copy(__pyx_v_trough_params); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 81, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
     } else {
-      __pyx_t_7 = PyObject_CallFunctionObjArgs((PyObject*)&PyDict_Type, __pyx_v_trough_params, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 77, __pyx_L1_error)
+      __pyx_t_7 = PyObject_CallFunctionObjArgs((PyObject*)&PyDict_Type, __pyx_v_trough_params, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 81, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
     }
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_10, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_10, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -4657,14 +4479,14 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     __Pyx_XDECREF_SET(__pyx_v_trough, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "hyvr/classes/trough_ae.pyx":78
+    /* "hyvr/classes/trough_ae.pyx":82
  *             trough_params['z'] = zc
  *             trough = Trough(self.type_params, **trough_params)
  *             self._add_object(trough)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_object); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_object); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_10 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_7))) {
@@ -4678,12 +4500,12 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
     }
     __pyx_t_5 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_10, __pyx_v_trough) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_trough);
     __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "hyvr/classes/trough_ae.pyx":72
+    /* "hyvr/classes/trough_ae.pyx":76
  * 
  *         # Generate troughs
  *         for xc, yc, zc in te_xyz:             # <<<<<<<<<<<<<<
@@ -4693,7 +4515,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hyvr/classes/trough_ae.pyx":58
+  /* "hyvr/classes/trough_ae.pyx":62
  * 
  * 
  *     def generate_objects(self, grid):             # <<<<<<<<<<<<<<
@@ -4725,7 +4547,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_2generate_objects(
   return __pyx_r;
 }
 
-/* "hyvr/classes/trough_ae.pyx":86
+/* "hyvr/classes/trough_ae.pyx":90
  *     @cython.wraparound(False)
  *     @cython.nonecheck(False)
  *     cpdef maybe_assign_points_to_object(self, int oi,             # <<<<<<<<<<<<<<
@@ -4754,7 +4576,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
   PyObject *__pyx_v_dip = 0;
   PyObject *__pyx_v_cos_azim = 0;
   PyObject *__pyx_v_azim = 0;
-  PyObject *__pyx_v_len_tanvec_xy = NULL;
+  double __pyx_v_len_tanvec_xy;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4830,11 +4652,11 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
   Py_ssize_t __pyx_t_71;
   Py_ssize_t __pyx_t_72;
   Py_ssize_t __pyx_t_73;
-  double __pyx_t_74;
+  Py_ssize_t __pyx_t_74;
   Py_ssize_t __pyx_t_75;
   Py_ssize_t __pyx_t_76;
   Py_ssize_t __pyx_t_77;
-  Py_ssize_t __pyx_t_78;
+  double __pyx_t_78;
   Py_ssize_t __pyx_t_79;
   Py_ssize_t __pyx_t_80;
   Py_ssize_t __pyx_t_81;
@@ -4865,27 +4687,27 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_maybe_assign_points_to_object); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_maybe_assign_points_to_object); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_4hyvr_7classes_9trough_ae_8TroughAE_5maybe_assign_points_to_object)) {
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_oi); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_oi); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 86, __pyx_L1_error) }
-        __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_geo_ids, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
+        if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 90, __pyx_L1_error) }
+        __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_geo_ids, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 86, __pyx_L1_error) }
-        __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_angles, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 86, __pyx_L1_error)
+        if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 90, __pyx_L1_error) }
+        __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_angles, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_7 = PyFloat_FromDouble(__pyx_v_y); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __pyx_t_7 = PyFloat_FromDouble(__pyx_v_y); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_8 = PyFloat_FromDouble(__pyx_v_z); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __pyx_t_8 = PyFloat_FromDouble(__pyx_v_z); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_x_idx); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_x_idx); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_v_y_idx); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 86, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_v_y_idx); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 90, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_INCREF(__pyx_t_1);
         __pyx_t_11 = __pyx_t_1; __pyx_t_12 = NULL;
@@ -4903,7 +4725,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_11)) {
           PyObject *__pyx_temp[10] = {__pyx_t_12, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, ((PyObject *)__pyx_v_grid)};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_13, 9+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_13, 9+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4919,7 +4741,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_11)) {
           PyObject *__pyx_temp[10] = {__pyx_t_12, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, ((PyObject *)__pyx_v_grid)};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_13, 9+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_13, 9+__pyx_t_13); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4933,7 +4755,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
         } else
         #endif
         {
-          __pyx_t_14 = PyTuple_New(9+__pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 86, __pyx_L1_error)
+          __pyx_t_14 = PyTuple_New(9+__pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 90, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_14);
           if (__pyx_t_12) {
             __Pyx_GIVEREF(__pyx_t_12); PyTuple_SET_ITEM(__pyx_t_14, 0, __pyx_t_12); __pyx_t_12 = NULL;
@@ -4965,7 +4787,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
           __pyx_t_8 = 0;
           __pyx_t_9 = 0;
           __pyx_t_10 = 0;
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_14, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_14, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         }
@@ -4988,40 +4810,40 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     #endif
   }
 
-  /* "hyvr/classes/trough_ae.pyx":130
+  /* "hyvr/classes/trough_ae.pyx":134
  *         # number of calculations short, we first use very broad criterions
  *         # before calculating whether it's inside.
  *         dx = x - self.object_x[oi]             # <<<<<<<<<<<<<<
  *         dy = y - self.object_y[oi]
  *         dz = z - self.object_z[oi]
  */
-  if (unlikely(!__pyx_v_self->object_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 130, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 134, __pyx_L1_error)}
   __pyx_t_15 = __pyx_v_oi;
   __pyx_v_dx = (__pyx_v_x - (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_x.data + __pyx_t_15 * __pyx_v_self->object_x.strides[0]) ))));
 
-  /* "hyvr/classes/trough_ae.pyx":131
+  /* "hyvr/classes/trough_ae.pyx":135
  *         # before calculating whether it's inside.
  *         dx = x - self.object_x[oi]
  *         dy = y - self.object_y[oi]             # <<<<<<<<<<<<<<
  *         dz = z - self.object_z[oi]
  *         if grid.periodic:
  */
-  if (unlikely(!__pyx_v_self->object_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 131, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 135, __pyx_L1_error)}
   __pyx_t_16 = __pyx_v_oi;
   __pyx_v_dy = (__pyx_v_y - (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_y.data + __pyx_t_16 * __pyx_v_self->object_y.strides[0]) ))));
 
-  /* "hyvr/classes/trough_ae.pyx":132
+  /* "hyvr/classes/trough_ae.pyx":136
  *         dx = x - self.object_x[oi]
  *         dy = y - self.object_y[oi]
  *         dz = z - self.object_z[oi]             # <<<<<<<<<<<<<<
  *         if grid.periodic:
  *             if dx > grid.lx/2:
  */
-  if (unlikely(!__pyx_v_self->object_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 132, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 136, __pyx_L1_error)}
   __pyx_t_17 = __pyx_v_oi;
   __pyx_v_dz = (__pyx_v_z - (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_z.data + __pyx_t_17 * __pyx_v_self->object_z.strides[0]) ))));
 
-  /* "hyvr/classes/trough_ae.pyx":133
+  /* "hyvr/classes/trough_ae.pyx":137
  *         dy = y - self.object_y[oi]
  *         dz = z - self.object_z[oi]
  *         if grid.periodic:             # <<<<<<<<<<<<<<
@@ -5031,7 +4853,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
   __pyx_t_18 = (__pyx_v_grid->periodic != 0);
   if (__pyx_t_18) {
 
-    /* "hyvr/classes/trough_ae.pyx":134
+    /* "hyvr/classes/trough_ae.pyx":138
  *         dz = z - self.object_z[oi]
  *         if grid.periodic:
  *             if dx > grid.lx/2:             # <<<<<<<<<<<<<<
@@ -5041,7 +4863,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = ((__pyx_v_dx > (__pyx_v_grid->lx / 2.0)) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":135
+      /* "hyvr/classes/trough_ae.pyx":139
  *         if grid.periodic:
  *             if dx > grid.lx/2:
  *                 dx -= grid.lx             # <<<<<<<<<<<<<<
@@ -5050,7 +4872,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
       __pyx_v_dx = (__pyx_v_dx - __pyx_v_grid->lx);
 
-      /* "hyvr/classes/trough_ae.pyx":134
+      /* "hyvr/classes/trough_ae.pyx":138
  *         dz = z - self.object_z[oi]
  *         if grid.periodic:
  *             if dx > grid.lx/2:             # <<<<<<<<<<<<<<
@@ -5060,7 +4882,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
       goto __pyx_L4;
     }
 
-    /* "hyvr/classes/trough_ae.pyx":136
+    /* "hyvr/classes/trough_ae.pyx":140
  *             if dx > grid.lx/2:
  *                 dx -= grid.lx
  *             elif dx < -grid.lx/2:             # <<<<<<<<<<<<<<
@@ -5070,7 +4892,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = ((__pyx_v_dx < ((-__pyx_v_grid->lx) / 2.0)) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":137
+      /* "hyvr/classes/trough_ae.pyx":141
  *                 dx -= grid.lx
  *             elif dx < -grid.lx/2:
  *                 dx += grid.lx             # <<<<<<<<<<<<<<
@@ -5079,7 +4901,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
       __pyx_v_dx = (__pyx_v_dx + __pyx_v_grid->lx);
 
-      /* "hyvr/classes/trough_ae.pyx":136
+      /* "hyvr/classes/trough_ae.pyx":140
  *             if dx > grid.lx/2:
  *                 dx -= grid.lx
  *             elif dx < -grid.lx/2:             # <<<<<<<<<<<<<<
@@ -5089,7 +4911,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     }
     __pyx_L4:;
 
-    /* "hyvr/classes/trough_ae.pyx":138
+    /* "hyvr/classes/trough_ae.pyx":142
  *             elif dx < -grid.lx/2:
  *                 dx += grid.lx
  *             if dy > grid.ly/2:             # <<<<<<<<<<<<<<
@@ -5099,7 +4921,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = ((__pyx_v_dy > (__pyx_v_grid->ly / 2.0)) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":139
+      /* "hyvr/classes/trough_ae.pyx":143
  *                 dx += grid.lx
  *             if dy > grid.ly/2:
  *                 dy -= grid.ly             # <<<<<<<<<<<<<<
@@ -5108,7 +4930,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
       __pyx_v_dy = (__pyx_v_dy - __pyx_v_grid->ly);
 
-      /* "hyvr/classes/trough_ae.pyx":138
+      /* "hyvr/classes/trough_ae.pyx":142
  *             elif dx < -grid.lx/2:
  *                 dx += grid.lx
  *             if dy > grid.ly/2:             # <<<<<<<<<<<<<<
@@ -5118,7 +4940,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
       goto __pyx_L5;
     }
 
-    /* "hyvr/classes/trough_ae.pyx":140
+    /* "hyvr/classes/trough_ae.pyx":144
  *             if dy > grid.ly/2:
  *                 dy -= grid.ly
  *             elif dy < -grid.ly/2:             # <<<<<<<<<<<<<<
@@ -5128,7 +4950,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = ((__pyx_v_dy < ((-__pyx_v_grid->ly) / 2.0)) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":141
+      /* "hyvr/classes/trough_ae.pyx":145
  *                 dy -= grid.ly
  *             elif dy < -grid.ly/2:
  *                 dy += grid.ly             # <<<<<<<<<<<<<<
@@ -5137,7 +4959,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
       __pyx_v_dy = (__pyx_v_dy + __pyx_v_grid->ly);
 
-      /* "hyvr/classes/trough_ae.pyx":140
+      /* "hyvr/classes/trough_ae.pyx":144
  *             if dy > grid.ly/2:
  *                 dy -= grid.ly
  *             elif dy < -grid.ly/2:             # <<<<<<<<<<<<<<
@@ -5147,7 +4969,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     }
     __pyx_L5:;
 
-    /* "hyvr/classes/trough_ae.pyx":133
+    /* "hyvr/classes/trough_ae.pyx":137
  *         dy = y - self.object_y[oi]
  *         dz = z - self.object_z[oi]
  *         if grid.periodic:             # <<<<<<<<<<<<<<
@@ -5156,14 +4978,14 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":143
+  /* "hyvr/classes/trough_ae.pyx":147
  *                 dy += grid.ly
  *         # it seems to me that this is a bit faster than abs, and speed here is critical
  *         if dx > self.object_max_ab[oi] or -dx > self.object_max_ab[oi] or dy > self.object_max_ab[oi] or -dy > self.object_max_ab[oi] or dz > 0:             # <<<<<<<<<<<<<<
  *             geo_ids[0] = -1
  *             return
  */
-  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 143, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 147, __pyx_L1_error)}
   __pyx_t_19 = __pyx_v_oi;
   __pyx_t_20 = ((__pyx_v_dx > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_max_ab.data + __pyx_t_19 * __pyx_v_self->object_max_ab.strides[0]) )))) != 0);
   if (!__pyx_t_20) {
@@ -5171,7 +4993,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = __pyx_t_20;
     goto __pyx_L7_bool_binop_done;
   }
-  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 143, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 147, __pyx_L1_error)}
   __pyx_t_21 = __pyx_v_oi;
   __pyx_t_20 = (((-__pyx_v_dx) > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_max_ab.data + __pyx_t_21 * __pyx_v_self->object_max_ab.strides[0]) )))) != 0);
   if (!__pyx_t_20) {
@@ -5179,7 +5001,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = __pyx_t_20;
     goto __pyx_L7_bool_binop_done;
   }
-  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 143, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 147, __pyx_L1_error)}
   __pyx_t_22 = __pyx_v_oi;
   __pyx_t_20 = ((__pyx_v_dy > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_max_ab.data + __pyx_t_22 * __pyx_v_self->object_max_ab.strides[0]) )))) != 0);
   if (!__pyx_t_20) {
@@ -5187,7 +5009,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = __pyx_t_20;
     goto __pyx_L7_bool_binop_done;
   }
-  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 143, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_max_ab.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 147, __pyx_L1_error)}
   __pyx_t_23 = __pyx_v_oi;
   __pyx_t_20 = (((-__pyx_v_dy) > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_max_ab.data + __pyx_t_23 * __pyx_v_self->object_max_ab.strides[0]) )))) != 0);
   if (!__pyx_t_20) {
@@ -5200,7 +5022,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
   __pyx_L7_bool_binop_done:;
   if (__pyx_t_18) {
 
-    /* "hyvr/classes/trough_ae.pyx":144
+    /* "hyvr/classes/trough_ae.pyx":148
  *         # it seems to me that this is a bit faster than abs, and speed here is critical
  *         if dx > self.object_max_ab[oi] or -dx > self.object_max_ab[oi] or dy > self.object_max_ab[oi] or -dy > self.object_max_ab[oi] or dz > 0:
  *             geo_ids[0] = -1             # <<<<<<<<<<<<<<
@@ -5210,7 +5032,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_24 = 0;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_24 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-    /* "hyvr/classes/trough_ae.pyx":145
+    /* "hyvr/classes/trough_ae.pyx":149
  *         if dx > self.object_max_ab[oi] or -dx > self.object_max_ab[oi] or dy > self.object_max_ab[oi] or -dy > self.object_max_ab[oi] or dz > 0:
  *             geo_ids[0] = -1
  *             return             # <<<<<<<<<<<<<<
@@ -5221,7 +5043,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "hyvr/classes/trough_ae.pyx":143
+    /* "hyvr/classes/trough_ae.pyx":147
  *                 dy += grid.ly
  *         # it seems to me that this is a bit faster than abs, and speed here is critical
  *         if dx > self.object_max_ab[oi] or -dx > self.object_max_ab[oi] or dy > self.object_max_ab[oi] or -dy > self.object_max_ab[oi] or dz > 0:             # <<<<<<<<<<<<<<
@@ -5230,65 +5052,65 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":149
+  /* "hyvr/classes/trough_ae.pyx":153
  *         # To decide whether the point is inside, we can just use the normalized
  *         # distance. Therefore we first calculate the normalized distance vector
  *         normalized_dx = (dx*self.object_cosalpha[oi] + dy*self.object_sinalpha[oi])/self.object_a[oi]             # <<<<<<<<<<<<<<
  *         normalized_dy = (-dx*self.object_sinalpha[oi] + dy*self.object_cosalpha[oi])/self.object_b[oi]
  *         normalized_dz = dz/self.object_c[oi]
  */
-  if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 149, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 153, __pyx_L1_error)}
   __pyx_t_25 = __pyx_v_oi;
-  if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 149, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 153, __pyx_L1_error)}
   __pyx_t_26 = __pyx_v_oi;
   __pyx_t_27 = ((__pyx_v_dx * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_25 * __pyx_v_self->object_cosalpha.strides[0]) )))) + (__pyx_v_dy * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_26 * __pyx_v_self->object_sinalpha.strides[0]) )))));
-  if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 149, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 153, __pyx_L1_error)}
   __pyx_t_28 = __pyx_v_oi;
   __pyx_t_29 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_a.data + __pyx_t_28 * __pyx_v_self->object_a.strides[0]) )));
   if (unlikely(__pyx_t_29 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 149, __pyx_L1_error)
+    __PYX_ERR(0, 153, __pyx_L1_error)
   }
   __pyx_v_normalized_dx = (__pyx_t_27 / __pyx_t_29);
 
-  /* "hyvr/classes/trough_ae.pyx":150
+  /* "hyvr/classes/trough_ae.pyx":154
  *         # distance. Therefore we first calculate the normalized distance vector
  *         normalized_dx = (dx*self.object_cosalpha[oi] + dy*self.object_sinalpha[oi])/self.object_a[oi]
  *         normalized_dy = (-dx*self.object_sinalpha[oi] + dy*self.object_cosalpha[oi])/self.object_b[oi]             # <<<<<<<<<<<<<<
  *         normalized_dz = dz/self.object_c[oi]
  *         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
  */
-  if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 150, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 154, __pyx_L1_error)}
   __pyx_t_30 = __pyx_v_oi;
-  if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 150, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 154, __pyx_L1_error)}
   __pyx_t_31 = __pyx_v_oi;
   __pyx_t_29 = (((-__pyx_v_dx) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_30 * __pyx_v_self->object_sinalpha.strides[0]) )))) + (__pyx_v_dy * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_31 * __pyx_v_self->object_cosalpha.strides[0]) )))));
-  if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 150, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 154, __pyx_L1_error)}
   __pyx_t_32 = __pyx_v_oi;
   __pyx_t_27 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_b.data + __pyx_t_32 * __pyx_v_self->object_b.strides[0]) )));
   if (unlikely(__pyx_t_27 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 150, __pyx_L1_error)
+    __PYX_ERR(0, 154, __pyx_L1_error)
   }
   __pyx_v_normalized_dy = (__pyx_t_29 / __pyx_t_27);
 
-  /* "hyvr/classes/trough_ae.pyx":151
+  /* "hyvr/classes/trough_ae.pyx":155
  *         normalized_dx = (dx*self.object_cosalpha[oi] + dy*self.object_sinalpha[oi])/self.object_a[oi]
  *         normalized_dy = (-dx*self.object_sinalpha[oi] + dy*self.object_cosalpha[oi])/self.object_b[oi]
  *         normalized_dz = dz/self.object_c[oi]             # <<<<<<<<<<<<<<
  *         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
  *         if l2 > 1:
  */
-  if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 151, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 155, __pyx_L1_error)}
   __pyx_t_33 = __pyx_v_oi;
   __pyx_t_27 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_33 * __pyx_v_self->object_c.strides[0]) )));
   if (unlikely(__pyx_t_27 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 151, __pyx_L1_error)
+    __PYX_ERR(0, 155, __pyx_L1_error)
   }
   __pyx_v_normalized_dz = (((__pyx_t_5numpy_float_t)__pyx_v_dz) / __pyx_t_27);
 
-  /* "hyvr/classes/trough_ae.pyx":152
+  /* "hyvr/classes/trough_ae.pyx":156
  *         normalized_dy = (-dx*self.object_sinalpha[oi] + dy*self.object_cosalpha[oi])/self.object_b[oi]
  *         normalized_dz = dz/self.object_c[oi]
  *         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2             # <<<<<<<<<<<<<<
@@ -5297,7 +5119,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   __pyx_v_l2 = ((pow(__pyx_v_normalized_dx, 2.0) + pow(__pyx_v_normalized_dy, 2.0)) + pow(__pyx_v_normalized_dz, 2.0));
 
-  /* "hyvr/classes/trough_ae.pyx":153
+  /* "hyvr/classes/trough_ae.pyx":157
  *         normalized_dz = dz/self.object_c[oi]
  *         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
  *         if l2 > 1:             # <<<<<<<<<<<<<<
@@ -5307,7 +5129,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
   __pyx_t_18 = ((__pyx_v_l2 > 1.0) != 0);
   if (__pyx_t_18) {
 
-    /* "hyvr/classes/trough_ae.pyx":154
+    /* "hyvr/classes/trough_ae.pyx":158
  *         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
  *         if l2 > 1:
  *             geo_ids[0] = -1             # <<<<<<<<<<<<<<
@@ -5317,7 +5139,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_34 = 0;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_34 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-    /* "hyvr/classes/trough_ae.pyx":155
+    /* "hyvr/classes/trough_ae.pyx":159
  *         if l2 > 1:
  *             geo_ids[0] = -1
  *             return             # <<<<<<<<<<<<<<
@@ -5328,7 +5150,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "hyvr/classes/trough_ae.pyx":153
+    /* "hyvr/classes/trough_ae.pyx":157
  *         normalized_dz = dz/self.object_c[oi]
  *         l2 = normalized_dx**2 + normalized_dy**2 + normalized_dz**2
  *         if l2 > 1:             # <<<<<<<<<<<<<<
@@ -5337,35 +5159,35 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":161
+  /* "hyvr/classes/trough_ae.pyx":165
  * 
  *         # check whether it's below the lag surface
  *         if z < self.object_z[oi] - self.object_c[oi] + self.object_lag[oi]:             # <<<<<<<<<<<<<<
  *             # is inside lag surface
  *             geo_ids[0] = self.object_lag_facies[oi]
  */
-  if (unlikely(!__pyx_v_self->object_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 161, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 165, __pyx_L1_error)}
   __pyx_t_35 = __pyx_v_oi;
-  if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 161, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 165, __pyx_L1_error)}
   __pyx_t_36 = __pyx_v_oi;
-  if (unlikely(!__pyx_v_self->object_lag.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 161, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_lag.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 165, __pyx_L1_error)}
   __pyx_t_37 = __pyx_v_oi;
   __pyx_t_18 = ((__pyx_v_z < (((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_z.data + __pyx_t_35 * __pyx_v_self->object_z.strides[0]) ))) - (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_36 * __pyx_v_self->object_c.strides[0]) )))) + (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_lag.data + __pyx_t_37 * __pyx_v_self->object_lag.strides[0]) ))))) != 0);
   if (__pyx_t_18) {
 
-    /* "hyvr/classes/trough_ae.pyx":163
+    /* "hyvr/classes/trough_ae.pyx":167
  *         if z < self.object_z[oi] - self.object_c[oi] + self.object_lag[oi]:
  *             # is inside lag surface
  *             geo_ids[0] = self.object_lag_facies[oi]             # <<<<<<<<<<<<<<
  *             angles[0] = 0 # no azimuth
  *             angles[1] = 0 # no dip
  */
-    if (unlikely(!__pyx_v_self->object_lag_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 163, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_lag_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 167, __pyx_L1_error)}
     __pyx_t_38 = __pyx_v_oi;
     __pyx_t_39 = 0;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_39 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_lag_facies.data + __pyx_t_38 * __pyx_v_self->object_lag_facies.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":164
+    /* "hyvr/classes/trough_ae.pyx":168
  *             # is inside lag surface
  *             geo_ids[0] = self.object_lag_facies[oi]
  *             angles[0] = 0 # no azimuth             # <<<<<<<<<<<<<<
@@ -5375,7 +5197,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_40 = 0;
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_40 * __pyx_v_angles.strides[0]) )) = 0.0;
 
-    /* "hyvr/classes/trough_ae.pyx":165
+    /* "hyvr/classes/trough_ae.pyx":169
  *             geo_ids[0] = self.object_lag_facies[oi]
  *             angles[0] = 0 # no azimuth
  *             angles[1] = 0 # no dip             # <<<<<<<<<<<<<<
@@ -5385,19 +5207,19 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_41 = 1;
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_41 * __pyx_v_angles.strides[0]) )) = 0.0;
 
-    /* "hyvr/classes/trough_ae.pyx":166
+    /* "hyvr/classes/trough_ae.pyx":170
  *             angles[0] = 0 # no azimuth
  *             angles[1] = 0 # no dip
  *             geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *             return
  * 
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 166, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 170, __pyx_L1_error)}
     __pyx_t_42 = __pyx_v_oi;
     __pyx_t_43 = 2;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_43 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_42 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":167
+    /* "hyvr/classes/trough_ae.pyx":171
  *             angles[1] = 0 # no dip
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return             # <<<<<<<<<<<<<<
@@ -5408,7 +5230,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "hyvr/classes/trough_ae.pyx":161
+    /* "hyvr/classes/trough_ae.pyx":165
  * 
  *         # check whether it's below the lag surface
  *         if z < self.object_z[oi] - self.object_c[oi] + self.object_lag[oi]:             # <<<<<<<<<<<<<<
@@ -5417,67 +5239,67 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":169
+  /* "hyvr/classes/trough_ae.pyx":173
  *             return
  * 
  *         if self.object_structure[oi] == 0: # flat             # <<<<<<<<<<<<<<
  *             geo_ids[0] = self.object_facies[oi]
  *             angles[0] = self.object_azim[oi]
  */
-  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 169, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 173, __pyx_L1_error)}
   __pyx_t_44 = __pyx_v_oi;
   __pyx_t_18 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_44 * __pyx_v_self->object_structure.strides[0]) ))) == 0) != 0);
   if (__pyx_t_18) {
 
-    /* "hyvr/classes/trough_ae.pyx":170
+    /* "hyvr/classes/trough_ae.pyx":174
  * 
  *         if self.object_structure[oi] == 0: # flat
  *             geo_ids[0] = self.object_facies[oi]             # <<<<<<<<<<<<<<
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 170, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 174, __pyx_L1_error)}
     __pyx_t_45 = __pyx_v_oi;
     __pyx_t_46 = 0;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_46 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies.data + __pyx_t_45 * __pyx_v_self->__pyx_base.object_facies.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":171
+    /* "hyvr/classes/trough_ae.pyx":175
  *         if self.object_structure[oi] == 0: # flat
  *             geo_ids[0] = self.object_facies[oi]
  *             angles[0] = self.object_azim[oi]             # <<<<<<<<<<<<<<
  *             angles[1] = self.object_dip[oi]
  *             geo_ids[2] = self.object_num_ha[oi]
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_azim.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 171, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_azim.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 175, __pyx_L1_error)}
     __pyx_t_47 = __pyx_v_oi;
     __pyx_t_48 = 0;
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_48 * __pyx_v_angles.strides[0]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_azim.data + __pyx_t_47 * __pyx_v_self->__pyx_base.object_azim.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":172
+    /* "hyvr/classes/trough_ae.pyx":176
  *             geo_ids[0] = self.object_facies[oi]
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]             # <<<<<<<<<<<<<<
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 172, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 176, __pyx_L1_error)}
     __pyx_t_49 = __pyx_v_oi;
     __pyx_t_50 = 1;
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_50 * __pyx_v_angles.strides[0]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_49 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":173
+    /* "hyvr/classes/trough_ae.pyx":177
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]
  *             geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *             return
  *         elif self.object_structure[oi] == 1: # dip
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 173, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 177, __pyx_L1_error)}
     __pyx_t_51 = __pyx_v_oi;
     __pyx_t_52 = 2;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_52 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_51 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":174
+    /* "hyvr/classes/trough_ae.pyx":178
  *             angles[1] = self.object_dip[oi]
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return             # <<<<<<<<<<<<<<
@@ -5488,7 +5310,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "hyvr/classes/trough_ae.pyx":169
+    /* "hyvr/classes/trough_ae.pyx":173
  *             return
  * 
  *         if self.object_structure[oi] == 0: # flat             # <<<<<<<<<<<<<<
@@ -5497,58 +5319,58 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":175
+  /* "hyvr/classes/trough_ae.pyx":179
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return
  *         elif self.object_structure[oi] == 1: # dip             # <<<<<<<<<<<<<<
  *             # get distance from zero-plane
  *             plane_dist = dx*self.object_normvec_x[oi] +\
  */
-  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 175, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 179, __pyx_L1_error)}
   __pyx_t_53 = __pyx_v_oi;
   __pyx_t_18 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_53 * __pyx_v_self->object_structure.strides[0]) ))) == 1) != 0);
   if (__pyx_t_18) {
 
-    /* "hyvr/classes/trough_ae.pyx":177
+    /* "hyvr/classes/trough_ae.pyx":181
  *         elif self.object_structure[oi] == 1: # dip
  *             # get distance from zero-plane
  *             plane_dist = dx*self.object_normvec_x[oi] +\             # <<<<<<<<<<<<<<
  *                          dy*self.object_normvec_y[oi] +\
  *                          dz*self.object_normvec_z[oi] + self.object_shift[oi]
  */
-    if (unlikely(!__pyx_v_self->object_normvec_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 177, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_normvec_x.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 181, __pyx_L1_error)}
     __pyx_t_54 = __pyx_v_oi;
 
-    /* "hyvr/classes/trough_ae.pyx":178
+    /* "hyvr/classes/trough_ae.pyx":182
  *             # get distance from zero-plane
  *             plane_dist = dx*self.object_normvec_x[oi] +\
  *                          dy*self.object_normvec_y[oi] +\             # <<<<<<<<<<<<<<
  *                          dz*self.object_normvec_z[oi] + self.object_shift[oi]
  *             # get index in facies vector, where n = len(facies)//2 at d=0
  */
-    if (unlikely(!__pyx_v_self->object_normvec_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 178, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_normvec_y.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 182, __pyx_L1_error)}
     __pyx_t_55 = __pyx_v_oi;
 
-    /* "hyvr/classes/trough_ae.pyx":179
+    /* "hyvr/classes/trough_ae.pyx":183
  *             plane_dist = dx*self.object_normvec_x[oi] +\
  *                          dy*self.object_normvec_y[oi] +\
  *                          dz*self.object_normvec_z[oi] + self.object_shift[oi]             # <<<<<<<<<<<<<<
  *             # get index in facies vector, where n = len(facies)//2 at d=0
  *             n = int(plane_dist/self.object_layer_dist[oi]) + self.object_num_facies[oi]//2
  */
-    if (unlikely(!__pyx_v_self->object_normvec_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 179, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_normvec_z.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 183, __pyx_L1_error)}
     __pyx_t_56 = __pyx_v_oi;
 
-    /* "hyvr/classes/trough_ae.pyx":178
+    /* "hyvr/classes/trough_ae.pyx":182
  *             # get distance from zero-plane
  *             plane_dist = dx*self.object_normvec_x[oi] +\
  *                          dy*self.object_normvec_y[oi] +\             # <<<<<<<<<<<<<<
  *                          dz*self.object_normvec_z[oi] + self.object_shift[oi]
  *             # get index in facies vector, where n = len(facies)//2 at d=0
  */
-    if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 179, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 183, __pyx_L1_error)}
 
-    /* "hyvr/classes/trough_ae.pyx":179
+    /* "hyvr/classes/trough_ae.pyx":183
  *             plane_dist = dx*self.object_normvec_x[oi] +\
  *                          dy*self.object_normvec_y[oi] +\
  *                          dz*self.object_normvec_z[oi] + self.object_shift[oi]             # <<<<<<<<<<<<<<
@@ -5558,84 +5380,84 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_57 = __pyx_v_oi;
     __pyx_v_plane_dist = ((((__pyx_v_dx * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_x.data + __pyx_t_54 * __pyx_v_self->object_normvec_x.strides[0]) )))) + (__pyx_v_dy * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_y.data + __pyx_t_55 * __pyx_v_self->object_normvec_y.strides[0]) ))))) + (__pyx_v_dz * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_normvec_z.data + __pyx_t_56 * __pyx_v_self->object_normvec_z.strides[0]) ))))) + (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_57 * __pyx_v_self->object_shift.strides[0]) ))));
 
-    /* "hyvr/classes/trough_ae.pyx":181
+    /* "hyvr/classes/trough_ae.pyx":185
  *                          dz*self.object_normvec_z[oi] + self.object_shift[oi]
  *             # get index in facies vector, where n = len(facies)//2 at d=0
  *             n = int(plane_dist/self.object_layer_dist[oi]) + self.object_num_facies[oi]//2             # <<<<<<<<<<<<<<
  *             geo_ids[0] = self.object_facies_array[oi,n]
  *             angles[0] = self.object_azim[oi]
  */
-    if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 181, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 185, __pyx_L1_error)}
     __pyx_t_58 = __pyx_v_oi;
     __pyx_t_27 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_58 * __pyx_v_self->object_layer_dist.strides[0]) )));
     if (unlikely(__pyx_t_27 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 181, __pyx_L1_error)
+      __PYX_ERR(0, 185, __pyx_L1_error)
     }
-    __pyx_t_1 = __Pyx_PyInt_FromDouble((((__pyx_t_5numpy_float_t)__pyx_v_plane_dist) / __pyx_t_27)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_FromDouble((((__pyx_t_5numpy_float_t)__pyx_v_plane_dist) / __pyx_t_27)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    if (unlikely(!__pyx_v_self->__pyx_base.object_num_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 181, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_num_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 185, __pyx_L1_error)}
     __pyx_t_59 = __pyx_v_oi;
-    __pyx_t_2 = __Pyx_PyInt_From_long(__Pyx_div_long((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_facies.data + __pyx_t_59 * __pyx_v_self->__pyx_base.object_num_facies.strides[0]) ))), 2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_long(__Pyx_div_long((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_facies.data + __pyx_t_59 * __pyx_v_self->__pyx_base.object_num_facies.strides[0]) ))), 2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_11 = PyNumber_Add(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_11 = PyNumber_Add(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_t_11); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_t_11); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_v_n = __pyx_t_13;
 
-    /* "hyvr/classes/trough_ae.pyx":182
+    /* "hyvr/classes/trough_ae.pyx":186
  *             # get index in facies vector, where n = len(facies)//2 at d=0
  *             n = int(plane_dist/self.object_layer_dist[oi]) + self.object_num_facies[oi]//2
  *             geo_ids[0] = self.object_facies_array[oi,n]             # <<<<<<<<<<<<<<
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 182, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 186, __pyx_L1_error)}
     __pyx_t_60 = __pyx_v_oi;
     __pyx_t_61 = __pyx_v_n;
     __pyx_t_62 = 0;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_62 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies_array.data + __pyx_t_60 * __pyx_v_self->__pyx_base.object_facies_array.strides[0]) ) + __pyx_t_61 * __pyx_v_self->__pyx_base.object_facies_array.strides[1]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":183
+    /* "hyvr/classes/trough_ae.pyx":187
  *             n = int(plane_dist/self.object_layer_dist[oi]) + self.object_num_facies[oi]//2
  *             geo_ids[0] = self.object_facies_array[oi,n]
  *             angles[0] = self.object_azim[oi]             # <<<<<<<<<<<<<<
  *             angles[1] = self.object_dip[oi]
  *             geo_ids[2] = self.object_num_ha[oi]
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_azim.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 183, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_azim.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 187, __pyx_L1_error)}
     __pyx_t_63 = __pyx_v_oi;
     __pyx_t_64 = 0;
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_64 * __pyx_v_angles.strides[0]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_azim.data + __pyx_t_63 * __pyx_v_self->__pyx_base.object_azim.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":184
+    /* "hyvr/classes/trough_ae.pyx":188
  *             geo_ids[0] = self.object_facies_array[oi,n]
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]             # <<<<<<<<<<<<<<
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 184, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 188, __pyx_L1_error)}
     __pyx_t_65 = __pyx_v_oi;
     __pyx_t_66 = 1;
     *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_66 * __pyx_v_angles.strides[0]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_65 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":185
+    /* "hyvr/classes/trough_ae.pyx":189
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]
  *             geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *             return
  *         elif self.object_structure[oi] == 2 or self.object_structure[oi] == 3: # bulb or bulb_sets
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 185, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 189, __pyx_L1_error)}
     __pyx_t_67 = __pyx_v_oi;
     __pyx_t_68 = 2;
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_68 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_67 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-    /* "hyvr/classes/trough_ae.pyx":186
+    /* "hyvr/classes/trough_ae.pyx":190
  *             angles[1] = self.object_dip[oi]
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return             # <<<<<<<<<<<<<<
@@ -5646,7 +5468,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "hyvr/classes/trough_ae.pyx":175
+    /* "hyvr/classes/trough_ae.pyx":179
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return
  *         elif self.object_structure[oi] == 1: # dip             # <<<<<<<<<<<<<<
@@ -5655,14 +5477,14 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":187
+  /* "hyvr/classes/trough_ae.pyx":191
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return
  *         elif self.object_structure[oi] == 2 or self.object_structure[oi] == 3: # bulb or bulb_sets             # <<<<<<<<<<<<<<
  *             # Since ellipsoids are isosurfaces of quadratic functions, we can
  *             # get the tangential vector by taking the (negative) gradient of
  */
-  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 187, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 191, __pyx_L1_error)}
   __pyx_t_69 = __pyx_v_oi;
   __pyx_t_20 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_69 * __pyx_v_self->object_structure.strides[0]) ))) == 2) != 0);
   if (!__pyx_t_20) {
@@ -5670,93 +5492,71 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = __pyx_t_20;
     goto __pyx_L15_bool_binop_done;
   }
-  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 187, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 191, __pyx_L1_error)}
   __pyx_t_70 = __pyx_v_oi;
   __pyx_t_20 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_70 * __pyx_v_self->object_structure.strides[0]) ))) == 3) != 0);
   __pyx_t_18 = __pyx_t_20;
   __pyx_L15_bool_binop_done:;
   if (likely(__pyx_t_18)) {
 
-    /* "hyvr/classes/trough_ae.pyx":199
+    /* "hyvr/classes/trough_ae.pyx":203
  *             # tangential plane.
  *             # The full derivation is a bit lengthy.
  *             aaa = normalized_dx/self.object_a[oi]             # <<<<<<<<<<<<<<
  *             bbb = normalized_dy/self.object_b[oi]
  *             ccc = normalized_dz/self.object_c[oi]
  */
-    if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 199, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 203, __pyx_L1_error)}
     __pyx_t_71 = __pyx_v_oi;
     __pyx_t_27 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_a.data + __pyx_t_71 * __pyx_v_self->object_a.strides[0]) )));
     if (unlikely(__pyx_t_27 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 199, __pyx_L1_error)
+      __PYX_ERR(0, 203, __pyx_L1_error)
     }
     __pyx_v_aaa = (((__pyx_t_5numpy_float_t)__pyx_v_normalized_dx) / __pyx_t_27);
 
-    /* "hyvr/classes/trough_ae.pyx":200
+    /* "hyvr/classes/trough_ae.pyx":204
  *             # The full derivation is a bit lengthy.
  *             aaa = normalized_dx/self.object_a[oi]
  *             bbb = normalized_dy/self.object_b[oi]             # <<<<<<<<<<<<<<
  *             ccc = normalized_dz/self.object_c[oi]
  *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
  */
-    if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 200, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 204, __pyx_L1_error)}
     __pyx_t_72 = __pyx_v_oi;
     __pyx_t_27 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_b.data + __pyx_t_72 * __pyx_v_self->object_b.strides[0]) )));
     if (unlikely(__pyx_t_27 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 200, __pyx_L1_error)
+      __PYX_ERR(0, 204, __pyx_L1_error)
     }
     __pyx_v_bbb = (((__pyx_t_5numpy_float_t)__pyx_v_normalized_dy) / __pyx_t_27);
 
-    /* "hyvr/classes/trough_ae.pyx":201
+    /* "hyvr/classes/trough_ae.pyx":205
  *             aaa = normalized_dx/self.object_a[oi]
  *             bbb = normalized_dy/self.object_b[oi]
  *             ccc = normalized_dz/self.object_c[oi]             # <<<<<<<<<<<<<<
  *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
  *             if len_tanvec != 0:
  */
-    if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 201, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 205, __pyx_L1_error)}
     __pyx_t_73 = __pyx_v_oi;
     __pyx_t_27 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_73 * __pyx_v_self->object_c.strides[0]) )));
     if (unlikely(__pyx_t_27 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 201, __pyx_L1_error)
+      __PYX_ERR(0, 205, __pyx_L1_error)
     }
     __pyx_v_ccc = (((__pyx_t_5numpy_float_t)__pyx_v_normalized_dz) / __pyx_t_27);
 
-    /* "hyvr/classes/trough_ae.pyx":202
+    /* "hyvr/classes/trough_ae.pyx":206
  *             bbb = normalized_dy/self.object_b[oi]
  *             ccc = normalized_dz/self.object_c[oi]
  *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)             # <<<<<<<<<<<<<<
  *             if len_tanvec != 0:
  *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyFloat_FromDouble(((pow(__pyx_v_aaa, 2.0) + pow(__pyx_v_bbb, 2.0)) + pow(__pyx_v_ccc, 2.0))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_14 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_2);
-      if (likely(__pyx_t_14)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-        __Pyx_INCREF(__pyx_t_14);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_2, function);
-      }
-    }
-    __pyx_t_11 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_14, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1);
-    __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 202, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_11);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_74 = __pyx_PyFloat_AsDouble(__pyx_t_11); if (unlikely((__pyx_t_74 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 202, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_v_len_tanvec = __pyx_t_74;
+    __pyx_v_len_tanvec = sqrt(((pow(__pyx_v_aaa, 2.0) + pow(__pyx_v_bbb, 2.0)) + pow(__pyx_v_ccc, 2.0)));
 
-    /* "hyvr/classes/trough_ae.pyx":203
+    /* "hyvr/classes/trough_ae.pyx":207
  *             ccc = normalized_dz/self.object_c[oi]
  *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
  *             if len_tanvec != 0:             # <<<<<<<<<<<<<<
@@ -5766,43 +5566,43 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __pyx_t_18 = ((__pyx_v_len_tanvec != 0.0) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":204
+      /* "hyvr/classes/trough_ae.pyx":208
  *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
  *             if len_tanvec != 0:
  *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec             # <<<<<<<<<<<<<<
  *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
  *                 tanvec_z = ccc/len_tanvec
  */
-      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 204, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 208, __pyx_L1_error)}
+      __pyx_t_74 = __pyx_v_oi;
+      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 208, __pyx_L1_error)}
       __pyx_t_75 = __pyx_v_oi;
-      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 204, __pyx_L1_error)}
-      __pyx_t_76 = __pyx_v_oi;
-      __pyx_t_27 = ((__pyx_v_aaa * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_75 * __pyx_v_self->object_cosalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_76 * __pyx_v_self->object_sinalpha.strides[0]) )))));
+      __pyx_t_27 = ((__pyx_v_aaa * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_74 * __pyx_v_self->object_cosalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_75 * __pyx_v_self->object_sinalpha.strides[0]) )))));
       if (unlikely(__pyx_v_len_tanvec == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 204, __pyx_L1_error)
+        __PYX_ERR(0, 208, __pyx_L1_error)
       }
       __pyx_v_tanvec_x = (__pyx_t_27 / ((__pyx_t_5numpy_float_t)__pyx_v_len_tanvec));
 
-      /* "hyvr/classes/trough_ae.pyx":205
+      /* "hyvr/classes/trough_ae.pyx":209
  *             if len_tanvec != 0:
  *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
  *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec             # <<<<<<<<<<<<<<
  *                 tanvec_z = ccc/len_tanvec
  *                 # The dip is the angle between the normal vector of the tangential
  */
-      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 205, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 209, __pyx_L1_error)}
+      __pyx_t_76 = __pyx_v_oi;
+      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 209, __pyx_L1_error)}
       __pyx_t_77 = __pyx_v_oi;
-      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 205, __pyx_L1_error)}
-      __pyx_t_78 = __pyx_v_oi;
-      __pyx_t_27 = (((-__pyx_v_aaa) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_77 * __pyx_v_self->object_sinalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_78 * __pyx_v_self->object_cosalpha.strides[0]) )))));
+      __pyx_t_27 = (((-__pyx_v_aaa) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_76 * __pyx_v_self->object_sinalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_77 * __pyx_v_self->object_cosalpha.strides[0]) )))));
       if (unlikely(__pyx_v_len_tanvec == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 205, __pyx_L1_error)
+        __PYX_ERR(0, 209, __pyx_L1_error)
       }
       __pyx_v_tanvec_y = (__pyx_t_27 / ((__pyx_t_5numpy_float_t)__pyx_v_len_tanvec));
 
-      /* "hyvr/classes/trough_ae.pyx":206
+      /* "hyvr/classes/trough_ae.pyx":210
  *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
  *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
  *                 tanvec_z = ccc/len_tanvec             # <<<<<<<<<<<<<<
@@ -5811,96 +5611,54 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
       if (unlikely(__pyx_v_len_tanvec == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 206, __pyx_L1_error)
+        __PYX_ERR(0, 210, __pyx_L1_error)
       }
       __pyx_v_tanvec_z = (__pyx_v_ccc / __pyx_v_len_tanvec);
 
-      /* "hyvr/classes/trough_ae.pyx":211
+      /* "hyvr/classes/trough_ae.pyx":215
  *                 # this means the cosine of the dip is dot(tanvec, [0, 0, 1]),
  *                 # i.e. the third component of norm_vec
  *                 dip = acos(tanvec_z)/np.pi*180             # <<<<<<<<<<<<<<
  *                 # The angle is positive if the x-component of the normal vector is
  *                 # positive
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_acos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_tanvec_z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_14 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-        __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_2);
-        if (likely(__pyx_t_14)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-          __Pyx_INCREF(__pyx_t_14);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_2, function);
-        }
-      }
-      __pyx_t_11 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_14, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1);
-      __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 211, __pyx_L1_error)
+      __pyx_t_11 = PyFloat_FromDouble(acos(__pyx_v_tanvec_z)); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_11, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_11, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_int_180); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+      __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_int_180); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_dip = __pyx_t_1;
       __pyx_t_1 = 0;
 
-      /* "hyvr/classes/trough_ae.pyx":216
+      /* "hyvr/classes/trough_ae.pyx":220
  *                 # the normal vector projected and normalized to the x-y-plane,
  *                 # multiplied with [0,1,0] is:
  *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)             # <<<<<<<<<<<<<<
  *                 if len_tanvec_xy == 0:
  *                     azim = 0
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_11 = PyFloat_FromDouble((pow(__pyx_v_tanvec_x, 2.0) + pow(__pyx_v_tanvec_y, 2.0))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 216, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_11);
-      __pyx_t_14 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-        __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_2);
-        if (likely(__pyx_t_14)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-          __Pyx_INCREF(__pyx_t_14);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_2, function);
-        }
-      }
-      __pyx_t_1 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_14, __pyx_t_11) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_11);
-      __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_v_len_tanvec_xy = __pyx_t_1;
-      __pyx_t_1 = 0;
+      __pyx_v_len_tanvec_xy = sqrt((pow(__pyx_v_tanvec_x, 2.0) + pow(__pyx_v_tanvec_y, 2.0)));
 
-      /* "hyvr/classes/trough_ae.pyx":217
+      /* "hyvr/classes/trough_ae.pyx":221
  *                 # multiplied with [0,1,0] is:
  *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
  *                 if len_tanvec_xy == 0:             # <<<<<<<<<<<<<<
  *                     azim = 0
  *                 else:
  */
-      __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_v_len_tanvec_xy, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 217, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_18 = ((__pyx_v_len_tanvec_xy == 0.0) != 0);
       if (__pyx_t_18) {
 
-        /* "hyvr/classes/trough_ae.pyx":218
+        /* "hyvr/classes/trough_ae.pyx":222
  *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
  *                 if len_tanvec_xy == 0:
  *                     azim = 0             # <<<<<<<<<<<<<<
@@ -5910,7 +5668,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
         __Pyx_INCREF(__pyx_int_0);
         __pyx_v_azim = __pyx_int_0;
 
-        /* "hyvr/classes/trough_ae.pyx":217
+        /* "hyvr/classes/trough_ae.pyx":221
  *                 # multiplied with [0,1,0] is:
  *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
  *                 if len_tanvec_xy == 0:             # <<<<<<<<<<<<<<
@@ -5920,7 +5678,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
         goto __pyx_L18;
       }
 
-      /* "hyvr/classes/trough_ae.pyx":220
+      /* "hyvr/classes/trough_ae.pyx":224
  *                     azim = 0
  *                 else:
  *                     cos_azim = tanvec_y/len_tanvec_xy             # <<<<<<<<<<<<<<
@@ -5928,128 +5686,88 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  *                 if dip > 90:
  */
       /*else*/ {
-        __pyx_t_1 = PyFloat_FromDouble(__pyx_v_tanvec_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 220, __pyx_L1_error)
+        if (unlikely(__pyx_v_len_tanvec_xy == 0)) {
+          PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+          __PYX_ERR(0, 224, __pyx_L1_error)
+        }
+        __pyx_t_1 = PyFloat_FromDouble((__pyx_v_tanvec_y / __pyx_v_len_tanvec_xy)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_v_len_tanvec_xy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_v_cos_azim = __pyx_t_2;
-        __pyx_t_2 = 0;
+        __pyx_v_cos_azim = __pyx_t_1;
+        __pyx_t_1 = 0;
 
-        /* "hyvr/classes/trough_ae.pyx":221
+        /* "hyvr/classes/trough_ae.pyx":225
  *                 else:
  *                     cos_azim = tanvec_y/len_tanvec_xy
  *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/np.pi*180             # <<<<<<<<<<<<<<
  *                 if dip > 90:
  *                     # if the dip is bigger than 90 we can also just rotate the azimuth
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_ho); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
+        __pyx_t_78 = __pyx_PyFloat_AsDouble(__pyx_v_cos_azim); if (unlikely((__pyx_t_78 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 225, __pyx_L1_error)
+        __pyx_t_1 = PyFloat_FromDouble((__pyx_f_4hyvr_9optimized_sign(__pyx_v_tanvec_x) * acos(__pyx_t_78))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_sign); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyFloat_FromDouble(__pyx_v_tanvec_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_14 = NULL;
-        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_11))) {
-          __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_11);
-          if (likely(__pyx_t_14)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_11);
-            __Pyx_INCREF(__pyx_t_14);
-            __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_11, function);
-          }
-        }
-        __pyx_t_2 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_14, __pyx_t_1) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_1);
-        __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_acos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_14 = NULL;
-        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-          __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_1);
-          if (likely(__pyx_t_14)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-            __Pyx_INCREF(__pyx_t_14);
-            __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_1, function);
-          }
-        }
-        __pyx_t_11 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_14, __pyx_v_cos_azim) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_cos_azim);
-        __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-        if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 221, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_np); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_11); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = PyNumber_Multiply(__pyx_t_11, __pyx_int_180); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __pyx_v_azim = __pyx_t_2;
-        __pyx_t_2 = 0;
+        __pyx_t_11 = PyNumber_Multiply(__pyx_t_2, __pyx_int_180); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 225, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __pyx_v_azim = __pyx_t_11;
+        __pyx_t_11 = 0;
       }
       __pyx_L18:;
 
-      /* "hyvr/classes/trough_ae.pyx":222
+      /* "hyvr/classes/trough_ae.pyx":226
  *                     cos_azim = tanvec_y/len_tanvec_xy
  *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/np.pi*180
  *                 if dip > 90:             # <<<<<<<<<<<<<<
  *                     # if the dip is bigger than 90 we can also just rotate the azimuth
  *                     dip = 180 - dip
  */
-      __pyx_t_2 = PyObject_RichCompare(__pyx_v_dip, __pyx_int_90, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 222, __pyx_L1_error)
-      __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 222, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_11 = PyObject_RichCompare(__pyx_v_dip, __pyx_int_90, Py_GT); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 226, __pyx_L1_error)
+      __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 226, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       if (__pyx_t_18) {
 
-        /* "hyvr/classes/trough_ae.pyx":224
+        /* "hyvr/classes/trough_ae.pyx":228
  *                 if dip > 90:
  *                     # if the dip is bigger than 90 we can also just rotate the azimuth
  *                     dip = 180 - dip             # <<<<<<<<<<<<<<
  *                     # add 180 to azimuth and shift such that it's between -180 and 180
  *                     azim = (azim + 180 + 180) % 360 - 180
  */
-        __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_180, __pyx_v_dip, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        __Pyx_DECREF_SET(__pyx_v_dip, __pyx_t_2);
-        __pyx_t_2 = 0;
+        __pyx_t_11 = __Pyx_PyInt_SubtractCObj(__pyx_int_180, __pyx_v_dip, 0xB4, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 228, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF_SET(__pyx_v_dip, __pyx_t_11);
+        __pyx_t_11 = 0;
 
-        /* "hyvr/classes/trough_ae.pyx":226
+        /* "hyvr/classes/trough_ae.pyx":230
  *                     dip = 180 - dip
  *                     # add 180 to azimuth and shift such that it's between -180 and 180
  *                     azim = (azim + 180 + 180) % 360 - 180             # <<<<<<<<<<<<<<
  *             else:
  *                 # the point is exactly at the center of the trough, this means
  */
-        __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_v_azim, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 226, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_11 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 226, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyInt_AddObjC(__pyx_v_azim, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 230, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyInt_RemainderObjC(__pyx_t_11, __pyx_int_360, 0x168, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 226, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_11, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyInt_SubtractObjC(__pyx_t_2, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 226, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyInt_RemainderObjC(__pyx_t_2, __pyx_int_360, 0x168, 0, 0); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 230, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __Pyx_DECREF_SET(__pyx_v_azim, __pyx_t_11);
-        __pyx_t_11 = 0;
+        __pyx_t_2 = __Pyx_PyInt_SubtractObjC(__pyx_t_11, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+        __Pyx_DECREF_SET(__pyx_v_azim, __pyx_t_2);
+        __pyx_t_2 = 0;
 
-        /* "hyvr/classes/trough_ae.pyx":222
+        /* "hyvr/classes/trough_ae.pyx":226
  *                     cos_azim = tanvec_y/len_tanvec_xy
  *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/np.pi*180
  *                 if dip > 90:             # <<<<<<<<<<<<<<
@@ -6058,7 +5776,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
       }
 
-      /* "hyvr/classes/trough_ae.pyx":203
+      /* "hyvr/classes/trough_ae.pyx":207
  *             ccc = normalized_dz/self.object_c[oi]
  *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
  *             if len_tanvec != 0:             # <<<<<<<<<<<<<<
@@ -6068,7 +5786,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
       goto __pyx_L17;
     }
 
-    /* "hyvr/classes/trough_ae.pyx":230
+    /* "hyvr/classes/trough_ae.pyx":234
  *                 # the point is exactly at the center of the trough, this means
  *                 # there is no azim and dip
  *                 azim = 0             # <<<<<<<<<<<<<<
@@ -6079,7 +5797,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
       __Pyx_INCREF(__pyx_int_0);
       __pyx_v_azim = __pyx_int_0;
 
-      /* "hyvr/classes/trough_ae.pyx":231
+      /* "hyvr/classes/trough_ae.pyx":235
  *                 # there is no azim and dip
  *                 azim = 0
  *                 dip = 0             # <<<<<<<<<<<<<<
@@ -6091,38 +5809,38 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     }
     __pyx_L17:;
 
-    /* "hyvr/classes/trough_ae.pyx":234
+    /* "hyvr/classes/trough_ae.pyx":238
  * 
  *             # use self.object_dip[oi] as maximum dip
  *             if dip > self.object_dip[oi]:             # <<<<<<<<<<<<<<
  *                 dip = self.object_dip[oi]
  * 
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 234, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 238, __pyx_L1_error)}
     __pyx_t_79 = __pyx_v_oi;
-    __pyx_t_11 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_79 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 234, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_2 = PyObject_RichCompare(__pyx_v_dip, __pyx_t_11, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 234, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 234, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_79 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_11 = PyObject_RichCompare(__pyx_v_dip, __pyx_t_2, Py_GT); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 238, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_18 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_18 < 0)) __PYX_ERR(0, 238, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":235
+      /* "hyvr/classes/trough_ae.pyx":239
  *             # use self.object_dip[oi] as maximum dip
  *             if dip > self.object_dip[oi]:
  *                 dip = self.object_dip[oi]             # <<<<<<<<<<<<<<
  * 
  *             if self.object_structure[oi] == 2: # bulb
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 235, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 239, __pyx_L1_error)}
       __pyx_t_80 = __pyx_v_oi;
-      __pyx_t_2 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_80 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF_SET(__pyx_v_dip, __pyx_t_2);
-      __pyx_t_2 = 0;
+      __pyx_t_11 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_80 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 239, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __Pyx_DECREF_SET(__pyx_v_dip, __pyx_t_11);
+      __pyx_t_11 = 0;
 
-      /* "hyvr/classes/trough_ae.pyx":234
+      /* "hyvr/classes/trough_ae.pyx":238
  * 
  *             # use self.object_dip[oi] as maximum dip
  *             if dip > self.object_dip[oi]:             # <<<<<<<<<<<<<<
@@ -6131,65 +5849,65 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
     }
 
-    /* "hyvr/classes/trough_ae.pyx":237
+    /* "hyvr/classes/trough_ae.pyx":241
  *                 dip = self.object_dip[oi]
  * 
  *             if self.object_structure[oi] == 2: # bulb             # <<<<<<<<<<<<<<
  *                 geo_ids[0] = self.object_facies[oi]
  *                 angles[0] = azim
  */
-    if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 237, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 241, __pyx_L1_error)}
     __pyx_t_81 = __pyx_v_oi;
     __pyx_t_18 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_81 * __pyx_v_self->object_structure.strides[0]) ))) == 2) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/classes/trough_ae.pyx":238
+      /* "hyvr/classes/trough_ae.pyx":242
  * 
  *             if self.object_structure[oi] == 2: # bulb
  *                 geo_ids[0] = self.object_facies[oi]             # <<<<<<<<<<<<<<
  *                 angles[0] = azim
  *                 angles[1] = dip
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 238, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.object_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 242, __pyx_L1_error)}
       __pyx_t_82 = __pyx_v_oi;
       __pyx_t_83 = 0;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_83 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies.data + __pyx_t_82 * __pyx_v_self->__pyx_base.object_facies.strides[0]) )));
 
-      /* "hyvr/classes/trough_ae.pyx":239
+      /* "hyvr/classes/trough_ae.pyx":243
  *             if self.object_structure[oi] == 2: # bulb
  *                 geo_ids[0] = self.object_facies[oi]
  *                 angles[0] = azim             # <<<<<<<<<<<<<<
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  */
-      __pyx_t_27 = __pyx_PyFloat_AsDouble(__pyx_v_azim); if (unlikely((__pyx_t_27 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 239, __pyx_L1_error)
+      __pyx_t_27 = __pyx_PyFloat_AsDouble(__pyx_v_azim); if (unlikely((__pyx_t_27 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L1_error)
       __pyx_t_84 = 0;
       *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_84 * __pyx_v_angles.strides[0]) )) = __pyx_t_27;
 
-      /* "hyvr/classes/trough_ae.pyx":240
+      /* "hyvr/classes/trough_ae.pyx":244
  *                 geo_ids[0] = self.object_facies[oi]
  *                 angles[0] = azim
  *                 angles[1] = dip             # <<<<<<<<<<<<<<
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return
  */
-      __pyx_t_27 = __pyx_PyFloat_AsDouble(__pyx_v_dip); if (unlikely((__pyx_t_27 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 240, __pyx_L1_error)
+      __pyx_t_27 = __pyx_PyFloat_AsDouble(__pyx_v_dip); if (unlikely((__pyx_t_27 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 244, __pyx_L1_error)
       __pyx_t_85 = 1;
       *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_85 * __pyx_v_angles.strides[0]) )) = __pyx_t_27;
 
-      /* "hyvr/classes/trough_ae.pyx":241
+      /* "hyvr/classes/trough_ae.pyx":245
  *                 angles[0] = azim
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *                 return
  *             else:
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 241, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 245, __pyx_L1_error)}
       __pyx_t_86 = __pyx_v_oi;
       __pyx_t_87 = 2;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_87 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_86 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-      /* "hyvr/classes/trough_ae.pyx":242
+      /* "hyvr/classes/trough_ae.pyx":246
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return             # <<<<<<<<<<<<<<
@@ -6200,7 +5918,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
       __pyx_r = Py_None; __Pyx_INCREF(Py_None);
       goto __pyx_L0;
 
-      /* "hyvr/classes/trough_ae.pyx":237
+      /* "hyvr/classes/trough_ae.pyx":241
  *                 dip = self.object_dip[oi]
  * 
  *             if self.object_structure[oi] == 2: # bulb             # <<<<<<<<<<<<<<
@@ -6209,7 +5927,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
     }
 
-    /* "hyvr/classes/trough_ae.pyx":247
+    /* "hyvr/classes/trough_ae.pyx":251
  *                 # The facies can be found by dividing the normalized distance
  *                 # by the normalized bublset_d:
  *                 n = int(ceil((sqrt(l2) + self.object_shift[oi])*self.object_c[oi]/self.object_layer_dist[oi]))             # <<<<<<<<<<<<<<
@@ -6217,123 +5935,68 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  *                 angles[0] = azim
  */
     /*else*/ {
-      __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_ceil); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_11);
-      __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_10 = PyFloat_FromDouble(__pyx_v_l2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_9 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_14))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_14);
-        if (likely(__pyx_t_9)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_14);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_14, function);
-        }
-      }
-      __pyx_t_1 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_14, __pyx_t_9, __pyx_t_10) : __Pyx_PyObject_CallOneArg(__pyx_t_14, __pyx_t_10);
-      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 247, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 251, __pyx_L1_error)}
       __pyx_t_88 = __pyx_v_oi;
-      __pyx_t_14 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_88 * __pyx_v_self->object_shift.strides[0]) )))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_10 = PyNumber_Add(__pyx_t_1, __pyx_t_14); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 247, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 251, __pyx_L1_error)}
       __pyx_t_89 = __pyx_v_oi;
-      __pyx_t_14 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_89 * __pyx_v_self->object_c.strides[0]) )))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_1 = PyNumber_Multiply(__pyx_t_10, __pyx_t_14); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 247, __pyx_L1_error)}
+      __pyx_t_27 = ((sqrt(__pyx_v_l2) + (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_88 * __pyx_v_self->object_shift.strides[0]) )))) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_89 * __pyx_v_self->object_c.strides[0]) ))));
+      if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 251, __pyx_L1_error)}
       __pyx_t_90 = __pyx_v_oi;
-      __pyx_t_14 = PyFloat_FromDouble((*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_90 * __pyx_v_self->object_layer_dist.strides[0]) )))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_10 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_14); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __pyx_t_14 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_11))) {
-        __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_11);
-        if (likely(__pyx_t_14)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_11);
-          __Pyx_INCREF(__pyx_t_14);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_11, function);
-        }
+      __pyx_t_29 = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_90 * __pyx_v_self->object_layer_dist.strides[0]) )));
+      if (unlikely(__pyx_t_29 == 0)) {
+        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+        __PYX_ERR(0, 251, __pyx_L1_error)
       }
-      __pyx_t_2 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_14, __pyx_t_10) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_10);
-      __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __pyx_t_11 = __Pyx_PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_11);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_13 = __Pyx_PyInt_As_int(__pyx_t_11); if (unlikely((__pyx_t_13 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 247, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __pyx_v_n = __pyx_t_13;
+      __pyx_v_n = ((int)ceil((__pyx_t_27 / __pyx_t_29)));
 
-      /* "hyvr/classes/trough_ae.pyx":248
+      /* "hyvr/classes/trough_ae.pyx":252
  *                 # by the normalized bublset_d:
  *                 n = int(ceil((sqrt(l2) + self.object_shift[oi])*self.object_c[oi]/self.object_layer_dist[oi]))
  *                 geo_ids[0] = self.object_facies_array[oi,n]             # <<<<<<<<<<<<<<
  *                 angles[0] = azim
  *                 angles[1] = dip
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 248, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.object_facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 252, __pyx_L1_error)}
       __pyx_t_91 = __pyx_v_oi;
       __pyx_t_92 = __pyx_v_n;
       __pyx_t_93 = 0;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_93 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies_array.data + __pyx_t_91 * __pyx_v_self->__pyx_base.object_facies_array.strides[0]) ) + __pyx_t_92 * __pyx_v_self->__pyx_base.object_facies_array.strides[1]) )));
 
-      /* "hyvr/classes/trough_ae.pyx":249
+      /* "hyvr/classes/trough_ae.pyx":253
  *                 n = int(ceil((sqrt(l2) + self.object_shift[oi])*self.object_c[oi]/self.object_layer_dist[oi]))
  *                 geo_ids[0] = self.object_facies_array[oi,n]
  *                 angles[0] = azim             # <<<<<<<<<<<<<<
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  */
-      __pyx_t_27 = __pyx_PyFloat_AsDouble(__pyx_v_azim); if (unlikely((__pyx_t_27 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 249, __pyx_L1_error)
+      __pyx_t_29 = __pyx_PyFloat_AsDouble(__pyx_v_azim); if (unlikely((__pyx_t_29 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
       __pyx_t_94 = 0;
-      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_94 * __pyx_v_angles.strides[0]) )) = __pyx_t_27;
+      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_94 * __pyx_v_angles.strides[0]) )) = __pyx_t_29;
 
-      /* "hyvr/classes/trough_ae.pyx":250
+      /* "hyvr/classes/trough_ae.pyx":254
  *                 geo_ids[0] = self.object_facies_array[oi,n]
  *                 angles[0] = azim
  *                 angles[1] = dip             # <<<<<<<<<<<<<<
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return
  */
-      __pyx_t_27 = __pyx_PyFloat_AsDouble(__pyx_v_dip); if (unlikely((__pyx_t_27 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 250, __pyx_L1_error)
+      __pyx_t_29 = __pyx_PyFloat_AsDouble(__pyx_v_dip); if (unlikely((__pyx_t_29 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L1_error)
       __pyx_t_95 = 1;
-      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_95 * __pyx_v_angles.strides[0]) )) = __pyx_t_27;
+      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_95 * __pyx_v_angles.strides[0]) )) = __pyx_t_29;
 
-      /* "hyvr/classes/trough_ae.pyx":251
+      /* "hyvr/classes/trough_ae.pyx":255
  *                 angles[0] = azim
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *                 return
  *         else:
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 251, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 255, __pyx_L1_error)}
       __pyx_t_96 = __pyx_v_oi;
       __pyx_t_97 = 2;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_97 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_96 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-      /* "hyvr/classes/trough_ae.pyx":252
+      /* "hyvr/classes/trough_ae.pyx":256
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return             # <<<<<<<<<<<<<<
@@ -6345,7 +6008,7 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
       goto __pyx_L0;
     }
 
-    /* "hyvr/classes/trough_ae.pyx":187
+    /* "hyvr/classes/trough_ae.pyx":191
  *             geo_ids[2] = self.object_num_ha[oi]
  *             return
  *         elif self.object_structure[oi] == 2 or self.object_structure[oi] == 3: # bulb or bulb_sets             # <<<<<<<<<<<<<<
@@ -6354,18 +6017,18 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
  */
   }
 
-  /* "hyvr/classes/trough_ae.pyx":254
+  /* "hyvr/classes/trough_ae.pyx":258
  *                 return
  *         else:
  *             print('Structure:', self.object_structure[oi])             # <<<<<<<<<<<<<<
  *             raise NotImplementedError('This structure is not implemented yet')
  */
   /*else*/ {
-    if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 254, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 258, __pyx_L1_error)}
     __pyx_t_98 = __pyx_v_oi;
-    __pyx_t_11 = __Pyx_PyInt_From_npy_int32((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_98 * __pyx_v_self->object_structure.strides[0]) )))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_From_npy_int32((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->object_structure.data + __pyx_t_98 * __pyx_v_self->object_structure.strides[0]) )))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_kp_u_Structure);
     __Pyx_GIVEREF(__pyx_kp_u_Structure);
@@ -6373,24 +6036,24 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
     __Pyx_GIVEREF(__pyx_t_11);
     PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_11);
     __pyx_t_11 = 0;
-    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_2, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_2, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 258, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-    /* "hyvr/classes/trough_ae.pyx":255
+    /* "hyvr/classes/trough_ae.pyx":259
  *         else:
  *             print('Structure:', self.object_structure[oi])
  *             raise NotImplementedError('This structure is not implemented yet')             # <<<<<<<<<<<<<<
  */
-    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 255, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 259, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_Raise(__pyx_t_11, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __PYX_ERR(0, 255, __pyx_L1_error)
+    __PYX_ERR(0, 259, __pyx_L1_error)
   }
 
-  /* "hyvr/classes/trough_ae.pyx":86
+  /* "hyvr/classes/trough_ae.pyx":90
  *     @cython.wraparound(False)
  *     @cython.nonecheck(False)
  *     cpdef maybe_assign_points_to_object(self, int oi,             # <<<<<<<<<<<<<<
@@ -6419,7 +6082,6 @@ static PyObject *__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points
   __Pyx_XDECREF(__pyx_v_dip);
   __Pyx_XDECREF(__pyx_v_cos_azim);
   __Pyx_XDECREF(__pyx_v_azim);
-  __Pyx_XDECREF(__pyx_v_len_tanvec_xy);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -6478,53 +6140,53 @@ static PyObject *__pyx_pw_4hyvr_7classes_9trough_ae_8TroughAE_5maybe_assign_poin
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_geo_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 1); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 1); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_angles)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 2); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 2); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 3); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 3); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 4); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 4); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_z)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 5); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 5); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 6); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 6); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 7); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 7); __PYX_ERR(0, 90, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_grid)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 8); __PYX_ERR(0, 86, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, 8); __PYX_ERR(0, 90, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "maybe_assign_points_to_object") < 0)) __PYX_ERR(0, 86, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "maybe_assign_points_to_object") < 0)) __PYX_ERR(0, 90, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
       goto __pyx_L5_argtuple_error;
@@ -6539,25 +6201,25 @@ static PyObject *__pyx_pw_4hyvr_7classes_9trough_ae_8TroughAE_5maybe_assign_poin
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
     }
-    __pyx_v_oi = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L3_error)
-    __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 87, __pyx_L3_error)
-    __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 88, __pyx_L3_error)
-    __pyx_v_x = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L3_error)
-    __pyx_v_y = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_y == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L3_error)
-    __pyx_v_z = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_z == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L3_error)
-    __pyx_v_x_idx = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L3_error)
-    __pyx_v_y_idx = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L3_error)
+    __pyx_v_oi = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L3_error)
+    __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 91, __pyx_L3_error)
+    __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 92, __pyx_L3_error)
+    __pyx_v_x = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
+    __pyx_v_y = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_y == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
+    __pyx_v_z = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_z == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
+    __pyx_v_x_idx = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 94, __pyx_L3_error)
+    __pyx_v_y_idx = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 94, __pyx_L3_error)
     __pyx_v_grid = ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)values[8]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 86, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_object", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 90, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hyvr.classes.trough_ae.TroughAE.maybe_assign_points_to_object", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 91, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 95, __pyx_L1_error)
   __pyx_r = __pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_4maybe_assign_points_to_object(((struct __pyx_obj_4hyvr_7classes_9trough_ae_TroughAE *)__pyx_v_self), __pyx_v_oi, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_grid);
 
   /* function exit code */
@@ -6575,9 +6237,9 @@ static PyObject *__pyx_pf_4hyvr_7classes_9trough_ae_8TroughAE_4maybe_assign_poin
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("maybe_assign_points_to_object", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 86, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 86, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points_to_object(__pyx_v_self, __pyx_v_oi, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_grid, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 90, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 90, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points_to_object(__pyx_v_self, __pyx_v_oi, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_grid, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -26243,7 +25905,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_View_MemoryView, __pyx_k_View_MemoryView, sizeof(__pyx_k_View_MemoryView), 0, 0, 1, 1},
   {&__pyx_n_s__27, __pyx_k__27, sizeof(__pyx_k__27), 0, 0, 1, 1},
   {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
-  {&__pyx_n_s_acos, __pyx_k_acos, sizeof(__pyx_k_acos), 0, 0, 1, 1},
   {&__pyx_n_s_add_object, __pyx_k_add_object, sizeof(__pyx_k_add_object), 0, 0, 1, 1},
   {&__pyx_n_s_allocate_buffer, __pyx_k_allocate_buffer, sizeof(__pyx_k_allocate_buffer), 0, 0, 1, 1},
   {&__pyx_n_s_alpha, __pyx_k_alpha, sizeof(__pyx_k_alpha), 0, 0, 1, 1},
@@ -26252,7 +25913,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
   {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
   {&__pyx_n_u_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 1, 0, 1},
-  {&__pyx_n_s_ceil, __pyx_k_ceil, sizeof(__pyx_k_ceil), 0, 0, 1, 1},
   {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_kp_s_contiguous_and_direct, __pyx_k_contiguous_and_direct, sizeof(__pyx_k_contiguous_and_direct), 0, 0, 1, 0},
@@ -26276,7 +25936,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
   {&__pyx_n_s_grid, __pyx_k_grid, sizeof(__pyx_k_grid), 0, 0, 1, 1},
-  {&__pyx_n_s_ho, __pyx_k_ho, sizeof(__pyx_k_ho), 0, 0, 1, 1},
   {&__pyx_n_s_hyvr_classes_trough, __pyx_k_hyvr_classes_trough, sizeof(__pyx_k_hyvr_classes_trough), 0, 0, 1, 1},
   {&__pyx_n_s_hyvr_classes_trough_ae, __pyx_k_hyvr_classes_trough_ae, sizeof(__pyx_k_hyvr_classes_trough_ae), 0, 0, 1, 1},
   {&__pyx_n_s_hyvr_classes_trough_utils, __pyx_k_hyvr_classes_trough_utils, sizeof(__pyx_k_hyvr_classes_trough_utils), 0, 0, 1, 1},
@@ -26331,10 +25990,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
   {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
   {&__pyx_n_s_shift, __pyx_k_shift, sizeof(__pyx_k_shift), 0, 0, 1, 1},
-  {&__pyx_n_s_sign, __pyx_k_sign, sizeof(__pyx_k_sign), 0, 0, 1, 1},
   {&__pyx_n_s_sinalpha, __pyx_k_sinalpha, sizeof(__pyx_k_sinalpha), 0, 0, 1, 1},
   {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
-  {&__pyx_n_s_sqrt, __pyx_k_sqrt, sizeof(__pyx_k_sqrt), 0, 0, 1, 1},
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
   {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
   {&__pyx_n_s_stop, __pyx_k_stop, sizeof(__pyx_k_stop), 0, 0, 1, 1},
@@ -26363,9 +26020,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 36, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 254, __pyx_L1_error)
-  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 259, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(3, 272, __pyx_L1_error)
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(3, 285, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(3, 856, __pyx_L1_error)
@@ -26384,12 +26041,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hyvr/classes/trough_ae.pyx":255
+  /* "hyvr/classes/trough_ae.pyx":259
  *         else:
  *             print('Structure:', self.object_structure[oi])
  *             raise NotImplementedError('This structure is not implemented yet')             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_This_structure_is_not_implemente); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_This_structure_is_not_implemente); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
@@ -26810,16 +26467,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_4hyvr_7classes_9trough_ae_TroughAE.__pyx_base.create_object_arrays = (PyObject *(*)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch))__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_create_object_arrays;
   __pyx_vtable_4hyvr_7classes_9trough_ae_TroughAE.__pyx_base.maybe_assign_points_to_object = (PyObject *(*)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch))__pyx_f_4hyvr_7classes_9trough_ae_8TroughAE_maybe_assign_points_to_object;
   __pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_base = __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization;
-  if (PyType_Ready(&__pyx_type_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_dictoffset && __pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_dict, __pyx_vtabptr_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_TroughAE, (PyObject *)&__pyx_type_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_4hyvr_7classes_9trough_ae_TroughAE.tp_dict, __pyx_vtabptr_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_TroughAE, (PyObject *)&__pyx_type_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_4hyvr_7classes_9trough_ae_TroughAE) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   __pyx_ptype_4hyvr_7classes_9trough_ae_TroughAE = &__pyx_type_4hyvr_7classes_9trough_ae_TroughAE;
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
@@ -26938,10 +26595,18 @@ static int __Pyx_modinit_variable_import_code(void) {
 
 static int __Pyx_modinit_function_import_code(void) {
   __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_import_code", 0);
   /*--- Function import code ---*/
+  __pyx_t_1 = PyImport_ImportModule("hyvr.optimized"); if (!__pyx_t_1) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "sign", (void (**)(void))&__pyx_f_4hyvr_9optimized_sign, "int (double)") < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  Py_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 
@@ -27137,7 +26802,7 @@ if (!__Pyx_RefNanny) {
   if (unlikely(__Pyx_modinit_type_init_code() != 0)) goto __pyx_L1_error;
   if (unlikely(__Pyx_modinit_type_import_code() != 0)) goto __pyx_L1_error;
   (void)__Pyx_modinit_variable_import_code();
-  (void)__Pyx_modinit_function_import_code();
+  if (unlikely(__Pyx_modinit_function_import_code() != 0)) goto __pyx_L1_error;
   /*--- Execution code ---*/
   #if defined(__Pyx_Generator_USED) || defined(__Pyx_Coroutine_USED)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
@@ -27877,12 +27542,6 @@ static CYTHON_INLINE void __Pyx_XDEC_MEMVIEW(__Pyx_memviewslice *memslice,
     }
 }
 
-/* BufferIndexError */
-static void __Pyx_RaiseBufferIndexError(int axis) {
-  PyErr_Format(PyExc_IndexError,
-     "Out of bounds on buffer access (axis %d)", axis);
-}
-
 /* DictGetItem */
 #if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
 static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key) {
@@ -28017,73 +27676,6 @@ static CYTHON_INLINE long __Pyx_div_long(long a, long b) {
     long r = a - q*b;
     q -= ((r != 0) & ((r ^ b) < 0));
     return q;
-}
-
-/* PyIntCompare */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED long intval, CYTHON_UNUSED long inplace) {
-    if (op1 == op2) {
-        Py_RETURN_TRUE;
-    }
-    #if PY_MAJOR_VERSION < 3
-    if (likely(PyInt_CheckExact(op1))) {
-        const long b = intval;
-        long a = PyInt_AS_LONG(op1);
-        if (a == b) Py_RETURN_TRUE; else Py_RETURN_FALSE;
-    }
-    #endif
-    #if CYTHON_USE_PYLONG_INTERNALS
-    if (likely(PyLong_CheckExact(op1))) {
-        int unequal;
-        unsigned long uintval;
-        Py_ssize_t size = Py_SIZE(op1);
-        const digit* digits = ((PyLongObject*)op1)->ob_digit;
-        if (intval == 0) {
-            if (size == 0) Py_RETURN_TRUE; else Py_RETURN_FALSE;
-        } else if (intval < 0) {
-            if (size >= 0)
-                Py_RETURN_FALSE;
-            intval = -intval;
-            size = -size;
-        } else {
-            if (size <= 0)
-                Py_RETURN_FALSE;
-        }
-        uintval = (unsigned long) intval;
-#if PyLong_SHIFT * 4 < SIZEOF_LONG*8
-        if (uintval >> (PyLong_SHIFT * 4)) {
-            unequal = (size != 5) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
-                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[2] != ((uintval >> (2 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[3] != ((uintval >> (3 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[4] != ((uintval >> (4 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
-        } else
-#endif
-#if PyLong_SHIFT * 3 < SIZEOF_LONG*8
-        if (uintval >> (PyLong_SHIFT * 3)) {
-            unequal = (size != 4) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
-                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[2] != ((uintval >> (2 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[3] != ((uintval >> (3 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
-        } else
-#endif
-#if PyLong_SHIFT * 2 < SIZEOF_LONG*8
-        if (uintval >> (PyLong_SHIFT * 2)) {
-            unequal = (size != 3) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
-                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK)) | (digits[2] != ((uintval >> (2 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
-        } else
-#endif
-#if PyLong_SHIFT * 1 < SIZEOF_LONG*8
-        if (uintval >> (PyLong_SHIFT * 1)) {
-            unequal = (size != 2) || (digits[0] != (uintval & (unsigned long) PyLong_MASK))
-                 | (digits[1] != ((uintval >> (1 * PyLong_SHIFT)) & (unsigned long) PyLong_MASK));
-        } else
-#endif
-            unequal = (size != 1) || (((unsigned long) digits[0]) != (uintval & (unsigned long) PyLong_MASK));
-        if (unequal == 0) Py_RETURN_TRUE; else Py_RETURN_FALSE;
-    }
-    #endif
-    if (PyFloat_CheckExact(op1)) {
-        const long b = intval;
-        double a = PyFloat_AS_DOUBLE(op1);
-        if ((double)a == (double)b) Py_RETURN_TRUE; else Py_RETURN_FALSE;
-    }
-    return (
-        PyObject_RichCompare(op1, op2, Py_EQ));
 }
 
 /* PyIntBinop */
@@ -32357,6 +31949,60 @@ raise_neg_overflow:
     }
     return 0;
 }
+
+/* FunctionImport */
+  #ifndef __PYX_HAVE_RT_ImportFunction
+#define __PYX_HAVE_RT_ImportFunction
+static int __Pyx_ImportFunction(PyObject *module, const char *funcname, void (**f)(void), const char *sig) {
+    PyObject *d = 0;
+    PyObject *cobj = 0;
+    union {
+        void (*fp)(void);
+        void *p;
+    } tmp;
+    d = PyObject_GetAttrString(module, (char *)"__pyx_capi__");
+    if (!d)
+        goto bad;
+    cobj = PyDict_GetItemString(d, funcname);
+    if (!cobj) {
+        PyErr_Format(PyExc_ImportError,
+            "%.200s does not export expected C function %.200s",
+                PyModule_GetName(module), funcname);
+        goto bad;
+    }
+#if PY_VERSION_HEX >= 0x02070000
+    if (!PyCapsule_IsValid(cobj, sig)) {
+        PyErr_Format(PyExc_TypeError,
+            "C function %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), funcname, sig, PyCapsule_GetName(cobj));
+        goto bad;
+    }
+    tmp.p = PyCapsule_GetPointer(cobj, sig);
+#else
+    {const char *desc, *s1, *s2;
+    desc = (const char *)PyCObject_GetDesc(cobj);
+    if (!desc)
+        goto bad;
+    s1 = desc; s2 = sig;
+    while (*s1 != '\0' && *s1 == *s2) { s1++; s2++; }
+    if (*s1 != *s2) {
+        PyErr_Format(PyExc_TypeError,
+            "C function %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), funcname, sig, desc);
+        goto bad;
+    }
+    tmp.p = PyCObject_AsVoidPtr(cobj);}
+#endif
+    *f = tmp.fp;
+    if (!(*f))
+        goto bad;
+    Py_DECREF(d);
+    return 0;
+bad:
+    Py_XDECREF(d);
+    return -1;
+}
+#endif
 
 /* InitStrings */
   static int __Pyx_InitStrings(__Pyx_StringTabEntry *t) {

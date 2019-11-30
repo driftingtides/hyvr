@@ -1417,6 +1417,7 @@ struct __pyx_memoryviewslice_obj {
  */
 
 struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization {
+  PyObject *(*_create_common_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
   PyObject *(*create_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
   PyObject *(*maybe_assign_points_to_object)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch);
 };
@@ -4521,23 +4522,23 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
   /* "hyvr/assign_points.pyx":202
  * 
  *     cdef int oi_orig, aei_orig
- *     oi_orig = oi             # <<<<<<<<<<<<<<
- *     aei_orig = aei
+ *     oi_orig = int(oi)             # <<<<<<<<<<<<<<
+ *     aei_orig = int(aei)
  * 
  */
   __pyx_v_oi_orig = __pyx_v_oi;
 
   /* "hyvr/assign_points.pyx":203
  *     cdef int oi_orig, aei_orig
- *     oi_orig = oi
- *     aei_orig = aei             # <<<<<<<<<<<<<<
+ *     oi_orig = int(oi)
+ *     aei_orig = int(aei)             # <<<<<<<<<<<<<<
  * 
  *     while aei < n_ae:
  */
   __pyx_v_aei_orig = __pyx_v_aei;
 
   /* "hyvr/assign_points.pyx":205
- *     aei_orig = aei
+ *     aei_orig = int(aei)
  * 
  *     while aei < n_ae:             # <<<<<<<<<<<<<<
  *         # if z > ae_zmaxs[aei]:

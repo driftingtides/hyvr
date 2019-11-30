@@ -29,6 +29,7 @@ cdef class AERealization:
         np.int32_t [:,:] object_facies_array
 
 
+    cpdef _create_common_object_arrays(self)
     cpdef create_object_arrays(self)
     cpdef maybe_assign_points_to_object(self, int oi,
                                         np.int32_t [:] geo_ids,

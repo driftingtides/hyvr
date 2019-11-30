@@ -13,18 +13,18 @@ cdef class Sheet:
     """
 
     cdef public:
-        int dipsets, num_facies
-        double zmin, zmax
-        double dip, azim
-        double shift, layer_dist
-        double normvec_x, normvec_y, normvec_z
-        int facies, num_ha
-        int [:] facies_array
+        np.int32_t dipsets, num_facies
+        np.float_t zmin, zmax
+        np.float_t dip, azim
+        np.float_t shift, layer_dist
+        np.float_t normvec_x, normvec_y, normvec_z
+        np.int32_t facies, num_ha
+        np.int32_t [:] facies_array
         ContactSurface bottom_surface, top_surface
 
 
     def __init__(self, type_params, bottom_surface, top_surface, grid):
-        cdef double sin_dip, cos_dip, sin_azim, cos_azim, xc, yc, zc
+        cdef np.float_t sin_dip, cos_dip, sin_azim, cos_azim, xc, yc, zc
 
         self.bottom_surface = bottom_surface
         self.top_surface = top_surface

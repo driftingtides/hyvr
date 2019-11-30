@@ -199,8 +199,8 @@ cpdef maybe_assign_points_to_stratum(
     """
 
     cdef int oi_orig, aei_orig
-    oi_orig = oi
-    aei_orig = aei
+    oi_orig = int(oi)
+    aei_orig = int(aei)
 
     while aei < n_ae:
         # if z > ae_zmaxs[aei]:

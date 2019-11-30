@@ -38,7 +38,10 @@ except ModuleNotFoundError:
 class sdist(_sdist):
     def run(self):
         # Make sure the compiled Cython files in the distribution are up-to-date
-        cythonize(extensions)
+        cythonize(extensions,
+                  language_level=3,
+                  annotate=True,
+                  compiler_directives={'profile':True})
         _sdist.run(self)
 
 # Extensions

@@ -145,7 +145,7 @@ class Model:
             for ae in stratum.aes:
                 ae.num = num_ae
                 num_ae += 1
-                for obj in ae.objects:
+                for obj in ae.object_list:
                     obj.num_ha = num_ha
                     num_ha += 1
 
@@ -260,7 +260,7 @@ class Model:
                         # Assign architectural element trends
                         if ae.type_params['k_ztrend'] is not None:
                             # Vertical trend
-                            zf_vec = np.linspace(*ae.type_params['k_ztrend'], self.gridnz)  # Z factor at each elevation
+                            zf_vec = np.linspace(*ae.type_params['k_ztrend'], self.grid.nz)  # Z factor at each elevation
                             k_iso *= zf_vec
                         if ae.type_params['k_xtrend'] is not None:
                             xf_vec = np.linspace(*ae.type_params['k_xtrend'], self.grid.nx)

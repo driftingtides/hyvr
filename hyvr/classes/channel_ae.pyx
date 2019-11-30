@@ -11,9 +11,11 @@ from hyvr.classes.ae_realization cimport AERealization
 
 cdef class ChannelAE(AERealization):
 
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
     cpdef create_object_arrays(self):
         # This is super ugly :(
-        cdef int i
+        cdef int i, nx, ny, j, k, max_len_centerline
         self.object_a = np.zeros(self.n_objects, dtype=np.float)
         self.object_width = np.zeros(self.n_objects, dtype=np.float)
         self.object_depth = np.zeros(self.n_objects, dtype=np.float)
@@ -28,7 +30,10 @@ cdef class ChannelAE(AERealization):
         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
         self.object_dipsets = np.zeros(self.n_objects, dtype=np.int32)
 
-        nx, ny = self.object_list[0].dont_check.shape
+        if self.n_objects > 0:
+            nx, ny = self.object_list[0].dont_check.shape
+        else:
+            nx, ny = 0, 0
         self.object_dont_check = np.zeros((self.n_objects, nx, ny), dtype=np.int32)
 
         for i, obj in enumerate(self.object_list):
@@ -45,20 +50,26 @@ cdef class ChannelAE(AERealization):
             self.object_lag_height[i] = obj.lag_height
             self.object_lag_facies[i] = obj.lag_facies
             self.object_dipsets[i] = obj.dipsets
-            self.object_dont_check[i,:,:] = obj.dont_check
+            for j in range(nx):
+                for k in range(ny):
+                    self.object_dont_check[i,j,k] = obj.dont_check[j,k]
 
         # find length of centerline discretizations
-        max_len_centerline = np.max(self.object_len_centerline)
+        if self.n_objects > 0:
+            max_len_centerline = np.max(self.object_len_centerline)
+        else:
+            max_len_centerline = 0
         self.object_x_center = np.zeros((self.n_objects, max_len_centerline), dtype=np.float)
         self.object_y_center = np.zeros((self.n_objects, max_len_centerline), dtype=np.float)
         self.object_vx = np.zeros((self.n_objects, max_len_centerline), dtype=np.float)
         self.object_vy = np.zeros((self.n_objects, max_len_centerline), dtype=np.float)
 
         for i, obj in enumerate(self.object_list):
-            self.object_x_center[i,:] = obj.x_center
-            self.object_y_center[i,:] = obj.y_center
-            self.object_vx[i,:] = obj.vx
-            self.object_vy[i,:] = obj.vy
+            for j in range(self.object_len_centerline[i]):
+                self.object_x_center[i,j] = obj.x_center[j]
+                self.object_y_center[i,j] = obj.y_center[j]
+                self.object_vx[i,j] = obj.vx[j]
+                self.object_vy[i,j] = obj.vy[j]
 
 
     def generate_objects(self, grid):

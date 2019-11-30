@@ -9,9 +9,11 @@ from hyvr.classes.ae_realization cimport AERealization
 
 cdef class SheetAE(AERealization):
 
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
     cpdef create_object_arrays(self):
         # This is super ugly :(
-        cdef int i
+        cdef int i, nx, ny, j, k
         self.object_shift = np.zeros(self.n_objects, dtype=np.float)
         self.object_layer_dist = np.zeros(self.n_objects, dtype=np.float)
         self.object_normvec_x = np.zeros(self.n_objects, dtype=np.float)
@@ -20,7 +22,10 @@ cdef class SheetAE(AERealization):
         self.object_bottom_surface_zmean = np.zeros(self.n_objects, dtype=np.float)
         self.object_dipsets = np.zeros(self.n_objects, dtype=np.int32)
 
-        nx, ny = self.object_list[0].bottom_surface.surface.shape
+        if self.n_objects > 0:
+            nx, ny = self.object_list[0].bottom_surface.surface.shape
+        else:
+            nx, ny = 0, 0
         self.object_bottom_surface = np.zeros((self.n_objects, nx, ny), dtype=np.float)
         self.object_top_surface = np.zeros((self.n_objects, nx, ny), dtype=np.float)
 
@@ -32,8 +37,10 @@ cdef class SheetAE(AERealization):
             self.object_normvec_z[i] = obj.normvec_z
             self.object_bottom_surface_zmean[i] = obj.bottom_surface.zmean
             self.object_dipsets[i] = obj.dipsets
-            self.object_top_surface[i,:,:] = obj.top_surface.surface
-            self.object_bottom_surface[i,:,:] = obj.bottom_surface.surface
+            for j in range(nx):
+                for k in range(ny):
+                    self.object_top_surface[i,j,k] = obj.top_surface.surface[j,k]
+                    self.object_bottom_surface[i,j,k] = obj.bottom_surface.surface[j,k]
 
 
     def generate_objects(self, grid):

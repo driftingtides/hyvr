@@ -5,11 +5,15 @@ from hyvr.classes.trough import Trough
 
 cimport cython
 cimport numpy as np
+from libc.math cimport sqrt, ceil, acos
 from hyvr.classes.ae_realization cimport AERealization
+cimport hyvr.optimized as ho
 
 
 cdef class TroughAE(AERealization):
 
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
     cpdef create_object_arrays(self):
         # This is super ugly :(
         cdef int i

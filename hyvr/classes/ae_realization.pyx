@@ -3,6 +3,8 @@ Base class for AE realizations
 """
 
 import numpy as np
+
+cimport cython
 cimport numpy as np
 from hyvr.classes.contact_surface cimport ContactSurface
 
@@ -83,10 +85,18 @@ cdef class AERealization:
 
         # generate objects
         self.generate_objects(grid)
-        self.y_idx_cached = None # TODO: what is this?
 
         # create object arrays
         self.n_objects = len(self.object_list)
+        self._create_common_object_arrays()
+        self.create_object_arrays()
+
+
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    cpdef _create_common_object_arrays(self):
+
+        cdef int i, max_num_facies, num_facies, j
         self.object_zmins = np.array(self.object_zmin_list)
         self.object_zmaxs = np.array(self.object_zmax_list)
         # get the rest from the object list
@@ -95,23 +105,22 @@ cdef class AERealization:
         self.object_facies = np.zeros(self.n_objects, dtype=np.int32)
         self.object_num_ha = np.zeros(self.n_objects, dtype=np.int32)
         self.object_num_facies = np.zeros(self.n_objects, dtype=np.int32)
-        cdef int i
         for i, obj in enumerate(self.object_list):
             self.object_azim[i] = obj.azim
             self.object_dip[i] = obj.dip
             self.object_facies[i] = obj.facies
             self.object_num_ha[i] = obj.num_ha
             self.object_num_facies[i] = obj.num_facies
-        cdef int max_num_facies = np.max(self.object_num_facies)
+
+        if self.n_objects > 0:
+            max_num_facies = np.max(self.object_num_facies)
+        else:
+            max_num_facies = 0
         self.object_facies_array = np.zeros((self.n_objects, max_num_facies), dtype=np.int32)
-        cdef int num_facies
         for i, obj in enumerate(self.object_list):
             num_facies = self.object_num_facies[i]
-            self.object_facies_array[i,0:num_facies] = np.array(obj.facies_array, dtype=np.int32)
-
-
-        # the rest has to be done for each type separately
-        self.create_object_arrays()
+            for j in range(num_facies):
+                self.object_facies_array[i,j] = obj.facies_array[j]
 
 
 
