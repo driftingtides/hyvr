@@ -64,7 +64,7 @@ if use_cython:
     ext_modules = cythonize(extensions,
                             language_level=3,
                             annotate=True,
-                            compiler_directives={'profile':True})
+                            compiler_directives={'profile':False})
 else:
     ext_modules = extensions
 

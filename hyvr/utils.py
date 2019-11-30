@@ -487,10 +487,10 @@ def specsim(grid, var, corl, selection_mask=None, two_dim=False, covmod='gaussia
         # rectangular selection that contains all selected cells
         if two_dim:
             x_idx, y_idx = np.where(selection_mask)
-            min_x_idx = min(x_idx)
-            max_x_idx = max(x_idx)
-            min_y_idx = min(y_idx)
-            max_y_idx = max(y_idx)
+            min_x_idx = np.min(x_idx)
+            max_x_idx = np.max(x_idx)
+            min_y_idx = np.min(y_idx)
+            max_y_idx = np.max(y_idx)
             rectangular_mask = np.zeros_like(selection_mask)
             rectangular_mask[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1] = True
             selected_X = grid.X[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,0]
@@ -508,11 +508,11 @@ def specsim(grid, var, corl, selection_mask=None, two_dim=False, covmod='gaussia
                 min_x_idx = min(x_idx)
             except:
                 import pdb; pdb.set_trace()
-            max_x_idx = max(x_idx)
-            min_y_idx = min(y_idx)
-            max_y_idx = max(y_idx)
-            max_z_idx = max(z_idx)
-            min_z_idx = min(z_idx)
+            max_x_idx = np.max(x_idx)
+            min_y_idx = np.min(y_idx)
+            max_y_idx = np.max(y_idx)
+            max_z_idx = np.max(z_idx)
+            min_z_idx = np.min(z_idx)
             rectangular_mask = np.zeros_like(selection_mask)
             rectangular_mask[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1] = True
             selected_X = grid.X[min_x_idx:max_x_idx+1,min_y_idx:max_y_idx+1,min_z_idx:max_z_idx+1]
