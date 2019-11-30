@@ -1,5 +1,6 @@
+cimport numpy as np
 
 cdef class ContactSurface:
 
-    cdef public double z, zmax, zmin, zmean
-    cdef public double [:,:] surface
+    cdef public np.float_t z, zmax, zmin, zmean
+    cdef public np.float_t [:,:] surface

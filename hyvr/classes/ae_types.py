@@ -2,7 +2,10 @@
 This module contains the architectural element types.
 """
 
-from hyvr.classes.ae_realizations import *
+from hyvr.classes.ae_realization import AERealization
+from hyvr.classes.sheet_ae import SheetAE
+from hyvr.classes.channel_ae import ChannelAE
+from hyvr.classes.trough_ae import TroughAE
 
 class AEType:
     """
@@ -51,9 +54,9 @@ class AEType:
         model : Model object
         """
         if self.geometry == 'trough':
-            return TruncEllipAE(bottom_surface, top_surface, self.name, self.params, stratum, grid)
+            return TroughAE(bottom_surface, top_surface, self.name, self.params, stratum, grid)
         elif self.geometry == 'channel':
-            return ExtParAE(bottom_surface, top_surface, self.name, self.params, stratum, grid)
+            return ChannelAE(bottom_surface, top_surface, self.name, self.params, stratum, grid)
         elif self.geometry == 'sheet':
             return SheetAE(bottom_surface, top_surface, self.name, self.params, stratum, grid)
         else:

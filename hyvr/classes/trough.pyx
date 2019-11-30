@@ -198,7 +198,7 @@ cdef class Trough:
                               Grid grid):
         """
         This function checks whether the current grid cell with given
-        coordinates is inside the channel and assigns facies, azimuth and dip by
+        coordinates is inside the trough and assigns facies, azimuth and dip by
         altering the passed arrays.
 
         Parameters

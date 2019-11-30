@@ -848,6 +848,9 @@ static const char *__pyx_f[] = {
   "stringsource",
   "type.pxd",
   "hyvr/classes/grid.pxd",
+  "hyvr/classes/contact_surface.pxd",
+  "hyvr/classes/ae_realization.pxd",
+  "hyvr/classes/sheet_ae.pxd",
 };
 /* MemviewSliceStruct.proto */
 struct __pyx_memoryview_obj;
@@ -1173,6 +1176,9 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 /*--- Type declarations ---*/
 struct __pyx_obj_4hyvr_7classes_4grid_Grid;
+struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface;
+struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization;
+struct __pyx_obj_4hyvr_7classes_8sheet_ae_SheetAE;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
@@ -1247,6 +1253,80 @@ struct __pyx_obj_4hyvr_7classes_4grid_Grid {
   __Pyx_memviewslice X_centered;
   __Pyx_memviewslice Y_centered;
   __Pyx_memviewslice Z_centered;
+};
+
+
+/* "hyvr/classes/contact_surface.pxd":3
+ * cimport numpy as np
+ * 
+ * cdef class ContactSurface:             # <<<<<<<<<<<<<<
+ * 
+ *     cdef public np.float_t z, zmax, zmin, zmean
+ */
+struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface {
+  PyObject_HEAD
+  __pyx_t_5numpy_float_t z;
+  __pyx_t_5numpy_float_t zmax;
+  __pyx_t_5numpy_float_t zmin;
+  __pyx_t_5numpy_float_t zmean;
+  __Pyx_memviewslice surface;
+};
+
+
+/* "hyvr/classes/ae_realization.pxd":6
+ * from hyvr.classes.grid cimport Grid
+ * 
+ * cdef class AERealization:             # <<<<<<<<<<<<<<
+ * 
+ *     cdef public:
+ */
+struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization {
+  PyObject_HEAD
+  struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *__pyx_vtab;
+  __pyx_t_5numpy_int32_t type_id;
+  __pyx_t_5numpy_int32_t num;
+  __pyx_t_5numpy_int32_t bg_facies;
+  __pyx_t_5numpy_float_t zmin;
+  __pyx_t_5numpy_float_t zmax;
+  __pyx_t_5numpy_float_t bg_dip;
+  __pyx_t_5numpy_float_t bg_azim;
+  struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *bottom_surface;
+  struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *top_surface;
+  PyObject *type_params;
+  PyObject *type_name;
+  PyObject *object_list;
+  PyObject *object_zmax_list;
+  PyObject *object_zmin_list;
+  int n_objects;
+  __Pyx_memviewslice object_zmins;
+  __Pyx_memviewslice object_zmaxs;
+  __Pyx_memviewslice object_dip;
+  __Pyx_memviewslice object_azim;
+  __Pyx_memviewslice object_facies;
+  __Pyx_memviewslice object_num_ha;
+  __Pyx_memviewslice object_num_facies;
+  __Pyx_memviewslice object_facies_array;
+};
+
+
+/* "hyvr/classes/sheet_ae.pxd":7
+ * from hyvr.classes.ae_realization cimport AERealization
+ * 
+ * cdef class SheetAE(AERealization):             # <<<<<<<<<<<<<<
+ * 
+ *     cdef public:
+ */
+struct __pyx_obj_4hyvr_7classes_8sheet_ae_SheetAE {
+  struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization __pyx_base;
+  __Pyx_memviewslice object_shift;
+  __Pyx_memviewslice object_layer_dist;
+  __Pyx_memviewslice object_normvec_x;
+  __Pyx_memviewslice object_normvec_y;
+  __Pyx_memviewslice object_normvec_z;
+  __Pyx_memviewslice object_bottom_surface;
+  __Pyx_memviewslice object_top_surface;
+  __Pyx_memviewslice object_bottom_surface_zmean;
+  __Pyx_memviewslice object_dipsets;
 };
 
 
@@ -1326,6 +1406,35 @@ struct __pyx_memoryviewslice_obj {
   int (*to_dtype_func)(char *, PyObject *);
 };
 
+
+
+/* "hyvr/classes/ae_realization.pxd":6
+ * from hyvr.classes.grid cimport Grid
+ * 
+ * cdef class AERealization:             # <<<<<<<<<<<<<<
+ * 
+ *     cdef public:
+ */
+
+struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization {
+  PyObject *(*create_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
+  PyObject *(*maybe_assign_points_to_object)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch);
+};
+static struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *__pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization;
+
+
+/* "hyvr/classes/sheet_ae.pxd":7
+ * from hyvr.classes.ae_realization cimport AERealization
+ * 
+ * cdef class SheetAE(AERealization):             # <<<<<<<<<<<<<<
+ * 
+ *     cdef public:
+ */
+
+struct __pyx_vtabstruct_4hyvr_7classes_8sheet_ae_SheetAE {
+  struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization __pyx_base;
+};
+static struct __pyx_vtabstruct_4hyvr_7classes_8sheet_ae_SheetAE *__pyx_vtabptr_4hyvr_7classes_8sheet_ae_SheetAE;
 
 
 /* "View.MemoryView":105
@@ -1896,6 +2005,9 @@ enum __Pyx_ImportType_CheckSize {
 static PyTypeObject *__Pyx_ImportType(PyObject* module, const char *module_name, const char *class_name, size_t size, enum __Pyx_ImportType_CheckSize check_size);
 #endif
 
+/* GetVTable.proto */
+static void* __Pyx_GetVtable(PyObject *dict);
+
 /* CLineInTraceback.proto */
 #ifdef CYTHON_CLINE_IN_TRACEBACK
 #define __Pyx_CLineForTraceback(tstate, c_line)  (((CYTHON_CLINE_IN_TRACEBACK)) ? c_line : 0)
@@ -2128,9 +2240,6 @@ static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsdsds
 /* ObjectToMemviewSlice.proto */
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(PyObject *, int writable_flag);
 
-/* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_5numpy_float_t(PyObject *, int writable_flag);
-
 /* CheckBinaryVersion.proto */
 static int __Pyx_check_binary_version(void);
 
@@ -2184,6 +2293,15 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, cha
 /* Module declarations from 'hyvr.classes.grid' */
 static PyTypeObject *__pyx_ptype_4hyvr_7classes_4grid_Grid = 0;
 
+/* Module declarations from 'hyvr.classes.contact_surface' */
+static PyTypeObject *__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface = 0;
+
+/* Module declarations from 'hyvr.classes.ae_realization' */
+static PyTypeObject *__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization = 0;
+
+/* Module declarations from 'hyvr.classes.sheet_ae' */
+static PyTypeObject *__pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE = 0;
+
 /* Module declarations from 'hyvr.assign_points' */
 static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
@@ -2198,7 +2316,7 @@ static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(PyObject *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
-static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -2273,7 +2391,6 @@ static const char __pyx_k_dip[] = "dip";
 static const char __pyx_k_hat[] = "hat";
 static const char __pyx_k_nan[] = "nan";
 static const char __pyx_k_new[] = "__new__";
-static const char __pyx_k_num[] = "num";
 static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_sys[] = "sys";
 static const char __pyx_k_Done[] = "Done  ";
@@ -2312,7 +2429,6 @@ static const char __pyx_k_x_idx[] = "x_idx";
 static const char __pyx_k_y_idx[] = "y_idx";
 static const char __pyx_k_zeros[] = "zeros";
 static const char __pyx_k_angles[] = "angles";
-static const char __pyx_k_bg_dip[] = "bg_dip";
 static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_facies[] = "facies";
 static const char __pyx_k_format[] = "format";
@@ -2325,15 +2441,10 @@ static const char __pyx_k_strata[] = "strata";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
-static const char __pyx_k_SheetAE[] = "SheetAE";
 static const char __pyx_k_asarray[] = "asarray";
-static const char __pyx_k_bg_azim[] = "bg_azim";
 static const char __pyx_k_fortran[] = "fortran";
 static const char __pyx_k_geo_ids[] = "geo_ids";
 static const char __pyx_k_memview[] = "memview";
-static const char __pyx_k_objects[] = "objects";
-static const char __pyx_k_surface[] = "surface";
-static const char __pyx_k_type_id[] = "type_id";
 static const char __pyx_k_Ellipsis[] = "Ellipsis";
 static const char __pyx_k_ae_zmaxs[] = "ae_zmaxs";
 static const char __pyx_k_ae_zmins[] = "ae_zmins";
@@ -2343,9 +2454,7 @@ static const char __pyx_k_n_strata[] = "n_strata";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_TypeError[] = "TypeError";
-static const char __pyx_k_bg_facies[] = "bg_facies";
 static const char __pyx_k_enumerate[] = "enumerate";
-static const char __pyx_k_n_objects[] = "n_objects";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_IndexError[] = "IndexError";
@@ -2357,17 +2466,12 @@ static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_stratum_aes[] = "stratum_aes";
-static const char __pyx_k_top_surface[] = "top_surface";
 static const char __pyx_k_RuntimeError[] = "RuntimeError";
-static const char __pyx_k_object_zmaxs[] = "object_zmaxs";
-static const char __pyx_k_object_zmins[] = "object_zmins";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
 static const char __pyx_k_strata_zmins[] = "strata_zmins";
 static const char __pyx_k_stringsource[] = "stringsource";
-static const char __pyx_k_AERealization[] = "AERealization";
 static const char __pyx_k_pyx_getbuffer[] = "__pyx_getbuffer";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
-static const char __pyx_k_bottom_surface[] = "bottom_surface";
 static const char __pyx_k_View_MemoryView[] = "View.MemoryView";
 static const char __pyx_k_allocate_buffer[] = "allocate_buffer";
 static const char __pyx_k_dtype_is_object[] = "dtype_is_object";
@@ -2378,7 +2482,6 @@ static const char __pyx_k_Currently_done_3d[] = "Currently done: {:>3d} %\r";
 static const char __pyx_k_pyx_unpickle_Enum[] = "__pyx_unpickle_Enum";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_strided_and_direct[] = "<strided and direct>";
-static const char __pyx_k_maybe_assign_points[] = "maybe_assign_points";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
@@ -2388,7 +2491,6 @@ static const char __pyx_k_Cannot_index_with_type_s[] = "Cannot index with type '
 static const char __pyx_k_Invalid_shape_in_axis_d_d[] = "Invalid shape in axis %d: %d.";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
-static const char __pyx_k_hyvr_classes_ae_realizations[] = "hyvr.classes.ae_realizations";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
@@ -2413,7 +2515,6 @@ static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __red
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
 static const char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
 static const char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
-static PyObject *__pyx_n_s_AERealization;
 static PyObject *__pyx_n_s_ASCII;
 static PyObject *__pyx_kp_u_Assigning_parameters_to_grid_cel;
 static PyObject *__pyx_kp_s_Buffer_view_does_not_expose_stri;
@@ -2441,7 +2542,6 @@ static PyObject *__pyx_n_b_O;
 static PyObject *__pyx_kp_s_Out_of_bounds_on_buffer_access_a;
 static PyObject *__pyx_n_s_PickleError;
 static PyObject *__pyx_n_s_RuntimeError;
-static PyObject *__pyx_n_s_SheetAE;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s_Unable_to_convert_item_to_object;
 static PyObject *__pyx_n_s_ValueError;
@@ -2461,10 +2561,6 @@ static PyObject *__pyx_n_s_angles;
 static PyObject *__pyx_n_s_asarray;
 static PyObject *__pyx_n_u_azim;
 static PyObject *__pyx_n_s_base;
-static PyObject *__pyx_n_s_bg_azim;
-static PyObject *__pyx_n_s_bg_dip;
-static PyObject *__pyx_n_s_bg_facies;
-static PyObject *__pyx_n_s_bottom_surface;
 static PyObject *__pyx_n_s_c;
 static PyObject *__pyx_n_u_c;
 static PyObject *__pyx_n_s_class;
@@ -2493,7 +2589,6 @@ static PyObject *__pyx_n_s_grid;
 static PyObject *__pyx_n_u_ha;
 static PyObject *__pyx_n_u_hat;
 static PyObject *__pyx_n_s_hu;
-static PyObject *__pyx_n_s_hyvr_classes_ae_realizations;
 static PyObject *__pyx_n_s_hyvr_utils;
 static PyObject *__pyx_n_s_id;
 static PyObject *__pyx_n_s_import;
@@ -2501,11 +2596,9 @@ static PyObject *__pyx_n_s_int32;
 static PyObject *__pyx_n_s_itemsize;
 static PyObject *__pyx_kp_s_itemsize_0_for_cython_array;
 static PyObject *__pyx_n_s_main;
-static PyObject *__pyx_n_s_maybe_assign_points;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
 static PyObject *__pyx_n_s_n_ae;
-static PyObject *__pyx_n_s_n_objects;
 static PyObject *__pyx_n_s_n_strata;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_name_2;
@@ -2516,7 +2609,6 @@ static PyObject *__pyx_n_s_ndim;
 static PyObject *__pyx_n_s_new;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
 static PyObject *__pyx_n_s_np;
-static PyObject *__pyx_n_s_num;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_kp_u_numpy_core_multiarray_failed_to;
 static PyObject *__pyx_kp_u_numpy_core_umath_failed_to_impor;
@@ -2524,9 +2616,6 @@ static PyObject *__pyx_n_s_nx;
 static PyObject *__pyx_n_s_ny;
 static PyObject *__pyx_n_s_nz;
 static PyObject *__pyx_n_s_obj;
-static PyObject *__pyx_n_s_object_zmaxs;
-static PyObject *__pyx_n_s_object_zmins;
-static PyObject *__pyx_n_s_objects;
 static PyObject *__pyx_n_s_oi;
 static PyObject *__pyx_n_s_ones;
 static PyObject *__pyx_n_s_pack;
@@ -2563,11 +2652,8 @@ static PyObject *__pyx_kp_s_strided_and_direct_or_indirect;
 static PyObject *__pyx_kp_s_strided_and_indirect;
 static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_struct;
-static PyObject *__pyx_n_s_surface;
 static PyObject *__pyx_n_s_sys;
 static PyObject *__pyx_n_s_test;
-static PyObject *__pyx_n_s_top_surface;
-static PyObject *__pyx_n_s_type_id;
 static PyObject *__pyx_kp_s_unable_to_allocate_array_data;
 static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
@@ -2582,7 +2668,7 @@ static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_n_s_zeros;
 static PyObject *__pyx_pf_4hyvr_13assign_points_assign_points(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_model); /* proto */
 static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid); /* proto */
-static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid); /* proto */
+static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -2675,7 +2761,7 @@ static PyObject *__pyx_tuple__36;
 static PyObject *__pyx_codeobj__37;
 /* Late includes */
 
-/* "hyvr/assign_points.pyx":13
+/* "hyvr/assign_points.pyx":15
  * @cython.nonecheck(False)
  * @cython.cdivision(True)
  * cpdef assign_points(model):             # <<<<<<<<<<<<<<
@@ -2780,146 +2866,146 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   Py_ssize_t __pyx_t_61;
   __Pyx_RefNannySetupContext("assign_points", 0);
 
-  /* "hyvr/assign_points.pyx":31
+  /* "hyvr/assign_points.pyx":33
  * 
  *     # getting grid information
  *     nx = model.grid.nx             # <<<<<<<<<<<<<<
  *     ny = model.grid.ny
  *     nz = model.grid.nz
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_nx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_nx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_nx = __pyx_t_3;
 
-  /* "hyvr/assign_points.pyx":32
+  /* "hyvr/assign_points.pyx":34
  *     # getting grid information
  *     nx = model.grid.nx
  *     ny = model.grid.ny             # <<<<<<<<<<<<<<
  *     nz = model.grid.nz
  *     gridX = model.grid.X
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ny); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ny); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_ny = __pyx_t_3;
 
-  /* "hyvr/assign_points.pyx":33
+  /* "hyvr/assign_points.pyx":35
  *     nx = model.grid.nx
  *     ny = model.grid.ny
  *     nz = model.grid.nz             # <<<<<<<<<<<<<<
  *     gridX = model.grid.X
  *     gridY = model.grid.Y
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_nz); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_nz); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_nz = __pyx_t_3;
 
-  /* "hyvr/assign_points.pyx":34
+  /* "hyvr/assign_points.pyx":36
  *     ny = model.grid.ny
  *     nz = model.grid.nz
  *     gridX = model.grid.X             # <<<<<<<<<<<<<<
  *     gridY = model.grid.Y
  *     gridz = model.grid.z
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_X); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_X); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_gridX = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "hyvr/assign_points.pyx":35
+  /* "hyvr/assign_points.pyx":37
  *     nz = model.grid.nz
  *     gridX = model.grid.X
  *     gridY = model.grid.Y             # <<<<<<<<<<<<<<
  *     gridz = model.grid.z
  *     n_strata = model.n_strata
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Y); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_gridY = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "hyvr/assign_points.pyx":36
+  /* "hyvr/assign_points.pyx":38
  *     gridX = model.grid.X
  *     gridY = model.grid.Y
  *     gridz = model.grid.z             # <<<<<<<<<<<<<<
  *     n_strata = model.n_strata
  *     strata_zmins = model.strata_zmins
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_gridz = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "hyvr/assign_points.pyx":37
+  /* "hyvr/assign_points.pyx":39
  *     gridY = model.grid.Y
  *     gridz = model.grid.z
  *     n_strata = model.n_strata             # <<<<<<<<<<<<<<
  *     strata_zmins = model.strata_zmins
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_n_strata); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_n_strata); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_n_strata = __pyx_t_3;
 
-  /* "hyvr/assign_points.pyx":38
+  /* "hyvr/assign_points.pyx":40
  *     gridz = model.grid.z
  *     n_strata = model.n_strata
  *     strata_zmins = model.strata_zmins             # <<<<<<<<<<<<<<
  * 
  *     hu.print_to_stdout("Assigning parameters to grid cells:")
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_strata_zmins); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_strata_zmins); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_strata_zmins = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "hyvr/assign_points.pyx":40
+  /* "hyvr/assign_points.pyx":42
  *     strata_zmins = model.strata_zmins
  * 
  *     hu.print_to_stdout("Assigning parameters to grid cells:")             # <<<<<<<<<<<<<<
  * 
  *     facies_array = np.zeros((nx, ny, nz), dtype=np.int32)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_hu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_hu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_print_to_stdout); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_print_to_stdout); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2934,30 +3020,30 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_2, __pyx_kp_u_Assigning_parameters_to_grid_cel) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_kp_u_Assigning_parameters_to_grid_cel);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hyvr/assign_points.pyx":42
+  /* "hyvr/assign_points.pyx":44
  *     hu.print_to_stdout("Assigning parameters to grid cells:")
  * 
  *     facies_array = np.zeros((nx, ny, nz), dtype=np.int32)             # <<<<<<<<<<<<<<
  * 
  *     # number of current stratum
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1);
@@ -2968,50 +3054,50 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_8);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_8);
   __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int32); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int32); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, __pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, __pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_facies_array = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "hyvr/assign_points.pyx":45
+  /* "hyvr/assign_points.pyx":47
  * 
  *     # number of current stratum
  *     strata_array = np.zeros((nx, ny, nz), dtype=np.int32)             # <<<<<<<<<<<<<<
  * 
  *     # This holds the number of the current AE starting from the top. This is
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
@@ -3022,50 +3108,50 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_1 = 0;
   __pyx_t_7 = 0;
   __pyx_t_6 = 0;
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_int32); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_int32); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_6, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_6, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_strata_array = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "hyvr/assign_points.pyx":49
+  /* "hyvr/assign_points.pyx":51
  *     # This holds the number of the current AE starting from the top. This is
  *     # mostly for visualising the model.
  *     ae_array = -1*np.ones((nx, ny, nz), dtype=np.int32)             # <<<<<<<<<<<<<<
  * 
  *     # ha = hydrofacies assemblage
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ones); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ones); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_1);
@@ -3076,53 +3162,53 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_1 = 0;
   __pyx_t_6 = 0;
   __pyx_t_8 = 0;
-  __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_7);
   PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7);
   __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_int32); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_int32); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Multiply(__pyx_int_neg_1, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_int_neg_1, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_v_ae_array = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "hyvr/assign_points.pyx":54
+  /* "hyvr/assign_points.pyx":56
  *     # this number is basically a counter for the different geometrical objects
  *     # within the architectural elements
  *     ha_array = -1*np.ones((nx, ny, nz), dtype=np.int32)             # <<<<<<<<<<<<<<
  * 
  *     # hat = hydrofacies assemblage type
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_ones); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_ones); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = PyTuple_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_7);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_7);
@@ -3133,53 +3219,53 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_7 = 0;
   __pyx_t_8 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_int32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_int32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PyNumber_Multiply(__pyx_int_neg_1, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_6 = PyNumber_Multiply(__pyx_int_neg_1, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_6, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_6, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_v_ha_array = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "hyvr/assign_points.pyx":58
+  /* "hyvr/assign_points.pyx":60
  *     # hat = hydrofacies assemblage type
  *     # This holds the corresponding number of AEType to which this belongs
  *     hat_array = -1*np.ones((nx, ny, nz), dtype=np.int32)             # <<<<<<<<<<<<<<
  * 
  *     # angles
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_ones); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_ones); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6);
@@ -3190,53 +3276,53 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_6 = 0;
   __pyx_t_2 = 0;
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_8);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_8);
   __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int32); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int32); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_1, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_1, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyNumber_Multiply(__pyx_int_neg_1, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_8 = PyNumber_Multiply(__pyx_int_neg_1, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_hat_array = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "hyvr/assign_points.pyx":61
+  /* "hyvr/assign_points.pyx":63
  * 
  *     # angles
  *     azim_array = np.zeros((nx, ny, nz), dtype=np.float)             # <<<<<<<<<<<<<<
  *     dip_array = np.zeros((nx, ny, nz), dtype=np.float)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_zeros); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_zeros); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_8);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_8);
@@ -3247,50 +3333,50 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_8 = 0;
   __pyx_t_1 = 0;
   __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_8) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_8) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_azim_array = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "hyvr/assign_points.pyx":62
+  /* "hyvr/assign_points.pyx":64
  *     # angles
  *     azim_array = np.zeros((nx, ny, nz), dtype=np.float)
  *     dip_array = np.zeros((nx, ny, nz), dtype=np.float)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_nx); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_ny); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_nz); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_8);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_8);
@@ -3301,94 +3387,94 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __pyx_t_8 = 0;
   __pyx_t_7 = 0;
   __pyx_t_6 = 0;
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_float); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_float); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_8) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_8) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_dip_array = __pyx_t_4;
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "hyvr/assign_points.pyx":66
+  /* "hyvr/assign_points.pyx":68
  * 
  *     # container for passing facies, ae, ha, and hat, and azimuth and dip
  *     geo_ids = np.empty(4, dtype=np.int32)             # <<<<<<<<<<<<<<
  *     angles = np.empty(2, dtype=np.float)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_empty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_empty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_int32); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_int32); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple_, __pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple_, __pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_geo_ids = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "hyvr/assign_points.pyx":67
+  /* "hyvr/assign_points.pyx":69
  *     # container for passing facies, ae, ha, and hat, and azimuth and dip
  *     geo_ids = np.empty(4, dtype=np.int32)
  *     angles = np.empty(2, dtype=np.float)             # <<<<<<<<<<<<<<
  * 
  *     total_n = nx * ny
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_empty); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_empty); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_tuple__2, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_tuple__2, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_6, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_6, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_v_angles = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "hyvr/assign_points.pyx":69
+  /* "hyvr/assign_points.pyx":71
  *     angles = np.empty(2, dtype=np.float)
  * 
  *     total_n = nx * ny             # <<<<<<<<<<<<<<
@@ -3397,7 +3483,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
   __pyx_v_total_n = (__pyx_v_nx * __pyx_v_ny);
 
-  /* "hyvr/assign_points.pyx":77
+  /* "hyvr/assign_points.pyx":79
  * 
  *     # TODO: make this a parallel loop
  *     for loop_idx in range(total_n):             # <<<<<<<<<<<<<<
@@ -3409,7 +3495,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
     __pyx_v_loop_idx = __pyx_t_12;
 
-    /* "hyvr/assign_points.pyx":78
+    /* "hyvr/assign_points.pyx":80
  *     # TODO: make this a parallel loop
  *     for loop_idx in range(total_n):
  *         x_idx = loop_idx // ny             # <<<<<<<<<<<<<<
@@ -3418,7 +3504,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
     __pyx_v_x_idx = (__pyx_v_loop_idx / __pyx_v_ny);
 
-    /* "hyvr/assign_points.pyx":79
+    /* "hyvr/assign_points.pyx":81
  *     for loop_idx in range(total_n):
  *         x_idx = loop_idx // ny
  *         y_idx = loop_idx % ny             # <<<<<<<<<<<<<<
@@ -3427,19 +3513,19 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
     __pyx_v_y_idx = (__pyx_v_loop_idx % __pyx_v_ny);
 
-    /* "hyvr/assign_points.pyx":81
+    /* "hyvr/assign_points.pyx":83
  *         y_idx = loop_idx % ny
  * 
  *         percentage_done = int(np.round(100*loop_idx/total_n))             # <<<<<<<<<<<<<<
  *         sys.stdout.write("Currently done: {:>3d} %\r".format(percentage_done))
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_round); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_round); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_long(((0x64 * __pyx_v_loop_idx) / ((long)__pyx_v_total_n))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_long(((0x64 * __pyx_v_loop_idx) / ((long)__pyx_v_total_n))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_1 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -3454,31 +3540,31 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     __pyx_t_6 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_2);
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 81, __pyx_L1_error)
+    if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF_SET(__pyx_v_percentage_done, __pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "hyvr/assign_points.pyx":82
+    /* "hyvr/assign_points.pyx":84
  * 
  *         percentage_done = int(np.round(100*loop_idx/total_n))
  *         sys.stdout.write("Currently done: {:>3d} %\r".format(percentage_done))             # <<<<<<<<<<<<<<
  * 
  *         # Here we start to go through one tower from top to bottom
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_stdout); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_stdout); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_write); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_write); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Currently_done_3d, __pyx_n_s_format); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Currently_done_3d, __pyx_n_s_format); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_7 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -3492,7 +3578,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     }
     __pyx_t_2 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_7, __pyx_v_percentage_done) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_percentage_done);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = NULL;
@@ -3508,12 +3594,12 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     __pyx_t_8 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_1, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_2);
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 82, __pyx_L1_error)
+    if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "hyvr/assign_points.pyx":85
+    /* "hyvr/assign_points.pyx":87
  * 
  *         # Here we start to go through one tower from top to bottom
  *         x = gridX[x_idx, y_idx, 0]             # <<<<<<<<<<<<<<
@@ -3525,7 +3611,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     __pyx_t_15 = 0;
     __pyx_v_x = (*((__pyx_t_5numpy_float_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_gridX.data + __pyx_t_13 * __pyx_v_gridX.strides[0]) ) + __pyx_t_14 * __pyx_v_gridX.strides[1]) ) + __pyx_t_15 * __pyx_v_gridX.strides[2]) )));
 
-    /* "hyvr/assign_points.pyx":86
+    /* "hyvr/assign_points.pyx":88
  *         # Here we start to go through one tower from top to bottom
  *         x = gridX[x_idx, y_idx, 0]
  *         y = gridY[x_idx, y_idx, 0]             # <<<<<<<<<<<<<<
@@ -3537,7 +3623,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     __pyx_t_18 = 0;
     __pyx_v_y = (*((__pyx_t_5numpy_float_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_gridY.data + __pyx_t_16 * __pyx_v_gridY.strides[0]) ) + __pyx_t_17 * __pyx_v_gridY.strides[1]) ) + __pyx_t_18 * __pyx_v_gridY.strides[2]) )));
 
-    /* "hyvr/assign_points.pyx":87
+    /* "hyvr/assign_points.pyx":89
  *         x = gridX[x_idx, y_idx, 0]
  *         y = gridY[x_idx, y_idx, 0]
  *         si = 0    # stratum index             # <<<<<<<<<<<<<<
@@ -3546,7 +3632,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
     __pyx_v_si = 0;
 
-    /* "hyvr/assign_points.pyx":88
+    /* "hyvr/assign_points.pyx":90
  *         y = gridY[x_idx, y_idx, 0]
  *         si = 0    # stratum index
  *         aei = 0   # AE index             # <<<<<<<<<<<<<<
@@ -3555,7 +3641,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
     __pyx_v_aei = 0;
 
-    /* "hyvr/assign_points.pyx":89
+    /* "hyvr/assign_points.pyx":91
  *         si = 0    # stratum index
  *         aei = 0   # AE index
  *         oi = 0    # object index             # <<<<<<<<<<<<<<
@@ -3564,7 +3650,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
     __pyx_v_oi = 0;
 
-    /* "hyvr/assign_points.pyx":91
+    /* "hyvr/assign_points.pyx":93
  *         oi = 0    # object index
  * 
  *         for z_idx in range(nz-1, -1, -1):             # <<<<<<<<<<<<<<
@@ -3574,7 +3660,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     for (__pyx_t_19 = (__pyx_v_nz - 1); __pyx_t_19 > -1; __pyx_t_19-=1) {
       __pyx_v_z_idx = __pyx_t_19;
 
-      /* "hyvr/assign_points.pyx":92
+      /* "hyvr/assign_points.pyx":94
  * 
  *         for z_idx in range(nz-1, -1, -1):
  *             z = gridz[z_idx]             # <<<<<<<<<<<<<<
@@ -3584,7 +3670,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       __pyx_t_20 = __pyx_v_z_idx;
       __pyx_v_z = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_gridz.data + __pyx_t_20 * __pyx_v_gridz.strides[0]) )));
 
-      /* "hyvr/assign_points.pyx":93
+      /* "hyvr/assign_points.pyx":95
  *         for z_idx in range(nz-1, -1, -1):
  *             z = gridz[z_idx]
  *             geo_ids[0] = -1             # <<<<<<<<<<<<<<
@@ -3594,41 +3680,41 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       __pyx_t_21 = 0;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_21 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-      /* "hyvr/assign_points.pyx":94
+      /* "hyvr/assign_points.pyx":96
  *             z = gridz[z_idx]
  *             geo_ids[0] = -1
  *             angles[0] = np.nan             # <<<<<<<<<<<<<<
  *             angles[1] = np.nan
  *             geo_ids[1] = -1
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 94, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_nan); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 94, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_nan); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_22 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_22 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 94, __pyx_L1_error)
+      __pyx_t_22 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_22 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_23 = 0;
       *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_23 * __pyx_v_angles.strides[0]) )) = __pyx_t_22;
 
-      /* "hyvr/assign_points.pyx":95
+      /* "hyvr/assign_points.pyx":97
  *             geo_ids[0] = -1
  *             angles[0] = np.nan
  *             angles[1] = np.nan             # <<<<<<<<<<<<<<
  *             geo_ids[1] = -1
  *             geo_ids[2] = -1
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 97, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_nan); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_nan); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 97, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_22 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_22 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_22 = __pyx_PyFloat_AsDouble(__pyx_t_8); if (unlikely((__pyx_t_22 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 97, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_t_24 = 1;
       *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_24 * __pyx_v_angles.strides[0]) )) = __pyx_t_22;
 
-      /* "hyvr/assign_points.pyx":96
+      /* "hyvr/assign_points.pyx":98
  *             angles[0] = np.nan
  *             angles[1] = np.nan
  *             geo_ids[1] = -1             # <<<<<<<<<<<<<<
@@ -3638,7 +3724,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       __pyx_t_25 = 1;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_25 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-      /* "hyvr/assign_points.pyx":97
+      /* "hyvr/assign_points.pyx":99
  *             angles[1] = np.nan
  *             geo_ids[1] = -1
  *             geo_ids[2] = -1             # <<<<<<<<<<<<<<
@@ -3648,7 +3734,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       __pyx_t_26 = 2;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_26 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-      /* "hyvr/assign_points.pyx":98
+      /* "hyvr/assign_points.pyx":100
  *             geo_ids[1] = -1
  *             geo_ids[2] = -1
  *             geo_ids[3] = -1             # <<<<<<<<<<<<<<
@@ -3658,7 +3744,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       __pyx_t_27 = 3;
       *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_27 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-      /* "hyvr/assign_points.pyx":110
+      /* "hyvr/assign_points.pyx":112
  *             # much computations, since most of the time these will be enough to
  *             # make sure that a cell is not inside an object
  *             while si < n_strata:             # <<<<<<<<<<<<<<
@@ -3669,7 +3755,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
         __pyx_t_28 = ((__pyx_v_si < __pyx_v_n_strata) != 0);
         if (!__pyx_t_28) break;
 
-        /* "hyvr/assign_points.pyx":111
+        /* "hyvr/assign_points.pyx":113
  *             # make sure that a cell is not inside an object
  *             while si < n_strata:
  *                 if z < strata_zmins[si]:             # <<<<<<<<<<<<<<
@@ -3680,7 +3766,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
         __pyx_t_28 = ((__pyx_v_z < (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_strata_zmins.data + __pyx_t_29 * __pyx_v_strata_zmins.strides[0]) )))) != 0);
         if (__pyx_t_28) {
 
-          /* "hyvr/assign_points.pyx":114
+          /* "hyvr/assign_points.pyx":116
  *                     # if the current cell is below the current stratum, we can
  *                     # go to the next stratum
  *                     si += 1             # <<<<<<<<<<<<<<
@@ -3689,7 +3775,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
           __pyx_v_si = (__pyx_v_si + 1);
 
-          /* "hyvr/assign_points.pyx":115
+          /* "hyvr/assign_points.pyx":117
  *                     # go to the next stratum
  *                     si += 1
  *                     aei = 0             # <<<<<<<<<<<<<<
@@ -3698,7 +3784,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
           __pyx_v_aei = 0;
 
-          /* "hyvr/assign_points.pyx":116
+          /* "hyvr/assign_points.pyx":118
  *                     si += 1
  *                     aei = 0
  *                     oi = 0             # <<<<<<<<<<<<<<
@@ -3707,7 +3793,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
           __pyx_v_oi = 0;
 
-          /* "hyvr/assign_points.pyx":117
+          /* "hyvr/assign_points.pyx":119
  *                     aei = 0
  *                     oi = 0
  *                     continue             # <<<<<<<<<<<<<<
@@ -3716,7 +3802,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
           goto __pyx_L7_continue;
 
-          /* "hyvr/assign_points.pyx":111
+          /* "hyvr/assign_points.pyx":113
  *             # make sure that a cell is not inside an object
  *             while si < n_strata:
  *                 if z < strata_zmins[si]:             # <<<<<<<<<<<<<<
@@ -3725,7 +3811,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
         }
 
-        /* "hyvr/assign_points.pyx":120
+        /* "hyvr/assign_points.pyx":122
  *                 else:
  *                     # otherwise we have to check really to get an answer
  *                     stratum = model.strata[si]             # <<<<<<<<<<<<<<
@@ -3733,64 +3819,64 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  *                         stratum.aes, stratum.n_ae,
  */
         /*else*/ {
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_strata); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 120, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_strata); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_8, __pyx_v_si, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_8, __pyx_v_si, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_XDECREF_SET(__pyx_v_stratum, __pyx_t_6);
           __pyx_t_6 = 0;
 
-          /* "hyvr/assign_points.pyx":122
+          /* "hyvr/assign_points.pyx":124
  *                     stratum = model.strata[si]
  *                     aei, oi = maybe_assign_points_to_stratum(
  *                         stratum.aes, stratum.n_ae,             # <<<<<<<<<<<<<<
  *                         stratum.ae_zmaxs, stratum.ae_zmins,
  *                         geo_ids, angles, x, y, z,
  */
-          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_aes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_aes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          if (!(likely(PyList_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_6)->tp_name), 0))) __PYX_ERR(0, 122, __pyx_L1_error)
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_n_ae); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+          if (!(likely(PyList_CheckExact(__pyx_t_6))||((__pyx_t_6) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_6)->tp_name), 0))) __PYX_ERR(0, 124, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_n_ae); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 124, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_30 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_30 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 122, __pyx_L1_error)
+          __pyx_t_30 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_30 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 124, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-          /* "hyvr/assign_points.pyx":123
+          /* "hyvr/assign_points.pyx":125
  *                     aei, oi = maybe_assign_points_to_stratum(
  *                         stratum.aes, stratum.n_ae,
  *                         stratum.ae_zmaxs, stratum.ae_zmins,             # <<<<<<<<<<<<<<
  *                         geo_ids, angles, x, y, z,
  *                         x_idx, y_idx, aei, oi, model.grid
  */
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_ae_zmaxs); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_ae_zmaxs); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_ae_zmins); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_stratum, __pyx_n_s_ae_zmins); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_31 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_31.memview)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_31 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_8, PyBUF_WRITABLE); if (unlikely(!__pyx_t_31.memview)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-          /* "hyvr/assign_points.pyx":125
+          /* "hyvr/assign_points.pyx":127
  *                         stratum.ae_zmaxs, stratum.ae_zmins,
  *                         geo_ids, angles, x, y, z,
  *                         x_idx, y_idx, aei, oi, model.grid             # <<<<<<<<<<<<<<
  *                     )
  *                     if geo_ids[0] != -1:
  */
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 125, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 127, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
-          if (!(likely(((__pyx_t_8) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_8, __pyx_ptype_4hyvr_7classes_4grid_Grid))))) __PYX_ERR(0, 125, __pyx_L1_error)
+          if (!(likely(((__pyx_t_8) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_8, __pyx_ptype_4hyvr_7classes_4grid_Grid))))) __PYX_ERR(0, 127, __pyx_L1_error)
 
-          /* "hyvr/assign_points.pyx":121
+          /* "hyvr/assign_points.pyx":123
  *                     # otherwise we have to check really to get an answer
  *                     stratum = model.strata[si]
  *                     aei, oi = maybe_assign_points_to_stratum(             # <<<<<<<<<<<<<<
  *                         stratum.aes, stratum.n_ae,
  *                         stratum.ae_zmaxs, stratum.ae_zmins,
  */
-          __pyx_t_2 = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(((PyObject*)__pyx_t_6), __pyx_t_30, __pyx_t_5, __pyx_t_31, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)__pyx_t_8), 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 121, __pyx_L1_error)
+          __pyx_t_2 = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(((PyObject*)__pyx_t_6), __pyx_t_30, __pyx_t_5, __pyx_t_31, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)__pyx_t_8), 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
@@ -3806,7 +3892,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             if (unlikely(size != 2)) {
               if (size > 2) __Pyx_RaiseTooManyValuesError(2);
               else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-              __PYX_ERR(0, 121, __pyx_L1_error)
+              __PYX_ERR(0, 123, __pyx_L1_error)
             }
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
             if (likely(PyTuple_CheckExact(sequence))) {
@@ -3819,15 +3905,15 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __Pyx_INCREF(__pyx_t_8);
             __Pyx_INCREF(__pyx_t_6);
             #else
-            __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+            __pyx_t_8 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_8);
-            __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 121, __pyx_L1_error)
+            __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
             #endif
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           } else {
             Py_ssize_t index = -1;
-            __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
+            __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
             __pyx_t_32 = Py_TYPE(__pyx_t_1)->tp_iternext;
@@ -3835,7 +3921,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __Pyx_GOTREF(__pyx_t_8);
             index = 1; __pyx_t_6 = __pyx_t_32(__pyx_t_1); if (unlikely(!__pyx_t_6)) goto __pyx_L10_unpacking_failed;
             __Pyx_GOTREF(__pyx_t_6);
-            if (__Pyx_IternextUnpackEndCheck(__pyx_t_32(__pyx_t_1), 2) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
+            if (__Pyx_IternextUnpackEndCheck(__pyx_t_32(__pyx_t_1), 2) < 0) __PYX_ERR(0, 123, __pyx_L1_error)
             __pyx_t_32 = NULL;
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             goto __pyx_L11_unpacking_done;
@@ -3843,17 +3929,17 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __pyx_t_32 = NULL;
             if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-            __PYX_ERR(0, 121, __pyx_L1_error)
+            __PYX_ERR(0, 123, __pyx_L1_error)
             __pyx_L11_unpacking_done:;
           }
-          __pyx_t_30 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_30 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L1_error)
+          __pyx_t_30 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_30 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_33 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_33 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L1_error)
+          __pyx_t_33 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_33 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_v_aei = __pyx_t_30;
           __pyx_v_oi = __pyx_t_33;
 
-          /* "hyvr/assign_points.pyx":127
+          /* "hyvr/assign_points.pyx":129
  *                         x_idx, y_idx, aei, oi, model.grid
  *                     )
  *                     if geo_ids[0] != -1:             # <<<<<<<<<<<<<<
@@ -3864,7 +3950,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
           __pyx_t_28 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_34 * __pyx_v_geo_ids.strides[0]) ))) != -1L) != 0);
           if (__pyx_t_28) {
 
-            /* "hyvr/assign_points.pyx":128
+            /* "hyvr/assign_points.pyx":130
  *                     )
  *                     if geo_ids[0] != -1:
  *                         facies_array[x_idx, y_idx, z_idx] = geo_ids[0]             # <<<<<<<<<<<<<<
@@ -3877,7 +3963,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_38 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_facies_array.data + __pyx_t_36 * __pyx_v_facies_array.strides[0]) ) + __pyx_t_37 * __pyx_v_facies_array.strides[1]) ) + __pyx_t_38 * __pyx_v_facies_array.strides[2]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_35 * __pyx_v_geo_ids.strides[0]) )));
 
-            /* "hyvr/assign_points.pyx":129
+            /* "hyvr/assign_points.pyx":131
  *                     if geo_ids[0] != -1:
  *                         facies_array[x_idx, y_idx, z_idx] = geo_ids[0]
  *                         azim_array[x_idx, y_idx, z_idx] = angles[0]             # <<<<<<<<<<<<<<
@@ -3890,7 +3976,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_42 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_float_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_azim_array.data + __pyx_t_40 * __pyx_v_azim_array.strides[0]) ) + __pyx_t_41 * __pyx_v_azim_array.strides[1]) ) + __pyx_t_42 * __pyx_v_azim_array.strides[2]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_39 * __pyx_v_angles.strides[0]) )));
 
-            /* "hyvr/assign_points.pyx":130
+            /* "hyvr/assign_points.pyx":132
  *                         facies_array[x_idx, y_idx, z_idx] = geo_ids[0]
  *                         azim_array[x_idx, y_idx, z_idx] = angles[0]
  *                         dip_array[x_idx, y_idx, z_idx] = angles[1]             # <<<<<<<<<<<<<<
@@ -3903,7 +3989,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_46 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_float_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_dip_array.data + __pyx_t_44 * __pyx_v_dip_array.strides[0]) ) + __pyx_t_45 * __pyx_v_dip_array.strides[1]) ) + __pyx_t_46 * __pyx_v_dip_array.strides[2]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_43 * __pyx_v_angles.strides[0]) )));
 
-            /* "hyvr/assign_points.pyx":131
+            /* "hyvr/assign_points.pyx":133
  *                         azim_array[x_idx, y_idx, z_idx] = angles[0]
  *                         dip_array[x_idx, y_idx, z_idx] = angles[1]
  *                         ae_array[x_idx, y_idx, z_idx] = geo_ids[1]             # <<<<<<<<<<<<<<
@@ -3916,7 +4002,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_50 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_ae_array.data + __pyx_t_48 * __pyx_v_ae_array.strides[0]) ) + __pyx_t_49 * __pyx_v_ae_array.strides[1]) ) + __pyx_t_50 * __pyx_v_ae_array.strides[2]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_47 * __pyx_v_geo_ids.strides[0]) )));
 
-            /* "hyvr/assign_points.pyx":132
+            /* "hyvr/assign_points.pyx":134
  *                         dip_array[x_idx, y_idx, z_idx] = angles[1]
  *                         ae_array[x_idx, y_idx, z_idx] = geo_ids[1]
  *                         ha_array[x_idx, y_idx, z_idx] = geo_ids[2]             # <<<<<<<<<<<<<<
@@ -3929,7 +4015,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_54 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_ha_array.data + __pyx_t_52 * __pyx_v_ha_array.strides[0]) ) + __pyx_t_53 * __pyx_v_ha_array.strides[1]) ) + __pyx_t_54 * __pyx_v_ha_array.strides[2]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_51 * __pyx_v_geo_ids.strides[0]) )));
 
-            /* "hyvr/assign_points.pyx":133
+            /* "hyvr/assign_points.pyx":135
  *                         ae_array[x_idx, y_idx, z_idx] = geo_ids[1]
  *                         ha_array[x_idx, y_idx, z_idx] = geo_ids[2]
  *                         hat_array[x_idx, y_idx, z_idx] = geo_ids[3]             # <<<<<<<<<<<<<<
@@ -3942,7 +4028,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_58 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_hat_array.data + __pyx_t_56 * __pyx_v_hat_array.strides[0]) ) + __pyx_t_57 * __pyx_v_hat_array.strides[1]) ) + __pyx_t_58 * __pyx_v_hat_array.strides[2]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_55 * __pyx_v_geo_ids.strides[0]) )));
 
-            /* "hyvr/assign_points.pyx":134
+            /* "hyvr/assign_points.pyx":136
  *                         ha_array[x_idx, y_idx, z_idx] = geo_ids[2]
  *                         hat_array[x_idx, y_idx, z_idx] = geo_ids[3]
  *                         strata_array[x_idx, y_idx, z_idx] = si             # <<<<<<<<<<<<<<
@@ -3954,7 +4040,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
             __pyx_t_61 = __pyx_v_z_idx;
             *((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_strata_array.data + __pyx_t_59 * __pyx_v_strata_array.strides[0]) ) + __pyx_t_60 * __pyx_v_strata_array.strides[1]) ) + __pyx_t_61 * __pyx_v_strata_array.strides[2]) )) = __pyx_v_si;
 
-            /* "hyvr/assign_points.pyx":135
+            /* "hyvr/assign_points.pyx":137
  *                         hat_array[x_idx, y_idx, z_idx] = geo_ids[3]
  *                         strata_array[x_idx, y_idx, z_idx] = si
  *                         break             # <<<<<<<<<<<<<<
@@ -3963,7 +4049,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
             goto __pyx_L8_break;
 
-            /* "hyvr/assign_points.pyx":127
+            /* "hyvr/assign_points.pyx":129
  *                         x_idx, y_idx, aei, oi, model.grid
  *                     )
  *                     if geo_ids[0] != -1:             # <<<<<<<<<<<<<<
@@ -3972,7 +4058,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
           }
 
-          /* "hyvr/assign_points.pyx":137
+          /* "hyvr/assign_points.pyx":139
  *                         break
  *                     else:
  *                         si += 1             # <<<<<<<<<<<<<<
@@ -3982,7 +4068,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
           /*else*/ {
             __pyx_v_si = (__pyx_v_si + 1);
 
-            /* "hyvr/assign_points.pyx":138
+            /* "hyvr/assign_points.pyx":140
  *                     else:
  *                         si += 1
  *                         aei = 0             # <<<<<<<<<<<<<<
@@ -3991,7 +4077,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
             __pyx_v_aei = 0;
 
-            /* "hyvr/assign_points.pyx":139
+            /* "hyvr/assign_points.pyx":141
  *                         si += 1
  *                         aei = 0
  *                         oi = 0             # <<<<<<<<<<<<<<
@@ -4000,7 +4086,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
             __pyx_v_oi = 0;
 
-            /* "hyvr/assign_points.pyx":140
+            /* "hyvr/assign_points.pyx":142
  *                         aei = 0
  *                         oi = 0
  *                         continue             # <<<<<<<<<<<<<<
@@ -4014,7 +4100,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       }
       __pyx_L8_break:;
 
-      /* "hyvr/assign_points.pyx":142
+      /* "hyvr/assign_points.pyx":144
  *                         continue
  * 
  *             if si == n_strata:             # <<<<<<<<<<<<<<
@@ -4024,18 +4110,18 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
       __pyx_t_28 = ((__pyx_v_si == __pyx_v_n_strata) != 0);
       if (__pyx_t_28) {
 
-        /* "hyvr/assign_points.pyx":143
+        /* "hyvr/assign_points.pyx":145
  * 
  *             if si == n_strata:
  *                 print("Warning: Something went wrong: Cell can not be assigned to any stratum")             # <<<<<<<<<<<<<<
  * 
  *     # we're done now, and can write the results back to the model
  */
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 143, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "hyvr/assign_points.pyx":142
+        /* "hyvr/assign_points.pyx":144
  *                         continue
  * 
  *             if si == n_strata:             # <<<<<<<<<<<<<<
@@ -4046,91 +4132,19 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
     }
   }
 
-  /* "hyvr/assign_points.pyx":146
+  /* "hyvr/assign_points.pyx":148
  * 
  *     # we're done now, and can write the results back to the model
  *     model.data['facies'] = np.asarray(facies_array)             # <<<<<<<<<<<<<<
  *     model.data['azim'] = np.asarray(azim_array)
  *     model.data['dip'] = np.asarray(dip_array)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_facies_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_1 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_8);
-    if (likely(__pyx_t_1)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-      __Pyx_INCREF(__pyx_t_1);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_8, function);
-    }
-  }
-  __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_facies, __pyx_t_2) < 0)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "hyvr/assign_points.pyx":147
- *     # we're done now, and can write the results back to the model
- *     model.data['facies'] = np.asarray(facies_array)
- *     model.data['azim'] = np.asarray(azim_array)             # <<<<<<<<<<<<<<
- *     model.data['dip'] = np.asarray(dip_array)
- *     model.data['strata'] = np.asarray(strata_array)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_asarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_azim_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_1 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_6);
-    if (likely(__pyx_t_1)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-      __Pyx_INCREF(__pyx_t_1);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_6, function);
-    }
-  }
-  __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_1, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_n_u_azim, __pyx_t_2) < 0)) __PYX_ERR(0, 147, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "hyvr/assign_points.pyx":148
- *     model.data['facies'] = np.asarray(facies_array)
- *     model.data['azim'] = np.asarray(azim_array)
- *     model.data['dip'] = np.asarray(dip_array)             # <<<<<<<<<<<<<<
- *     model.data['strata'] = np.asarray(strata_array)
- *     model.data['ae'] = np.asarray(ae_array)
- */
   __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_dip_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_facies_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -4150,23 +4164,23 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_dip, __pyx_t_2) < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_facies, __pyx_t_2) < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "hyvr/assign_points.pyx":149
- *     model.data['azim'] = np.asarray(azim_array)
+ *     # we're done now, and can write the results back to the model
+ *     model.data['facies'] = np.asarray(facies_array)
+ *     model.data['azim'] = np.asarray(azim_array)             # <<<<<<<<<<<<<<
  *     model.data['dip'] = np.asarray(dip_array)
- *     model.data['strata'] = np.asarray(strata_array)             # <<<<<<<<<<<<<<
- *     model.data['ae'] = np.asarray(ae_array)
- *     model.data['ha'] = np.asarray(ha_array)
+ *     model.data['strata'] = np.asarray(strata_array)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_asarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_strata_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_azim_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
@@ -4186,23 +4200,23 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_n_u_strata, __pyx_t_2) < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_n_u_azim, __pyx_t_2) < 0)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "hyvr/assign_points.pyx":150
- *     model.data['dip'] = np.asarray(dip_array)
+ *     model.data['facies'] = np.asarray(facies_array)
+ *     model.data['azim'] = np.asarray(azim_array)
+ *     model.data['dip'] = np.asarray(dip_array)             # <<<<<<<<<<<<<<
  *     model.data['strata'] = np.asarray(strata_array)
- *     model.data['ae'] = np.asarray(ae_array)             # <<<<<<<<<<<<<<
- *     model.data['ha'] = np.asarray(ha_array)
- *     model.data['hat'] = np.asarray(hat_array)
+ *     model.data['ae'] = np.asarray(ae_array)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_ae_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
+  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_dip_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -4222,23 +4236,23 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_ae, __pyx_t_2) < 0)) __PYX_ERR(0, 150, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_dip, __pyx_t_2) < 0)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "hyvr/assign_points.pyx":151
- *     model.data['strata'] = np.asarray(strata_array)
+ *     model.data['azim'] = np.asarray(azim_array)
+ *     model.data['dip'] = np.asarray(dip_array)
+ *     model.data['strata'] = np.asarray(strata_array)             # <<<<<<<<<<<<<<
  *     model.data['ae'] = np.asarray(ae_array)
- *     model.data['ha'] = np.asarray(ha_array)             # <<<<<<<<<<<<<<
- *     model.data['hat'] = np.asarray(hat_array)
- *     hu.print_to_stdout("Done  ")
+ *     model.data['ha'] = np.asarray(ha_array)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_asarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_ha_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_strata_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
@@ -4258,23 +4272,23 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_n_u_ha, __pyx_t_2) < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_n_u_strata, __pyx_t_2) < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "hyvr/assign_points.pyx":152
- *     model.data['ae'] = np.asarray(ae_array)
+ *     model.data['dip'] = np.asarray(dip_array)
+ *     model.data['strata'] = np.asarray(strata_array)
+ *     model.data['ae'] = np.asarray(ae_array)             # <<<<<<<<<<<<<<
  *     model.data['ha'] = np.asarray(ha_array)
- *     model.data['hat'] = np.asarray(hat_array)             # <<<<<<<<<<<<<<
- *     hu.print_to_stdout("Done  ")
- * 
+ *     model.data['hat'] = np.asarray(hat_array)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_hat_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_ae_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
@@ -4294,20 +4308,92 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_hat, __pyx_t_2) < 0)) __PYX_ERR(0, 152, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_ae, __pyx_t_2) < 0)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "hyvr/assign_points.pyx":153
+ *     model.data['strata'] = np.asarray(strata_array)
+ *     model.data['ae'] = np.asarray(ae_array)
+ *     model.data['ha'] = np.asarray(ha_array)             # <<<<<<<<<<<<<<
+ *     model.data['hat'] = np.asarray(hat_array)
+ *     hu.print_to_stdout("Done  ")
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_asarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = __pyx_memoryview_fromslice(__pyx_v_ha_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_1 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_6);
+    if (likely(__pyx_t_1)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_6, function);
+    }
+  }
+  __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_1, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_n_u_ha, __pyx_t_2) < 0)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "hyvr/assign_points.pyx":154
+ *     model.data['ae'] = np.asarray(ae_array)
+ *     model.data['ha'] = np.asarray(ha_array)
+ *     model.data['hat'] = np.asarray(hat_array)             # <<<<<<<<<<<<<<
+ *     hu.print_to_stdout("Done  ")
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_asarray); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_hat_array, 3, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_1 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_8);
+    if (likely(__pyx_t_1)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_8, function);
+    }
+  }
+  __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_data); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  if (unlikely(PyObject_SetItem(__pyx_t_8, __pyx_n_u_hat, __pyx_t_2) < 0)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "hyvr/assign_points.pyx":155
  *     model.data['ha'] = np.asarray(ha_array)
  *     model.data['hat'] = np.asarray(hat_array)
  *     hu.print_to_stdout("Done  ")             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_hu); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_hu); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_print_to_stdout); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_print_to_stdout); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_t_8 = NULL;
@@ -4322,12 +4408,12 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
   }
   __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_8, __pyx_kp_u_Done) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_kp_u_Done);
   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hyvr/assign_points.pyx":13
+  /* "hyvr/assign_points.pyx":15
  * @cython.nonecheck(False)
  * @cython.cdivision(True)
  * cpdef assign_points(model):             # <<<<<<<<<<<<<<
@@ -4392,7 +4478,7 @@ static PyObject *__pyx_pf_4hyvr_13assign_points_assign_points(CYTHON_UNUSED PyOb
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("assign_points", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_4hyvr_13assign_points_assign_points(__pyx_v_model, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_4hyvr_13assign_points_assign_points(__pyx_v_model, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4409,7 +4495,7 @@ static PyObject *__pyx_pf_4hyvr_13assign_points_assign_points(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "hyvr/assign_points.pyx":160
+/* "hyvr/assign_points.pyx":162
  * @cython.nonecheck(False)
  * @cython.cdivision(True)
  * cpdef maybe_assign_points_to_stratum(             # <<<<<<<<<<<<<<
@@ -4432,7 +4518,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
   Py_ssize_t __pyx_t_7;
   __Pyx_RefNannySetupContext("maybe_assign_points_to_stratum", 0);
 
-  /* "hyvr/assign_points.pyx":200
+  /* "hyvr/assign_points.pyx":202
  * 
  *     cdef int oi_orig, aei_orig
  *     oi_orig = oi             # <<<<<<<<<<<<<<
@@ -4441,7 +4527,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
   __pyx_v_oi_orig = __pyx_v_oi;
 
-  /* "hyvr/assign_points.pyx":201
+  /* "hyvr/assign_points.pyx":203
  *     cdef int oi_orig, aei_orig
  *     oi_orig = oi
  *     aei_orig = aei             # <<<<<<<<<<<<<<
@@ -4450,7 +4536,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
   __pyx_v_aei_orig = __pyx_v_aei;
 
-  /* "hyvr/assign_points.pyx":203
+  /* "hyvr/assign_points.pyx":205
  *     aei_orig = aei
  * 
  *     while aei < n_ae:             # <<<<<<<<<<<<<<
@@ -4461,7 +4547,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
     __pyx_t_1 = ((__pyx_v_aei < __pyx_v_n_ae) != 0);
     if (!__pyx_t_1) break;
 
-    /* "hyvr/assign_points.pyx":209
+    /* "hyvr/assign_points.pyx":211
  *             # This case should not happen
  *             # break
  *         if z < ae_zmins[aei]:             # <<<<<<<<<<<<<<
@@ -4472,7 +4558,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
     __pyx_t_1 = ((__pyx_v_z < (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_ae_zmins.data + __pyx_t_2 * __pyx_v_ae_zmins.strides[0]) )))) != 0);
     if (__pyx_t_1) {
 
-      /* "hyvr/assign_points.pyx":211
+      /* "hyvr/assign_points.pyx":213
  *         if z < ae_zmins[aei]:
  *             # if we're below the current AE, we can go search in the next one
  *             oi = 0             # <<<<<<<<<<<<<<
@@ -4481,7 +4567,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
       __pyx_v_oi = 0;
 
-      /* "hyvr/assign_points.pyx":212
+      /* "hyvr/assign_points.pyx":214
  *             # if we're below the current AE, we can go search in the next one
  *             oi = 0
  *             aei += 1             # <<<<<<<<<<<<<<
@@ -4490,7 +4576,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
       __pyx_v_aei = (__pyx_v_aei + 1);
 
-      /* "hyvr/assign_points.pyx":213
+      /* "hyvr/assign_points.pyx":215
  *             oi = 0
  *             aei += 1
  *             continue             # <<<<<<<<<<<<<<
@@ -4499,7 +4585,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
       goto __pyx_L3_continue;
 
-      /* "hyvr/assign_points.pyx":209
+      /* "hyvr/assign_points.pyx":211
  *             # This case should not happen
  *             # break
  *         if z < ae_zmins[aei]:             # <<<<<<<<<<<<<<
@@ -4508,7 +4594,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
     }
 
-    /* "hyvr/assign_points.pyx":215
+    /* "hyvr/assign_points.pyx":217
  *             continue
  *         else:
  *             oi = maybe_assign_points_to_ae(             # <<<<<<<<<<<<<<
@@ -4517,7 +4603,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
     /*else*/ {
 
-      /* "hyvr/assign_points.pyx":216
+      /* "hyvr/assign_points.pyx":218
  *         else:
  *             oi = maybe_assign_points_to_ae(
  *                 stratum_aes[aei], geo_ids, angles, x, y, z, x_idx, y_idx, oi, grid             # <<<<<<<<<<<<<<
@@ -4526,22 +4612,23 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
       if (unlikely(__pyx_v_stratum_aes == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 216, __pyx_L1_error)
+        __PYX_ERR(0, 218, __pyx_L1_error)
       }
+      if (!(likely(((PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei), __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization))))) __PYX_ERR(0, 218, __pyx_L1_error)
       __pyx_t_3 = PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei);
       __Pyx_INCREF(__pyx_t_3);
 
-      /* "hyvr/assign_points.pyx":215
+      /* "hyvr/assign_points.pyx":217
  *             continue
  *         else:
  *             oi = maybe_assign_points_to_ae(             # <<<<<<<<<<<<<<
  *                 stratum_aes[aei], geo_ids, angles, x, y, z, x_idx, y_idx, oi, grid
  *             )
  */
-      __pyx_v_oi = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(__pyx_t_3, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid, 0);
+      __pyx_v_oi = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(((struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *)__pyx_t_3), __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "hyvr/assign_points.pyx":221
+      /* "hyvr/assign_points.pyx":223
  *             #     facies, angles, x, y, z, x_idx, y_idx, oi, grid
  *             # )
  *             if geo_ids[0] != -1:             # <<<<<<<<<<<<<<
@@ -4552,7 +4639,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
       __pyx_t_1 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_4 * __pyx_v_geo_ids.strides[0]) ))) != -1L) != 0);
       if (__pyx_t_1) {
 
-        /* "hyvr/assign_points.pyx":223
+        /* "hyvr/assign_points.pyx":225
  *             if geo_ids[0] != -1:
  *                 # we found something
  *                 return aei, oi             # <<<<<<<<<<<<<<
@@ -4560,11 +4647,11 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  *                 # if we didn't find something here, we check the next AE
  */
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_aei); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 223, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_aei); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_oi); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 223, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_oi); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 223, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -4576,7 +4663,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
         __pyx_t_6 = 0;
         goto __pyx_L0;
 
-        /* "hyvr/assign_points.pyx":221
+        /* "hyvr/assign_points.pyx":223
  *             #     facies, angles, x, y, z, x_idx, y_idx, oi, grid
  *             # )
  *             if geo_ids[0] != -1:             # <<<<<<<<<<<<<<
@@ -4585,7 +4672,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
       }
 
-      /* "hyvr/assign_points.pyx":226
+      /* "hyvr/assign_points.pyx":228
  *             else:
  *                 # if we didn't find something here, we check the next AE
  *                 aei += 1             # <<<<<<<<<<<<<<
@@ -4595,7 +4682,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
       /*else*/ {
         __pyx_v_aei = (__pyx_v_aei + 1);
 
-        /* "hyvr/assign_points.pyx":227
+        /* "hyvr/assign_points.pyx":229
  *                 # if we didn't find something here, we check the next AE
  *                 aei += 1
  *                 oi = 0             # <<<<<<<<<<<<<<
@@ -4604,7 +4691,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  */
         __pyx_v_oi = 0;
 
-        /* "hyvr/assign_points.pyx":228
+        /* "hyvr/assign_points.pyx":230
  *                 aei += 1
  *                 oi = 0
  *                 continue             # <<<<<<<<<<<<<<
@@ -4617,7 +4704,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
     __pyx_L3_continue:;
   }
 
-  /* "hyvr/assign_points.pyx":231
+  /* "hyvr/assign_points.pyx":233
  * 
  *     # At this point we know that the cell is not in any AE and therefore not in this stratum
  *     geo_ids[0] = -1             # <<<<<<<<<<<<<<
@@ -4627,7 +4714,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
   __pyx_t_7 = 0;
   *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_7 * __pyx_v_geo_ids.strides[0]) )) = -1;
 
-  /* "hyvr/assign_points.pyx":232
+  /* "hyvr/assign_points.pyx":234
  *     # At this point we know that the cell is not in any AE and therefore not in this stratum
  *     geo_ids[0] = -1
  *     return 0, 0             # <<<<<<<<<<<<<<
@@ -4639,7 +4726,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
   __pyx_r = __pyx_tuple__4;
   goto __pyx_L0;
 
-  /* "hyvr/assign_points.pyx":160
+  /* "hyvr/assign_points.pyx":162
  * @cython.nonecheck(False)
  * @cython.cdivision(True)
  * cpdef maybe_assign_points_to_stratum(             # <<<<<<<<<<<<<<
@@ -4728,83 +4815,83 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_n_ae)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 1); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 1); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ae_zmaxs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 2); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 2); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ae_zmins)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 3); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 3); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_geo_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 4); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 4); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_angles)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 5); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 5); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 6); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 6); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 7); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 7); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_z)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 8); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 8); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 9); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 9); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 10); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 10); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_aei)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 11); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 11); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_oi)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 12); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 12); __PYX_ERR(0, 162, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_grid)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 13); __PYX_ERR(0, 160, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, 13); __PYX_ERR(0, 162, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "maybe_assign_points_to_stratum") < 0)) __PYX_ERR(0, 160, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "maybe_assign_points_to_stratum") < 0)) __PYX_ERR(0, 162, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 14) {
       goto __pyx_L5_argtuple_error;
@@ -4825,30 +4912,30 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(
       values[13] = PyTuple_GET_ITEM(__pyx_args, 13);
     }
     __pyx_v_stratum_aes = ((PyObject*)values[0]);
-    __pyx_v_n_ae = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_n_ae == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 162, __pyx_L3_error)
-    __pyx_v_ae_zmaxs = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ae_zmaxs.memview)) __PYX_ERR(0, 163, __pyx_L3_error)
-    __pyx_v_ae_zmins = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ae_zmins.memview)) __PYX_ERR(0, 164, __pyx_L3_error)
-    __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 165, __pyx_L3_error)
-    __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 166, __pyx_L3_error)
-    __pyx_v_x = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L3_error)
-    __pyx_v_y = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_y == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L3_error)
-    __pyx_v_z = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_z == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L3_error)
-    __pyx_v_x_idx = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L3_error)
-    __pyx_v_y_idx = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L3_error)
-    __pyx_v_aei = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_aei == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L3_error)
-    __pyx_v_oi = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L3_error)
+    __pyx_v_n_ae = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_n_ae == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 164, __pyx_L3_error)
+    __pyx_v_ae_zmaxs = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ae_zmaxs.memview)) __PYX_ERR(0, 165, __pyx_L3_error)
+    __pyx_v_ae_zmins = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ae_zmins.memview)) __PYX_ERR(0, 166, __pyx_L3_error)
+    __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 167, __pyx_L3_error)
+    __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 168, __pyx_L3_error)
+    __pyx_v_x = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L3_error)
+    __pyx_v_y = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_y == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L3_error)
+    __pyx_v_z = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_z == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L3_error)
+    __pyx_v_x_idx = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 170, __pyx_L3_error)
+    __pyx_v_y_idx = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 170, __pyx_L3_error)
+    __pyx_v_aei = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_aei == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L3_error)
+    __pyx_v_oi = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L3_error)
     __pyx_v_grid = ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)values[13]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 160, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_stratum", 1, 14, 14, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 162, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hyvr.assign_points.maybe_assign_points_to_stratum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_stratum_aes), (&PyList_Type), 1, "stratum_aes", 1))) __PYX_ERR(0, 161, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 170, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_stratum_aes), (&PyList_Type), 1, "stratum_aes", 1))) __PYX_ERR(0, 163, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 172, __pyx_L1_error)
   __pyx_r = __pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(__pyx_self, __pyx_v_stratum_aes, __pyx_v_n_ae, __pyx_v_ae_zmaxs, __pyx_v_ae_zmins, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, __pyx_v_grid);
 
   /* function exit code */
@@ -4866,11 +4953,11 @@ static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("maybe_assign_points_to_stratum", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_ae_zmaxs.memview)) { __Pyx_RaiseUnboundLocalError("ae_zmaxs"); __PYX_ERR(0, 160, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_ae_zmins.memview)) { __Pyx_RaiseUnboundLocalError("ae_zmins"); __PYX_ERR(0, 160, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 160, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 160, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(__pyx_v_stratum_aes, __pyx_v_n_ae, __pyx_v_ae_zmaxs, __pyx_v_ae_zmins, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, __pyx_v_grid, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
+  if (unlikely(!__pyx_v_ae_zmaxs.memview)) { __Pyx_RaiseUnboundLocalError("ae_zmaxs"); __PYX_ERR(0, 162, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_ae_zmins.memview)) { __Pyx_RaiseUnboundLocalError("ae_zmins"); __PYX_ERR(0, 162, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 162, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 162, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(__pyx_v_stratum_aes, __pyx_v_n_ae, __pyx_v_ae_zmaxs, __pyx_v_ae_zmins, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, __pyx_v_grid, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4891,16 +4978,16 @@ static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(
   return __pyx_r;
 }
 
-/* "hyvr/assign_points.pyx":239
+/* "hyvr/assign_points.pyx":241
  * @cython.nonecheck(False)
  * @cython.cdivision(True)
  * cpdef int maybe_assign_points_to_ae(             # <<<<<<<<<<<<<<
- *     ae,
+ *     AERealization ae,
  *     np.int32_t [:] geo_ids,
  */
 
 static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_oi_orig;
   int __pyx_v_n_objects;
   __Pyx_memviewslice __pyx_v_object_zmaxs = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -4911,41 +4998,31 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
   __pyx_t_5numpy_float_t __pyx_v_z_below;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_t_2;
+  int __pyx_t_1;
+  __Pyx_memviewslice __pyx_t_2 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_t_3 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  PyObject *__pyx_t_4 = NULL;
-  __Pyx_memviewslice __pyx_t_5 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  int __pyx_t_6;
-  Py_ssize_t __pyx_t_7;
+  int __pyx_t_4;
+  Py_ssize_t __pyx_t_5;
+  Py_ssize_t __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
   Py_ssize_t __pyx_t_8;
-  PyObject *__pyx_t_9 = NULL;
-  PyObject *__pyx_t_10 = NULL;
-  PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
-  PyObject *__pyx_t_13 = NULL;
-  PyObject *__pyx_t_14 = NULL;
-  PyObject *__pyx_t_15 = NULL;
-  PyObject *__pyx_t_16 = NULL;
-  PyObject *__pyx_t_17 = NULL;
-  Py_ssize_t __pyx_t_18;
-  __pyx_t_5numpy_int32_t __pyx_t_19;
+  __pyx_t_5numpy_int32_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
+  Py_ssize_t __pyx_t_11;
+  int __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  Py_ssize_t __pyx_t_14;
+  Py_ssize_t __pyx_t_15;
+  Py_ssize_t __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
+  __pyx_t_5numpy_float_t __pyx_t_18;
+  Py_ssize_t __pyx_t_19;
   Py_ssize_t __pyx_t_20;
   Py_ssize_t __pyx_t_21;
-  int __pyx_t_22;
-  Py_ssize_t __pyx_t_23;
-  Py_ssize_t __pyx_t_24;
-  Py_ssize_t __pyx_t_25;
-  Py_ssize_t __pyx_t_26;
-  Py_ssize_t __pyx_t_27;
-  __pyx_t_5numpy_float_t __pyx_t_28;
-  Py_ssize_t __pyx_t_29;
-  Py_ssize_t __pyx_t_30;
-  Py_ssize_t __pyx_t_31;
-  Py_ssize_t __pyx_t_32;
+  Py_ssize_t __pyx_t_22;
   __Pyx_RefNannySetupContext("maybe_assign_points_to_ae", 0);
 
-  /* "hyvr/assign_points.pyx":277
+  /* "hyvr/assign_points.pyx":279
  *     """
  *     cdef int oi_orig, n_objects
  *     oi_orig = int(oi)             # <<<<<<<<<<<<<<
@@ -4954,86 +5031,73 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
   __pyx_v_oi_orig = __pyx_v_oi;
 
-  /* "hyvr/assign_points.pyx":278
+  /* "hyvr/assign_points.pyx":280
  *     cdef int oi_orig, n_objects
  *     oi_orig = int(oi)
  *     n_objects = ae.n_objects             # <<<<<<<<<<<<<<
  * 
  *     cdef np.float_t [:] object_zmaxs = ae.object_zmaxs
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_n_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 278, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 278, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_n_objects = __pyx_t_2;
+  __pyx_t_1 = __pyx_v_ae->n_objects;
+  __pyx_v_n_objects = __pyx_t_1;
 
-  /* "hyvr/assign_points.pyx":280
+  /* "hyvr/assign_points.pyx":282
  *     n_objects = ae.n_objects
  * 
  *     cdef np.float_t [:] object_zmaxs = ae.object_zmaxs             # <<<<<<<<<<<<<<
  *     cdef np.float_t [:] object_zmins = ae.object_zmins
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_object_zmaxs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 280, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_3.memview)) __PYX_ERR(0, 280, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_object_zmaxs = __pyx_t_3;
-  __pyx_t_3.memview = NULL;
-  __pyx_t_3.data = NULL;
+  if (unlikely(!__pyx_v_ae->object_zmaxs.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 282, __pyx_L1_error)}
+  __pyx_t_2 = __pyx_v_ae->object_zmaxs;
+  __PYX_INC_MEMVIEW(&__pyx_t_2, 1);
+  __pyx_v_object_zmaxs = __pyx_t_2;
+  __pyx_t_2.memview = NULL;
+  __pyx_t_2.data = NULL;
 
-  /* "hyvr/assign_points.pyx":281
+  /* "hyvr/assign_points.pyx":283
  * 
  *     cdef np.float_t [:] object_zmaxs = ae.object_zmaxs
  *     cdef np.float_t [:] object_zmins = ae.object_zmins             # <<<<<<<<<<<<<<
  * 
  *     cdef np.float_t [:,:] top_surface = ae.top_surface.surface
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_object_zmins); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_3.memview)) __PYX_ERR(0, 281, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_object_zmins = __pyx_t_3;
-  __pyx_t_3.memview = NULL;
-  __pyx_t_3.data = NULL;
+  if (unlikely(!__pyx_v_ae->object_zmins.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 283, __pyx_L1_error)}
+  __pyx_t_2 = __pyx_v_ae->object_zmins;
+  __PYX_INC_MEMVIEW(&__pyx_t_2, 1);
+  __pyx_v_object_zmins = __pyx_t_2;
+  __pyx_t_2.memview = NULL;
+  __pyx_t_2.data = NULL;
 
-  /* "hyvr/assign_points.pyx":283
+  /* "hyvr/assign_points.pyx":285
  *     cdef np.float_t [:] object_zmins = ae.object_zmins
  * 
  *     cdef np.float_t [:,:] top_surface = ae.top_surface.surface             # <<<<<<<<<<<<<<
  *     cdef np.float_t [:,:] bottom_surface = ae.bottom_surface.surface
  *     cdef np.float_t z_above, z_below
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_top_surface); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 283, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_surface); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 283, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_5numpy_float_t(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 283, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_top_surface = __pyx_t_5;
-  __pyx_t_5.memview = NULL;
-  __pyx_t_5.data = NULL;
+  if (unlikely(!__pyx_v_ae->top_surface->surface.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 285, __pyx_L1_error)}
+  __pyx_t_3 = __pyx_v_ae->top_surface->surface;
+  __PYX_INC_MEMVIEW(&__pyx_t_3, 1);
+  __pyx_v_top_surface = __pyx_t_3;
+  __pyx_t_3.memview = NULL;
+  __pyx_t_3.data = NULL;
 
-  /* "hyvr/assign_points.pyx":284
+  /* "hyvr/assign_points.pyx":286
  * 
  *     cdef np.float_t [:,:] top_surface = ae.top_surface.surface
  *     cdef np.float_t [:,:] bottom_surface = ae.bottom_surface.surface             # <<<<<<<<<<<<<<
  *     cdef np.float_t z_above, z_below
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_bottom_surface); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 284, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_surface); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_5numpy_float_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 284, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_bottom_surface = __pyx_t_5;
-  __pyx_t_5.memview = NULL;
-  __pyx_t_5.data = NULL;
+  if (unlikely(!__pyx_v_ae->bottom_surface->surface.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 286, __pyx_L1_error)}
+  __pyx_t_3 = __pyx_v_ae->bottom_surface->surface;
+  __PYX_INC_MEMVIEW(&__pyx_t_3, 1);
+  __pyx_v_bottom_surface = __pyx_t_3;
+  __pyx_t_3.memview = NULL;
+  __pyx_t_3.data = NULL;
 
-  /* "hyvr/assign_points.pyx":296
+  /* "hyvr/assign_points.pyx":298
  *     # below z and we can therefore abort our search.
  * 
  *     while oi < n_objects:             # <<<<<<<<<<<<<<
@@ -5041,21 +5105,21 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  *             # we won't find any object below
  */
   while (1) {
-    __pyx_t_6 = ((__pyx_v_oi < __pyx_v_n_objects) != 0);
-    if (!__pyx_t_6) break;
+    __pyx_t_4 = ((__pyx_v_oi < __pyx_v_n_objects) != 0);
+    if (!__pyx_t_4) break;
 
-    /* "hyvr/assign_points.pyx":297
+    /* "hyvr/assign_points.pyx":299
  * 
  *     while oi < n_objects:
  *         if z > object_zmaxs[oi]:             # <<<<<<<<<<<<<<
  *             # we won't find any object below
  *             break
  */
-    __pyx_t_7 = __pyx_v_oi;
-    __pyx_t_6 = ((__pyx_v_z > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_object_zmaxs.data + __pyx_t_7 * __pyx_v_object_zmaxs.strides[0]) )))) != 0);
-    if (__pyx_t_6) {
+    __pyx_t_5 = __pyx_v_oi;
+    __pyx_t_4 = ((__pyx_v_z > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_object_zmaxs.data + __pyx_t_5 * __pyx_v_object_zmaxs.strides[0]) )))) != 0);
+    if (__pyx_t_4) {
 
-      /* "hyvr/assign_points.pyx":299
+      /* "hyvr/assign_points.pyx":301
  *         if z > object_zmaxs[oi]:
  *             # we won't find any object below
  *             break             # <<<<<<<<<<<<<<
@@ -5064,7 +5128,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
       goto __pyx_L4_break;
 
-      /* "hyvr/assign_points.pyx":297
+      /* "hyvr/assign_points.pyx":299
  * 
  *     while oi < n_objects:
  *         if z > object_zmaxs[oi]:             # <<<<<<<<<<<<<<
@@ -5073,18 +5137,18 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
     }
 
-    /* "hyvr/assign_points.pyx":300
+    /* "hyvr/assign_points.pyx":302
  *             # we won't find any object below
  *             break
  *         elif z < object_zmins[oi]:             # <<<<<<<<<<<<<<
  *             oi += 1
  *             continue
  */
-    __pyx_t_8 = __pyx_v_oi;
-    __pyx_t_6 = ((__pyx_v_z < (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_object_zmins.data + __pyx_t_8 * __pyx_v_object_zmins.strides[0]) )))) != 0);
-    if (__pyx_t_6) {
+    __pyx_t_6 = __pyx_v_oi;
+    __pyx_t_4 = ((__pyx_v_z < (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_object_zmins.data + __pyx_t_6 * __pyx_v_object_zmins.strides[0]) )))) != 0);
+    if (__pyx_t_4) {
 
-      /* "hyvr/assign_points.pyx":301
+      /* "hyvr/assign_points.pyx":303
  *             break
  *         elif z < object_zmins[oi]:
  *             oi += 1             # <<<<<<<<<<<<<<
@@ -5093,16 +5157,16 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
       __pyx_v_oi = (__pyx_v_oi + 1);
 
-      /* "hyvr/assign_points.pyx":302
+      /* "hyvr/assign_points.pyx":304
  *         elif z < object_zmins[oi]:
  *             oi += 1
  *             continue             # <<<<<<<<<<<<<<
  *         else:
- *             ae.objects[oi].maybe_assign_points(
+ *             ae.maybe_assign_points_to_object(
  */
       goto __pyx_L3_continue;
 
-      /* "hyvr/assign_points.pyx":300
+      /* "hyvr/assign_points.pyx":302
  *             # we won't find any object below
  *             break
  *         elif z < object_zmins[oi]:             # <<<<<<<<<<<<<<
@@ -5111,163 +5175,60 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
     }
 
-    /* "hyvr/assign_points.pyx":304
+    /* "hyvr/assign_points.pyx":306
  *             continue
  *         else:
- *             ae.objects[oi].maybe_assign_points(             # <<<<<<<<<<<<<<
- *                 geo_ids, angles, x, y, z, x_idx, y_idx, grid
+ *             ae.maybe_assign_points_to_object(             # <<<<<<<<<<<<<<
+ *                 oi, geo_ids, angles, x, y, z, x_idx, y_idx, grid
  *             )
  */
     /*else*/ {
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_objects); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 304, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_4, __pyx_v_oi, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 304, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_maybe_assign_points); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 304, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-      /* "hyvr/assign_points.pyx":305
+      /* "hyvr/assign_points.pyx":307
  *         else:
- *             ae.objects[oi].maybe_assign_points(
- *                 geo_ids, angles, x, y, z, x_idx, y_idx, grid             # <<<<<<<<<<<<<<
+ *             ae.maybe_assign_points_to_object(
+ *                 oi, geo_ids, angles, x, y, z, x_idx, y_idx, grid             # <<<<<<<<<<<<<<
  *             )
  *             if geo_ids[0] != -1:
  */
-      __pyx_t_9 = __pyx_memoryview_fromslice(__pyx_v_geo_ids, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_10 = __pyx_memoryview_fromslice(__pyx_v_angles, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float_t, 0);; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_11 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_11);
-      __pyx_t_12 = PyFloat_FromDouble(__pyx_v_y); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_13 = PyFloat_FromDouble(__pyx_v_z); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_14 = __Pyx_PyInt_From_int(__pyx_v_x_idx); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_15 = __Pyx_PyInt_From_int(__pyx_v_y_idx); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 305, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_15);
-      __pyx_t_16 = NULL;
-      __pyx_t_2 = 0;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-        __pyx_t_16 = PyMethod_GET_SELF(__pyx_t_4);
-        if (likely(__pyx_t_16)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-          __Pyx_INCREF(__pyx_t_16);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_4, function);
-          __pyx_t_2 = 1;
-        }
-      }
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_4)) {
-        PyObject *__pyx_temp[9] = {__pyx_t_16, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_15, ((PyObject *)__pyx_v_grid)};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_2, 8+__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-        PyObject *__pyx_temp[9] = {__pyx_t_16, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_15, ((PyObject *)__pyx_v_grid)};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_2, 8+__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      } else
-      #endif
-      {
-        __pyx_t_17 = PyTuple_New(8+__pyx_t_2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 304, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        if (__pyx_t_16) {
-          __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_16); __pyx_t_16 = NULL;
-        }
-        __Pyx_GIVEREF(__pyx_t_9);
-        PyTuple_SET_ITEM(__pyx_t_17, 0+__pyx_t_2, __pyx_t_9);
-        __Pyx_GIVEREF(__pyx_t_10);
-        PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_2, __pyx_t_10);
-        __Pyx_GIVEREF(__pyx_t_11);
-        PyTuple_SET_ITEM(__pyx_t_17, 2+__pyx_t_2, __pyx_t_11);
-        __Pyx_GIVEREF(__pyx_t_12);
-        PyTuple_SET_ITEM(__pyx_t_17, 3+__pyx_t_2, __pyx_t_12);
-        __Pyx_GIVEREF(__pyx_t_13);
-        PyTuple_SET_ITEM(__pyx_t_17, 4+__pyx_t_2, __pyx_t_13);
-        __Pyx_GIVEREF(__pyx_t_14);
-        PyTuple_SET_ITEM(__pyx_t_17, 5+__pyx_t_2, __pyx_t_14);
-        __Pyx_GIVEREF(__pyx_t_15);
-        PyTuple_SET_ITEM(__pyx_t_17, 6+__pyx_t_2, __pyx_t_15);
-        __Pyx_INCREF(((PyObject *)__pyx_v_grid));
-        __Pyx_GIVEREF(((PyObject *)__pyx_v_grid));
-        PyTuple_SET_ITEM(__pyx_t_17, 7+__pyx_t_2, ((PyObject *)__pyx_v_grid));
-        __pyx_t_9 = 0;
-        __pyx_t_10 = 0;
-        __pyx_t_11 = 0;
-        __pyx_t_12 = 0;
-        __pyx_t_13 = 0;
-        __pyx_t_14 = 0;
-        __pyx_t_15 = 0;
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_17, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-      }
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_7 = ((struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *)__pyx_v_ae->__pyx_vtab)->maybe_assign_points_to_object(__pyx_v_ae, __pyx_v_oi, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_grid, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 306, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "hyvr/assign_points.pyx":307
- *                 geo_ids, angles, x, y, z, x_idx, y_idx, grid
+      /* "hyvr/assign_points.pyx":309
+ *                 oi, geo_ids, angles, x, y, z, x_idx, y_idx, grid
  *             )
  *             if geo_ids[0] != -1:             # <<<<<<<<<<<<<<
  *                 geo_ids[1] = ae.num
  *                 geo_ids[3] = ae.type_id
  */
-      __pyx_t_18 = 0;
-      __pyx_t_6 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_18 * __pyx_v_geo_ids.strides[0]) ))) != -1L) != 0);
-      if (__pyx_t_6) {
+      __pyx_t_8 = 0;
+      __pyx_t_4 = (((*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_8 * __pyx_v_geo_ids.strides[0]) ))) != -1L) != 0);
+      if (__pyx_t_4) {
 
-        /* "hyvr/assign_points.pyx":308
+        /* "hyvr/assign_points.pyx":310
  *             )
  *             if geo_ids[0] != -1:
  *                 geo_ids[1] = ae.num             # <<<<<<<<<<<<<<
  *                 geo_ids[3] = ae.type_id
  *                 return oi
  */
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_num); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 308, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_19 = __Pyx_PyInt_As_npy_int32(__pyx_t_1); if (unlikely((__pyx_t_19 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 308, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_20 = 1;
-        *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_20 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_19;
+        __pyx_t_9 = __pyx_v_ae->num;
+        __pyx_t_10 = 1;
+        *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_10 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_9;
 
-        /* "hyvr/assign_points.pyx":309
+        /* "hyvr/assign_points.pyx":311
  *             if geo_ids[0] != -1:
  *                 geo_ids[1] = ae.num
  *                 geo_ids[3] = ae.type_id             # <<<<<<<<<<<<<<
  *                 return oi
  *             else:
  */
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_type_id); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_19 = __Pyx_PyInt_As_npy_int32(__pyx_t_1); if (unlikely((__pyx_t_19 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_21 = 3;
-        *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_21 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_19;
+        __pyx_t_9 = __pyx_v_ae->type_id;
+        __pyx_t_11 = 3;
+        *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_11 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_9;
 
-        /* "hyvr/assign_points.pyx":310
+        /* "hyvr/assign_points.pyx":312
  *                 geo_ids[1] = ae.num
  *                 geo_ids[3] = ae.type_id
  *                 return oi             # <<<<<<<<<<<<<<
@@ -5277,8 +5238,8 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
         __pyx_r = __pyx_v_oi;
         goto __pyx_L0;
 
-        /* "hyvr/assign_points.pyx":307
- *                 geo_ids, angles, x, y, z, x_idx, y_idx, grid
+        /* "hyvr/assign_points.pyx":309
+ *                 oi, geo_ids, angles, x, y, z, x_idx, y_idx, grid
  *             )
  *             if geo_ids[0] != -1:             # <<<<<<<<<<<<<<
  *                 geo_ids[1] = ae.num
@@ -5286,7 +5247,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
       }
 
-      /* "hyvr/assign_points.pyx":312
+      /* "hyvr/assign_points.pyx":314
  *                 return oi
  *             else:
  *                 oi += 1             # <<<<<<<<<<<<<<
@@ -5296,7 +5257,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
       /*else*/ {
         __pyx_v_oi = (__pyx_v_oi + 1);
 
-        /* "hyvr/assign_points.pyx":313
+        /* "hyvr/assign_points.pyx":315
  *             else:
  *                 oi += 1
  *                 continue             # <<<<<<<<<<<<<<
@@ -5310,21 +5271,18 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
   }
   __pyx_L4_break:;
 
-  /* "hyvr/assign_points.pyx":319
+  /* "hyvr/assign_points.pyx":321
  *     # if isinstance(ae, SheetAE):
  *     #     return 0
  *     if isinstance(ae, SheetAE):             # <<<<<<<<<<<<<<
  *         return 0
  *     z_above = top_surface[x_idx, y_idx]
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_SheetAE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 319, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyObject_IsInstance(__pyx_v_ae, __pyx_t_1); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 319, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_22 = (__pyx_t_6 != 0);
-  if (__pyx_t_22) {
+  __pyx_t_4 = __Pyx_TypeCheck(((PyObject *)__pyx_v_ae), __pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE); 
+  __pyx_t_12 = (__pyx_t_4 != 0);
+  if (__pyx_t_12) {
 
-    /* "hyvr/assign_points.pyx":320
+    /* "hyvr/assign_points.pyx":322
  *     #     return 0
  *     if isinstance(ae, SheetAE):
  *         return 0             # <<<<<<<<<<<<<<
@@ -5334,7 +5292,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "hyvr/assign_points.pyx":319
+    /* "hyvr/assign_points.pyx":321
  *     # if isinstance(ae, SheetAE):
  *     #     return 0
  *     if isinstance(ae, SheetAE):             # <<<<<<<<<<<<<<
@@ -5343,117 +5301,102 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
   }
 
-  /* "hyvr/assign_points.pyx":321
+  /* "hyvr/assign_points.pyx":323
  *     if isinstance(ae, SheetAE):
  *         return 0
  *     z_above = top_surface[x_idx, y_idx]             # <<<<<<<<<<<<<<
  *     z_below = bottom_surface[x_idx, y_idx]
  *     if z_below < z and z < z_above:
  */
-  __pyx_t_23 = __pyx_v_x_idx;
-  __pyx_t_24 = __pyx_v_y_idx;
-  __pyx_v_z_above = (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_top_surface.data + __pyx_t_23 * __pyx_v_top_surface.strides[0]) ) + __pyx_t_24 * __pyx_v_top_surface.strides[1]) )));
+  __pyx_t_13 = __pyx_v_x_idx;
+  __pyx_t_14 = __pyx_v_y_idx;
+  __pyx_v_z_above = (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_top_surface.data + __pyx_t_13 * __pyx_v_top_surface.strides[0]) ) + __pyx_t_14 * __pyx_v_top_surface.strides[1]) )));
 
-  /* "hyvr/assign_points.pyx":322
+  /* "hyvr/assign_points.pyx":324
  *         return 0
  *     z_above = top_surface[x_idx, y_idx]
  *     z_below = bottom_surface[x_idx, y_idx]             # <<<<<<<<<<<<<<
  *     if z_below < z and z < z_above:
  *         geo_ids[0] = ae.bg_facies
  */
-  __pyx_t_25 = __pyx_v_x_idx;
-  __pyx_t_26 = __pyx_v_y_idx;
-  __pyx_v_z_below = (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bottom_surface.data + __pyx_t_25 * __pyx_v_bottom_surface.strides[0]) ) + __pyx_t_26 * __pyx_v_bottom_surface.strides[1]) )));
+  __pyx_t_15 = __pyx_v_x_idx;
+  __pyx_t_16 = __pyx_v_y_idx;
+  __pyx_v_z_below = (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bottom_surface.data + __pyx_t_15 * __pyx_v_bottom_surface.strides[0]) ) + __pyx_t_16 * __pyx_v_bottom_surface.strides[1]) )));
 
-  /* "hyvr/assign_points.pyx":323
+  /* "hyvr/assign_points.pyx":325
  *     z_above = top_surface[x_idx, y_idx]
  *     z_below = bottom_surface[x_idx, y_idx]
  *     if z_below < z and z < z_above:             # <<<<<<<<<<<<<<
  *         geo_ids[0] = ae.bg_facies
  *         angles[0] = ae.bg_azim
  */
-  __pyx_t_6 = ((__pyx_v_z_below < __pyx_v_z) != 0);
-  if (__pyx_t_6) {
+  __pyx_t_4 = ((__pyx_v_z_below < __pyx_v_z) != 0);
+  if (__pyx_t_4) {
   } else {
-    __pyx_t_22 = __pyx_t_6;
+    __pyx_t_12 = __pyx_t_4;
     goto __pyx_L9_bool_binop_done;
   }
-  __pyx_t_6 = ((__pyx_v_z < __pyx_v_z_above) != 0);
-  __pyx_t_22 = __pyx_t_6;
+  __pyx_t_4 = ((__pyx_v_z < __pyx_v_z_above) != 0);
+  __pyx_t_12 = __pyx_t_4;
   __pyx_L9_bool_binop_done:;
-  if (__pyx_t_22) {
+  if (__pyx_t_12) {
 
-    /* "hyvr/assign_points.pyx":324
+    /* "hyvr/assign_points.pyx":326
  *     z_below = bottom_surface[x_idx, y_idx]
  *     if z_below < z and z < z_above:
  *         geo_ids[0] = ae.bg_facies             # <<<<<<<<<<<<<<
  *         angles[0] = ae.bg_azim
  *         angles[1] = ae.bg_dip
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_bg_facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 324, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_19 = __Pyx_PyInt_As_npy_int32(__pyx_t_1); if (unlikely((__pyx_t_19 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 324, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_27 = 0;
-    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_27 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_19;
+    __pyx_t_9 = __pyx_v_ae->bg_facies;
+    __pyx_t_17 = 0;
+    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_17 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_9;
 
-    /* "hyvr/assign_points.pyx":325
+    /* "hyvr/assign_points.pyx":327
  *     if z_below < z and z < z_above:
  *         geo_ids[0] = ae.bg_facies
  *         angles[0] = ae.bg_azim             # <<<<<<<<<<<<<<
  *         angles[1] = ae.bg_dip
  *         geo_ids[1] = ae.num
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_bg_azim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_28 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_28 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 325, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_29 = 0;
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_29 * __pyx_v_angles.strides[0]) )) = __pyx_t_28;
+    __pyx_t_18 = __pyx_v_ae->bg_azim;
+    __pyx_t_19 = 0;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_19 * __pyx_v_angles.strides[0]) )) = __pyx_t_18;
 
-    /* "hyvr/assign_points.pyx":326
+    /* "hyvr/assign_points.pyx":328
  *         geo_ids[0] = ae.bg_facies
  *         angles[0] = ae.bg_azim
  *         angles[1] = ae.bg_dip             # <<<<<<<<<<<<<<
  *         geo_ids[1] = ae.num
  *         geo_ids[3] = ae.type_id
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_bg_dip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_28 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_28 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 326, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_30 = 1;
-    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_30 * __pyx_v_angles.strides[0]) )) = __pyx_t_28;
+    __pyx_t_18 = __pyx_v_ae->bg_dip;
+    __pyx_t_20 = 1;
+    *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_20 * __pyx_v_angles.strides[0]) )) = __pyx_t_18;
 
-    /* "hyvr/assign_points.pyx":327
+    /* "hyvr/assign_points.pyx":329
  *         angles[0] = ae.bg_azim
  *         angles[1] = ae.bg_dip
  *         geo_ids[1] = ae.num             # <<<<<<<<<<<<<<
  *         geo_ids[3] = ae.type_id
  *         # If we didn't find an object, but it belongs to the current AE, we can start the next
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_num); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 327, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_19 = __Pyx_PyInt_As_npy_int32(__pyx_t_1); if (unlikely((__pyx_t_19 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 327, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_31 = 1;
-    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_31 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_19;
+    __pyx_t_9 = __pyx_v_ae->num;
+    __pyx_t_21 = 1;
+    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_21 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_9;
 
-    /* "hyvr/assign_points.pyx":328
+    /* "hyvr/assign_points.pyx":330
  *         angles[1] = ae.bg_dip
  *         geo_ids[1] = ae.num
  *         geo_ids[3] = ae.type_id             # <<<<<<<<<<<<<<
  *         # If we didn't find an object, but it belongs to the current AE, we can start the next
  *         # time from the same object
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ae, __pyx_n_s_type_id); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_19 = __Pyx_PyInt_As_npy_int32(__pyx_t_1); if (unlikely((__pyx_t_19 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 328, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_32 = 3;
-    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_32 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_19;
+    __pyx_t_9 = __pyx_v_ae->type_id;
+    __pyx_t_22 = 3;
+    *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_22 * __pyx_v_geo_ids.strides[0]) )) = __pyx_t_9;
 
-    /* "hyvr/assign_points.pyx":331
+    /* "hyvr/assign_points.pyx":333
  *         # If we didn't find an object, but it belongs to the current AE, we can start the next
  *         # time from the same object
  *         return oi_orig             # <<<<<<<<<<<<<<
@@ -5463,7 +5406,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
     __pyx_r = __pyx_v_oi_orig;
     goto __pyx_L0;
 
-    /* "hyvr/assign_points.pyx":323
+    /* "hyvr/assign_points.pyx":325
  *     z_above = top_surface[x_idx, y_idx]
  *     z_below = bottom_surface[x_idx, y_idx]
  *     if z_below < z and z < z_above:             # <<<<<<<<<<<<<<
@@ -5472,7 +5415,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
  */
   }
 
-  /* "hyvr/assign_points.pyx":334
+  /* "hyvr/assign_points.pyx":336
  *     else:
  *         # The cell does not belong to this AE
  *         return 0             # <<<<<<<<<<<<<<
@@ -5484,29 +5427,19 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
     goto __pyx_L0;
   }
 
-  /* "hyvr/assign_points.pyx":239
+  /* "hyvr/assign_points.pyx":241
  * @cython.nonecheck(False)
  * @cython.cdivision(True)
  * cpdef int maybe_assign_points_to_ae(             # <<<<<<<<<<<<<<
- *     ae,
+ *     AERealization ae,
  *     np.int32_t [:] geo_ids,
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
+  __PYX_XDEC_MEMVIEW(&__pyx_t_2, 1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
-  __Pyx_XDECREF(__pyx_t_4);
-  __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
-  __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_XDECREF(__pyx_t_13);
-  __Pyx_XDECREF(__pyx_t_14);
-  __Pyx_XDECREF(__pyx_t_15);
-  __Pyx_XDECREF(__pyx_t_16);
-  __Pyx_XDECREF(__pyx_t_17);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_WriteUnraisable("hyvr.assign_points.maybe_assign_points_to_ae", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
@@ -5522,7 +5455,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(PyObject *__p
 static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static char __pyx_doc_4hyvr_13assign_points_4maybe_assign_points_to_ae[] = "\n    Return facies, azim and dip if the cell is inside this AE.\n    Assigns values to point if point is in current ae\n\n    Parameters\n    ----------\n    ae : AERealization object\n    geo_ids : np.int32 array of size 4\n        This holds the geological indices, i.e. facies number, architectural\n        element number, hydrofacies assemblage (ha) and hydrofacies assemblage\n        type (hat).\n    angles : np.ndarray[np.float, dim=1]\n        Array of length 2 that holds the azimuth and dip angles, will also\n        be altered.\n    x, y, z : float\n        cell coordinates\n    x_idx, y_idx : int\n        indices of x and y position in grid.\n    oi : int\n        Object index of the last found object. This can be used as a\n        starting point for the next cell.\n    grid : Grid object\n\n    Returns\n    -------\n    oi : int\n        Object index of the last found object. This can be used as a\n        starting point for the next cell.\n    ";
 static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_ae = 0;
+  struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae = 0;
   __Pyx_memviewslice __pyx_v_geo_ids = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_angles = { 0, 0, { 0 }, { 0 }, { 0 } };
   double __pyx_v_x;
@@ -5574,59 +5507,59 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_geo_ids)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 1); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 1); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_angles)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 2); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 2); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 3); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 3); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 4); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 4); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_z)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 5); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 5); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 6); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 6); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 7); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 7); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_oi)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 8); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 8); __PYX_ERR(0, 241, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_grid)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 9); __PYX_ERR(0, 239, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, 9); __PYX_ERR(0, 241, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "maybe_assign_points_to_ae") < 0)) __PYX_ERR(0, 239, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "maybe_assign_points_to_ae") < 0)) __PYX_ERR(0, 241, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
       goto __pyx_L5_argtuple_error;
@@ -5642,26 +5575,27 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
     }
-    __pyx_v_ae = values[0];
-    __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 241, __pyx_L3_error)
-    __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 242, __pyx_L3_error)
-    __pyx_v_x = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L3_error)
-    __pyx_v_y = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_y == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L3_error)
-    __pyx_v_z = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_z == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L3_error)
-    __pyx_v_x_idx = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 244, __pyx_L3_error)
-    __pyx_v_y_idx = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 244, __pyx_L3_error)
-    __pyx_v_oi = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
+    __pyx_v_ae = ((struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *)values[0]);
+    __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 243, __pyx_L3_error)
+    __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 244, __pyx_L3_error)
+    __pyx_v_x = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
+    __pyx_v_y = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_y == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
+    __pyx_v_z = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_z == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
+    __pyx_v_x_idx = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L3_error)
+    __pyx_v_y_idx = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L3_error)
+    __pyx_v_oi = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 247, __pyx_L3_error)
     __pyx_v_grid = ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)values[9]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 239, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("maybe_assign_points_to_ae", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 241, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hyvr.assign_points.maybe_assign_points_to_ae", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 246, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ae), __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization, 1, "ae", 0))) __PYX_ERR(0, 242, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 248, __pyx_L1_error)
   __pyx_r = __pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(__pyx_self, __pyx_v_ae, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid);
 
   /* function exit code */
@@ -5673,15 +5607,15 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid) {
+static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("maybe_assign_points_to_ae", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 239, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 239, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(__pyx_v_ae, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
+  if (unlikely(!__pyx_v_geo_ids.memview)) { __Pyx_RaiseUnboundLocalError("geo_ids"); __PYX_ERR(0, 241, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_angles.memview)) { __Pyx_RaiseUnboundLocalError("angles"); __PYX_ERR(0, 241, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(__pyx_v_ae, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -21705,7 +21639,6 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_n_s_AERealization, __pyx_k_AERealization, sizeof(__pyx_k_AERealization), 0, 0, 1, 1},
   {&__pyx_n_s_ASCII, __pyx_k_ASCII, sizeof(__pyx_k_ASCII), 0, 0, 1, 1},
   {&__pyx_kp_u_Assigning_parameters_to_grid_cel, __pyx_k_Assigning_parameters_to_grid_cel, sizeof(__pyx_k_Assigning_parameters_to_grid_cel), 0, 1, 0, 0},
   {&__pyx_kp_s_Buffer_view_does_not_expose_stri, __pyx_k_Buffer_view_does_not_expose_stri, sizeof(__pyx_k_Buffer_view_does_not_expose_stri), 0, 0, 1, 0},
@@ -21733,7 +21666,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Out_of_bounds_on_buffer_access_a, __pyx_k_Out_of_bounds_on_buffer_access_a, sizeof(__pyx_k_Out_of_bounds_on_buffer_access_a), 0, 0, 1, 0},
   {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_RuntimeError, __pyx_k_RuntimeError, sizeof(__pyx_k_RuntimeError), 0, 0, 1, 1},
-  {&__pyx_n_s_SheetAE, __pyx_k_SheetAE, sizeof(__pyx_k_SheetAE), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s_Unable_to_convert_item_to_object, __pyx_k_Unable_to_convert_item_to_object, sizeof(__pyx_k_Unable_to_convert_item_to_object), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
@@ -21753,10 +21685,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_asarray, __pyx_k_asarray, sizeof(__pyx_k_asarray), 0, 0, 1, 1},
   {&__pyx_n_u_azim, __pyx_k_azim, sizeof(__pyx_k_azim), 0, 1, 0, 1},
   {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
-  {&__pyx_n_s_bg_azim, __pyx_k_bg_azim, sizeof(__pyx_k_bg_azim), 0, 0, 1, 1},
-  {&__pyx_n_s_bg_dip, __pyx_k_bg_dip, sizeof(__pyx_k_bg_dip), 0, 0, 1, 1},
-  {&__pyx_n_s_bg_facies, __pyx_k_bg_facies, sizeof(__pyx_k_bg_facies), 0, 0, 1, 1},
-  {&__pyx_n_s_bottom_surface, __pyx_k_bottom_surface, sizeof(__pyx_k_bottom_surface), 0, 0, 1, 1},
   {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
   {&__pyx_n_u_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 1, 0, 1},
   {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
@@ -21785,7 +21713,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_ha, __pyx_k_ha, sizeof(__pyx_k_ha), 0, 1, 0, 1},
   {&__pyx_n_u_hat, __pyx_k_hat, sizeof(__pyx_k_hat), 0, 1, 0, 1},
   {&__pyx_n_s_hu, __pyx_k_hu, sizeof(__pyx_k_hu), 0, 0, 1, 1},
-  {&__pyx_n_s_hyvr_classes_ae_realizations, __pyx_k_hyvr_classes_ae_realizations, sizeof(__pyx_k_hyvr_classes_ae_realizations), 0, 0, 1, 1},
   {&__pyx_n_s_hyvr_utils, __pyx_k_hyvr_utils, sizeof(__pyx_k_hyvr_utils), 0, 0, 1, 1},
   {&__pyx_n_s_id, __pyx_k_id, sizeof(__pyx_k_id), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -21793,11 +21720,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_itemsize, __pyx_k_itemsize, sizeof(__pyx_k_itemsize), 0, 0, 1, 1},
   {&__pyx_kp_s_itemsize_0_for_cython_array, __pyx_k_itemsize_0_for_cython_array, sizeof(__pyx_k_itemsize_0_for_cython_array), 0, 0, 1, 0},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-  {&__pyx_n_s_maybe_assign_points, __pyx_k_maybe_assign_points, sizeof(__pyx_k_maybe_assign_points), 0, 0, 1, 1},
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
   {&__pyx_n_s_n_ae, __pyx_k_n_ae, sizeof(__pyx_k_n_ae), 0, 0, 1, 1},
-  {&__pyx_n_s_n_objects, __pyx_k_n_objects, sizeof(__pyx_k_n_objects), 0, 0, 1, 1},
   {&__pyx_n_s_n_strata, __pyx_k_n_strata, sizeof(__pyx_k_n_strata), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
@@ -21808,7 +21733,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
-  {&__pyx_n_s_num, __pyx_k_num, sizeof(__pyx_k_num), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_kp_u_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 1, 0, 0},
   {&__pyx_kp_u_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 1, 0, 0},
@@ -21816,9 +21740,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ny, __pyx_k_ny, sizeof(__pyx_k_ny), 0, 0, 1, 1},
   {&__pyx_n_s_nz, __pyx_k_nz, sizeof(__pyx_k_nz), 0, 0, 1, 1},
   {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
-  {&__pyx_n_s_object_zmaxs, __pyx_k_object_zmaxs, sizeof(__pyx_k_object_zmaxs), 0, 0, 1, 1},
-  {&__pyx_n_s_object_zmins, __pyx_k_object_zmins, sizeof(__pyx_k_object_zmins), 0, 0, 1, 1},
-  {&__pyx_n_s_objects, __pyx_k_objects, sizeof(__pyx_k_objects), 0, 0, 1, 1},
   {&__pyx_n_s_oi, __pyx_k_oi, sizeof(__pyx_k_oi), 0, 0, 1, 1},
   {&__pyx_n_s_ones, __pyx_k_ones, sizeof(__pyx_k_ones), 0, 0, 1, 1},
   {&__pyx_n_s_pack, __pyx_k_pack, sizeof(__pyx_k_pack), 0, 0, 1, 1},
@@ -21855,11 +21776,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_strided_and_indirect, __pyx_k_strided_and_indirect, sizeof(__pyx_k_strided_and_indirect), 0, 0, 1, 0},
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
   {&__pyx_n_s_struct, __pyx_k_struct, sizeof(__pyx_k_struct), 0, 0, 1, 1},
-  {&__pyx_n_s_surface, __pyx_k_surface, sizeof(__pyx_k_surface), 0, 0, 1, 1},
   {&__pyx_n_s_sys, __pyx_k_sys, sizeof(__pyx_k_sys), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
-  {&__pyx_n_s_top_surface, __pyx_k_top_surface, sizeof(__pyx_k_top_surface), 0, 0, 1, 1},
-  {&__pyx_n_s_type_id, __pyx_k_type_id, sizeof(__pyx_k_type_id), 0, 0, 1, 1},
   {&__pyx_kp_s_unable_to_allocate_array_data, __pyx_k_unable_to_allocate_array_data, sizeof(__pyx_k_unable_to_allocate_array_data), 0, 0, 1, 0},
   {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
   {&__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_k_unknown_dtype_code_in_numpy_pxd, sizeof(__pyx_k_unknown_dtype_code_in_numpy_pxd), 0, 1, 0, 0},
@@ -21875,8 +21793,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 77, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 143, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 145, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 272, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 856, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 1038, __pyx_L1_error)
@@ -21895,47 +21813,47 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hyvr/assign_points.pyx":66
+  /* "hyvr/assign_points.pyx":68
  * 
  *     # container for passing facies, ae, ha, and hat, and azimuth and dip
  *     geo_ids = np.empty(4, dtype=np.int32)             # <<<<<<<<<<<<<<
  *     angles = np.empty(2, dtype=np.float)
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_int_4); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "hyvr/assign_points.pyx":67
+  /* "hyvr/assign_points.pyx":69
  *     # container for passing facies, ae, ha, and hat, and azimuth and dip
  *     geo_ids = np.empty(4, dtype=np.int32)
  *     angles = np.empty(2, dtype=np.float)             # <<<<<<<<<<<<<<
  * 
  *     total_n = nx * ny
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_int_2); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_int_2); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "hyvr/assign_points.pyx":143
+  /* "hyvr/assign_points.pyx":145
  * 
  *             if si == n_strata:
  *                 print("Warning: Something went wrong: Cell can not be assigned to any stratum")             # <<<<<<<<<<<<<<
  * 
  *     # we're done now, and can write the results back to the model
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Warning_Something_went_wrong_Cel); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Warning_Something_went_wrong_Cel); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "hyvr/assign_points.pyx":232
+  /* "hyvr/assign_points.pyx":234
  *     # At this point we know that the cell is not in any AE and therefore not in this stratum
  *     geo_ids[0] = -1
  *     return 0, 0             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_0); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 232, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_0); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
@@ -22425,6 +22343,23 @@ static int __Pyx_modinit_type_import_code(void) {
   __pyx_ptype_4hyvr_7classes_4grid_Grid = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.grid", "Grid", sizeof(struct __pyx_obj_4hyvr_7classes_4grid_Grid), __Pyx_ImportType_CheckSize_Warn);
    if (!__pyx_ptype_4hyvr_7classes_4grid_Grid) __PYX_ERR(4, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.contact_surface"); if (unlikely(!__pyx_t_1)) __PYX_ERR(5, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.contact_surface", "ContactSurface", sizeof(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface) __PYX_ERR(5, 3, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.ae_realization"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 6, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.ae_realization", "AERealization", sizeof(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization) __PYX_ERR(6, 6, __pyx_L1_error)
+  __pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization = (struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization*)__Pyx_GetVtable(__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization)) __PYX_ERR(6, 6, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.sheet_ae"); if (unlikely(!__pyx_t_1)) __PYX_ERR(7, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.sheet_ae", "SheetAE", sizeof(struct __pyx_obj_4hyvr_7classes_8sheet_ae_SheetAE), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE) __PYX_ERR(7, 7, __pyx_L1_error)
+  __pyx_vtabptr_4hyvr_7classes_8sheet_ae_SheetAE = (struct __pyx_vtabstruct_4hyvr_7classes_8sheet_ae_SheetAE*)__Pyx_GetVtable(__pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_7classes_8sheet_ae_SheetAE)) __PYX_ERR(7, 7, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -22651,7 +22586,7 @@ if (!__Pyx_RefNanny) {
   /* "hyvr/assign_points.pyx":1
  * import sys             # <<<<<<<<<<<<<<
  * import numpy as np
- * cimport cython
+ * import hyvr.utils as hu
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_sys, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -22661,69 +22596,41 @@ if (!__Pyx_RefNanny) {
   /* "hyvr/assign_points.pyx":2
  * import sys
  * import numpy as np             # <<<<<<<<<<<<<<
- * cimport cython
- * cimport numpy as np
+ * import hyvr.utils as hu
+ * 
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hyvr/assign_points.pyx":6
- * cimport numpy as np
- * from hyvr.classes.grid cimport Grid
- * from hyvr.classes.ae_realizations import AERealization, SheetAE             # <<<<<<<<<<<<<<
- * import hyvr.utils as hu
- * 
- */
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s_AERealization);
-  __Pyx_GIVEREF(__pyx_n_s_AERealization);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_AERealization);
-  __Pyx_INCREF(__pyx_n_s_SheetAE);
-  __Pyx_GIVEREF(__pyx_n_s_SheetAE);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_SheetAE);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_hyvr_classes_ae_realizations, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_AERealization); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_AERealization, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_SheetAE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SheetAE, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "hyvr/assign_points.pyx":7
- * from hyvr.classes.grid cimport Grid
- * from hyvr.classes.ae_realizations import AERealization, SheetAE
+  /* "hyvr/assign_points.pyx":3
+ * import sys
+ * import numpy as np
  * import hyvr.utils as hu             # <<<<<<<<<<<<<<
  * 
- * @cython.boundscheck(False)
+ * cimport cython
  */
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s__30);
   __Pyx_GIVEREF(__pyx_n_s__30);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s__30);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_hyvr_utils, __pyx_t_2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_hu, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s__30);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_hyvr_utils, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_hu, __pyx_t_2) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "hyvr/assign_points.pyx":1
  * import sys             # <<<<<<<<<<<<<<
  * import numpy as np
- * cimport cython
+ * import hyvr.utils as hu
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "View.MemoryView":209
  *         info.obj = self
@@ -22732,10 +22639,10 @@ if (!__Pyx_RefNanny) {
  * 
  *     def __dealloc__(array self):
  */
-  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 209, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) __PYX_ERR(2, 209, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 209, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem((PyObject *)__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(2, 209, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_array_type);
 
   /* "View.MemoryView":286
@@ -22745,12 +22652,12 @@ if (!__Pyx_RefNanny) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__31, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 286, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__31, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 286, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(generic);
-  __Pyx_DECREF_SET(generic, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(generic, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":287
  * 
@@ -22759,12 +22666,12 @@ if (!__Pyx_RefNanny) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__32, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 287, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__32, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 287, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(strided);
-  __Pyx_DECREF_SET(strided, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(strided, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":288
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -22773,12 +22680,12 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__33, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 288, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__33, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 288, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(indirect);
-  __Pyx_DECREF_SET(indirect, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(indirect, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":291
  * 
@@ -22787,12 +22694,12 @@ if (!__Pyx_RefNanny) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__34, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 291, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__34, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 291, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(contiguous);
-  __Pyx_DECREF_SET(contiguous, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(contiguous, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":292
  * 
@@ -22801,12 +22708,12 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__35, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 292, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__35, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 292, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(indirect_contiguous);
-  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":316
  * 
@@ -22841,10 +22748,10 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 549, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) __PYX_ERR(2, 549, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 549, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem((PyObject *)__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(2, 549, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_memoryview_type);
 
   /* "View.MemoryView":995
@@ -22854,10 +22761,10 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 995, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) __PYX_ERR(2, 995, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 995, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem((PyObject *)__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(2, 995, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_memoryviewslice_type);
 
   /* "(tree fragment)":1
@@ -22865,10 +22772,10 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15View_dot_MemoryView_1__pyx_unpickle_Enum, NULL, __pyx_n_s_View_MemoryView); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_1) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_15View_dot_MemoryView_1__pyx_unpickle_Enum, NULL, __pyx_n_s_View_MemoryView); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_2) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "(tree fragment)":11
  *         __pyx_unpickle_Enum__set_state(<Enum> __pyx_result, __pyx_state)
@@ -24947,6 +24854,26 @@ bad:
     return NULL;
 }
 #endif
+
+/* GetVTable */
+static void* __Pyx_GetVtable(PyObject *dict) {
+    void* ptr;
+    PyObject *ob = PyObject_GetItem(dict, __pyx_n_s_pyx_vtable);
+    if (!ob)
+        goto bad;
+#if PY_VERSION_HEX >= 0x02070000
+    ptr = PyCapsule_GetPointer(ob, 0);
+#else
+    ptr = PyCObject_AsVoidPtr(ob);
+#endif
+    if (!ptr && !PyErr_Occurred())
+        PyErr_SetString(PyExc_RuntimeError, "invalid vtable found for imported type");
+    Py_DECREF(ob);
+    return ptr;
+bad:
+    Py_XDECREF(ob);
+    return NULL;
+}
 
 /* CLineInTraceback */
 #ifndef CYTHON_CLINE_IN_TRACEBACK
@@ -27370,29 +27297,6 @@ __pyx_fail:
     retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
                                                  PyBUF_RECORDS_RO | writable_flag, 3,
                                                  &__Pyx_TypeInfo_nn___pyx_t_5numpy_int32_t, stack,
-                                                 &result, obj);
-    if (unlikely(retcode == -1))
-        goto __pyx_fail;
-    return result;
-__pyx_fail:
-    result.memview = NULL;
-    result.data = NULL;
-    return result;
-}
-
-/* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_5numpy_float_t(PyObject *obj, int writable_flag) {
-    __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
-    __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_STRIDED), (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_STRIDED) };
-    int retcode;
-    if (obj == Py_None) {
-        result.memview = (struct __pyx_memoryview_obj *) Py_None;
-        return result;
-    }
-    retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
-                                                 PyBUF_RECORDS_RO | writable_flag, 2,
-                                                 &__Pyx_TypeInfo_nn___pyx_t_5numpy_float_t, stack,
                                                  &result, obj);
     if (unlikely(retcode == -1))
         goto __pyx_fail;

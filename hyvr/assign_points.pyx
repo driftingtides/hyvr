@@ -1,10 +1,12 @@
 import sys
 import numpy as np
+import hyvr.utils as hu
+
 cimport cython
 cimport numpy as np
 from hyvr.classes.grid cimport Grid
-from hyvr.classes.ae_realizations import AERealization, SheetAE
-import hyvr.utils as hu
+from hyvr.classes.ae_realization cimport AERealization
+from hyvr.classes.sheet_ae cimport SheetAE
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -237,7 +239,7 @@ cpdef maybe_assign_points_to_stratum(
 @cython.nonecheck(False)
 @cython.cdivision(True)
 cpdef int maybe_assign_points_to_ae(
-    ae,
+    AERealization ae,
     np.int32_t [:] geo_ids,
     np.float_t [:] angles,
     double x, double y, double z,
@@ -301,8 +303,8 @@ cpdef int maybe_assign_points_to_ae(
             oi += 1
             continue
         else:
-            ae.objects[oi].maybe_assign_points(
-                geo_ids, angles, x, y, z, x_idx, y_idx, grid
+            ae.maybe_assign_points_to_object(
+                oi, geo_ids, angles, x, y, z, x_idx, y_idx, grid
             )
             if geo_ids[0] != -1:
                 geo_ids[1] = ae.num
