@@ -34,9 +34,10 @@ doesn't affect how HyVR works (e.g. it doesn't change ini-file option names).
 Uploading a new version
 =======================
 
-Please run the tests before you push anything to github. Furthermore, you should
-also publish the new version on PyPI. Therefore, you have to create a source
-distribution or a wheel using
+Please run the tests before you push anything to github (or at least our MADE
+test case by running ``python -m hyvr``). Furthermore, you should also publish
+the new version on PyPI. Therefore, you have to create a source distribution or
+a wheel using
 ```
 python setup.py sdist
 ```
@@ -64,6 +65,37 @@ this example 1.0.1) to PyPI:
 python -m twine upload dist/*
 ```
 
+It's also a good idea to update the online documentation afterwards.
+
+Building and uploading documentation
+====================================
+
+To rebuild the documentation, change to the `docs` directory and run the
+following commands:
+```
+sphinx-apidoc -fM -H 'Module Reference' -o modules ../hyvr
+make html
+```
+
+To push the new documentation to github pages, you have to check out the branch
+`gh-pages` and recreate the documentation:
+```
+git checkout gh-pages
+rm _sources _static
+git checkout master --
+git reset HEAD
+cd docs
+sphinx-apidoc -fM -H 'Module Reference' -o modules ../hyvr
+make html
+cd ..
+cp docs/_build/html/* .
+rm -rf hyvr docs README.rst testcases versionnumber
+git add -A
+git commit -m <commit message>
+git push origin gh-pages
+```
+
+
 
 How HyVR Works
 ==============
@@ -75,9 +107,6 @@ There are roughly 4 big tasks that HyVR performs:
 3) Assigning values to grid points
 4) Storing the results in different formats
 
-Below you will find short descriptions of all of these steps, but first some
-general guidelines for working on HyVR.
-
 
 Reading Parameters
 ------------------
@@ -87,7 +116,7 @@ configuration file.  The code for this part can be found in
 ``hyvr/input/``. There are 3 important files in there:
 
 * ``option_parsing.py``: This is our option parsing module, you probably
-  shouldn't touch this.
+  don't have to change this.
 * ``options.py``: This is the list of possible options. If you add
   functionality, you will need to add your option here so that it will be
   parsed.
@@ -106,6 +135,22 @@ done for every stratum.
 The model is stored in separate objects: The model objects holds a list of
 strata, each strata holds a list of the AEs inside, and each AE holds a list of
 the geometrical objects/hydrofacies assemblages it contains.
+
+Implementation of architectural elements is split in several ways. First,
+there's a distinction between AE types (``hyvr/geo/ae_types.py``), and AE
+realizations (``hyvr/geo/ae_realizations.py``).
+The AE types correspond to the sections in the ini-file, e.g. ``clay_sheet`` in
+``made.ini``. From these templates, AE realizations are randomly created
+according to the parameters.
+AE realization implementation is also split. Firstly, there's the Python part,
+where each AE realization has a list of objects, for access/creation from Python
+code. However, to make the assignment of grid points to objects faster, each AE
+realization also contains arrays of object properties, since we can iterate much
+faster over arrays compared to Python lists.
+
+Most of the code for model generation can be found in ``hyvr/geo/``.
+
+
 
 
 Assigning Values to Grid

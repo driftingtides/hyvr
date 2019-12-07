@@ -1,5 +1,8 @@
 """
-This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.
+This module contains all options for the ini-files. 
+
+This module is only for parsing deprecated ini files, it might be removed in the
+future.
 
 :Authors: Samuel Scherrer, Jeremy P. Bennett
 """

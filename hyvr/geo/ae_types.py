@@ -2,10 +2,10 @@
 This module contains the architectural element types.
 """
 
-from hyvr.classes.ae_realization import AERealization
-from hyvr.classes.sheet_ae import SheetAE
-from hyvr.classes.channel_ae import ChannelAE
-from hyvr.classes.trough_ae import TroughAE
+from hyvr.geo.ae_realization import AERealization
+from hyvr.geo.sheet_ae import SheetAE
+from hyvr.geo.channel_ae import ChannelAE
+from hyvr.geo.trough_ae import TroughAE
 
 class AEType:
     """

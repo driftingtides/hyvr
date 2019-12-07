@@ -48,15 +48,15 @@ class sdist(_sdist):
 # ----------
 here = path.abspath(path.dirname(__file__))
 extensions = [Extension("hyvr.optimized", sources=[path.join(here, "hyvr", "optimized"+ext)]),
-              Extension("hyvr.classes.grid", sources=[path.join(here, "hyvr", "classes", "grid"+ext)]),
-              Extension("hyvr.classes.contact_surface", sources=[path.join(here, "hyvr", "classes", "contact_surface"+ext)]),
-              Extension("hyvr.classes.ae_realization", sources=[path.join(here, "hyvr", "classes", "ae_realization"+ext)]),
-              Extension("hyvr.classes.trough", sources=[path.join(here, "hyvr", "classes", "trough"+ext)]),
-              Extension("hyvr.classes.trough_ae", sources=[path.join(here, "hyvr", "classes", "trough_ae"+ext)]),
-              Extension("hyvr.classes.sheet", sources=[path.join(here, "hyvr", "classes", "sheet"+ext)]),
-              Extension("hyvr.classes.sheet_ae", sources=[path.join(here, "hyvr", "classes", "sheet_ae"+ext)]),
-              Extension("hyvr.classes.channel", sources=[path.join(here, "hyvr", "classes", "channel"+ext)]),
-              Extension("hyvr.classes.channel_ae", sources=[path.join(here, "hyvr", "classes", "channel_ae"+ext)]),
+              Extension("hyvr.geo.grid", sources=[path.join(here, "hyvr", "geo", "grid"+ext)]),
+              Extension("hyvr.geo.contact_surface", sources=[path.join(here, "hyvr", "geo", "contact_surface"+ext)]),
+              Extension("hyvr.geo.ae_realization", sources=[path.join(here, "hyvr", "geo", "ae_realization"+ext)]),
+              Extension("hyvr.geo.trough", sources=[path.join(here, "hyvr", "geo", "trough"+ext)]),
+              Extension("hyvr.geo.trough_ae", sources=[path.join(here, "hyvr", "geo", "trough_ae"+ext)]),
+              Extension("hyvr.geo.sheet", sources=[path.join(here, "hyvr", "geo", "sheet"+ext)]),
+              Extension("hyvr.geo.sheet_ae", sources=[path.join(here, "hyvr", "geo", "sheet_ae"+ext)]),
+              Extension("hyvr.geo.channel", sources=[path.join(here, "hyvr", "geo", "channel"+ext)]),
+              Extension("hyvr.geo.channel_ae", sources=[path.join(here, "hyvr", "geo", "channel_ae"+ext)]),
               Extension("hyvr.assign_points", sources=[path.join(here, "hyvr", "assign_points"+ext)]),
               ]
                          # include_dirs=[np.get_include()])]

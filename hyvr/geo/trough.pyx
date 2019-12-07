@@ -3,7 +3,7 @@ cimport hyvr.optimized as ho
 import hyvr.utils as hu
 from libc.math cimport sin, cos, ceil, acos, sqrt
 cimport numpy as np
-from hyvr.classes.grid cimport Grid
+from hyvr.geo.grid cimport Grid
 cimport cython
 
 cdef class Trough:

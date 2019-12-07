@@ -1,8 +1,8 @@
 
 cimport numpy as np
-from hyvr.classes.contact_surface cimport ContactSurface
-from hyvr.classes.grid cimport Grid
-from hyvr.classes.ae_realization cimport AERealization
+from hyvr.geo.contact_surface cimport ContactSurface
+from hyvr.geo.grid cimport Grid
+from hyvr.geo.ae_realization cimport AERealization
 
 cdef class TroughAE(AERealization):
 

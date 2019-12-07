@@ -1,6 +1,6 @@
 import numpy as np
 from hyvr.optimized import curve_interp
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 def ferguson_curve(grid, h, k, ds, eps_factor, flow_angle, domain_length, xstart, ystart, width):
     """

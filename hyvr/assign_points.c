@@ -847,10 +847,10 @@ static const char *__pyx_f[] = {
   "__init__.pxd",
   "stringsource",
   "type.pxd",
-  "hyvr/classes/grid.pxd",
-  "hyvr/classes/contact_surface.pxd",
-  "hyvr/classes/ae_realization.pxd",
-  "hyvr/classes/sheet_ae.pxd",
+  "hyvr/geo/grid.pxd",
+  "hyvr/geo/contact_surface.pxd",
+  "hyvr/geo/ae_realization.pxd",
+  "hyvr/geo/sheet_ae.pxd",
 };
 /* MemviewSliceStruct.proto */
 struct __pyx_memoryview_obj;
@@ -1175,10 +1175,10 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 
 /*--- Type declarations ---*/
-struct __pyx_obj_4hyvr_7classes_4grid_Grid;
-struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface;
-struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization;
-struct __pyx_obj_4hyvr_7classes_8sheet_ae_SheetAE;
+struct __pyx_obj_4hyvr_3geo_4grid_Grid;
+struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface;
+struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization;
+struct __pyx_obj_4hyvr_3geo_8sheet_ae_SheetAE;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
@@ -1220,13 +1220,13 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
 
-/* "hyvr/classes/grid.pxd":2
+/* "hyvr/geo/grid.pxd":2
  * # "Header" file for Grid class
  * cdef class Grid:             # <<<<<<<<<<<<<<
  *     """Simple grid class for access from cython functions"""
  * 
  */
-struct __pyx_obj_4hyvr_7classes_4grid_Grid {
+struct __pyx_obj_4hyvr_3geo_4grid_Grid {
   PyObject_HEAD
   double x0;
   double y0;
@@ -1256,16 +1256,16 @@ struct __pyx_obj_4hyvr_7classes_4grid_Grid {
 };
 
 
-/* "hyvr/classes/contact_surface.pxd":3
+/* "hyvr/geo/contact_surface.pxd":3
  * cimport numpy as np
  * 
  * cdef class ContactSurface:             # <<<<<<<<<<<<<<
  * 
  *     cdef public int nx, ny
  */
-struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface {
+struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface {
   PyObject_HEAD
-  struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_vtab;
+  struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_vtab;
   int nx;
   int ny;
   __pyx_t_5numpy_float_t z;
@@ -1276,16 +1276,16 @@ struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface {
 };
 
 
-/* "hyvr/classes/ae_realization.pxd":6
- * from hyvr.classes.grid cimport Grid
+/* "hyvr/geo/ae_realization.pxd":13
+ * from hyvr.geo.grid cimport Grid
  * 
  * cdef class AERealization:             # <<<<<<<<<<<<<<
- * 
- *     cdef public:
+ *     """
+ *     Base class for AERealizations.
  */
-struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization {
+struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization {
   PyObject_HEAD
-  struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *__pyx_vtab;
+  struct __pyx_vtabstruct_4hyvr_3geo_14ae_realization_AERealization *__pyx_vtab;
   __pyx_t_5numpy_int32_t type_id;
   __pyx_t_5numpy_int32_t num;
   __pyx_t_5numpy_int32_t bg_facies;
@@ -1293,8 +1293,8 @@ struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization {
   __pyx_t_5numpy_float_t zmax;
   __pyx_t_5numpy_float_t bg_dip;
   __pyx_t_5numpy_float_t bg_azim;
-  struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *bottom_surface;
-  struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *top_surface;
+  struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *bottom_surface;
+  struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *top_surface;
   PyObject *type_params;
   PyObject *type_name;
   PyObject *object_list;
@@ -1312,15 +1312,15 @@ struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization {
 };
 
 
-/* "hyvr/classes/sheet_ae.pxd":7
- * from hyvr.classes.ae_realization cimport AERealization
+/* "hyvr/geo/sheet_ae.pxd":7
+ * from hyvr.geo.ae_realization cimport AERealization
  * 
  * cdef class SheetAE(AERealization):             # <<<<<<<<<<<<<<
  * 
  *     cdef public:
  */
-struct __pyx_obj_4hyvr_7classes_8sheet_ae_SheetAE {
-  struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization __pyx_base;
+struct __pyx_obj_4hyvr_3geo_8sheet_ae_SheetAE {
+  struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization __pyx_base;
   __Pyx_memviewslice object_shift;
   __Pyx_memviewslice object_layer_dist;
   __Pyx_memviewslice object_normvec_x;
@@ -1411,7 +1411,7 @@ struct __pyx_memoryviewslice_obj {
 
 
 
-/* "hyvr/classes/contact_surface.pxd":3
+/* "hyvr/geo/contact_surface.pxd":3
  * cimport numpy as np
  * 
  * cdef class ContactSurface:             # <<<<<<<<<<<<<<
@@ -1419,41 +1419,41 @@ struct __pyx_memoryviewslice_obj {
  *     cdef public int nx, ny
  */
 
-struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface {
-  PyObject *(*use_lower_surface_value)(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
-  PyObject *(*use_higher_surface_value)(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
+struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface {
+  PyObject *(*use_lower_surface_value)(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
+  PyObject *(*use_higher_surface_value)(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
 };
-static struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface;
+static struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface;
 
 
-/* "hyvr/classes/ae_realization.pxd":6
- * from hyvr.classes.grid cimport Grid
+/* "hyvr/geo/ae_realization.pxd":13
+ * from hyvr.geo.grid cimport Grid
  * 
  * cdef class AERealization:             # <<<<<<<<<<<<<<
- * 
- *     cdef public:
+ *     """
+ *     Base class for AERealizations.
  */
 
-struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization {
-  PyObject *(*_create_common_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
-  PyObject *(*create_object_arrays)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int __pyx_skip_dispatch);
-  PyObject *(*maybe_assign_points_to_object)(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, int, __Pyx_memviewslice, __Pyx_memviewslice, __pyx_t_5numpy_float_t, __pyx_t_5numpy_float_t, __pyx_t_5numpy_float_t, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch);
+struct __pyx_vtabstruct_4hyvr_3geo_14ae_realization_AERealization {
+  PyObject *(*_create_common_object_arrays)(struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *, int __pyx_skip_dispatch);
+  PyObject *(*create_object_arrays)(struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *, int __pyx_skip_dispatch);
+  PyObject *(*maybe_assign_points_to_object)(struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *, int, __Pyx_memviewslice, __Pyx_memviewslice, __pyx_t_5numpy_float_t, __pyx_t_5numpy_float_t, __pyx_t_5numpy_float_t, int, int, struct __pyx_obj_4hyvr_3geo_4grid_Grid *, int __pyx_skip_dispatch);
 };
-static struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *__pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization;
+static struct __pyx_vtabstruct_4hyvr_3geo_14ae_realization_AERealization *__pyx_vtabptr_4hyvr_3geo_14ae_realization_AERealization;
 
 
-/* "hyvr/classes/sheet_ae.pxd":7
- * from hyvr.classes.ae_realization cimport AERealization
+/* "hyvr/geo/sheet_ae.pxd":7
+ * from hyvr.geo.ae_realization cimport AERealization
  * 
  * cdef class SheetAE(AERealization):             # <<<<<<<<<<<<<<
  * 
  *     cdef public:
  */
 
-struct __pyx_vtabstruct_4hyvr_7classes_8sheet_ae_SheetAE {
-  struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization __pyx_base;
+struct __pyx_vtabstruct_4hyvr_3geo_8sheet_ae_SheetAE {
+  struct __pyx_vtabstruct_4hyvr_3geo_14ae_realization_AERealization __pyx_base;
 };
-static struct __pyx_vtabstruct_4hyvr_7classes_8sheet_ae_SheetAE *__pyx_vtabptr_4hyvr_7classes_8sheet_ae_SheetAE;
+static struct __pyx_vtabstruct_4hyvr_3geo_8sheet_ae_SheetAE *__pyx_vtabptr_4hyvr_3geo_8sheet_ae_SheetAE;
 
 
 /* "View.MemoryView":105
@@ -2309,17 +2309,17 @@ static PyTypeObject *__pyx_ptype_5numpy_ndarray = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
-/* Module declarations from 'hyvr.classes.grid' */
-static PyTypeObject *__pyx_ptype_4hyvr_7classes_4grid_Grid = 0;
+/* Module declarations from 'hyvr.geo.grid' */
+static PyTypeObject *__pyx_ptype_4hyvr_3geo_4grid_Grid = 0;
 
-/* Module declarations from 'hyvr.classes.contact_surface' */
-static PyTypeObject *__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface = 0;
+/* Module declarations from 'hyvr.geo.contact_surface' */
+static PyTypeObject *__pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface = 0;
 
-/* Module declarations from 'hyvr.classes.ae_realization' */
-static PyTypeObject *__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization = 0;
+/* Module declarations from 'hyvr.geo.ae_realization' */
+static PyTypeObject *__pyx_ptype_4hyvr_3geo_14ae_realization_AERealization = 0;
 
-/* Module declarations from 'hyvr.classes.sheet_ae' */
-static PyTypeObject *__pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE = 0;
+/* Module declarations from 'hyvr.geo.sheet_ae' */
+static PyTypeObject *__pyx_ptype_4hyvr_3geo_8sheet_ae_SheetAE = 0;
 
 /* Module declarations from 'hyvr.assign_points' */
 static PyTypeObject *__pyx_array_type = 0;
@@ -2334,8 +2334,8 @@ static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *, int __pyx_skip_dispatch); /*proto*/
-static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(PyObject *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
-static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, struct __pyx_obj_4hyvr_7classes_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(PyObject *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, int, struct __pyx_obj_4hyvr_3geo_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int, int, int, struct __pyx_obj_4hyvr_3geo_4grid_Grid *, int __pyx_skip_dispatch); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -2678,8 +2678,8 @@ static PyObject *__pyx_n_s_y_idx;
 static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_n_s_zeros;
 static PyObject *__pyx_pf_4hyvr_13assign_points_assign_points(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_model); /* proto */
-static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid); /* proto */
-static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid); /* proto */
+static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid); /* proto */
+static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -3791,7 +3791,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  */
           __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_grid); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_4hyvr_7classes_4grid_Grid))))) __PYX_ERR(0, 127, __pyx_L1_error)
+          if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_4hyvr_3geo_4grid_Grid))))) __PYX_ERR(0, 127, __pyx_L1_error)
 
           /* "hyvr/assign_points.pyx":123
  *                     # otherwise we have to check really to get an answer
@@ -3800,7 +3800,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_assign_points(PyObject *__pyx_v_m
  *                         stratum.aes, stratum.n_ae,
  *                         stratum.ae_zmaxs, stratum.ae_zmins,
  */
-          __pyx_t_8 = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(((PyObject*)__pyx_t_2), __pyx_t_30, __pyx_t_5, __pyx_t_31, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)__pyx_t_6), 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_8 = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(((PyObject*)__pyx_t_2), __pyx_t_30, __pyx_t_5, __pyx_t_31, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, ((struct __pyx_obj_4hyvr_3geo_4grid_Grid *)__pyx_t_6), 0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
@@ -4427,7 +4427,7 @@ static PyObject *__pyx_pf_4hyvr_13assign_points_assign_points(CYTHON_UNUSED PyOb
  */
 
 static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid, CYTHON_UNUSED int __pyx_skip_dispatch) {
   CYTHON_UNUSED int __pyx_v_oi_orig;
   CYTHON_UNUSED int __pyx_v_aei_orig;
   PyObject *__pyx_r = NULL;
@@ -4537,7 +4537,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
         __PYX_ERR(0, 218, __pyx_L1_error)
       }
-      if (!(likely(((PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei), __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization))))) __PYX_ERR(0, 218, __pyx_L1_error)
+      if (!(likely(((PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei), __pyx_ptype_4hyvr_3geo_14ae_realization_AERealization))))) __PYX_ERR(0, 218, __pyx_L1_error)
       __pyx_t_3 = PyList_GET_ITEM(__pyx_v_stratum_aes, __pyx_v_aei);
       __Pyx_INCREF(__pyx_t_3);
 
@@ -4548,7 +4548,7 @@ static PyObject *__pyx_f_4hyvr_13assign_points_maybe_assign_points_to_stratum(Py
  *                 stratum_aes[aei], geo_ids, angles, x, y, z, x_idx, y_idx, oi, grid
  *             )
  */
-      __pyx_v_oi = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(((struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *)__pyx_t_3), __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid, 0);
+      __pyx_v_oi = __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(((struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *)__pyx_t_3), __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
       /* "hyvr/assign_points.pyx":223
@@ -4687,7 +4687,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(
   int __pyx_v_y_idx;
   int __pyx_v_aei;
   int __pyx_v_oi;
-  struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid = 0;
+  struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("maybe_assign_points_to_stratum (wrapper)", 0);
@@ -4847,7 +4847,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(
     __pyx_v_y_idx = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 170, __pyx_L3_error)
     __pyx_v_aei = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_aei == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L3_error)
     __pyx_v_oi = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L3_error)
-    __pyx_v_grid = ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)values[13]);
+    __pyx_v_grid = ((struct __pyx_obj_4hyvr_3geo_4grid_Grid *)values[13]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
@@ -4858,7 +4858,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_stratum_aes), (&PyList_Type), 1, "stratum_aes", 1))) __PYX_ERR(0, 163, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 172, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_3geo_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 172, __pyx_L1_error)
   __pyx_r = __pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(__pyx_self, __pyx_v_stratum_aes, __pyx_v_n_ae, __pyx_v_ae_zmaxs, __pyx_v_ae_zmins, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_aei, __pyx_v_oi, __pyx_v_grid);
 
   /* function exit code */
@@ -4870,7 +4870,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_3maybe_assign_points_to_stratum(
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid) {
+static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_stratum_aes, int __pyx_v_n_ae, __Pyx_memviewslice __pyx_v_ae_zmaxs, __Pyx_memviewslice __pyx_v_ae_zmins, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_aei, int __pyx_v_oi, struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4910,7 +4910,7 @@ static PyObject *__pyx_pf_4hyvr_13assign_points_2maybe_assign_points_to_stratum(
  */
 
 static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_oi_orig;
   int __pyx_v_n_objects;
   __Pyx_memviewslice __pyx_v_object_zmaxs = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -5114,7 +5114,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_
  *             )
  *             if geo_ids[0] != -1:
  */
-      __pyx_t_7 = ((struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization *)__pyx_v_ae->__pyx_vtab)->maybe_assign_points_to_object(__pyx_v_ae, __pyx_v_oi, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_grid, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 306, __pyx_L1_error)
+      __pyx_t_7 = ((struct __pyx_vtabstruct_4hyvr_3geo_14ae_realization_AERealization *)__pyx_v_ae->__pyx_vtab)->maybe_assign_points_to_object(__pyx_v_ae, __pyx_v_oi, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_grid, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 306, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
@@ -5201,7 +5201,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_
  *         return 0
  *     z_above = top_surface[x_idx, y_idx]
  */
-  __pyx_t_4 = __Pyx_TypeCheck(((PyObject *)__pyx_v_ae), __pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE); 
+  __pyx_t_4 = __Pyx_TypeCheck(((PyObject *)__pyx_v_ae), __pyx_ptype_4hyvr_3geo_8sheet_ae_SheetAE); 
   __pyx_t_12 = (__pyx_t_4 != 0);
   if (__pyx_t_12) {
 
@@ -5378,7 +5378,7 @@ static int __pyx_f_4hyvr_13assign_points_maybe_assign_points_to_ae(struct __pyx_
 static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static char __pyx_doc_4hyvr_13assign_points_4maybe_assign_points_to_ae[] = "\n    Return facies, azim and dip if the cell is inside this AE.\n    Assigns values to point if point is in current ae\n\n    Parameters\n    ----------\n    ae : AERealization object\n    geo_ids : np.int32 array of size 4\n        This holds the geological indices, i.e. facies number, architectural\n        element number, hydrofacies assemblage (ha) and hydrofacies assemblage\n        type (hat).\n    angles : np.ndarray[np.float, dim=1]\n        Array of length 2 that holds the azimuth and dip angles, will also\n        be altered.\n    x, y, z : float\n        cell coordinates\n    x_idx, y_idx : int\n        indices of x and y position in grid.\n    oi : int\n        Object index of the last found object. This can be used as a\n        starting point for the next cell.\n    grid : Grid object\n\n    Returns\n    -------\n    oi : int\n        Object index of the last found object. This can be used as a\n        starting point for the next cell.\n    ";
 static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae = 0;
+  struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *__pyx_v_ae = 0;
   __Pyx_memviewslice __pyx_v_geo_ids = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_angles = { 0, 0, { 0 }, { 0 }, { 0 } };
   double __pyx_v_x;
@@ -5387,7 +5387,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
   int __pyx_v_x_idx;
   int __pyx_v_y_idx;
   int __pyx_v_oi;
-  struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid = 0;
+  struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("maybe_assign_points_to_ae (wrapper)", 0);
@@ -5498,7 +5498,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
     }
-    __pyx_v_ae = ((struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *)values[0]);
+    __pyx_v_ae = ((struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *)values[0]);
     __pyx_v_geo_ids = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_geo_ids.memview)) __PYX_ERR(0, 243, __pyx_L3_error)
     __pyx_v_angles = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_angles.memview)) __PYX_ERR(0, 244, __pyx_L3_error)
     __pyx_v_x = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
@@ -5507,7 +5507,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
     __pyx_v_x_idx = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_x_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L3_error)
     __pyx_v_y_idx = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_y_idx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L3_error)
     __pyx_v_oi = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_oi == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 247, __pyx_L3_error)
-    __pyx_v_grid = ((struct __pyx_obj_4hyvr_7classes_4grid_Grid *)values[9]);
+    __pyx_v_grid = ((struct __pyx_obj_4hyvr_3geo_4grid_Grid *)values[9]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
@@ -5517,8 +5517,8 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ae), __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization, 1, "ae", 0))) __PYX_ERR(0, 242, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_7classes_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 248, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ae), __pyx_ptype_4hyvr_3geo_14ae_realization_AERealization, 1, "ae", 0))) __PYX_ERR(0, 242, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_grid), __pyx_ptype_4hyvr_3geo_4grid_Grid, 1, "grid", 0))) __PYX_ERR(0, 248, __pyx_L1_error)
   __pyx_r = __pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(__pyx_self, __pyx_v_ae, __pyx_v_geo_ids, __pyx_v_angles, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_x_idx, __pyx_v_y_idx, __pyx_v_oi, __pyx_v_grid);
 
   /* function exit code */
@@ -5530,7 +5530,7 @@ static PyObject *__pyx_pw_4hyvr_13assign_points_5maybe_assign_points_to_ae(PyObj
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_7classes_4grid_Grid *__pyx_v_grid) {
+static PyObject *__pyx_pf_4hyvr_13assign_points_4maybe_assign_points_to_ae(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization *__pyx_v_ae, __Pyx_memviewslice __pyx_v_geo_ids, __Pyx_memviewslice __pyx_v_angles, double __pyx_v_x, double __pyx_v_y, double __pyx_v_z, int __pyx_v_x_idx, int __pyx_v_y_idx, int __pyx_v_oi, struct __pyx_obj_4hyvr_3geo_4grid_Grid *__pyx_v_grid) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -22257,28 +22257,28 @@ static int __Pyx_modinit_type_import_code(void) {
   __pyx_ptype_5numpy_ufunc = __Pyx_ImportType(__pyx_t_1, "numpy", "ufunc", sizeof(PyUFuncObject), __Pyx_ImportType_CheckSize_Warn);
    if (!__pyx_ptype_5numpy_ufunc) __PYX_ERR(1, 918, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.grid"); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 2, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("hyvr.geo.grid"); if (unlikely(!__pyx_t_1)) __PYX_ERR(4, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_4hyvr_7classes_4grid_Grid = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.grid", "Grid", sizeof(struct __pyx_obj_4hyvr_7classes_4grid_Grid), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_4hyvr_7classes_4grid_Grid) __PYX_ERR(4, 2, __pyx_L1_error)
+  __pyx_ptype_4hyvr_3geo_4grid_Grid = __Pyx_ImportType(__pyx_t_1, "hyvr.geo.grid", "Grid", sizeof(struct __pyx_obj_4hyvr_3geo_4grid_Grid), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_3geo_4grid_Grid) __PYX_ERR(4, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.contact_surface"); if (unlikely(!__pyx_t_1)) __PYX_ERR(5, 3, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("hyvr.geo.contact_surface"); if (unlikely(!__pyx_t_1)) __PYX_ERR(5, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.contact_surface", "ContactSurface", sizeof(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface) __PYX_ERR(5, 3, __pyx_L1_error)
-  __pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface = (struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface*)__Pyx_GetVtable(__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface)) __PYX_ERR(5, 3, __pyx_L1_error)
+  __pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface = __Pyx_ImportType(__pyx_t_1, "hyvr.geo.contact_surface", "ContactSurface", sizeof(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface) __PYX_ERR(5, 3, __pyx_L1_error)
+  __pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface = (struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface*)__Pyx_GetVtable(__pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface)) __PYX_ERR(5, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.ae_realization"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 6, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("hyvr.geo.ae_realization"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_4hyvr_7classes_14ae_realization_AERealization = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.ae_realization", "AERealization", sizeof(struct __pyx_obj_4hyvr_7classes_14ae_realization_AERealization), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization) __PYX_ERR(6, 6, __pyx_L1_error)
-  __pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization = (struct __pyx_vtabstruct_4hyvr_7classes_14ae_realization_AERealization*)__Pyx_GetVtable(__pyx_ptype_4hyvr_7classes_14ae_realization_AERealization->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_7classes_14ae_realization_AERealization)) __PYX_ERR(6, 6, __pyx_L1_error)
+  __pyx_ptype_4hyvr_3geo_14ae_realization_AERealization = __Pyx_ImportType(__pyx_t_1, "hyvr.geo.ae_realization", "AERealization", sizeof(struct __pyx_obj_4hyvr_3geo_14ae_realization_AERealization), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_3geo_14ae_realization_AERealization) __PYX_ERR(6, 13, __pyx_L1_error)
+  __pyx_vtabptr_4hyvr_3geo_14ae_realization_AERealization = (struct __pyx_vtabstruct_4hyvr_3geo_14ae_realization_AERealization*)__Pyx_GetVtable(__pyx_ptype_4hyvr_3geo_14ae_realization_AERealization->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_3geo_14ae_realization_AERealization)) __PYX_ERR(6, 13, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyImport_ImportModule("hyvr.classes.sheet_ae"); if (unlikely(!__pyx_t_1)) __PYX_ERR(7, 7, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("hyvr.geo.sheet_ae"); if (unlikely(!__pyx_t_1)) __PYX_ERR(7, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE = __Pyx_ImportType(__pyx_t_1, "hyvr.classes.sheet_ae", "SheetAE", sizeof(struct __pyx_obj_4hyvr_7classes_8sheet_ae_SheetAE), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE) __PYX_ERR(7, 7, __pyx_L1_error)
-  __pyx_vtabptr_4hyvr_7classes_8sheet_ae_SheetAE = (struct __pyx_vtabstruct_4hyvr_7classes_8sheet_ae_SheetAE*)__Pyx_GetVtable(__pyx_ptype_4hyvr_7classes_8sheet_ae_SheetAE->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_7classes_8sheet_ae_SheetAE)) __PYX_ERR(7, 7, __pyx_L1_error)
+  __pyx_ptype_4hyvr_3geo_8sheet_ae_SheetAE = __Pyx_ImportType(__pyx_t_1, "hyvr.geo.sheet_ae", "SheetAE", sizeof(struct __pyx_obj_4hyvr_3geo_8sheet_ae_SheetAE), __Pyx_ImportType_CheckSize_Warn);
+   if (!__pyx_ptype_4hyvr_3geo_8sheet_ae_SheetAE) __PYX_ERR(7, 7, __pyx_L1_error)
+  __pyx_vtabptr_4hyvr_3geo_8sheet_ae_SheetAE = (struct __pyx_vtabstruct_4hyvr_3geo_8sheet_ae_SheetAE*)__Pyx_GetVtable(__pyx_ptype_4hyvr_3geo_8sheet_ae_SheetAE->tp_dict); if (unlikely(!__pyx_vtabptr_4hyvr_3geo_8sheet_ae_SheetAE)) __PYX_ERR(7, 7, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

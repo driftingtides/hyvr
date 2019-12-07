@@ -1,12 +1,12 @@
 
 import numpy as np
-from hyvr.classes.trough_utils import *
-from hyvr.classes.trough import Trough
+from hyvr.geo.trough_utils import *
+from hyvr.geo.trough import Trough
 
 cimport cython
 cimport numpy as np
 from libc.math cimport sqrt, ceil, acos, pi
-from hyvr.classes.ae_realization cimport AERealization
+from hyvr.geo.ae_realization cimport AERealization
 cimport hyvr.optimized as ho
 
 

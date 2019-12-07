@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "hyvr.classes.contact_surface",
+        "name": "hyvr.geo.contact_surface",
         "sources": [
-            "/home/samuel/playground/hyvr/hyvr/classes/contact_surface.pyx"
+            "/home/samuel/playground/hyvr/hyvr/geo/contact_surface.pyx"
         ]
     },
-    "module_name": "hyvr.classes.contact_surface"
+    "module_name": "hyvr.geo.contact_surface"
 }
 END: Cython Metadata */
 
@@ -603,8 +603,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__hyvr__classes__contact_surface
-#define __PYX_HAVE_API__hyvr__classes__contact_surface
+#define __PYX_HAVE__hyvr__geo__contact_surface
+#define __PYX_HAVE_API__hyvr__geo__contact_surface
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -843,8 +843,8 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "hyvr/classes/contact_surface.pyx",
-  "hyvr/classes/contact_surface.pxd",
+  "hyvr/geo/contact_surface.pyx",
+  "hyvr/geo/contact_surface.pxd",
   "stringsource",
   "__init__.pxd",
   "type.pxd",
@@ -1172,7 +1172,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 
 /*--- Type declarations ---*/
-struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface;
+struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
@@ -1214,16 +1214,16 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
 
-/* "hyvr/classes/contact_surface.pxd":3
+/* "hyvr/geo/contact_surface.pxd":3
  * cimport numpy as np
  * 
  * cdef class ContactSurface:             # <<<<<<<<<<<<<<
  * 
  *     cdef public int nx, ny
  */
-struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface {
+struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface {
   PyObject_HEAD
-  struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_vtab;
+  struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_vtab;
   int nx;
   int ny;
   __pyx_t_5numpy_float_t z;
@@ -1312,7 +1312,7 @@ struct __pyx_memoryviewslice_obj {
 
 
 
-/* "hyvr/classes/contact_surface.pyx":9
+/* "hyvr/geo/contact_surface.pyx":9
  * 
  * 
  * cdef class ContactSurface:             # <<<<<<<<<<<<<<
@@ -1320,11 +1320,11 @@ struct __pyx_memoryviewslice_obj {
  *     def __init__(self, grid, **kwargs):
  */
 
-struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface {
-  PyObject *(*use_lower_surface_value)(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
-  PyObject *(*use_higher_surface_value)(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
+struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface {
+  PyObject *(*use_lower_surface_value)(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
+  PyObject *(*use_higher_surface_value)(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, int __pyx_skip_dispatch);
 };
-static struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface;
+static struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface;
 
 
 /* "View.MemoryView":105
@@ -2109,8 +2109,8 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_lower_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch); /* proto*/
-static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_higher_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch); /* proto*/
+static PyObject *__pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_lower_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch); /* proto*/
+static PyObject *__pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_higher_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_array_get_memview(struct __pyx_array_obj *__pyx_v_self); /* proto*/
 static char *__pyx_memoryview_get_item_pointer(struct __pyx_memoryview_obj *__pyx_v_self, PyObject *__pyx_v_index); /* proto*/
 static PyObject *__pyx_memoryview_is_slice(struct __pyx_memoryview_obj *__pyx_v_self, PyObject *__pyx_v_obj); /* proto*/
@@ -2155,8 +2155,8 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, cha
 
 /* Module declarations from 'cython' */
 
-/* Module declarations from 'hyvr.classes.contact_surface' */
-static PyTypeObject *__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface = 0;
+/* Module declarations from 'hyvr.geo.contact_surface' */
+static PyTypeObject *__pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface = 0;
 static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
 static PyTypeObject *__pyx_memoryview_type = 0;
@@ -2168,7 +2168,7 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static PyObject *__pyx_f_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface__set_state(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, PyObject *); /*proto*/
+static PyObject *__pyx_f_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface__set_state(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, PyObject *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -2203,11 +2203,11 @@ static void __pyx_memoryview_slice_assign_scalar(__Pyx_memviewslice *, int, size
 static void __pyx_memoryview__slice_assign_scalar(char *, Py_ssize_t *, Py_ssize_t *, int, size_t, void *); /*proto*/
 static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *, PyObject *); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float_t = { "float_t", NULL, sizeof(__pyx_t_5numpy_float_t), { 0 }, 0, 'R', 0, 0 };
-#define __Pyx_MODULE_NAME "hyvr.classes.contact_surface"
-extern int __pyx_module_is_main_hyvr__classes__contact_surface;
-int __pyx_module_is_main_hyvr__classes__contact_surface = 0;
+#define __Pyx_MODULE_NAME "hyvr.geo.contact_surface"
+extern int __pyx_module_is_main_hyvr__geo__contact_surface;
+int __pyx_module_is_main_hyvr__geo__contact_surface = 0;
 
-/* Implementation of 'hyvr.classes.contact_surface' */
+/* Implementation of 'hyvr.geo.contact_surface' */
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_NotImplementedError;
 static PyObject *__pyx_builtin_range;
@@ -2314,13 +2314,13 @@ static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
 static const char __pyx_k_use_lower_surface_value[] = "use_lower_surface_value";
 static const char __pyx_k_Cannot_index_with_type_s[] = "Cannot index with type '%s'";
+static const char __pyx_k_hyvr_geo_contact_surface[] = "hyvr.geo.contact_surface";
 static const char __pyx_k_use_higher_surface_value[] = "use_higher_surface_value";
 static const char __pyx_k_Invalid_shape_in_axis_d_d[] = "Invalid shape in axis %d: %d.";
 static const char __pyx_k_This_is_not_implemented_yet[] = "This is not implemented yet!";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
 static const char __pyx_k_pyx_unpickle_ContactSurface[] = "__pyx_unpickle_ContactSurface";
-static const char __pyx_k_hyvr_classes_contact_surface[] = "hyvr.classes.contact_surface";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
 static const char __pyx_k_is_missing_for_Strata_option_ra[] = " is missing for Strata option 'random'!";
@@ -2405,7 +2405,7 @@ static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
 static PyObject *__pyx_n_s_grid;
 static PyObject *__pyx_n_s_hu;
-static PyObject *__pyx_n_s_hyvr_classes_contact_surface;
+static PyObject *__pyx_n_s_hyvr_geo_contact_surface;
 static PyObject *__pyx_n_s_hyvr_utils;
 static PyObject *__pyx_n_s_id;
 static PyObject *__pyx_n_s_import;
@@ -2474,26 +2474,26 @@ static PyObject *__pyx_n_s_use_higher_surface_value;
 static PyObject *__pyx_n_s_use_lower_surface_value;
 static PyObject *__pyx_n_u_var;
 static PyObject *__pyx_n_u_z;
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_grid, PyObject *__pyx_v_kwargs); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2use_lower_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4use_higher_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_6__reduce_cython__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_8__setstate_cython__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface___init__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_grid, PyObject *__pyx_v_kwargs); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2use_lower_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4use_higher_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2nx___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2ny___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_1z___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_1z_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_7surface___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_6__reduce_cython__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_8__setstate_cython__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -2538,7 +2538,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_16_memoryviewslice_4base___get__
 static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_4hyvr_7classes_15contact_surface_ContactSurface(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_4hyvr_3geo_15contact_surface_ContactSurface(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -2586,7 +2586,7 @@ static PyObject *__pyx_codeobj__30;
 static PyObject *__pyx_codeobj__37;
 /* Late includes */
 
-/* "hyvr/classes/contact_surface.pyx":11
+/* "hyvr/geo/contact_surface.pyx":11
  * cdef class ContactSurface:
  * 
  *     def __init__(self, grid, **kwargs):             # <<<<<<<<<<<<<<
@@ -2595,8 +2595,8 @@ static PyObject *__pyx_codeobj__37;
  */
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_grid = 0;
   PyObject *__pyx_v_kwargs = 0;
   int __pyx_r;
@@ -2637,11 +2637,11 @@ static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1__init__(
   __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 11, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_kwargs); __pyx_v_kwargs = 0;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), __pyx_v_grid, __pyx_v_kwargs);
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface___init__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), __pyx_v_grid, __pyx_v_kwargs);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_kwargs);
@@ -2649,7 +2649,7 @@ static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1__init__(
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_grid, PyObject *__pyx_v_kwargs) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface___init__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_grid, PyObject *__pyx_v_kwargs) {
   PyObject *__pyx_v_key = NULL;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2668,7 +2668,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   PyObject *__pyx_t_13 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "hyvr/classes/contact_surface.pyx":13
+  /* "hyvr/geo/contact_surface.pyx":13
  *     def __init__(self, grid, **kwargs):
  * 
  *         self.z = kwargs["z"]             # <<<<<<<<<<<<<<
@@ -2681,7 +2681,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->z = __pyx_t_2;
 
-  /* "hyvr/classes/contact_surface.pyx":14
+  /* "hyvr/geo/contact_surface.pyx":14
  * 
  *         self.z = kwargs["z"]
  *         self.nx = grid.nx             # <<<<<<<<<<<<<<
@@ -2694,7 +2694,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->nx = __pyx_t_3;
 
-  /* "hyvr/classes/contact_surface.pyx":15
+  /* "hyvr/geo/contact_surface.pyx":15
  *         self.z = kwargs["z"]
  *         self.nx = grid.nx
  *         self.ny = grid.ny             # <<<<<<<<<<<<<<
@@ -2707,7 +2707,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->ny = __pyx_t_3;
 
-  /* "hyvr/classes/contact_surface.pyx":17
+  /* "hyvr/geo/contact_surface.pyx":17
  *         self.ny = grid.ny
  * 
  *         if kwargs['mode'] == "random":             # <<<<<<<<<<<<<<
@@ -2720,7 +2720,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_4) {
 
-    /* "hyvr/classes/contact_surface.pyx":18
+    /* "hyvr/geo/contact_surface.pyx":18
  * 
  *         if kwargs['mode'] == "random":
  *             for key in ["z", "var", "corlx", "corly"]:             # <<<<<<<<<<<<<<
@@ -2739,7 +2739,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
       __Pyx_XDECREF_SET(__pyx_v_key, ((PyObject*)__pyx_t_6));
       __pyx_t_6 = 0;
 
-      /* "hyvr/classes/contact_surface.pyx":19
+      /* "hyvr/geo/contact_surface.pyx":19
  *         if kwargs['mode'] == "random":
  *             for key in ["z", "var", "corlx", "corly"]:
  *                 if not key in kwargs:             # <<<<<<<<<<<<<<
@@ -2750,7 +2750,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
       __pyx_t_7 = (__pyx_t_4 != 0);
       if (unlikely(__pyx_t_7)) {
 
-        /* "hyvr/classes/contact_surface.pyx":20
+        /* "hyvr/geo/contact_surface.pyx":20
  *             for key in ["z", "var", "corlx", "corly"]:
  *                 if not key in kwargs:
  *                     raise ValueError(key + " is missing for Strata option 'random'!")             # <<<<<<<<<<<<<<
@@ -2766,7 +2766,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __PYX_ERR(0, 20, __pyx_L1_error)
 
-        /* "hyvr/classes/contact_surface.pyx":19
+        /* "hyvr/geo/contact_surface.pyx":19
  *         if kwargs['mode'] == "random":
  *             for key in ["z", "var", "corlx", "corly"]:
  *                 if not key in kwargs:             # <<<<<<<<<<<<<<
@@ -2775,7 +2775,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
  */
       }
 
-      /* "hyvr/classes/contact_surface.pyx":18
+      /* "hyvr/geo/contact_surface.pyx":18
  * 
  *         if kwargs['mode'] == "random":
  *             for key in ["z", "var", "corlx", "corly"]:             # <<<<<<<<<<<<<<
@@ -2785,7 +2785,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hyvr/classes/contact_surface.pyx":21
+    /* "hyvr/geo/contact_surface.pyx":21
  *                 if not key in kwargs:
  *                     raise ValueError(key + " is missing for Strata option 'random'!")
  *             self.surface = hu.specsim(grid,             # <<<<<<<<<<<<<<
@@ -2798,7 +2798,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hyvr/classes/contact_surface.pyx":22
+    /* "hyvr/geo/contact_surface.pyx":22
  *                     raise ValueError(key + " is missing for Strata option 'random'!")
  *             self.surface = hu.specsim(grid,
  *                                    kwargs['var'],             # <<<<<<<<<<<<<<
@@ -2808,7 +2808,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_kwargs, __pyx_n_u_var); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "hyvr/classes/contact_surface.pyx":23
+    /* "hyvr/geo/contact_surface.pyx":23
  *             self.surface = hu.specsim(grid,
  *                                    kwargs['var'],
  *                                    [kwargs['corlx'], kwargs['corly']],             # <<<<<<<<<<<<<<
@@ -2828,7 +2828,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_6 = 0;
     __pyx_t_9 = 0;
 
-    /* "hyvr/classes/contact_surface.pyx":21
+    /* "hyvr/geo/contact_surface.pyx":21
  *                 if not key in kwargs:
  *                     raise ValueError(key + " is missing for Strata option 'random'!")
  *             self.surface = hu.specsim(grid,             # <<<<<<<<<<<<<<
@@ -2847,7 +2847,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_1 = 0;
     __pyx_t_10 = 0;
 
-    /* "hyvr/classes/contact_surface.pyx":24
+    /* "hyvr/geo/contact_surface.pyx":24
  *                                    kwargs['var'],
  *                                    [kwargs['corlx'], kwargs['corly']],
  *                                    two_dim=True,             # <<<<<<<<<<<<<<
@@ -2859,7 +2859,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_two_dim, Py_True) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
     if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_covmod, __pyx_n_u_gaussian) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
 
-    /* "hyvr/classes/contact_surface.pyx":21
+    /* "hyvr/geo/contact_surface.pyx":21
  *                 if not key in kwargs:
  *                     raise ValueError(key + " is missing for Strata option 'random'!")
  *             self.surface = hu.specsim(grid,             # <<<<<<<<<<<<<<
@@ -2878,7 +2878,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "hyvr/classes/contact_surface.pyx":26
+    /* "hyvr/geo/contact_surface.pyx":26
  *                                    two_dim=True,
  *                                    covmod='gaussian')
  *             self.surface += self.z*np.ones((grid.nx, grid.ny))             # <<<<<<<<<<<<<<
@@ -2938,7 +2938,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "hyvr/classes/contact_surface.pyx":28
+    /* "hyvr/geo/contact_surface.pyx":28
  *             self.surface += self.z*np.ones((grid.nx, grid.ny))
  * 
  *             self.zmean = np.mean(self.surface)             # <<<<<<<<<<<<<<
@@ -2973,7 +2973,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_v_self->zmean = __pyx_t_2;
 
-    /* "hyvr/classes/contact_surface.pyx":29
+    /* "hyvr/geo/contact_surface.pyx":29
  * 
  *             self.zmean = np.mean(self.surface)
  *             self.zmax = np.max(self.surface)             # <<<<<<<<<<<<<<
@@ -3008,7 +3008,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_v_self->zmax = __pyx_t_2;
 
-    /* "hyvr/classes/contact_surface.pyx":30
+    /* "hyvr/geo/contact_surface.pyx":30
  *             self.zmean = np.mean(self.surface)
  *             self.zmax = np.max(self.surface)
  *             self.zmin = np.min(self.surface)             # <<<<<<<<<<<<<<
@@ -3043,7 +3043,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_v_self->zmin = __pyx_t_2;
 
-    /* "hyvr/classes/contact_surface.pyx":17
+    /* "hyvr/geo/contact_surface.pyx":17
  *         self.ny = grid.ny
  * 
  *         if kwargs['mode'] == "random":             # <<<<<<<<<<<<<<
@@ -3053,7 +3053,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     goto __pyx_L3;
   }
 
-  /* "hyvr/classes/contact_surface.pyx":32
+  /* "hyvr/geo/contact_surface.pyx":32
  *             self.zmin = np.min(self.surface)
  * 
  *         elif kwargs['mode'] == "flat":             # <<<<<<<<<<<<<<
@@ -3066,7 +3066,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   if (__pyx_t_7) {
 
-    /* "hyvr/classes/contact_surface.pyx":33
+    /* "hyvr/geo/contact_surface.pyx":33
  * 
  *         elif kwargs['mode'] == "flat":
  *             self.surface = self.z * np.ones((grid.nx, grid.ny))             # <<<<<<<<<<<<<<
@@ -3119,7 +3119,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "hyvr/classes/contact_surface.pyx":34
+    /* "hyvr/geo/contact_surface.pyx":34
  *         elif kwargs['mode'] == "flat":
  *             self.surface = self.z * np.ones((grid.nx, grid.ny))
  *             self.zmean = self.z             # <<<<<<<<<<<<<<
@@ -3129,7 +3129,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_2 = __pyx_v_self->z;
     __pyx_v_self->zmean = __pyx_t_2;
 
-    /* "hyvr/classes/contact_surface.pyx":35
+    /* "hyvr/geo/contact_surface.pyx":35
  *             self.surface = self.z * np.ones((grid.nx, grid.ny))
  *             self.zmean = self.z
  *             self.zmin = self.z             # <<<<<<<<<<<<<<
@@ -3139,7 +3139,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_2 = __pyx_v_self->z;
     __pyx_v_self->zmin = __pyx_t_2;
 
-    /* "hyvr/classes/contact_surface.pyx":36
+    /* "hyvr/geo/contact_surface.pyx":36
  *             self.zmean = self.z
  *             self.zmin = self.z
  *             self.zmax = self.z             # <<<<<<<<<<<<<<
@@ -3149,7 +3149,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __pyx_t_2 = __pyx_v_self->z;
     __pyx_v_self->zmax = __pyx_t_2;
 
-    /* "hyvr/classes/contact_surface.pyx":32
+    /* "hyvr/geo/contact_surface.pyx":32
  *             self.zmin = np.min(self.surface)
  * 
  *         elif kwargs['mode'] == "flat":             # <<<<<<<<<<<<<<
@@ -3159,7 +3159,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     goto __pyx_L3;
   }
 
-  /* "hyvr/classes/contact_surface.pyx":38
+  /* "hyvr/geo/contact_surface.pyx":38
  *             self.zmax = self.z
  * 
  *         elif self.mode == "dem":             # <<<<<<<<<<<<<<
@@ -3172,7 +3172,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   if (unlikely(__pyx_t_7)) {
 
-    /* "hyvr/classes/contact_surface.pyx":39
+    /* "hyvr/geo/contact_surface.pyx":39
  * 
  *         elif self.mode == "dem":
  *             raise NotImplementedError("This is not implemented yet!")             # <<<<<<<<<<<<<<
@@ -3185,7 +3185,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __PYX_ERR(0, 39, __pyx_L1_error)
 
-    /* "hyvr/classes/contact_surface.pyx":38
+    /* "hyvr/geo/contact_surface.pyx":38
  *             self.zmax = self.z
  * 
  *         elif self.mode == "dem":             # <<<<<<<<<<<<<<
@@ -3195,7 +3195,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   }
   __pyx_L3:;
 
-  /* "hyvr/classes/contact_surface.pyx":11
+  /* "hyvr/geo/contact_surface.pyx":11
  * cdef class ContactSurface:
  * 
  *     def __init__(self, grid, **kwargs):             # <<<<<<<<<<<<<<
@@ -3215,7 +3215,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   __PYX_XDEC_MEMVIEW(&__pyx_t_11, 1);
   __Pyx_XDECREF(__pyx_t_12);
   __Pyx_XDECREF(__pyx_t_13);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_key);
@@ -3223,7 +3223,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
   return __pyx_r;
 }
 
-/* "hyvr/classes/contact_surface.pyx":44
+/* "hyvr/geo/contact_surface.pyx":44
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
  *     cpdef use_lower_surface_value(self, ContactSurface other_surface):             # <<<<<<<<<<<<<<
@@ -3231,8 +3231,8 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface___init__(s
  *         cdef np.float_t [:,:] other_surf = other_surface.surface
  */
 
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_3use_lower_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
-static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_lower_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_3use_lower_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
+static PyObject *__pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_lower_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch) {
   int __pyx_v_i;
   int __pyx_v_j;
   __Pyx_memviewslice __pyx_v_other_surf = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -3271,7 +3271,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
       #endif
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_use_lower_surface_value); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_3use_lower_surface_value)) {
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_3use_lower_surface_value)) {
         __Pyx_XDECREF(__pyx_r);
         __Pyx_INCREF(__pyx_t_1);
         __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -3307,7 +3307,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
     #endif
   }
 
-  /* "hyvr/classes/contact_surface.pyx":46
+  /* "hyvr/geo/contact_surface.pyx":46
  *     cpdef use_lower_surface_value(self, ContactSurface other_surface):
  *         cdef int i, j
  *         cdef np.float_t [:,:] other_surf = other_surface.surface             # <<<<<<<<<<<<<<
@@ -3321,7 +3321,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "hyvr/classes/contact_surface.pyx":47
+  /* "hyvr/geo/contact_surface.pyx":47
  *         cdef int i, j
  *         cdef np.float_t [:,:] other_surf = other_surface.surface
  *         for i in range(self.nx):             # <<<<<<<<<<<<<<
@@ -3333,7 +3333,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "hyvr/classes/contact_surface.pyx":48
+    /* "hyvr/geo/contact_surface.pyx":48
  *         cdef np.float_t [:,:] other_surf = other_surface.surface
  *         for i in range(self.nx):
  *             for j in range(self.ny):             # <<<<<<<<<<<<<<
@@ -3345,7 +3345,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
     for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
       __pyx_v_j = __pyx_t_11;
 
-      /* "hyvr/classes/contact_surface.pyx":49
+      /* "hyvr/geo/contact_surface.pyx":49
  *         for i in range(self.nx):
  *             for j in range(self.ny):
  *                 if self.surface[i,j] > other_surf[i,j]:             # <<<<<<<<<<<<<<
@@ -3360,7 +3360,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
       __pyx_t_16 = (((*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->surface.data + __pyx_t_12 * __pyx_v_self->surface.strides[0]) ) + __pyx_t_13 * __pyx_v_self->surface.strides[1]) ))) > (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_other_surf.data + __pyx_t_14 * __pyx_v_other_surf.strides[0]) ) + __pyx_t_15 * __pyx_v_other_surf.strides[1]) )))) != 0);
       if (__pyx_t_16) {
 
-        /* "hyvr/classes/contact_surface.pyx":50
+        /* "hyvr/geo/contact_surface.pyx":50
  *             for j in range(self.ny):
  *                 if self.surface[i,j] > other_surf[i,j]:
  *                     self.surface[i,j] = other_surf[i,j]             # <<<<<<<<<<<<<<
@@ -3374,7 +3374,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
         __pyx_t_20 = __pyx_v_j;
         *((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->surface.data + __pyx_t_19 * __pyx_v_self->surface.strides[0]) ) + __pyx_t_20 * __pyx_v_self->surface.strides[1]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_other_surf.data + __pyx_t_17 * __pyx_v_other_surf.strides[0]) ) + __pyx_t_18 * __pyx_v_other_surf.strides[1]) )));
 
-        /* "hyvr/classes/contact_surface.pyx":49
+        /* "hyvr/geo/contact_surface.pyx":49
  *         for i in range(self.nx):
  *             for j in range(self.ny):
  *                 if self.surface[i,j] > other_surf[i,j]:             # <<<<<<<<<<<<<<
@@ -3385,7 +3385,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
     }
   }
 
-  /* "hyvr/classes/contact_surface.pyx":52
+  /* "hyvr/geo/contact_surface.pyx":52
  *                     self.surface[i,j] = other_surf[i,j]
  *         # using the higher of both values might have changed the minimum
  *         self.zmin = np.min(self.surface)             # <<<<<<<<<<<<<<
@@ -3420,7 +3420,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->zmin = __pyx_t_21;
 
-  /* "hyvr/classes/contact_surface.pyx":44
+  /* "hyvr/geo/contact_surface.pyx":44
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
  *     cpdef use_lower_surface_value(self, ContactSurface other_surface):             # <<<<<<<<<<<<<<
@@ -3437,7 +3437,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.use_lower_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.use_lower_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __PYX_XDEC_MEMVIEW(&__pyx_v_other_surf, 1);
@@ -3447,13 +3447,13 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_l
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_3use_lower_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_3use_lower_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_3use_lower_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_3use_lower_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("use_lower_surface_value (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other_surface), __pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface, 1, "other_surface", 0))) __PYX_ERR(0, 44, __pyx_L1_error)
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2use_lower_surface_value(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_other_surface));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other_surface), __pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface, 1, "other_surface", 0))) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2use_lower_surface_value(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_other_surface));
 
   /* function exit code */
   goto __pyx_L0;
@@ -3464,13 +3464,13 @@ static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_3use
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2use_lower_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2use_lower_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("use_lower_surface_value", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_lower_surface_value(__pyx_v_self, __pyx_v_other_surface, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_lower_surface_value(__pyx_v_self, __pyx_v_other_surface, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3479,7 +3479,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2use
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.use_lower_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.use_lower_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3487,7 +3487,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2use
   return __pyx_r;
 }
 
-/* "hyvr/classes/contact_surface.pyx":57
+/* "hyvr/geo/contact_surface.pyx":57
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
  *     cpdef use_higher_surface_value(self, ContactSurface other_surface):             # <<<<<<<<<<<<<<
@@ -3495,8 +3495,8 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2use
  *         cdef np.float_t [:,:] other_surf = other_surface.surface
  */
 
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5use_higher_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
-static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_higher_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5use_higher_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
+static PyObject *__pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_higher_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface, int __pyx_skip_dispatch) {
   int __pyx_v_i;
   int __pyx_v_j;
   __Pyx_memviewslice __pyx_v_other_surf = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -3535,7 +3535,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
       #endif
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_use_higher_surface_value); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5use_higher_surface_value)) {
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5use_higher_surface_value)) {
         __Pyx_XDECREF(__pyx_r);
         __Pyx_INCREF(__pyx_t_1);
         __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -3571,7 +3571,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
     #endif
   }
 
-  /* "hyvr/classes/contact_surface.pyx":59
+  /* "hyvr/geo/contact_surface.pyx":59
  *     cpdef use_higher_surface_value(self, ContactSurface other_surface):
  *         cdef int i, j
  *         cdef np.float_t [:,:] other_surf = other_surface.surface             # <<<<<<<<<<<<<<
@@ -3585,7 +3585,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "hyvr/classes/contact_surface.pyx":60
+  /* "hyvr/geo/contact_surface.pyx":60
  *         cdef int i, j
  *         cdef np.float_t [:,:] other_surf = other_surface.surface
  *         for i in range(self.nx):             # <<<<<<<<<<<<<<
@@ -3597,7 +3597,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "hyvr/classes/contact_surface.pyx":61
+    /* "hyvr/geo/contact_surface.pyx":61
  *         cdef np.float_t [:,:] other_surf = other_surface.surface
  *         for i in range(self.nx):
  *             for j in range(self.ny):             # <<<<<<<<<<<<<<
@@ -3609,7 +3609,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
     for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
       __pyx_v_j = __pyx_t_11;
 
-      /* "hyvr/classes/contact_surface.pyx":62
+      /* "hyvr/geo/contact_surface.pyx":62
  *         for i in range(self.nx):
  *             for j in range(self.ny):
  *                 if self.surface[i,j] < other_surf[i,j]:             # <<<<<<<<<<<<<<
@@ -3624,7 +3624,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
       __pyx_t_16 = (((*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->surface.data + __pyx_t_12 * __pyx_v_self->surface.strides[0]) ) + __pyx_t_13 * __pyx_v_self->surface.strides[1]) ))) < (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_other_surf.data + __pyx_t_14 * __pyx_v_other_surf.strides[0]) ) + __pyx_t_15 * __pyx_v_other_surf.strides[1]) )))) != 0);
       if (__pyx_t_16) {
 
-        /* "hyvr/classes/contact_surface.pyx":63
+        /* "hyvr/geo/contact_surface.pyx":63
  *             for j in range(self.ny):
  *                 if self.surface[i,j] < other_surf[i,j]:
  *                     self.surface[i,j] = other_surf[i,j]             # <<<<<<<<<<<<<<
@@ -3638,7 +3638,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
         __pyx_t_20 = __pyx_v_j;
         *((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->surface.data + __pyx_t_19 * __pyx_v_self->surface.strides[0]) ) + __pyx_t_20 * __pyx_v_self->surface.strides[1]) )) = (*((__pyx_t_5numpy_float_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_other_surf.data + __pyx_t_17 * __pyx_v_other_surf.strides[0]) ) + __pyx_t_18 * __pyx_v_other_surf.strides[1]) )));
 
-        /* "hyvr/classes/contact_surface.pyx":62
+        /* "hyvr/geo/contact_surface.pyx":62
  *         for i in range(self.nx):
  *             for j in range(self.ny):
  *                 if self.surface[i,j] < other_surf[i,j]:             # <<<<<<<<<<<<<<
@@ -3649,7 +3649,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
     }
   }
 
-  /* "hyvr/classes/contact_surface.pyx":65
+  /* "hyvr/geo/contact_surface.pyx":65
  *                     self.surface[i,j] = other_surf[i,j]
  *         # using the higher of both values might have changed the maximum
  *         self.zmax = np.max(self.surface)             # <<<<<<<<<<<<<<
@@ -3682,7 +3682,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->zmax = __pyx_t_21;
 
-  /* "hyvr/classes/contact_surface.pyx":57
+  /* "hyvr/geo/contact_surface.pyx":57
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
  *     cpdef use_higher_surface_value(self, ContactSurface other_surface):             # <<<<<<<<<<<<<<
@@ -3699,7 +3699,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.use_higher_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.use_higher_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __PYX_XDEC_MEMVIEW(&__pyx_v_other_surf, 1);
@@ -3709,13 +3709,13 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_h
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5use_higher_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5use_higher_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5use_higher_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5use_higher_surface_value(PyObject *__pyx_v_self, PyObject *__pyx_v_other_surface) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("use_higher_surface_value (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other_surface), __pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface, 1, "other_surface", 0))) __PYX_ERR(0, 57, __pyx_L1_error)
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4use_higher_surface_value(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_other_surface));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_other_surface), __pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface, 1, "other_surface", 0))) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4use_higher_surface_value(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_other_surface));
 
   /* function exit code */
   goto __pyx_L0;
@@ -3726,13 +3726,13 @@ static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5use
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4use_higher_surface_value(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_other_surface) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4use_higher_surface_value(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_other_surface) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("use_higher_surface_value", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_higher_surface_value(__pyx_v_self, __pyx_v_other_surface, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_higher_surface_value(__pyx_v_self, __pyx_v_other_surface, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3741,7 +3741,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4use
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.use_higher_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.use_higher_surface_value", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3749,7 +3749,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4use
   return __pyx_r;
 }
 
-/* "hyvr/classes/contact_surface.pxd":5
+/* "hyvr/geo/contact_surface.pxd":5
  * cdef class ContactSurface:
  * 
  *     cdef public int nx, ny             # <<<<<<<<<<<<<<
@@ -3758,19 +3758,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4use
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2nx___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2nx___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3785,7 +3785,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.nx.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.nx.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3794,19 +3794,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -3818,7 +3818,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_2__set
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.nx.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.nx.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3826,19 +3826,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_2__set
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2ny___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2ny___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3853,7 +3853,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.ny.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.ny.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3862,19 +3862,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -3886,14 +3886,14 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_2__set
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.ny.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.ny.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "hyvr/classes/contact_surface.pxd":6
+/* "hyvr/geo/contact_surface.pxd":6
  * 
  *     cdef public int nx, ny
  *     cdef public np.float_t z, zmax, zmin, zmean             # <<<<<<<<<<<<<<
@@ -3902,19 +3902,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_2__set
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1z_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1z_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1z_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1z_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_1z___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_1z___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3929,7 +3929,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z__
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.z.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.z.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3938,19 +3938,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z__
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1z_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1z_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1z_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1z_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_1z_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_1z_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
@@ -3962,7 +3962,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z_2__set_
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.z.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.z.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3970,19 +3970,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_1z_2__set_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3997,7 +3997,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zma
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.zmax.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.zmax.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4006,19 +4006,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zma
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
@@ -4030,7 +4030,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_2__s
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.zmax.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.zmax.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -4038,19 +4038,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_2__s
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4065,7 +4065,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmi
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.zmin.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.zmin.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4074,19 +4074,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmi
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
@@ -4098,7 +4098,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_2__s
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.zmin.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.zmin.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -4106,19 +4106,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_2__s
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4133,7 +4133,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zme
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.zmean.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.zmean.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4142,19 +4142,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zme
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
@@ -4166,14 +4166,14 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_2__
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.zmean.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.zmean.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "hyvr/classes/contact_surface.pxd":7
+/* "hyvr/geo/contact_surface.pxd":7
  *     cdef public int nx, ny
  *     cdef public np.float_t z, zmax, zmin, zmean
  *     cdef public np.float_t [:,:] surface             # <<<<<<<<<<<<<<
@@ -4182,19 +4182,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_2__
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface___get__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_7surface___get__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface___get__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_7surface___get__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4210,7 +4210,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7sur
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.surface.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.surface.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4219,19 +4219,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7sur
 }
 
 /* Python wrapper */
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_2__set__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_2__set__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_2__set__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_2__set__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_memviewslice __pyx_t_1 = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -4247,7 +4247,7 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_2
   goto __pyx_L0;
   __pyx_L1_error:;
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.surface.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.surface.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -4261,19 +4261,19 @@ static int __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_2
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_6__reduce_cython__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_6__reduce_cython__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_6__reduce_cython__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_6__reduce_cython__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -4517,7 +4517,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_6__r
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -4535,19 +4535,19 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_6__r
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_8__setstate_cython__(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_8__setstate_cython__(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_8__setstate_cython__(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface_14ContactSurface_8__setstate_cython__(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4559,7 +4559,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_8__s
  *     __pyx_unpickle_ContactSurface__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(2, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -4575,7 +4575,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_8__s
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.ContactSurface.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.ContactSurface.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4590,9 +4590,9 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface_14ContactSurface_8__s
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_1__pyx_unpickle_ContactSurface(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_4hyvr_7classes_15contact_surface_1__pyx_unpickle_ContactSurface = {"__pyx_unpickle_ContactSurface", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_4hyvr_7classes_15contact_surface_1__pyx_unpickle_ContactSurface, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_1__pyx_unpickle_ContactSurface(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_1__pyx_unpickle_ContactSurface(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_4hyvr_3geo_15contact_surface_1__pyx_unpickle_ContactSurface = {"__pyx_unpickle_ContactSurface", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_4hyvr_3geo_15contact_surface_1__pyx_unpickle_ContactSurface, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_4hyvr_3geo_15contact_surface_1__pyx_unpickle_ContactSurface(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v___pyx_type = 0;
   long __pyx_v___pyx_checksum;
   PyObject *__pyx_v___pyx_state = 0;
@@ -4651,18 +4651,18 @@ static PyObject *__pyx_pw_4hyvr_7classes_15contact_surface_1__pyx_unpickle_Conta
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_ContactSurface", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 1, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.__pyx_unpickle_ContactSurface", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.__pyx_unpickle_ContactSurface", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -4756,7 +4756,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_Contac
  *     if __pyx_state is not None:
  *         __pyx_unpickle_ContactSurface__set_state(<ContactSurface> __pyx_result, __pyx_state)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 7, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -4795,7 +4795,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_Contac
  * cdef __pyx_unpickle_ContactSurface__set_state(ContactSurface __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(2, 9, __pyx_L1_error)
-    __pyx_t_3 = __pyx_f_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface__set_state(((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 9, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface__set_state(((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
@@ -4832,7 +4832,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_Contac
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.__pyx_unpickle_ContactSurface", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.__pyx_unpickle_ContactSurface", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -4850,7 +4850,7 @@ static PyObject *__pyx_pf_4hyvr_7classes_15contact_surface___pyx_unpickle_Contac
  *     if len(__pyx_state) > 7 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_4hyvr_7classes_15contact_surface___pyx_unpickle_ContactSurface__set_state(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_4hyvr_3geo_15contact_surface___pyx_unpickle_ContactSurface__set_state(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5022,7 +5022,7 @@ static PyObject *__pyx_f_4hyvr_7classes_15contact_surface___pyx_unpickle_Contact
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_AddTraceback("hyvr.classes.contact_surface.__pyx_unpickle_ContactSurface__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("hyvr.geo.contact_surface.__pyx_unpickle_ContactSurface__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -20270,10 +20270,10 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_4hyvr_7classes_15contact_surface_ContactSurface __pyx_vtable_4hyvr_7classes_15contact_surface_ContactSurface;
+static struct __pyx_vtabstruct_4hyvr_3geo_15contact_surface_ContactSurface __pyx_vtable_4hyvr_3geo_15contact_surface_ContactSurface;
 
-static PyObject *__pyx_tp_new_4hyvr_7classes_15contact_surface_ContactSurface(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *p;
+static PyObject *__pyx_tp_new_4hyvr_3geo_15contact_surface_ContactSurface(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -20281,15 +20281,15 @@ static PyObject *__pyx_tp_new_4hyvr_7classes_15contact_surface_ContactSurface(Py
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)o);
-  p->__pyx_vtab = __pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface;
+  p = ((struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)o);
+  p->__pyx_vtab = __pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface;
   p->surface.data = NULL;
   p->surface.memview = NULL;
   return o;
 }
 
-static void __pyx_tp_dealloc_4hyvr_7classes_15contact_surface_ContactSurface(PyObject *o) {
-  struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *p = (struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *)o;
+static void __pyx_tp_dealloc_4hyvr_3geo_15contact_surface_ContactSurface(PyObject *o) {
+  struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *p = (struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -20299,13 +20299,13 @@ static void __pyx_tp_dealloc_4hyvr_7classes_15contact_surface_ContactSurface(PyO
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_nx(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_nx(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_nx(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_nx(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2nx_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2nx_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20313,13 +20313,13 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_nx(Py
   }
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_ny(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_ny(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_ny(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_ny(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_2ny_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_2ny_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20327,13 +20327,13 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_ny(Py
   }
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_z(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1z_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_z(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1z_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_z(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_z(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1z_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1z_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20341,13 +20341,13 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_z(PyO
   }
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmax(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmax(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmax(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmax(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmax_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmax_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20355,13 +20355,13 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmax(
   }
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmin(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmin(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmin(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmin(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_4zmin_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_4zmin_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20369,13 +20369,13 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmin(
   }
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmean(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmean(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmean(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmean(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5zmean_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5zmean_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20383,13 +20383,13 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmean
   }
 }
 
-static PyObject *__pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_surface(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_1__get__(o);
+static PyObject *__pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_surface(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_1__get__(o);
 }
 
-static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_surface(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_surface(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7surface_3__set__(o, v);
+    return __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7surface_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -20397,31 +20397,31 @@ static int __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_surfa
   }
 }
 
-static PyMethodDef __pyx_methods_4hyvr_7classes_15contact_surface_ContactSurface[] = {
-  {"use_lower_surface_value", (PyCFunction)__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_3use_lower_surface_value, METH_O, 0},
-  {"use_higher_surface_value", (PyCFunction)__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_5use_higher_surface_value, METH_O, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_9__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_4hyvr_3geo_15contact_surface_ContactSurface[] = {
+  {"use_lower_surface_value", (PyCFunction)__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_3use_lower_surface_value, METH_O, 0},
+  {"use_higher_surface_value", (PyCFunction)__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_5use_higher_surface_value, METH_O, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_7__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_9__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_4hyvr_7classes_15contact_surface_ContactSurface[] = {
-  {(char *)"nx", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_nx, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_nx, (char *)0, 0},
-  {(char *)"ny", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_ny, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_ny, (char *)0, 0},
-  {(char *)"z", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_z, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_z, (char *)0, 0},
-  {(char *)"zmax", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmax, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmax, (char *)0, 0},
-  {(char *)"zmin", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmin, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmin, (char *)0, 0},
-  {(char *)"zmean", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmean, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_zmean, (char *)0, 0},
-  {(char *)"surface", __pyx_getprop_4hyvr_7classes_15contact_surface_14ContactSurface_surface, __pyx_setprop_4hyvr_7classes_15contact_surface_14ContactSurface_surface, (char *)0, 0},
+static struct PyGetSetDef __pyx_getsets_4hyvr_3geo_15contact_surface_ContactSurface[] = {
+  {(char *)"nx", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_nx, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_nx, (char *)0, 0},
+  {(char *)"ny", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_ny, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_ny, (char *)0, 0},
+  {(char *)"z", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_z, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_z, (char *)0, 0},
+  {(char *)"zmax", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmax, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmax, (char *)0, 0},
+  {(char *)"zmin", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmin, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmin, (char *)0, 0},
+  {(char *)"zmean", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmean, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_zmean, (char *)0, 0},
+  {(char *)"surface", __pyx_getprop_4hyvr_3geo_15contact_surface_14ContactSurface_surface, __pyx_setprop_4hyvr_3geo_15contact_surface_14ContactSurface_surface, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_4hyvr_7classes_15contact_surface_ContactSurface = {
+static PyTypeObject __pyx_type_4hyvr_3geo_15contact_surface_ContactSurface = {
   PyVarObject_HEAD_INIT(0, 0)
-  "hyvr.classes.contact_surface.ContactSurface", /*tp_name*/
-  sizeof(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface), /*tp_basicsize*/
+  "hyvr.geo.contact_surface.ContactSurface", /*tp_name*/
+  sizeof(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_4hyvr_7classes_15contact_surface_ContactSurface, /*tp_dealloc*/
+  __pyx_tp_dealloc_4hyvr_3geo_15contact_surface_ContactSurface, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -20454,17 +20454,17 @@ static PyTypeObject __pyx_type_4hyvr_7classes_15contact_surface_ContactSurface =
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_4hyvr_7classes_15contact_surface_ContactSurface, /*tp_methods*/
+  __pyx_methods_4hyvr_3geo_15contact_surface_ContactSurface, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_4hyvr_7classes_15contact_surface_ContactSurface, /*tp_getset*/
+  __pyx_getsets_4hyvr_3geo_15contact_surface_ContactSurface, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_4hyvr_7classes_15contact_surface_14ContactSurface_1__init__, /*tp_init*/
+  __pyx_pw_4hyvr_3geo_15contact_surface_14ContactSurface_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_4hyvr_7classes_15contact_surface_ContactSurface, /*tp_new*/
+  __pyx_tp_new_4hyvr_3geo_15contact_surface_ContactSurface, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -20607,7 +20607,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "hyvr.classes.contact_surface.array", /*tp_name*/
+  "hyvr.geo.contact_surface.array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -20726,7 +20726,7 @@ static PyMethodDef __pyx_methods_Enum[] = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "hyvr.classes.contact_surface.Enum", /*tp_name*/
+  "hyvr.geo.contact_surface.Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -20987,7 +20987,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "hyvr.classes.contact_surface.memoryview", /*tp_name*/
+  "hyvr.geo.contact_surface.memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -21125,7 +21125,7 @@ static struct PyGetSetDef __pyx_getsets__memoryviewslice[] = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "hyvr.classes.contact_surface._memoryviewslice", /*tp_name*/
+  "hyvr.geo.contact_surface._memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -21306,7 +21306,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
   {&__pyx_n_s_grid, __pyx_k_grid, sizeof(__pyx_k_grid), 0, 0, 1, 1},
   {&__pyx_n_s_hu, __pyx_k_hu, sizeof(__pyx_k_hu), 0, 0, 1, 1},
-  {&__pyx_n_s_hyvr_classes_contact_surface, __pyx_k_hyvr_classes_contact_surface, sizeof(__pyx_k_hyvr_classes_contact_surface), 0, 0, 1, 1},
+  {&__pyx_n_s_hyvr_geo_contact_surface, __pyx_k_hyvr_geo_contact_surface, sizeof(__pyx_k_hyvr_geo_contact_surface), 0, 0, 1, 1},
   {&__pyx_n_s_hyvr_utils, __pyx_k_hyvr_utils, sizeof(__pyx_k_hyvr_utils), 0, 0, 1, 1},
   {&__pyx_n_s_id, __pyx_k_id, sizeof(__pyx_k_id), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -21398,7 +21398,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hyvr/classes/contact_surface.pyx":18
+  /* "hyvr/geo/contact_surface.pyx":18
  * 
  *         if kwargs['mode'] == "random":
  *             for key in ["z", "var", "corlx", "corly"]:             # <<<<<<<<<<<<<<
@@ -21409,7 +21409,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "hyvr/classes/contact_surface.pyx":39
+  /* "hyvr/geo/contact_surface.pyx":39
  * 
  *         elif self.mode == "dem":
  *             raise NotImplementedError("This is not implemented yet!")             # <<<<<<<<<<<<<<
@@ -21823,20 +21823,20 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  __pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface = &__pyx_vtable_4hyvr_7classes_15contact_surface_ContactSurface;
-  __pyx_vtable_4hyvr_7classes_15contact_surface_ContactSurface.use_lower_surface_value = (PyObject *(*)(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, int __pyx_skip_dispatch))__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_lower_surface_value;
-  __pyx_vtable_4hyvr_7classes_15contact_surface_ContactSurface.use_higher_surface_value = (PyObject *(*)(struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_7classes_15contact_surface_ContactSurface *, int __pyx_skip_dispatch))__pyx_f_4hyvr_7classes_15contact_surface_14ContactSurface_use_higher_surface_value;
-  if (PyType_Ready(&__pyx_type_4hyvr_7classes_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface = &__pyx_vtable_4hyvr_3geo_15contact_surface_ContactSurface;
+  __pyx_vtable_4hyvr_3geo_15contact_surface_ContactSurface.use_lower_surface_value = (PyObject *(*)(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, int __pyx_skip_dispatch))__pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_lower_surface_value;
+  __pyx_vtable_4hyvr_3geo_15contact_surface_ContactSurface.use_higher_surface_value = (PyObject *(*)(struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, struct __pyx_obj_4hyvr_3geo_15contact_surface_ContactSurface *, int __pyx_skip_dispatch))__pyx_f_4hyvr_3geo_15contact_surface_14ContactSurface_use_higher_surface_value;
+  if (PyType_Ready(&__pyx_type_4hyvr_3geo_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_4hyvr_7classes_15contact_surface_ContactSurface.tp_print = 0;
+  __pyx_type_4hyvr_3geo_15contact_surface_ContactSurface.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_4hyvr_7classes_15contact_surface_ContactSurface.tp_dictoffset && __pyx_type_4hyvr_7classes_15contact_surface_ContactSurface.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_4hyvr_7classes_15contact_surface_ContactSurface.tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_4hyvr_3geo_15contact_surface_ContactSurface.tp_dictoffset && __pyx_type_4hyvr_3geo_15contact_surface_ContactSurface.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_4hyvr_3geo_15contact_surface_ContactSurface.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_4hyvr_7classes_15contact_surface_ContactSurface.tp_dict, __pyx_vtabptr_4hyvr_7classes_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ContactSurface, (PyObject *)&__pyx_type_4hyvr_7classes_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_4hyvr_7classes_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
-  __pyx_ptype_4hyvr_7classes_15contact_surface_ContactSurface = &__pyx_type_4hyvr_7classes_15contact_surface_ContactSurface;
+  if (__Pyx_SetVtable(__pyx_type_4hyvr_3geo_15contact_surface_ContactSurface.tp_dict, __pyx_vtabptr_4hyvr_3geo_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ContactSurface, (PyObject *)&__pyx_type_4hyvr_3geo_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_4hyvr_3geo_15contact_surface_ContactSurface) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_ptype_4hyvr_3geo_15contact_surface_ContactSurface = &__pyx_type_4hyvr_3geo_15contact_surface_ContactSurface;
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
   if (PyType_Ready(&__pyx_type___pyx_array) < 0) __PYX_ERR(2, 105, __pyx_L1_error)
@@ -22119,14 +22119,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_hyvr__classes__contact_surface) {
+  if (__pyx_module_is_main_hyvr__geo__contact_surface) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 2, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "hyvr.classes.contact_surface")) {
-      if (unlikely(PyDict_SetItemString(modules, "hyvr.classes.contact_surface", __pyx_m) < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "hyvr.geo.contact_surface")) {
+      if (unlikely(PyDict_SetItemString(modules, "hyvr.geo.contact_surface", __pyx_m) < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
     }
   }
   #endif
@@ -22147,7 +22147,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   #endif
 
-  /* "hyvr/classes/contact_surface.pyx":2
+  /* "hyvr/geo/contact_surface.pyx":2
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
  * import hyvr.utils as hu
@@ -22158,7 +22158,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hyvr/classes/contact_surface.pyx":3
+  /* "hyvr/geo/contact_surface.pyx":3
  * 
  * import numpy as np
  * import hyvr.utils as hu             # <<<<<<<<<<<<<<
@@ -22181,12 +22181,12 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_4hyvr_7classes_15contact_surface_1__pyx_unpickle_ContactSurface, NULL, __pyx_n_s_hyvr_classes_contact_surface); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_4hyvr_3geo_15contact_surface_1__pyx_unpickle_ContactSurface, NULL, __pyx_n_s_hyvr_geo_contact_surface); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_ContactSurface, __pyx_t_2) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hyvr/classes/contact_surface.pyx":2
+  /* "hyvr/geo/contact_surface.pyx":2
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
  * import hyvr.utils as hu
@@ -22358,11 +22358,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init hyvr.classes.contact_surface", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init hyvr.geo.contact_surface", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init hyvr.classes.contact_surface");
+    PyErr_SetString(PyExc_ImportError, "init hyvr.geo.contact_surface");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

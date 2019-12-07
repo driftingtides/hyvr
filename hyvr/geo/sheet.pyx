@@ -1,6 +1,6 @@
 import numpy as np
-from hyvr.classes.grid cimport Grid
-from hyvr.classes.contact_surface cimport ContactSurface
+from hyvr.geo.grid cimport Grid
+from hyvr.geo.contact_surface cimport ContactSurface
 import hyvr.utils as hu
 from libc.math cimport sin, cos, ceil, acos, sqrt
 cimport cython

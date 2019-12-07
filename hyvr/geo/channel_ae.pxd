@@ -1,18 +1,27 @@
 
 cimport numpy as np
-from hyvr.classes.contact_surface cimport ContactSurface
-from hyvr.classes.grid cimport Grid
-from hyvr.classes.ae_realization cimport AERealization
+from hyvr.geo.contact_surface cimport ContactSurface
+from hyvr.geo.grid cimport Grid
+from hyvr.geo.ae_realization cimport AERealization
 
-cdef class SheetAE(AERealization):
+
+cdef class ChannelAE(AERealization):
 
     cdef public:
         # These are arrays of object attributes for better access from cython
+        np.float_t [:,:] object_x_center, object_y_center
+        np.float_t [:,:] object_vx, object_vy
+        np.float_t [:] object_a, object_width, object_depth, object_min_dx_dy
+        np.int32_t [:] object_len_centerline
+        np.float_t [:] object_ztop
+        np.float_t [:] object_sin_dip, object_cos_dip
         np.float_t [:] object_shift, object_layer_dist
-        np.float_t [:] object_normvec_x, object_normvec_y, object_normvec_z
-        np.float_t [:,:,:] object_bottom_surface, object_top_surface
-        np.float_t [:] object_bottom_surface_zmean
+        np.float_t [:] object_lag_height
+        np.int32_t [:] object_lag_facies
         np.int32_t [:] object_dipsets
+        np.int32_t [:,:,:] object_dont_check
+
+
 
     cpdef create_object_arrays(self)
     cpdef maybe_assign_points_to_object(self, int oi,

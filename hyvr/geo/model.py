@@ -12,10 +12,10 @@ It can be broadly structured in two parts:
 import numpy as np
 import hyvr.utils as hu
 import hyvr.optimized as ho
-from hyvr.classes.contact_surface import ContactSurface
-from hyvr.classes.stratum import Stratum
-from hyvr.classes.ae_types import AEType
-from hyvr.classes.grid import Grid
+from hyvr.geo.contact_surface import ContactSurface
+from hyvr.geo.stratum import Stratum
+from hyvr.geo.ae_types import AEType
+from hyvr.geo.grid import Grid
 
 
 class Model:

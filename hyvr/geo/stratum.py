@@ -1,7 +1,7 @@
 import numpy as np
 import hyvr.optimized as ho
 import hyvr.utils as hu
-from hyvr.classes.contact_surface import ContactSurface
+from hyvr.geo.contact_surface import ContactSurface
 
 def prob_choose(types, probs):
     # TODO: At the moment the given probabilities are only relative

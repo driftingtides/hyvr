@@ -1,6 +1,17 @@
 """
-This module contains the classes Section and Option to simplify parsing and
-validating ini-files.
+This module contains the classes :class:`hyvr.input.option_parsing.Section` and
+:class:`hyvr.input.option_parsing.Option` to simplify parsing and validating
+input-files (``*.ini``).
+
+Every HyVR option should have a corresponding instance of an
+:class:`~hyvr.input.option_parsing.Option`, which is defined in
+:mod:`hyvr.input.options` in the options lists. These option lists
+are then assigned to :class:`~hyvr.input.option_parsing.Section` instances in
+:func:`hyvr.input.parameters.parse_inifile`.
+
+If you add functionality to HyVR, you most likely only have to add an option to
+the option lists, normally you don't have to change anything in here (at least
+if you're lucky, since this is a very recursive mess).
 
 :Author: Samuel Scherrer
 """
@@ -12,6 +23,15 @@ __all__ = ["Section", "Option", "MissingSectionError", "MissingOptionError", "Sh
 
 
 class Section():
+    """
+    A ``Section`` instance corresponds to a section in an ini-file. 
+
+    A section is mainly a wrapper for a list of options, and therefore only has
+    a name and a list of options. Upon parsing a section, it checks whether all
+    given options in the inifile are actually expected, and then delegates the
+    parsing of single options to the :class:`~hyvr.input.option_parsing.Option`
+    class.
+    """
 
     def __init__(self, name, options):
         """
@@ -67,6 +87,17 @@ class Section():
 
 class Option():
     """
+    An ``Option`` instance is basically a parser for a specific option in a
+    ini-file.
+    
+    An ``Option`` is typically part of a ``Section``, and normally
+    :func:`~hyvr.input.option_parsing.Option.parse` is called by the ``Section``
+    it belongs to.
+    The main tasks of an ``Option`` instance is to parse an option and make sure
+    it has the right type, and in the case of lists, the right shape.
+    Below is a description of its capabilities, note especially the ``shape``
+    parameter.
+
     Parameters
     ----------
     name : string
@@ -154,6 +185,23 @@ class Option():
     def parse(self, section):
         """
         Parses the option based on it's attributes.
+        
+        Parameters
+        ----------
+        section : ``Section`` instance
+            The section it belongs to.
+        
+        Returns
+        -------
+        value : self.type
+            The parsed value.
+        
+        Raises
+        ------
+        ShapeError
+            If the parsed list does not have the right shape.
+        ValueError
+            Other errors, description in text.
         """
         # try to find alternatives if they exist
         alternatives = deepcopy(self.alternatives)
@@ -202,7 +250,6 @@ class Option():
                         raise ValueError(self.name + ' in ' + section.name + ' has an invalid ' +\
                                          'shape because the options whose shape it should have ' +\
                                          'does not exist. Check your option definitions!')
-                        raise ShapeError(self.name, section.name)
                     shape = get_shape(section.dict[shape])
                 if isinstance(shape, int):
                     shape = [shape]

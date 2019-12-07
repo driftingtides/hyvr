@@ -1,9 +1,19 @@
+"""
+Header file for AERealization base class.
+
+More info in ae_realization.pyx
+
+:Author: Samuel Scherrer
+"""
 
 cimport numpy as np
-from hyvr.classes.contact_surface cimport ContactSurface
-from hyvr.classes.grid cimport Grid
+from hyvr.geo.contact_surface cimport ContactSurface
+from hyvr.geo.grid cimport Grid
 
 cdef class AERealization:
+    """
+    Base class for AERealizations.
+    """
 
     cdef public:
         np.int32_t type_id, num, bg_facies

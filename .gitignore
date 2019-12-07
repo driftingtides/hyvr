@@ -53,4 +53,4 @@ hyvr_backup/*
 *.profile
 profile/small
 hyvr/*.html
-hyvr/classes/*.html
+hyvr/geo/*.html

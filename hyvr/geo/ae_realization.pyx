@@ -6,26 +6,37 @@ import numpy as np
 
 cimport cython
 cimport numpy as np
-from hyvr.classes.contact_surface cimport ContactSurface
+from hyvr.geo.contact_surface cimport ContactSurface
 
 cdef class AERealization:
     """
     AE realizations are the realization of a certain AE type in a HyVR
     simulation. For example, in the 'made.ini' test case, the lowest stratum
-    consists of 'clay_sheet' architectural elements.
-    Each of these sheets is an AE realization.
+    consists of 'clay_sheet' architectural elements. While 'clay_sheet' is an AE
+    type, each of these sheets is an AE realization.
 
     This is the base class for AE realizations. Any instantiated object should
-    be an instance of one of the (currently) three subtypes: ``TruncEllipAE``,
+    be an instance of one of the (currently) three subtypes: ``TroughAE``,
     ``ChannelAE``, and ``SheetAE``.
 
     Typically these objects should not be created directly, but via the
     ``generate_realization`` method of the respective ``AEType`` object.
 
     An AE realization contains a list of geometrical objects that are typical
-    for this AE. For example, a TruncEllipAE contains a list of Trough objects.
+    for this AE. For example, a TroughAE contains a list of Trough objects.
     These objects should be implemented in separate files as cython cdef
     classes, similar to the Trough class.
+
+    AERealizations are designed to be used from Python and from Cython code.
+    Therefore, after construction the object list is converted to multiple
+    arrays of object properties.
+
+    For example, a TroughAE has a list of Trough objects, and each Trough object
+    has a property ``a`` of type float (lenth of semi-major axis of ellipsoid).
+    Therefore, the TroughAE object also has a float array called ``object_a`` as
+    property.
+    This makes access from Cyton code faster, because we can then iterate over
+    float arrays, instead of iterating over Python lists.
     
     The derived AERealization types must provide the methods
     ``generate_object``, ``maybe_assign_points_to_objects`` and
@@ -53,6 +64,10 @@ cdef class AERealization:
         type_params : dict
             Parameters for this AE type. These are the parameters that are read
             from the ini-file.
+        stratum : Stratum object
+            The stratum to which the AE belongs
+        grid : Grid object
+            The HyVR grid
         """
         self.bottom_surface = bottom_surface
         self.top_surface = top_surface
@@ -95,6 +110,9 @@ cdef class AERealization:
     @cython.boundscheck(False)
     @cython.wraparound(False)
     cpdef _create_common_object_arrays(self):
+        """
+        Creates object property arrays for common element properties.
+        """
 
         cdef int i, max_num_facies, num_facies, j
         self.object_zmins = np.array(self.object_zmin_list)

@@ -1,10 +1,10 @@
 
 import numpy as np
-from hyvr.classes.sheet import Sheet
+from hyvr.geo.sheet import Sheet
 
 cimport cython
 cimport numpy as np
-from hyvr.classes.ae_realization cimport AERealization
+from hyvr.geo.ae_realization cimport AERealization
 
 cdef class SheetAE(AERealization):
 

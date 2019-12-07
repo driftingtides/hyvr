@@ -1,12 +1,12 @@
 
 import numpy as np
-from hyvr.classes.channel_utils import ferguson_curve
-from hyvr.classes.channel import Channel
+from hyvr.geo.channel_utils import ferguson_curve
+from hyvr.geo.channel import Channel
 
 cimport cython
 cimport numpy as np
 from libc.math cimport sqrt, atan2
-from hyvr.classes.ae_realization cimport AERealization
+from hyvr.geo.ae_realization cimport AERealization
 
 
 cdef class ChannelAE(AERealization):

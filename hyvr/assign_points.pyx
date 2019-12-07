@@ -4,9 +4,9 @@ import hyvr.utils as hu
 
 cimport cython
 cimport numpy as np
-from hyvr.classes.grid cimport Grid
-from hyvr.classes.ae_realization cimport AERealization
-from hyvr.classes.sheet_ae cimport SheetAE
+from hyvr.geo.grid cimport Grid
+from hyvr.geo.ae_realization cimport AERealization
+from hyvr.geo.sheet_ae cimport SheetAE
 
 @cython.boundscheck(False)
 @cython.wraparound(False)

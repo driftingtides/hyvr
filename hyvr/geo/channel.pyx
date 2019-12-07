@@ -1,7 +1,7 @@
 import numpy as np
 cimport numpy as np
 cimport cython
-from hyvr.classes.grid cimport Grid
+from hyvr.geo.grid cimport Grid
 from libc.math cimport sqrt, sin, cos, atan2
 import hyvr.utils as hu
 

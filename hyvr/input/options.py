@@ -1,5 +1,19 @@
 """
-This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.
+This module contains all options for the ini-files. If you want to add an
+option, add it here.
+
+The options are instances of :class:`hyvr.input.option_parsing.Option`, where
+you will find more documentation on how to create an option. They should be
+added to one of the lists in here, if you want to add them to an existing
+section. For creating a new section, create a new list, and also make sure this
+section is added in :func:`hyvr.input.parameters.parse_inifile`.
+
+The element options are currently spread out over multiple
+lists. ``element_options`` contains general options that all architectural
+elements have. ``erosive_element_options`` contains options that all erosive
+architectural elements (trough, channel) have, and the
+``options['<element_name>']`` lists are specific for a single architectural
+element type.
 
 :Authors: Samuel Scherrer, Jeremy P. Bennett
 """

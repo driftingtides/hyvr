@@ -10,21 +10,12 @@
 """
 
 import sys
-import pickle
 import numpy as np
 import time
-import configparser as cp
 import pandas as pd
 import linecache
-import scipy.io
-import scipy.spatial as sp
 import os
-import shutil
 import errno
-import scipy.stats as st
-import hyvr.optimized as ho
-
-
 
 
 def mf6_vtr(fhead, mg, fout):
@@ -444,8 +435,8 @@ def get_alternating_facies(num_facies, type_params):
             facies[i] = np.random.choice(type_params['facies'])
     return facies
 
-def norm(v):
-    return np.sqrt(np.dot(v,v))
+# def norm(v):
+#     return np.sqrt(np.dot(v,v))
 
 
 def specsim(grid, var, corl, selection_mask=None, two_dim=False, covmod='gaussian'):

@@ -3,7 +3,8 @@ This is the main module for parsing the parameter file. There are two other
 modules strongly linked ot this one:
 
 * options: contains definitions of the possible options of a parameter file
-* option_parsing: provides the classes Section and Option for simpler parsing and validation.
+* option_parsing: provides the classes Section and Option for simpler parsing
+  and validation.
 
 :Authors: Jeremy P. Bennett, Samuel Scherrer
 """
@@ -17,51 +18,71 @@ from hyvr.utils import try_makefolder, print_to_stdout
 from hyvr.input.options import options
 from hyvr.input.options_deprecated import options as old_options
 from hyvr.input.option_parsing import *
-from hyvr.classes.model import Model
-from hyvr.classes.contact_surface_utils import parse_contact_model
+from hyvr.geo.model import Model
+from hyvr.geo.contact_surface_utils import parse_contact_model
 
 
-def model_setup(pf):
+def setup_from_inifile(inifile, flag_ow):
     """
-    Set up model using grid.Grid() class and assign parameters
+    Parses the input file and sets up the directory structure for a HyVR run.
 
-    Parameters:
-        pf (str):   					Parameter file path
-
-    Returns:
-        - run *(dict)* - Model run parameters
-        - mod *(dict)* - Model domain parameters
-        - sequences *(dict)* - Sequence parameters
-        - hydraulics *(dict)* - Hydraulic properties parameters
-        - flowtrans *(dict)* - Flow & transport simulation parameters
-        - elements *(dict)* - Architectural elements and parameters
-        - model_grid *(object class)* - Grid object class
-
+    Parameters
+    ----------
+    inifile : path
+        Path to inifile. If ``inifile`` is set to 0, the ini-file for the MADE
+        test case is used.
+    flag_ow : bool
+        Whether to overwrite existing run directories.
+    
+    Returns
+    -------
+    run : dict
+        HyVR run parameters (number of simulations, where to store results)
+    model : Model object
+        A HyVR model object created from the ini-file.
+    hydraulics : dict
+        Parsed hydraulics section of the ini-file
     """
-    run, model_dict, strata_dict, hydraulics, flowtrans, elements = parameters(pf)
+    run, model_dict, strata_dict, hydraulics, flowtrans, elements = parameters(inifile)
+
     # Assign architectural element identifiers
     for element in elements.keys():
         elements[element]['ae_id'] = strata_dict['ae'].index(element)
 
     # create model object
     model = Model(model_dict, strata_dict, elements, flowtrans)
+
+    # set up directories
+    set_up_directories(run, inifile, flag_ow)
+
     return run, model, hydraulics
 
 
 def parameters(inifile):
     """
-    Get parameters for hierarchical facies modelling from a .ini-file
+    Parses the inifile and returns all sections as dictionaries. Furthermore it
+    sets to correct directory names for the run settings.
 
-    Parameters:
-        inifile (str):  		Parameter file path
-
-    Returns:
-        - run *(dict)* - Model run parameters
-        - model *(dict)* - Model domain parameters
-        - sequences *(dict)* - Sequence parameters
-        - hydraulics *(dict)* - Hydraulic properties parameters
-        - flowtrans *(dict)* - Flow & transport simulation parameters
-        - elements *(dict)* - Architectural elements and parameters
+    Parameters
+    ----------
+    inifile : path
+        Path to inifile. If ``inifile`` is set to 0, the ini-file for the MADE
+        test case is used.
+    
+    Returns
+    -------
+    run : dict
+        HyVR run settings (number of simulations, where to store results)
+    model_dict : dict
+        model setup parameters
+    strata_dict : dict
+        strata setup parameters
+    hydraulics : dict
+        Parsed hydraulics section of the ini-file
+    flowtrans : dict
+        Flow and transport settings for output
+    elements : list of dicts
+        List of dictionaries of settings for :class:`hyvr.model.ae_types.AEType`.
     """
 
     print_to_stdout("Reading parameter file")
@@ -133,16 +154,37 @@ def parameters(inifile):
 
 
 def parse_inifile(p):
+    """
+    This function does the main work of parsing the input file.
+    
+    Parameters
+    ----------
+    p : ConfigParser
+       A config parser that already read in the inifile.
+    
+    Returns
+    -------
+    run : dict
+        HyVR run parameters (number of simulations, where to store results)
+    model_dict : dict
+        model setup parameters
+    strata_dict : dict
+        strata setup parameters
+    hydraulics : dict
+        Parsed hydraulics section of the ini-file
+    flowtrans : dict
+        Flow and transport settings for output
+    elements : list of dicts
+        List of dictionaries of settings for :class:`hyvr.model.ae_types.AEType`.
+    """
 
-    # TODO: these names were at some time keywords for hyvr, but I don't know what they describe and
-    # they are not implemented anymore
+    # TODO: these names were at some time keywords for hyvr, but I don't know
+    # what they describe and they are not implemented anymore
     str_values = 'k_trend', 'linear_acceleration'
 
     sections = p.sections()
     section_parser = {}
 
-    # The following code is not very nice, with lots of repetitions. This could
-    # be much nicer if the strata section had only one possible name.
     must_haves = ['run', 'model', 'strata', 'hydraulics']
     for section in must_haves:
         if section not in sections:
@@ -415,29 +457,29 @@ def parse_deprecated_inifile(p):
 
     return run, model, strata, hydraulics, flowtrans, elements
 
-def set_up_directories(run, configfile, overwrite_old_output=None):
+def set_up_directories(run, inifile, overwrite_old_output=None):
     """
     This functions creates the necessary directories (modeldir, rundir). It also stores the used
     ini-file in the rundir.
 
     Parameters:
         run (dict):        parsed run-section of the config file
-        configfile (str):  path to config file
+        inifile (str):  path to config file
         overwrite_old_output (bool):    Whether to overwrite the old run directory. If it is None, the option
-                           from the config file will be chosen instead (default in configfile: False)
+                           from the config file will be chosen instead (default in inifile: False)
     """
 
     # test case
-    if configfile == 0:
+    if inifile == 0:
         from pkg_resources import resource_filename
-        configfile = resource_filename(__name__, 'made.ini')
+        inifile = resource_filename(__name__, 'made.ini')
 
     p = cp.ConfigParser()
     try:
-        p.read(configfile, encoding='utf-8')
+        p.read(inifile, encoding='utf-8')
     except cp.MissingSectionHeaderError:
         # this is probably caused by a wrong encoding
-        p.read(configfile, encoding='utf-8-sig')
+        p.read(inifile, encoding='utf-8-sig')
 
     # we're now done with parsing and can create the model directory.
     try_makefolder(run['modeldir'])
@@ -464,5 +506,5 @@ def set_up_directories(run, configfile, overwrite_old_output=None):
         os.makedirs(run['rundir'])
 
     file_save = os.path.join(run['rundir'], run['runname'] + '_autogenerated_backup.ini')
-    with open(file_save, 'w') as configfile:
-        p.write(configfile)
+    with open(file_save, 'w') as inifile:
+        p.write(inifile)
