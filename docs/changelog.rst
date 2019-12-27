@@ -2,6 +2,25 @@
 Changelog/Bug Fixes
 ====================
 
+HyVR 1.1.0
+----------
+
+Release Date: 
+
+Contributors
+""""""""""""
+
+* Samuel Scherrer
+* Jeremy Bennett
+* Pablo Ortega Tong
+
+Changes
+"""""""
+
+More Cython -> better performance. Also, some minor bugfixes, profiling, and
+better tests.
+
+
 HyVR 1.0.0
 ----------
 
@@ -14,6 +33,7 @@ Contributors
 
 Changes
 """""""
+
 Channels ported to new code (introduced in version 0.9.9).
 
 
