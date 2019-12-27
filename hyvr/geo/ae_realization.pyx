@@ -44,7 +44,6 @@ cdef class AERealization:
 
     """
 
-
     def __init__(self,
                  ContactSurface bottom_surface,
                  ContactSurface top_surface,
@@ -66,6 +65,8 @@ cdef class AERealization:
             from the ini-file.
         stratum : Stratum object
             The stratum to which the AE belongs
+            NOTE/TODO: It seems like we only need the background values from
+                 this, might be nicer to pass only those
         grid : Grid object
             The HyVR grid
         """

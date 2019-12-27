@@ -1,56 +1,29 @@
-syntax: glob
-venv/*
-.idea*
-.git*
+# Python
 hyvr.egg-info/*
 dist/*
-*__pycache__*
 build/*
-.eggs/*
-pypi_instructions.txt
-test.py
 *.ipynb
-*doctrees/*
-.hgignore.orig
-.pypirc
-.travis.yml
-*/testing_small1/*
+__pycache__
+
+
+# Documentation
 docs/_build/
-*.nam
-hyvr/tests/test_lu/mf6/test_lu_hyvr.oc
-*.tdis
-*wel
-*.dat
-*oc
-*.mat
-*.vtr
-*ic
-*.cbc
-*.chd
-*dis
-hyvr/tests/test_lu/mf6/test_lu_hyvr.dis.grb
-*.hds
-*.ims
-*.lst
-*npf
-external/*
-*.so
-*.pyd
-.orig
-hyvr/sim.py.orig
-*.tif
-*.orig
-testcases/small/*
-testcases/small_reference/HGS*
-testcases/small_reference/*.h5
-testcases/small_reference/MODFLOW/*
-testcases/simple_cases/trough/*
-.pytest_cache/*
+
+# Tests
+.pytest_chache
+tests/full_testcases/small
+tests/full_testcases/small_reference/HGS*
+tests/full_testcases/small_reference/*.h5
+tests/full_testcases/small_reference/MODFLOW
+tests/simple_testcases/made_simple
+tests/simple_testcases/trough
 hyvr/made.ini
 hyvr/small/*
-hyvr_dev/*
-hyvr_backup/*
-*.profile
+
+# profiling
 profile/small
+
+# cythonize output
 hyvr/*.html
 hyvr/geo/*.html
+*.so

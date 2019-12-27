@@ -81,7 +81,7 @@ with open('versionnumber', 'r') as f:
 
 # copy the made.ini test case to the package directory
 from shutil import copyfile
-copyfile(path.join(here, 'testcases', 'made.ini'), path.join(here, 'hyvr', 'made.ini'))
+copyfile(path.join(here, 'testcases', 'full_testcases', 'made.ini'), path.join(here, 'hyvr', 'made.ini'))
 
 setup(
     name='hyvr',

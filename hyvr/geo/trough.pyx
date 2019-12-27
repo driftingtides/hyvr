@@ -9,10 +9,13 @@ cimport cython
 cdef class Trough:
     """
     This class holds all parameters of a geometrical trough object.
-
-    It has two methods: a constructor, that sets all parameters, e.g. dip set
-    facies, etc., and a ``maybe_assign_facies_azim_dip`` method, that checks
-    whether a given cell is inside the trough and returns its properties.
+    
+    The only method of this class is __init__, as after creating all trough
+    objects, the list of troughs in TroughAE will be converted to multiple lists
+    containing of attribute values for easier access from Cython.
+    
+    In principle this could also be implemented in pure Python, anyone
+    interested in rewriting this class (and Channel and Sheet) can do so.
     """
     cdef public:
         np.float_t x, y, z

@@ -65,7 +65,7 @@ def run(inifile, flag_ow=None):
         create_outputs(model, realdir, realname, run_settings['outputs'])
 
 
-    if param_file == 0:
+    if inifile == 0:
         # this is just the testcase, so we remove the output
         from pkg_resources import cleanup_resources
         cleanup_resources()
