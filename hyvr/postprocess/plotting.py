@@ -1,3 +1,7 @@
+"""
+Some functions to plot hyvr output. This module is for testing purposes only.
+"""
+
 import sys
 import numpy as np
 import matplotlib.pyplot as plt

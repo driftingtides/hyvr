@@ -22,12 +22,8 @@ def test_configfile_success():
         Option('yet_another_flag', bool, optional=False),
     ]
 
-    # print the options to test __repr__
-    for o in options:
-        print(o)
 
     section = Section('test', options)
-    print(section)
     p = cp.ConfigParser()
     p.read(filename)
     section_dict = section.parse(dict(p['test']))
