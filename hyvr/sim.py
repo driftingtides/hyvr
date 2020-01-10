@@ -57,11 +57,11 @@ def run(inifile, flag_ow=None):
         # Save data
         if run_settings['numsim'] > 1:
             realname = 'real_{:03d}'.format(sim)
-            realdir = os.path.join(run_settings['rundir'], realname)
+            realdir = run_settings['rundir'] / realname
         else:
             realname = run_settings['runname']
             realdir = run_settings['rundir']
-        hu.try_makefolder(realdir)
+        realdir.mkdir(parents=True, exist_ok=True)
         create_outputs(model, realdir, realname, run_settings['outputs'])
 
 

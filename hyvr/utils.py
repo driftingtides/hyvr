@@ -18,167 +18,167 @@ import os
 import errno
 
 
-def mf6_vtr(fhead, mg, fout):
-    """
-    Convert a MODFLOW 6 Binary head file into vtr suitable for visualisation in ParaView
+# def mf6_vtr(fhead, mg, fout):
+#     """
+#     Convert a MODFLOW 6 Binary head file into vtr suitable for visualisation in ParaView
 
-    Parameters
-    ----------
-
-
-
-    """
-    try:
-        import flopy
-    except ImportError:
-        print('mf output not possible: Flopy not installed.')
-        return
-    hfile = flopy.utils.binaryfile.HeadFile(fhead)          #
-    hdata = hfile.get_alldata()                             # Create numpy array with all data
-    head_dict = dict()                                      # Initialise dict with the data
-    for i in range(0, hdata.shape[0]):
-        hf_i = np.squeeze(hdata[i, :, :, :])                # Get heads at individual time steps
-        hf_i = np.transpose(hf_i, (2, 1, 0))                # Permute to be consistent with HyVR grids
-        head_dict['head_timestep{}'.format(i)] = hf_i
-
-    to_vtr(head_dict, fout, mg, points=True)
-
-
-def dem_load(fn):
-    """
-    Load data from ESRI-style ASCII-file.
-
-    Parameters:
-        fn (str): 				Directory and file name for save
-
-    Returns:
-        - data *(numpy array)* - Data from ERSI-style ASCII-file
-        - meta *(dict)* - Dict with grid metadata
-
-    """
-
-    # Extract header using linecache
-    meta = {}
-    meta['ncols'] = int(linecache.getline(fn, 1).split()[1])
-    meta['nrows'] = int(linecache.getline(fn, 2).split()[1])
-    meta['ox'] = linecache.getline(fn, 3).split()[1]
-    meta['oy'] = linecache.getline(fn, 4).split()[1]
-    meta['cell_size'] = linecache.getline(fn, 5).split()[1]
-    meta['no_Data'] = linecache.getline(fn, 6).split()[1]
-
-    # Extract data using pandas
-    df = pd.read_csv(fn, header=None, delimiter=' ', skiprows=6, dtype=np.float)
-    data = df.as_matrix()
-
-    return data, meta
-
-
-def dem_save(fn, data, gro):
-    """
-    Save DEM data to ESRI-style ASCII-file
-
-    Parameters:
-        fn (str):               Directory and file name for save
-        data (numpy array):     DEM data
-        gr (object class):      grid.Grid() object class
-
-    Returns:
-        Save DEM data to ESRI-style ASCII-file
-
-    """
-
-    header = ("ncols            {0.nx}\n"
-              "nrows            {0.ny}\n"
-              "xllcorner        {0.ox}\n"
-              "yllcorner        {0.oy}\n"
-              "cellsize         {0.cs2}\n"
-              "NOODATA_value    -9999"
-              ).format(gro)
-
-    with open(fn, mode='wb') as out_file:
-        np.savetxt(out_file,
-                   data,
-                   header=header,
-                   fmt='%.4f',
-                   comments='')
+#     Parameters
+#     ----------
 
 
 
-def load_gslib(fn):
-    """
-    Load .gslib files. This has been appropriated from the HPGL library
-    https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py
-    commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa
+#     """
+#     try:
+#         import flopy
+#     except ImportError:
+#         print('mf output not possible: Flopy not installed.')
+#         return
+#     hfile = flopy.utils.binaryfile.HeadFile(fhead)          #
+#     hdata = hfile.get_alldata()                             # Create numpy array with all data
+#     head_dict = dict()                                      # Initialise dict with the data
+#     for i in range(0, hdata.shape[0]):
+#         hf_i = np.squeeze(hdata[i, :, :, :])                # Get heads at individual time steps
+#         hf_i = np.transpose(hf_i, (2, 1, 0))                # Permute to be consistent with HyVR grids
+#         head_dict['head_timestep{}'.format(i)] = hf_i
 
-    Parameters:
-        fn (str): 			.gslib file path and name
+#     to_vtr(head_dict, fout, mg, points=True)
 
-    Returns:
-        gslib_dict *(dict)* - properties
 
-    """
-    gslib_dict = {}
-    list_prop = []
-    points = []
+# def dem_load(fn):
+#     """
+#     Load data from ESRI-style ASCII-file.
 
-    f = open(fn)
-    head = f.readline().split('\t')
-    num_p = int(f.readline())
-    #print num_p
+#     Parameters:
+#         fn (str): 				Directory and file name for save
 
-    lx, ly, lz = [int(x) for x in head[0].split(' ')]
-    nx, ny, nz = [float(x) for x in head[1].split(' ')]
-    ox, oy, oz = [float(x) for x in head[2].split(' ')]
+#     Returns:
+#         - data *(numpy array)* - Data from ERSI-style ASCII-file
+#         - meta *(dict)* - Dict with grid metadata
 
-    for i in range(num_p):
-        list_prop.append(str(f.readline().strip()))
-    #print list_prop
+#     """
 
-    for i in range(len(list_prop)):
-        gslib_dict[list_prop[i]] = np.zeros((lx * ly * lz))
+#     # Extract header using linecache
+#     meta = {}
+#     meta['ncols'] = int(linecache.getline(fn, 1).split()[1])
+#     meta['nrows'] = int(linecache.getline(fn, 2).split()[1])
+#     meta['ox'] = linecache.getline(fn, 3).split()[1]
+#     meta['oy'] = linecache.getline(fn, 4).split()[1]
+#     meta['cell_size'] = linecache.getline(fn, 5).split()[1]
+#     meta['no_Data'] = linecache.getline(fn, 6).split()[1]
 
-    index = np.zeros(len(list_prop))
+#     # Extract data using pandas
+#     df = pd.read_csv(fn, header=None, delimiter=' ', skiprows=6, dtype=np.float)
+#     data = df.as_matrix()
 
-    for line in f:
-        points = line.split()
-        for j in range(len(points)):
-            gslib_dict[list_prop[j]][index[j]] = float(points[j])
-            index[j] += 1
+#     return data, meta
 
-    for dkey in gslib_dict.keys():
-        gslib_dict[dkey] = gslib_dict[dkey].reshape((ly, lx, lz))
 
-    f.close()
+# def dem_save(fn, data, gro):
+#     """
+#     Save DEM data to ESRI-style ASCII-file
 
-    return gslib_dict
+#     Parameters:
+#         fn (str):               Directory and file name for save
+#         data (numpy array):     DEM data
+#         gr (object class):      grid.Grid() object class
+
+#     Returns:
+#         Save DEM data to ESRI-style ASCII-file
+
+#     """
+
+#     header = ("ncols            {0.nx}\n"
+#               "nrows            {0.ny}\n"
+#               "xllcorner        {0.ox}\n"
+#               "yllcorner        {0.oy}\n"
+#               "cellsize         {0.cs2}\n"
+#               "NOODATA_value    -9999"
+#               ).format(gro)
+
+#     with open(fn, mode='wb') as out_file:
+#         np.savetxt(out_file,
+#                    data,
+#                    header=header,
+#                    fmt='%.4f',
+#                    comments='')
+
+
+
+# def load_gslib(fn):
+#     """
+#     Load .gslib files. This has been appropriated from the HPGL library
+#     https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py
+#     commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa
+
+#     Parameters:
+#         fn (str): 			.gslib file path and name
+
+#     Returns:
+#         gslib_dict *(dict)* - properties
+
+#     """
+#     gslib_dict = {}
+#     list_prop = []
+#     points = []
+
+#     f = open(fn)
+#     head = f.readline().split('\t')
+#     num_p = int(f.readline())
+#     #print num_p
+
+#     lx, ly, lz = [int(x) for x in head[0].split(' ')]
+#     nx, ny, nz = [float(x) for x in head[1].split(' ')]
+#     ox, oy, oz = [float(x) for x in head[2].split(' ')]
+
+#     for i in range(num_p):
+#         list_prop.append(str(f.readline().strip()))
+#     #print list_prop
+
+#     for i in range(len(list_prop)):
+#         gslib_dict[list_prop[i]] = np.zeros((lx * ly * lz))
+
+#     index = np.zeros(len(list_prop))
+
+#     for line in f:
+#         points = line.split()
+#         for j in range(len(points)):
+#             gslib_dict[list_prop[j]][index[j]] = float(points[j])
+#             index[j] += 1
+
+#     for dkey in gslib_dict.keys():
+#         gslib_dict[dkey] = gslib_dict[dkey].reshape((ly, lx, lz))
+
+#     f.close()
+
+#     return gslib_dict
 
 
 ''' HYVR-specific utilities'''
 
 
-def read_lu(sq_fp):
-    """
-    Load user-defined strata (architectural element lookup table),
-    split the data based on a delimiter and return it as a new list
+# def read_lu(sq_fp):
+#     """
+#     Load user-defined strata (architectural element lookup table),
+#     split the data based on a delimiter and return it as a new list
 
-    Parameters:
-        sq_fp:			Load user-defined strata (architectural element lookup table)
+#     Parameters:
+#         sq_fp:			Load user-defined strata (architectural element lookup table)
 
-    Returns:
-        ssm_lu *(list)*: -Values of architectural element lookup table
+#     Returns:
+#         ssm_lu *(list)*: -Values of architectural element lookup table
 
-    """
-    # Load user-defined systems / architectural element lookup table
-    print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Reading strata data from ' + sq_fp)
-    with open(sq_fp) as f:
-        lines = f.read().splitlines()
+#     """
+#     # Load user-defined systems / architectural element lookup table
+#     print(time.strftime("%d-%m %H:%M:%S", time.localtime(time.time())) + ': Reading strata data from ' + sq_fp)
+#     with open(sq_fp) as f:
+#         lines = f.read().splitlines()
 
-    ssm_lu = []
-    for li in lines[1:]:
-        temp = li.split(',')
-        ssm_lu.append([int(temp[0]), float(temp[1]), float(temp[2]), str(temp[3]), int(temp[4])])
+#     ssm_lu = []
+#     for li in lines[1:]:
+#         temp = li.split(',')
+#         ssm_lu.append([int(temp[0]), float(temp[1]), float(temp[2]), str(temp[3]), int(temp[4])])
 
-    return ssm_lu
+#     return ssm_lu
 
 
 
@@ -304,35 +304,6 @@ def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
     return bh_df
 
 
-def calc_norm(x):
-    """
-    Calculate norm (compute the complex conjugate from 'x')
-
-    Parameters:
-        x:	Input parameter
-
-    Returns:
-        Complex conjugate of x
-
-    """
-    s = (x.conj() * x).real
-    return np.sqrt(np.add.reduce(s, axis=0))
-
-
-def try_makefolder(makedir):
-    """
-    Create modflow output folder
-
-    """
-    # Create modflow output folder
-
-    try:
-        os.makedirs(makedir)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
-
-
 def print_to_stdout(*args):
     """
     Prints a message to stdout with timestamp.
@@ -344,79 +315,78 @@ def print_to_stdout(*args):
 # Some utilities for generating shapes
 ####################################################################################################################
 
-def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):
-    """
-    Compute number of planes
+# def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):
+#     """
+#     Compute number of planes
 
-    Parameters:
-        dip_norm:
-        x_dip:			X coordinates of points on dip planes
-        y_dip:			Y coordinates of points on dip planes
-        znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes
-        xtemp:			X dimension of model grid nodes
-        ytemp:			Y dimension of model grid nodes
-        ztemp:			Z dimension of model grid nodes
-        select:         Model grid nodes to consider
+#     Parameters:
+#         dip_norm:
+#         x_dip:			X coordinates of points on dip planes
+#         y_dip:			Y coordinates of points on dip planes
+#         znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes
+#         xtemp:			X dimension of model grid nodes
+#         ytemp:			Y dimension of model grid nodes
+#         ztemp:			Z dimension of model grid nodes
+#         select:         Model grid nodes to consider
 
-    Returns:
-        set_no - Number of planes with selected model grid nodes
+#     Returns:
+#         set_no - Number of planes with selected model grid nodes
 
-    """
-    # Get closest plane to points
-    n_sets = dip_norm.shape[1]                   # Number of planes
-    nx, ny, nz = xtemp.shape                       # Get number of model cells
-    set_no = np.zeros((nx, ny, nz), dtype=np.int)  # Initialise set number array
-    z_dip = np.ones(x_dip.shape) * znow
+#     """
+#     # Get closest plane to points
+#     n_sets = dip_norm.shape[1]                   # Number of planes
+#     nx, ny, nz = xtemp.shape                       # Get number of model cells
+#     set_no = np.zeros((nx, ny, nz), dtype=np.int)  # Initialise set number array
+#     z_dip = np.ones(x_dip.shape) * znow
 
-    if len(select) > 0:
-        select_idx = np.where(select)                                               # Get indices of selected model nodes
-    else:
-        select = np.ones_like(xtemp, dtype=bool)
-        select_idx = np.where(select)
+#     if len(select) > 0:
+#         select_idx = np.where(select)                                               # Get indices of selected model nodes
+#     else:
+#         select = np.ones_like(xtemp, dtype=bool)
+#         select_idx = np.where(select)
 
-    points = np.array((xtemp[select].flatten(), ytemp[select].flatten(), ztemp[select].flatten()))      # Cartesian coordinates of model grid nodes
-    plp = np.array((x_dip, y_dip, z_dip)).T                                     # Cartesian coordinates of points on dip planes
-    pd = plp[:, None] - points.T                                                # subtract grid nodes from plane points
+#     points = np.array((xtemp[select].flatten(), ytemp[select].flatten(), ztemp[select].flatten()))      # Cartesian coordinates of model grid nodes
+#     plp = np.array((x_dip, y_dip, z_dip)).T                                     # Cartesian coordinates of points on dip planes
+#     pd = plp[:, None] - points.T                                                # subtract grid nodes from plane points
 
-    # Loop over set planes
-    for iset in range(n_sets-1):
-        if iset > 1:
-            pd_1 = pd_2
-        else:
-            abc_1 = dip_norm[:, iset]                                                           # Plane normal equation
-            pd_1 = abc_1.dot(pd[iset, :, :].squeeze().T) / np.sqrt(sum(abc_1 * abc_1))          # Distance to plane
-        pd1_c1 = pd_1 <= 0                                                                  # pd_1 meeting condition 1
-        pd1_c1_idx = np.where(pd1_c1)
+#     # Loop over set planes
+#     for iset in range(n_sets-1):
+#         if iset > 1:
+#             pd_1 = pd_2
+#         else:
+#             abc_1 = dip_norm[:, iset]                                                           # Plane normal equation
+#             pd_1 = abc_1.dot(pd[iset, :, :].squeeze().T) / np.sqrt(sum(abc_1 * abc_1))          # Distance to plane
+#         pd1_c1 = pd_1 <= 0                                                                  # pd_1 meeting condition 1
+#         pd1_c1_idx = np.where(pd1_c1)
 
-        if iset == 0:
-            set_no[select_idx[0][pd1_c1_idx], select_idx[1][pd1_c1_idx], select_idx[2][pd1_c1_idx]] = iset+1
-        # elif iset == n_sets: # this never happens
-        #     pd1_c2_idx = np.where(pd_1 > 0)                     # index of pd_2 meeting condition 1
-        #     set_no[select_idx[0][pd1_c2_idx], select_idx[1][pd1_c2_idx], select_idx[2][pd1_c2_idx]] = iset+1
-        else:
-            abc_2 = dip_norm[:, iset+1]
-            # Points on plane
-            pd_2 = abc_2.dot(pd[iset+1, :, :].squeeze().T) / np.sqrt(sum(abc_2 * abc_2))  # Distance to plane
-            inset = np.logical_and(pd_1 <= 0, pd_2 > 0)                                   # grid cell between planes
-            set_no[select_idx[0][inset], select_idx[1][inset], select_idx[2][inset]] = iset+1
+#         if iset == 0:
+#             set_no[select_idx[0][pd1_c1_idx], select_idx[1][pd1_c1_idx], select_idx[2][pd1_c1_idx]] = iset+1
+#         # elif iset == n_sets: # this never happens
+#         #     pd1_c2_idx = np.where(pd_1 > 0)                     # index of pd_2 meeting condition 1
+#         #     set_no[select_idx[0][pd1_c2_idx], select_idx[1][pd1_c2_idx], select_idx[2][pd1_c2_idx]] = iset+1
+#         else:
+#             abc_2 = dip_norm[:, iset+1]
+#             # Points on plane
+#             pd_2 = abc_2.dot(pd[iset+1, :, :].squeeze().T) / np.sqrt(sum(abc_2 * abc_2))  # Distance to plane
+#             inset = np.logical_and(pd_1 <= 0, pd_2 > 0)                                   # grid cell between planes
+#             set_no[select_idx[0][inset], select_idx[1][inset], select_idx[2][inset]] = iset+1
 
-    return set_no
+#     return set_no
 
+# def angle(v1, v2):
+#     """
+#     Return angle between two vectors in [°] between 0° and 180°
 
-def angle(v1, v2):
-    """
-    Return angle between two vectors in [°] between 0° and 180°
+#     Parameters:
+#         v1:	Vector 1
+#         v2:	Vector 2
 
-    Parameters:
-        v1:	Vector 1
-        v2:	Vector 2
-
-    Returns:
-        angle value *(float)* - Angle between v1 and v2
-    """
-    cos = np.dot(v1, v2) / np.sqrt(np.dot(v1, v1) * np.dot(v2, v2))
-    angle = np.arccos(cos)/np.pi*180
-    return angle
+#     Returns:
+#         angle value *(float)* - Angle between v1 and v2
+#     """
+#     cos = np.dot(v1, v2) / np.sqrt(np.dot(v1, v1) * np.dot(v2, v2))
+#     angle = np.arccos(cos)/np.pi*180
+#     return angle
 
 def get_alternating_facies(num_facies, type_params):
     """

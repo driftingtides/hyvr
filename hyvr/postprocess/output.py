@@ -14,14 +14,14 @@ the inifile-name of the format with the function and the file extension in the
 ``create_outputs`` function below (in the dictionary ``output_desc``).
 """
 
-import os
+import pathlib
 import pickle
 import warnings
 
 import scipy.io as sio
 import numpy as np
 
-from hyvr.utils import print_to_stdout, try_makefolder
+from hyvr.utils import print_to_stdout
 
 
 def create_outputs(model, realization_dir, runname, formats):
@@ -60,9 +60,9 @@ def create_outputs(model, realization_dir, runname, formats):
     for fmt in formats:
         if fmt not in output_desc:
             raise ValueError('No such output format: ' + fmt)
-        fname = os.path.join(os.path.abspath(realization_dir), runname)
+        fname = pathlib.Path(realization_dir) / runname
         try:
-            output_desc[fmt](model, fname)
+            output_desc[fmt](model, str(fname.resolve()))
         except ImportError as e:
             # in case of an import error, only warn the user instead of raising
             # an error
@@ -174,11 +174,11 @@ def to_modflow(model, fname):
         raise
     # For modflow we want to create a new folder instead of only a file. The folder name is the base
     # name of the passed filename
-    realization_dir = os.path.dirname(fname)
-    runname = os.path.basename(fname)
-    mfdir = os.path.join(realization_dir, 'MODFLOW')
-    mfname = os.path.join(mfdir, runname)
-    try_makefolder(mfdir)
+    realization_dir = pathlib.Path(fname).parent
+    runname = pathlib.Path(fname).name
+    mfdir = realization_dir / 'MODFLOW'
+    mfdir.mkdir(parents=True, exist_ok=True)
+    mfname = str(mfdir / runname)
 
     # Assign name and create modflow model object
     mf = flopy.modflow.Modflow(mfname, exe_name='mf2005')
@@ -245,11 +245,11 @@ def to_mf6(model, fname):
 
     # For modflow we want to create a new folder instead of only a file. The folder name is the base
     # name of the passed filename
-    realization_dir = os.path.dirname(fname)
-    runname = os.path.basename(fname)
-    mfdir = os.path.join(realization_dir, 'mf6')
-    mfname = os.path.join(mfdir, runname)
-    try_makefolder(mfdir)
+    realization_dir = pathlib.Path(fname).parent
+    runname = pathlib.Path(fname).name
+    mfdir = realization_dir / 'mf6'
+    mfdir.mkdir(parents=True, exist_ok=True)
+    mfname = str(mfdir / runname)
 
     # Transpose HyVR arrays for MF6 input
     transpose_order = (2, 1, 0)
@@ -266,7 +266,7 @@ def to_mf6(model, fname):
     sim = flopy.mf6.MFSimulation(sim_name=runname,
                                  version='mf6',
                                  exe_name='mf6',
-                                 sim_ws=mfdir)
+                                 sim_ws=str(mfdir))
                                  # sim_tdis_file='simulation.tdis')
 
     """ Create the Flopy temporal discretization object - STEADY-STATE """
@@ -421,10 +421,10 @@ def to_hgs(model, fname):
     fname : str
         Where to save the file (without file format extension)
     """
-    realization_dir = os.path.dirname(fname)
-    runname = os.path.basename(fname)
-    hgsdir = os.path.join(realization_dir, 'HGS')
-    try_makefolder(hgsdir)
+    realization_dir = pathlib.Path(fname).parent
+    runname = pathlib.Path(fname).name
+    hgsdir = realization_dir / 'HGS'
+    hgsdir.mkdir(parents=True, exist_ok=True)
 
     uid = np.arange(1, len(model.data['ktensors'][:, :, :, 1, 2].flatten()) + 1)    # Create list of IDs
     vals_to_write = {'ktensors': np.column_stack((uid,
@@ -441,5 +441,5 @@ def to_hgs(model, fname):
 
     # Loop over properties to write
     for val in vals_to_write:
-        val_filepath = os.path.join(hgsdir, val + '.txt')       # File name of HGS output file
+        val_filepath = hgsdir / (val + '.txt')       # File name of HGS output file
         np.savetxt(val_filepath, vals_to_write[val], fmt=val_fmts[val])
