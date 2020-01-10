@@ -16,4 +16,7 @@ try:
     hyvr.run(args.filename, args.overwrite)
 except Exception as e:
     print("Something went wrong:", e, file=sys.stderr)
-    sys.exit(1)
+    if args.filename == 0:
+        raise
+    else:
+        sys.exit(1)

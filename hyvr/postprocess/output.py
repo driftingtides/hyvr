@@ -16,8 +16,11 @@ the inifile-name of the format with the function and the file extension in the
 
 import os
 import pickle
+import warnings
+
 import scipy.io as sio
 import numpy as np
+
 from hyvr.utils import print_to_stdout, try_makefolder
 
 
@@ -58,7 +61,12 @@ def create_outputs(model, realization_dir, runname, formats):
         if fmt not in output_desc:
             raise ValueError('No such output format: ' + fmt)
         fname = os.path.join(os.path.abspath(realization_dir), runname)
-        output_desc[fmt](model, fname)
+        try:
+            output_desc[fmt](model, fname)
+        except ImportError as e:
+            # in case of an import error, only warn the user instead of raising
+            # an error
+            warning.warn(str(e))
         print_to_stdout('Saved', fmt, 'output to', realization_dir)
 
 
@@ -120,8 +128,9 @@ def to_hdf5(model, fname):
         with h5py.File(fname+'.h5', 'w') as hf:
             for key in model.data:
                 hf.create_dataset(key, data=model.data[key], compression=True)
-    except ImportError:
-        raise ValueError('h5 output not possible: h5py not found.')
+    except ImportError as e:
+        e += "Additional info: h5 output not possible: h5py not found!"
+        raise
 
 
 def to_vtr(model, fname):
@@ -143,8 +152,9 @@ def to_vtr(model, fname):
         yv = np.arange(model.grid.y0, model.grid.ymax+model.grid.dy, model.grid.dy)
         zv = np.arange(model.grid.z0, model.grid.zmax+model.grid.dz, model.grid.dz)
         gridToVTK(fname, xv, yv, zv, cellData=data_dict)
-    except ImportError:
-        raise ValueError('VTR output not possible: pyevtk not found. Remove the vtr output in the *.ini file or install pyevtk.')
+    except ImportError as e:
+        e += "Additional info: vtr output not possible: pyevtk not found!"
+        raise
 
 def to_modflow(model, fname):
     """
@@ -159,8 +169,9 @@ def to_modflow(model, fname):
     """
     try:
         import flopy
-    except ImportError:
-        raise ValueError('modflow output not possible: flopy not found.')
+    except ImportError as e:
+        e += "Additional info: modflow output not possible: flopy not found!"
+        raise
     # For modflow we want to create a new folder instead of only a file. The folder name is the base
     # name of the passed filename
     realization_dir = os.path.dirname(fname)
