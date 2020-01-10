@@ -17,8 +17,12 @@ Contributors
 Changes
 """""""
 
-More Cython -> better performance. Also, some minor bugfixes, profiling, and
-better tests.
+* More Cython -> Code faster
+* Profiling setup
+* coverage.py setup
+* better tests
+* better developers guide
+* some other minor changes
 
 
 HyVR 1.0.0

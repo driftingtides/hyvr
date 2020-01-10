@@ -92,9 +92,12 @@ github issue by `#<issue number>`, and automatically close an issue with
 `Resolves #<issue number>`. In case you do this, put this statement on the last
 line of the commit message.
 
-After fixing the issue, you can merge the branch into `develop` or
-create a pull request. Therefore you have to change into the `develop` branch
-again:
+After fixing the issue, add a short description of your changes to
+`docs/changelog.rst` for the next commit and add your name to the contributors
+list for this release.
+
+Then you can merge the branch into `develop` or create a pull request. Therefore
+you have to change into the `develop` branch again:
 ```
 git checkout develop
 git merge <type>/<short issue title>
