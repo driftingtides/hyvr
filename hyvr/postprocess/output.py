@@ -239,8 +239,9 @@ def to_mf6(model, fname):
 
     try:
         import flopy
-    except ImportError:
-        raise ValueError('mf6 output not possible: Flopy not installed.')
+    except ImportError as e:
+        e += "Additional info: mf6 output not possible: flopy not found!"
+        raise
 
     # For modflow we want to create a new folder instead of only a file. The folder name is the base
     # name of the passed filename
@@ -303,7 +304,7 @@ def to_mf6(model, fname):
                                                    delc=model.grid.dx,
                                                    top=ztop,
                                                    botm=botm[1:],
-                                                   fname='{}.dis'.format(runname))
+                                                   filename='{}.dis'.format(runname))
 
     """ Create Node Property Flow package object """
     if xt3d is True:
