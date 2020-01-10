@@ -1,8 +1,9 @@
 import os
 import configparser as cp
-from hyvr.input.option_parsing import Option, Section, ShapeError
 
-def test_configfile():
+from hyvr.input.option_parsing import Option, Section, ShapeError, MissingOptionError
+
+def test_configfile_success():
     filename = os.path.join(os.path.dirname(__file__), 'configtest.ini')
 
     options = [
@@ -21,7 +22,12 @@ def test_configfile():
         Option('yet_another_flag', bool, optional=False),
     ]
 
+    # print the options to test __repr__
+    for o in options:
+        print(o)
+
     section = Section('test', options)
+    print(section)
     p = cp.ConfigParser()
     p.read(filename)
     section_dict = section.parse(dict(p['test']))
@@ -44,26 +50,66 @@ def test_configfile():
     assert not section_dict['yet_another_flag']
 
 
+def test_configfile_fail_wrong_shape():
+    filename = os.path.join(os.path.dirname(__file__), 'configtest.ini')
+
     options = [
         Option('wrong_shape', list, shape=[2, 3], datatype=float),
     ]
 
-    error = Section('error1', options)
+    error = Section('wrong_shape', options)
     try:
-        section_dict = error.parse(dict(p['error1']))
+        p = cp.ConfigParser()
+        p.read(filename)
+        section_dict = error.parse(dict(p['wrong_shape']))
     except ShapeError as e:
         thrown = True
-        assert str(e) == 'Option wrong_shape in section error1 has wrong shape!'
+        assert str(e) == 'Option wrong_shape in section wrong_shape has wrong shape!'
     assert thrown
 
+def test_configfile_fail_expansion():
+    filename = os.path.join(os.path.dirname(__file__), 'configtest.ini')
 
     options = [
         Option('no_expansion', list, shape=[2, -1, 2], datatype=float),
     ]
-    error = Section('error2', options)
+    error = Section('no_expansion', options)
     try:
-        section_dict = error.parse(dict(p['error2']))
+        p = cp.ConfigParser()
+        p.read(filename)
+        section_dict = error.parse(dict(p['no_expansion']))
     except ValueError as e:
         thrown = True
-        assert str(e) == 'Option no_expansion in section error2 can not be expanded!'
+        assert str(e) == 'Option no_expansion in section no_expansion can not be expanded!'
+    assert thrown
+
+
+def test_configfile_fail_wrong_boolean():
+    filename = os.path.join(os.path.dirname(__file__), 'configtest.ini')
+    options = [
+        Option('wrong_boolean', bool),
+    ]
+    error = Section('wrong_boolean', options)
+    try:
+        p = cp.ConfigParser()
+        p.read(filename)
+        section_dict = error.parse(dict(p['wrong_boolean']))
+    except ValueError as e:
+        thrown = True
+        assert str(e) == 'Option wrong_boolean in section wrong_boolean is not a valid boolean!'
+    assert thrown
+
+
+def test_configfile_fail_missing_option():
+    filename = os.path.join(os.path.dirname(__file__), 'configtest.ini')
+    options = [
+        Option('missing_option', bool),
+    ]
+    error = Section('missing_option', options)
+    try:
+        p = cp.ConfigParser()
+        p.read(filename)
+        section_dict = error.parse(dict(p['missing_option']))
+    except MissingOptionError as e:
+        thrown = True
     assert thrown

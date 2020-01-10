@@ -48,3 +48,21 @@ TODOs
 * create "unit tests"
 * there are some even simpler ini-files than `made_simple.ini` in
   `tests/simple_testcases`, these should be reactivated
+  
+Coverage
+========
+
+Test coverage can be tested using
+[coverage](https://coverage.readthedocs.io/en/coverage-5.0.2/). You can run it
+from the top level directory via
+```
+coverage run run_all_tests.py
+```
+and generate html reports with
+```
+coverage html
+```
+The results can be viewed by opening `htmlcov/index.html`.
+
+Keep in mind that coverage does not include the cython code, so actual coverage
+is lower.
