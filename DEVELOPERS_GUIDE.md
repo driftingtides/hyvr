@@ -1,5 +1,4 @@
-General Coding Guidelines
-=========================
+# General Coding Guidelines
 
 The following are some general guidelines that you should follow as much as
 possible if you add code to HyVR. Unfortunately the existing code does not meet
@@ -30,8 +29,7 @@ doesn't affect how HyVR works (e.g. it doesn't change ini-file option names).
   or at most two pages in your text editor. If your function is very long,
   consider splitting it into several shorter functions.
 
-Version Control
-===============
+# Version Control
 
 The two major branches on [github](https://github.com/driftingtides/hyvr) are
 `main` and `develop`.
@@ -42,8 +40,8 @@ For working on an issue, create a new branch based on the `develop`
 branch. Only for fixing critical bugs you can directly base your work on
 `master` and merge your changes to master afterwards.
 
-Working on an issue
-===================
+
+## Working on an issue
 
 If you don't have cloned the repository yet, you can do it with
 ```
@@ -89,8 +87,8 @@ branch regularly to github, so you have a backup in case of disaster:
 git push -u origin <branch name>
 ```
 
-Releasing a new version
-=======================
+
+## Releasing a new version
 
 To release a new version, you first have to merge the current changes into
 `master` locally (either from `develop` for a real new version or from a bugfix
@@ -107,8 +105,7 @@ In case everything works as expected you should perform the following steps:
 - push to the github master branch
 - update the online documentation
 
-PyPI-test
----------
+### PyPI-test
 
 The versionnumber should be in the file `versionnumber`. It follows the format
 `<major version number>.<minor version number>.<number of fixes>`.
@@ -135,8 +132,7 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 
 If everything worked, move on, otherwise try to fix the issues first.
 
-PyPI
-----
+### PyPI
 
 Now you can set the correct version number. Then remove the distributions you
 created for PyPI-test and rebuild them:
@@ -149,8 +145,7 @@ Then you can upload the new version to PyPI:
 python -m twine upload dist/*
 ```
 
-Github
-------
+### Github
 
 Running `setup.py` might have recreated the C-files. You can add them and commit
 all other changes if you didn't already do so. The commit message header should
@@ -168,8 +163,7 @@ git push origin
 git push origin <tag>
 ```
 
-Documentation
--------------
+### Documentation
 
 To rebuild the documentation, change to the `docs` directory and run the
 following commands:
@@ -197,8 +191,7 @@ git push origin gh-pages
 ```
 
 
-How HyVR Works
-==============
+# How HyVR Works
 
 There are roughly 4 big tasks that HyVR performs:
 
@@ -208,8 +201,7 @@ There are roughly 4 big tasks that HyVR performs:
 4) Storing the results in different formats
 
 
-Reading Parameters
-------------------
+## Reading Parameters
 
 The first part of HyVR is reading (and validating) the input from the `*.ini`
 configuration file.  The code for this part can be found in
@@ -225,8 +217,7 @@ configuration file.  The code for this part can be found in
   (everything that couldn't be done by the option parsing module).
 
 
-Generating model
-----------------
+## Generating model
 
 The model is generated from top to bottom, by first generating contact surfaces
 of the uppermost strata, then generating contact surfaces of AEs within this
@@ -251,10 +242,7 @@ faster over arrays compared to Python lists.
 Most of the code for model generation can be found in ``hyvr/geo/``.
 
 
-
-
-Assigning Values to Grid
-------------------------
+## Assigning Values to Grid
 
 Assigning values to the grid is mostly done in the `assign_facies.pyx` file.
 This basically just iterates over all grid points and assigns facies, dip,
@@ -272,8 +260,7 @@ should be implemented in Cython if possible, to get better speed. In the future,
 the ``ae_realizations.py`` module should also be converted to Cython.
 
 
-Output
-------
+## Output
 
 The last step is to output the HyVR results to different formats. This is
 implemented in `postprocess/output.py`. The central method is `create_outputs`,
