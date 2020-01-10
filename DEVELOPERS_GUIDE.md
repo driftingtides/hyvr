@@ -1,5 +1,5 @@
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
+# Table of Contents
 
 - [General Coding Guidelines](#general-coding-guidelines)
 - [Version Control](#version-control)
