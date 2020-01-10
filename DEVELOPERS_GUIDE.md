@@ -82,6 +82,7 @@ new branch but didn't add/commit any changes yet.
   coding.
 - `feat` for adding minor features or minor fixes (spelling etc.)
 - `bug` for bugfixes
+- `doc` for documentation changes
 `<short issue title>` should normally be one word describing what the issue is about.
 
 Commit messages should always have one header line and then be followed by a

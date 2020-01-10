@@ -70,7 +70,8 @@ Installing HyVR
 ^^^^^^^^^^^^^^^
 
 Once you have activated your virtual environment, you can install HyVR from PyPI
-using ``pip``::
+using ``pip`` (with Anaconda you might have to install pip first into your
+environment using ``conda install pip``)::
 
     pip install hyvr
 
@@ -85,6 +86,16 @@ To install from source you need a C/C++ compiler. On Windows you can get one by
 installing Build Tools for Visual Studio.
 
 Installation from conda-forge will (hopefully) be coming soon.
+
+Dependencies
+^^^^^^^^^^^^
+
+``pip`` should normally install all required dependencies. Optional dependencies are::
+
+- ``Cython`` to recreate the C-extensions at installation
+- ``h5py`` for HDF5 output
+- ``flopy`` for output of MODFLOW files
+- ``pyevtk`` for VTR output
 
 
 Usage
