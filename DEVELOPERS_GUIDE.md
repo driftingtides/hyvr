@@ -67,7 +67,7 @@ If you don't have cloned the repository yet, you can do it with
 ```
 git clone git@github.com:driftingtides/hyvr.git
 ```
-otherwise, do a `git pull` to get the current version. If you are not already on
+Otherwise, do a `git pull` to get the current version. If you are not already on
 the develop branch, change to it with `git checkout develop`.
 Now you can create a new branch with
 ```
@@ -85,10 +85,11 @@ new branch but didn't add/commit any changes yet.
 `<short issue title>` should normally be one word describing what the issue is about.
 
 Commit messages should always have one header line and then be followed by a
-block description. The header line should start with the issue type in brackets
-`[<type>]`. You can reference a github issue by `#<issue number>`, and
-automatically close an issue with `Resolves #<issue number>`. In case you do
-this, put this statement on the last line of the commit message.
+block description. The header line should start with the issue type and
+description in brackets `[<type>][<short issue title>]`. You can reference a
+github issue by `#<issue number>`, and automatically close an issue with
+`Resolves #<issue number>`. In case you do this, put this statement on the last
+line of the commit message.
 
 After fixing the issue, you can merge the branch into `develop` or
 create a pull request. Therefore you have to change into the `develop` branch
