@@ -30,24 +30,98 @@ doesn't affect how HyVR works (e.g. it doesn't change ini-file option names).
   or at most two pages in your text editor. If your function is very long,
   consider splitting it into several shorter functions.
 
+Version Control
+===============
 
-Uploading a new version
+The two major branches on [github](https://github.com/driftingtides/hyvr) are
+`main` and `develop`.
+The `main` branch should always contain the current released version, that
+should also be available on PyPI.
+The `develop` contains the current state of development.
+For working on an issue, create a new branch based on the `develop`
+branch. Only for fixing critical bugs you can directly base your work on
+`master` and merge your changes to master afterwards.
+
+Working on an issue
+===================
+
+If you don't have cloned the repository yet, you can do it with
+```
+git clone git@github.com:driftingtides/hyvr.git
+```
+otherwise, do a `git pull` to get the current version. If you are not already on
+the develop branch, change to it with `git checkout develop`.
+Now you can create a new branch with
+```
+git checkout -b <type>/<short issue title>
+```
+where `<type>` should be the type of the issue and `<short issue title>` a short
+description about what the issue is. This also works if you forgot to create a
+new branch but didn't add/commit any changes yet.
+
+`<type>` should be one of the following:
+- `wip` (work in progress) for stuff that will take a while and require a lot of
+  coding.
+- `feat` for adding minor features or minor fixes (spelling etc.)
+- `bug` for bugfixes
+`<short issue title>` should normally be one word describing what the issue is about.
+
+Commit messages should always have one header line and then be followed by a
+block description. The header line should start with the issue type in brackets
+`[<type>]`. You can reference a github issue by `#<issue number>`, and
+automatically close an issue with `Resolves #<issue number>`. In case you do
+this, put this statement on the last line of the commit message.
+
+After fixing the issue, you can merge the branch into `develop` or
+create a pull request. Therefore you have to change into the `develop` branch
+again:
+```
+git checkout develop
+git merge <type>/<short issue title>
+```
+Then you can push your changes to github with
+```
+git push -u origin develop
+```
+In case you are working on a bigger issue, you might want to push your feature
+branch regularly to github, so you have a backup in case of disaster:
+```
+git push -u origin <branch name>
+```
+
+Releasing a new version
 =======================
 
-Please run the tests before you push anything to github (or at least our MADE
-test case by running ``python -m hyvr``). Furthermore, you should also publish
-the new version on PyPI. Therefore, you have to create a source distribution or
-a wheel using
+To release a new version, you first have to merge the current changes into
+`master` locally (either from `develop` for a real new version or from a bugfix
+branch for critical bugs).
+
+Then you should run the tests to make sure everything works as
+expected. Documentation for the tests can be found [here](tests/README.md).
+
+In case everything works as expected you should perform the following steps:
+- set the correct version number for PyPI-test and create distributions
+- upload the new version to PyPI-test and try installing it from there
+- set the correct version number and rebuild distributions
+- upload the new version to PyPI
+- push to the github master branch
+- update the online documentation
+
+PyPI-test
+---------
+
+The versionnumber should be in the file `versionnumber`. It follows the format
+`<major version number>.<minor version number>.<number of fixes>`.
+As PyPI and PyPI-test don't allow reuploading the same version again, we append
+a further number to the version number for PyPI-test, e.g. the <n>-th try on
+PyPI-test should get the version number `<major>.<minor>.<fix>.<n>`.
+
+After you have set the version number, create distributions of the python
+package by running `setup.py`:
 ```
-python setup.py sdist
+python setup.py sdist bdist_wheel
 ```
-or
-```
-python setup.py bdist_wheel
-```
-Make sure to set the versionnumber correctly. If you want to publish version
-1.0.1, you should use the versionnumber 1.0.1.x for PyPI-test, where x is the
-number of times you already tested whether installing from PyPI-test works.
+(Note: On linux you cannot create wheels.)
 
 Then you can upload the distributions first to PyPI-test using `twine`:
 ```
@@ -59,16 +133,43 @@ and then install the package from PyPI test:
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple hyvr
 ```
 
-If everything worked, you can upload it using the correct versionnumber (i.e. in
-this example 1.0.1) to PyPI:
+If everything worked, move on, otherwise try to fix the issues first.
+
+PyPI
+----
+
+Now you can set the correct version number. Then remove the distributions you
+created for PyPI-test and rebuild them:
+```
+rm dist/*
+python setup.py sdist bdist_wheel
+```
+Then you can upload the new version to PyPI:
 ```
 python -m twine upload dist/*
 ```
 
-It's also a good idea to update the online documentation afterwards.
+Github
+------
 
-Building and uploading documentation
-====================================
+Running `setup.py` might have recreated the C-files. You can add them and commit
+all other changes if you didn't already do so. The commit message header should
+start with `[v<version number>]`.
+
+Then tag the current commit with the version number:
+```
+git tag v<version number>
+```
+e.g. `git tag v1.1.0` for version 1.1.0.
+
+Now you can push the changes and the version tag:
+```
+git push origin
+git push origin <tag>
+```
+
+Documentation
+-------------
 
 To rebuild the documentation, change to the `docs` directory and run the
 following commands:
@@ -94,7 +195,6 @@ git add -A
 git commit -m <commit message>
 git push origin gh-pages
 ```
-
 
 
 How HyVR Works
