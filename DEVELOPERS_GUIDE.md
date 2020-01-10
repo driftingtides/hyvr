@@ -1,3 +1,23 @@
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [General Coding Guidelines](#general-coding-guidelines)
+- [Version Control](#version-control)
+    - [Working on an issue](#working-on-an-issue)
+    - [Releasing a new version](#releasing-a-new-version)
+        - [PyPI-test](#pypi-test)
+        - [PyPI](#pypi)
+        - [Github](#github)
+        - [Documentation](#documentation)
+- [How HyVR Works](#how-hyvr-works)
+    - [Reading Parameters](#reading-parameters)
+    - [Generating model](#generating-model)
+    - [Assigning Values to Grid](#assigning-values-to-grid)
+    - [Output](#output)
+
+<!-- markdown-toc end -->
+
+
 # General Coding Guidelines
 
 The following are some general guidelines that you should follow as much as
