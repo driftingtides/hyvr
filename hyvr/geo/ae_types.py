@@ -37,6 +37,11 @@ class AEType:
         self.geometry = ae_section['geometry']
         self.name = name
 
+        # older ini-files might have 'flat' instead of 'massive' as trough structure
+        if self.params['structure'] == 'flat':
+            self.params['structure'] = 'massive'
+
+
     def generate_realization(self, bottom_surface, top_surface, stratum, grid):
         """
         Generates a realization of the AE type.

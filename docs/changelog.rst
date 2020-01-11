@@ -17,11 +17,13 @@ Contributors
 Changes
 """""""
 
-* More Cython -> Code faster
-* Profiling setup
+* more Cython -> code faster
+* profiling setup
 * coverage.py setup
 * better tests
 * better developers guide
+* 'massive' is now a valid structure for troughs, as described in the documentation
+* changed 'flat' structure in made.ini to 'massive'
 * some other minor changes
 
 

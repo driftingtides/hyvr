@@ -17,7 +17,7 @@ class MockStratum:
 
 
 
-def trough_test(type_params, trough_params, point, expected):
+def trough_test(type_params, trough_params, point, expected, check_expected=True):
     """
     Run a test for given type params, trough params (a, b, c, alpha), a given
     point, and assert that the expected values are set
@@ -32,6 +32,14 @@ def trough_test(type_params, trough_params, point, expected):
         (x, y, z)
     expected : list/tuple
         (expected_facies, expected_azim, expected_dip)
+    check_expected : bool, optional (default: True)
+        Whether to check if the expected values are obtained.
+        If this is False, no assertions will be made.
+    
+    Returns
+    -------
+    facies, azim, dip : float
+        Facies, azimuth and dip at given location
     """
     grid = Grid(0., 0., 0., 0.1, 0.1, 0.1, 1.0, 1.0, 1.0, 0)
     bottom_surface = ContactSurface(grid, mode='flat', z=0)
@@ -58,18 +66,20 @@ def trough_test(type_params, trough_params, point, expected):
     # test
     x, y, z = point
     trough_ae.maybe_assign_points_to_object(0, geo_ids, angles, x, y, z, 0, 0, grid)
-    assert geo_ids[0] == expected[0]
-    if geo_ids[0] != -1:
-        assert angles[0] == expected[1]
-        assert angles[1] == expected[2]
+    if check_expected:
+        assert geo_ids[0] == expected[0]
+        if geo_ids[0] != -1:
+            assert angles[0] == expected[1]
+            assert angles[1] == expected[2]
+    return geo_ids[0], angles[0], angles[1]
 
 
-def test_flat_trough():
+def test_massive_trough():
     flat_type_params = {
         'te_xyz':[(0.5, 0.5, 0.5)],
         'lag_height': 0.0,
         'lag_facies': 20,
-        'structure': 'flat',
+        'structure': 'massive',
         'facies': [0],
         'azimuth': [10, 10],
         'dip': [15, 15],
@@ -106,54 +116,59 @@ def test_flat_trough():
                 (0, 10, 15))
 
 
-# def test_dip_trough():
+def test_dip_trough():
 
-#     grid = Grid(0.0, 0.0, 0.0, 0.1, 0.1, 0.1, 1.0, 1.0, 1.0, 0)
+    dip = 10
+    azim = 10
+    alpha = 30
+    dist = 0.01
+    dip_type_params = {
+        'te_xyz':[(0.5, 0.5, 0.5)],
+        "structure":'dip',
+        "dipset_dist":dist,
+        "facies":[5, 2],
+        "altfacies":[[2],[5]],
+        "dip":[dip,dip],
+        "azimuth":[azim,azim],
+        'lag_height':0.0,
+        'lag_facies':-1,
+        'ae_id':0,
+        'bg_facies':-1,
+        'bg_azim': np.nan,
+        'bg_dip': np.nan,
+        'size_ztrend': None,
+    }
 
-#     dip = 10
-#     azim = 10
-#     type_params = {
-#             "structure":'dip',
-#             "dipset_dist":0.01,
-#             "facies":[5, 2],
-#             "altfacies":[[2],[5]],
-#             "dip":[dip,dip],
-#             "azimuth":[azim,azim],
-#             'lag_height':0.0,
-#             'lag_facies':-1,
-#     }
+    trough_params = (0.2, 0.2, 0.2, alpha)
 
-#     a = 1.0
-#     b = 0.5
-#     c = 0.1
-#     alpha = 30.0
-#     trough = Trough(type_params, x=0.0, y=0.0, z=0.0, a=a, b=b, c=c, alpha=alpha)
-#     trough.num_ha = 0
-#     facies = np.zeros(1, dtype=np.int32)
-#     angles = np.zeros(2)
-#     ids = np.zeros(3, dtype=np.int32)
+    # get first facies
+    x0, y0, z0 = 0.5+0.1, 0.5+0.1, 0.5-0.1
+    fac1, azim1, dip1 = trough_test(dip_type_params, trough_params,
+                                  (x0, y0, z0), None,
+                                  check_expected=False)
+    assert dip1 == dip
+    assert azim1 == azim
 
-#     trough.maybe_assign_facies_azim_dip(facies, angles, ids, -0.2, 0.1, -0.02, 0, 0, grid)
-#     fac1 = facies[0]
+    # get second facies: first, find shift vector
+    sin_dip = sin(dip*np.pi/180)
+    cos_dip = cos(dip*np.pi/180)
+    sin_azim = sin(azim*np.pi/180)
+    cos_azim = cos(azim*np.pi/180)
+    normvec_x = -sin_dip*cos_azim
+    normvec_y = sin_dip*sin_azim
+    normvec_z = cos_dip
+    x = x0+dist*normvec_x
+    y = y0+dist*normvec_y
+    z = z0+dist*normvec_z
+    fac2, azim2, dip2 = trough_test(dip_type_params, trough_params,
+                                  (x, y, z), None,
+                                  check_expected=False)
+    assert dip2 == dip
+    assert azim2 == azim
 
-#     sin_dip = sin(dip*np.pi/180)
-#     cos_dip = cos(dip*np.pi/180)
-#     sin_azim = sin(azim*np.pi/180)
-#     cos_azim = cos(azim*np.pi/180)
-#     normvec_x = -sin_dip*cos_azim
-#     normvec_y = sin_dip*sin_azim
-#     normvec_z = cos_dip
-#     x = -0.2+0.01*normvec_x
-#     y = -0.2+0.01*normvec_y
-#     z = -0.2+0.01*normvec_z
-
-#     trough.maybe_assign_facies_azim_dip(facies, angles, ids, x, y, z, 0, 0, grid)
-#     fac2 = facies[0]
-
-#     assert fac1 != fac2
-#     assert angles[0] == alpha + 10
-#     assert angles[1] == 10
-
+    assert fac1 != fac2
+    assert fac1 in dip_type_params['facies']
+    assert fac2 in dip_type_params['facies']
 
 # def test_bulb_trough():
 

@@ -103,15 +103,15 @@ cdef class Trough:
         # To avoid string comparisons we assign each structure a number as
         # follows:
         #
-        # 0 : 'flat'
+        # 0 : 'massive'
         # 1 : 'dip'
         # 2 : 'bulb'
         # 3 : 'bulb_sets'
-        # -1: 'random'
-        self.structure = ['flat', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
+        # 4 : 'random'
+        self.structure = ['massive', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
         if self.structure == 4: # random
             self.structure = np.random.randint(4)
-        if self.structure == 0:  # flat
+        if self.structure == 0:  # massive
             self.facies = np.random.choice(type_params['facies'])
             self.azim = np.random.uniform(*type_params['azimuth'])
             self.dip = np.random.uniform(*type_params['dip'])
@@ -147,9 +147,9 @@ cdef class Trough:
             #     \       cos(dip)      /
             #
             #
-            # The azimuth is the given azimuth plus the rotation of the trough,
-            # all angles are in degree
-            self.azim = self.alpha + np.random.uniform(*type_params['azimuth'])
+            # The azimuth is the given azimuth **without** the rotation of the
+            # trough, all angles are in degree
+            self.azim = np.random.uniform(*type_params['azimuth'])
             self.dip = np.random.uniform(*type_params['dip'])
             sin_dip = sin(self.dip*np.pi/180)
             cos_dip = cos(self.dip*np.pi/180)

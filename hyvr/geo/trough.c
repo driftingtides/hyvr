@@ -2313,7 +2313,6 @@ static const char __pyx_k_base[] = "base";
 static const char __pyx_k_bulb[] = "bulb";
 static const char __pyx_k_ceil[] = "ceil";
 static const char __pyx_k_dict[] = "__dict__";
-static const char __pyx_k_flat[] = "flat";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
@@ -2349,6 +2348,7 @@ static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
 static const char __pyx_k_azimuth[] = "azimuth";
 static const char __pyx_k_fortran[] = "fortran";
+static const char __pyx_k_massive[] = "massive";
 static const char __pyx_k_memview[] = "memview";
 static const char __pyx_k_randint[] = "randint";
 static const char __pyx_k_uniform[] = "uniform";
@@ -2488,7 +2488,6 @@ static PyObject *__pyx_n_s_enumerate;
 static PyObject *__pyx_n_s_error;
 static PyObject *__pyx_n_u_facies;
 static PyObject *__pyx_n_s_flags;
-static PyObject *__pyx_n_u_flat;
 static PyObject *__pyx_n_s_format;
 static PyObject *__pyx_n_s_fortran;
 static PyObject *__pyx_n_u_fortran;
@@ -2506,6 +2505,7 @@ static PyObject *__pyx_kp_s_itemsize_0_for_cython_array;
 static PyObject *__pyx_n_u_lag_facies;
 static PyObject *__pyx_n_u_lag_height;
 static PyObject *__pyx_n_s_main;
+static PyObject *__pyx_n_u_massive;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
 static PyObject *__pyx_n_s_name;
@@ -2717,7 +2717,7 @@ static PyObject *__pyx_codeobj__29;
 static PyObject *__pyx_codeobj__36;
 /* Late includes */
 
-/* "hyvr/geo/trough.pyx":34
+/* "hyvr/geo/trough.pyx":37
  *         np.int32_t [:] facies_array
  * 
  *     def __init__(self, type_params, *, x, y, z, a, b, c, alpha):             # <<<<<<<<<<<<<<
@@ -2760,40 +2760,40 @@ static int __pyx_pw_4hyvr_3geo_6trough_6Trough_1__init__(PyObject *__pyx_v_self,
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_x)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_x); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_x); __PYX_ERR(0, 37, __pyx_L3_error)
         }
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_y)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_y); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_y); __PYX_ERR(0, 37, __pyx_L3_error)
         }
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_z)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_z); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_z); __PYX_ERR(0, 37, __pyx_L3_error)
         }
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_a)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_a); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_a); __PYX_ERR(0, 37, __pyx_L3_error)
         }
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_b)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_b); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_b); __PYX_ERR(0, 37, __pyx_L3_error)
         }
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_c)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_c); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_c); __PYX_ERR(0, 37, __pyx_L3_error)
         }
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_alpha); __PYX_ERR(0, 34, __pyx_L3_error)
+          __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_alpha); __PYX_ERR(0, 37, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 34, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 37, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
-      __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_x); __PYX_ERR(0, 34, __pyx_L3_error)
+      __Pyx_RaiseKeywordRequired("__init__", __pyx_n_s_x); __PYX_ERR(0, 37, __pyx_L3_error)
     }
     __pyx_v_type_params = values[0];
     __pyx_v_x = values[1];
@@ -2806,7 +2806,7 @@ static int __pyx_pw_4hyvr_3geo_6trough_6Trough_1__init__(PyObject *__pyx_v_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 34, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 37, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hyvr.geo.trough.Trough.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2841,67 +2841,67 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   __Pyx_memviewslice __pyx_t_13 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "hyvr/geo/trough.pyx":37
+  /* "hyvr/geo/trough.pyx":40
  *         cdef np.float_t sin_dip, cos_dip, sin_azim, cos_azim
  * 
  *         self.x = x             # <<<<<<<<<<<<<<
  *         self.y = y
  *         self.z = z
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_x); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_x); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
   __pyx_v_self->x = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":38
+  /* "hyvr/geo/trough.pyx":41
  * 
  *         self.x = x
  *         self.y = y             # <<<<<<<<<<<<<<
  *         self.z = z
  *         self.a = a
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_y); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_y); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L1_error)
   __pyx_v_self->y = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":39
+  /* "hyvr/geo/trough.pyx":42
  *         self.x = x
  *         self.y = y
  *         self.z = z             # <<<<<<<<<<<<<<
  *         self.a = a
  *         self.b = b
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_z); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_z); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L1_error)
   __pyx_v_self->z = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":40
+  /* "hyvr/geo/trough.pyx":43
  *         self.y = y
  *         self.z = z
  *         self.a = a             # <<<<<<<<<<<<<<
  *         self.b = b
  *         self.c = c
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_a); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_a); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L1_error)
   __pyx_v_self->a = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":41
+  /* "hyvr/geo/trough.pyx":44
  *         self.z = z
  *         self.a = a
  *         self.b = b             # <<<<<<<<<<<<<<
  *         self.c = c
  *         self.max_ab = max(a, b)
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_b); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_b); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
   __pyx_v_self->b = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":42
+  /* "hyvr/geo/trough.pyx":45
  *         self.a = a
  *         self.b = b
  *         self.c = c             # <<<<<<<<<<<<<<
  *         self.max_ab = max(a, b)
  *         self.zmin = z - c
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_c); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_c); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L1_error)
   __pyx_v_self->c = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":43
+  /* "hyvr/geo/trough.pyx":46
  *         self.b = b
  *         self.c = c
  *         self.max_ab = max(a, b)             # <<<<<<<<<<<<<<
@@ -2912,8 +2912,8 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   __pyx_t_2 = __pyx_v_b;
   __Pyx_INCREF(__pyx_v_a);
   __pyx_t_3 = __pyx_v_a;
-  __pyx_t_5 = PyObject_RichCompare(__pyx_t_2, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_5 = PyObject_RichCompare(__pyx_t_2, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (__pyx_t_6) {
     __Pyx_INCREF(__pyx_t_2);
@@ -2924,64 +2924,64 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->max_ab = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":44
+  /* "hyvr/geo/trough.pyx":47
  *         self.c = c
  *         self.max_ab = max(a, b)
  *         self.zmin = z - c             # <<<<<<<<<<<<<<
  *         self.zmax = z
  *         self.alpha = alpha
  */
-  __pyx_t_4 = PyNumber_Subtract(__pyx_v_z, __pyx_v_c); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Subtract(__pyx_v_z, __pyx_v_c); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->zmin = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":45
+  /* "hyvr/geo/trough.pyx":48
  *         self.max_ab = max(a, b)
  *         self.zmin = z - c
  *         self.zmax = z             # <<<<<<<<<<<<<<
  *         self.alpha = alpha
  * 
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_z); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_z); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_v_self->zmax = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":46
+  /* "hyvr/geo/trough.pyx":49
  *         self.zmin = z - c
  *         self.zmax = z
  *         self.alpha = alpha             # <<<<<<<<<<<<<<
  * 
  *         # To calculate the 'normalized' distance (i.e. the distance normalized
  */
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_alpha); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_alpha); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 49, __pyx_L1_error)
   __pyx_v_self->alpha = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":79
+  /* "hyvr/geo/trough.pyx":82
  *         #
  *         #
  *         self.sinalpha = np.sin(alpha*np.pi/180)             # <<<<<<<<<<<<<<
  *         self.cosalpha = np.cos(alpha*np.pi/180)
  *         # self.A = np.asarray([[a*self.cosalpha, -b*self.sinalpha, 0],
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_sin); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_sin); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_pi); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_alpha, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_alpha, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_2, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_2, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2997,34 +2997,34 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   __pyx_t_4 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->sinalpha = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":80
+  /* "hyvr/geo/trough.pyx":83
  *         #
  *         self.sinalpha = np.sin(alpha*np.pi/180)
  *         self.cosalpha = np.cos(alpha*np.pi/180)             # <<<<<<<<<<<<<<
  *         # self.A = np.asarray([[a*self.cosalpha, -b*self.sinalpha, 0],
  *         #                      [a*self.sinalpha, b*self.cosalpha, 0],
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_cos); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_cos); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_v_alpha, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(__pyx_v_alpha, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_3, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_3, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -3040,51 +3040,51 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   __pyx_t_4 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->cosalpha = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":95
+  /* "hyvr/geo/trough.pyx":98
  *         #     )
  * 
  *         self.lag = type_params['lag_height']             # <<<<<<<<<<<<<<
  *         self.lag_facies = type_params['lag_facies']
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_lag_height); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_lag_height); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->lag = __pyx_t_1;
 
-  /* "hyvr/geo/trough.pyx":96
+  /* "hyvr/geo/trough.pyx":99
  * 
  *         self.lag = type_params['lag_height']
  *         self.lag_facies = type_params['lag_facies']             # <<<<<<<<<<<<<<
  * 
  *         # Assign structure
  */
-  __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_lag_facies); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_lag_facies); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->lag_facies = __pyx_t_7;
 
-  /* "hyvr/geo/trough.pyx":108
+  /* "hyvr/geo/trough.pyx":111
  *         # 3 : 'bulb_sets'
- *         # -1: 'random'
- *         self.structure = ['flat', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])             # <<<<<<<<<<<<<<
+ *         # 4 : 'random'
+ *         self.structure = ['massive', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])             # <<<<<<<<<<<<<<
  *         if self.structure == 4: # random
  *             self.structure = np.random.randint(4)
  */
-  __pyx_t_5 = PyList_New(5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_5 = PyList_New(5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_n_u_flat);
-  __Pyx_GIVEREF(__pyx_n_u_flat);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_n_u_flat);
+  __Pyx_INCREF(__pyx_n_u_massive);
+  __Pyx_GIVEREF(__pyx_n_u_massive);
+  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_n_u_massive);
   __Pyx_INCREF(__pyx_n_u_dip);
   __Pyx_GIVEREF(__pyx_n_u_dip);
   PyList_SET_ITEM(__pyx_t_5, 1, __pyx_n_u_dip);
@@ -3097,10 +3097,10 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   __Pyx_INCREF(__pyx_n_u_random);
   __Pyx_GIVEREF(__pyx_n_u_random);
   PyList_SET_ITEM(__pyx_t_5, 4, __pyx_n_u_random);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_index); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_index); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_structure); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_structure); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3115,36 +3115,36 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   __pyx_t_4 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_self->structure = __pyx_t_7;
 
-  /* "hyvr/geo/trough.pyx":109
- *         # -1: 'random'
- *         self.structure = ['flat', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
+  /* "hyvr/geo/trough.pyx":112
+ *         # 4 : 'random'
+ *         self.structure = ['massive', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
  *         if self.structure == 4: # random             # <<<<<<<<<<<<<<
  *             self.structure = np.random.randint(4)
- *         if self.structure == 0:  # flat
+ *         if self.structure == 0:  # massive
  */
   __pyx_t_6 = ((__pyx_v_self->structure == 4) != 0);
   if (__pyx_t_6) {
 
-    /* "hyvr/geo/trough.pyx":110
- *         self.structure = ['flat', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
+    /* "hyvr/geo/trough.pyx":113
+ *         self.structure = ['massive', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
  *         if self.structure == 4: # random
  *             self.structure = np.random.randint(4)             # <<<<<<<<<<<<<<
- *         if self.structure == 0:  # flat
+ *         if self.structure == 0:  # massive
  *             self.facies = np.random.choice(type_params['facies'])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_randint); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_randint); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_5 = NULL;
@@ -3159,48 +3159,48 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     }
     __pyx_t_4 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_int_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_self->structure = __pyx_t_7;
 
-    /* "hyvr/geo/trough.pyx":109
- *         # -1: 'random'
- *         self.structure = ['flat', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
+    /* "hyvr/geo/trough.pyx":112
+ *         # 4 : 'random'
+ *         self.structure = ['massive', 'dip', 'bulb', 'bulb_sets', 'random'].index(type_params['structure'])
  *         if self.structure == 4: # random             # <<<<<<<<<<<<<<
  *             self.structure = np.random.randint(4)
- *         if self.structure == 0:  # flat
+ *         if self.structure == 0:  # massive
  */
   }
 
-  /* "hyvr/geo/trough.pyx":111
+  /* "hyvr/geo/trough.pyx":114
  *         if self.structure == 4: # random
  *             self.structure = np.random.randint(4)
- *         if self.structure == 0:  # flat             # <<<<<<<<<<<<<<
+ *         if self.structure == 0:  # massive             # <<<<<<<<<<<<<<
  *             self.facies = np.random.choice(type_params['facies'])
  *             self.azim = np.random.uniform(*type_params['azimuth'])
  */
   switch (__pyx_v_self->structure) {
     case 0:
 
-    /* "hyvr/geo/trough.pyx":112
+    /* "hyvr/geo/trough.pyx":115
  *             self.structure = np.random.randint(4)
- *         if self.structure == 0:  # flat
+ *         if self.structure == 0:  # massive
  *             self.facies = np.random.choice(type_params['facies'])             # <<<<<<<<<<<<<<
  *             self.azim = np.random.uniform(*type_params['azimuth'])
  *             self.dip = np.random.uniform(*type_params['dip'])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_choice); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_choice); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_facies); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_facies); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_3 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3215,255 +3215,249 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     __pyx_t_4 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_4); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_self->facies = __pyx_t_7;
 
-    /* "hyvr/geo/trough.pyx":113
- *         if self.structure == 0:  # flat
+    /* "hyvr/geo/trough.pyx":116
+ *         if self.structure == 0:  # massive
  *             self.facies = np.random.choice(type_params['facies'])
  *             self.azim = np.random.uniform(*type_params['azimuth'])             # <<<<<<<<<<<<<<
  *             self.dip = np.random.uniform(*type_params['dip'])
  *         elif self.structure == 1: # dip
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_azimuth); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_azimuth); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 113, __pyx_L1_error)
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_self->azim = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":114
+    /* "hyvr/geo/trough.pyx":117
  *             self.facies = np.random.choice(type_params['facies'])
  *             self.azim = np.random.uniform(*type_params['azimuth'])
  *             self.dip = np.random.uniform(*type_params['dip'])             # <<<<<<<<<<<<<<
  *         elif self.structure == 1: # dip
  *             # In this case the internal structure consists of parallel dipping layers.
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_uniform); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_uniform); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_4 = __Pyx_PySequence_Tuple(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PySequence_Tuple(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_self->dip = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":111
+    /* "hyvr/geo/trough.pyx":114
  *         if self.structure == 4: # random
  *             self.structure = np.random.randint(4)
- *         if self.structure == 0:  # flat             # <<<<<<<<<<<<<<
+ *         if self.structure == 0:  # massive             # <<<<<<<<<<<<<<
  *             self.facies = np.random.choice(type_params['facies'])
  *             self.azim = np.random.uniform(*type_params['azimuth'])
  */
     break;
     case 1:
 
-    /* "hyvr/geo/trough.pyx":120
+    /* "hyvr/geo/trough.pyx":123
  *             # could place the first layer, and a normal vector defined by two
  *             # angles, dip and azimuth.
  *             self.layer_dist = type_params['dipset_dist']             # <<<<<<<<<<<<<<
  * 
  *             # The normal vector is determined by the dip angle of the dipping
  */
-    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dipset_dist); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dipset_dist); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_self->layer_dist = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":149
- *             # The azimuth is the given azimuth plus the rotation of the trough,
- *             # all angles are in degree
- *             self.azim = self.alpha + np.random.uniform(*type_params['azimuth'])             # <<<<<<<<<<<<<<
+    /* "hyvr/geo/trough.pyx":152
+ *             # The azimuth is the given azimuth **without** the rotation of the
+ *             # trough, all angles are in degree
+ *             self.azim = np.random.uniform(*type_params['azimuth'])             # <<<<<<<<<<<<<<
  *             self.dip = np.random.uniform(*type_params['dip'])
  *             sin_dip = sin(self.dip*np.pi/180)
  */
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_self->alpha); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_azimuth); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_2 = __Pyx_PySequence_Tuple(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_azimuth); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 149, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_self->azim = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":150
- *             # all angles are in degree
- *             self.azim = self.alpha + np.random.uniform(*type_params['azimuth'])
+    /* "hyvr/geo/trough.pyx":153
+ *             # trough, all angles are in degree
+ *             self.azim = np.random.uniform(*type_params['azimuth'])
  *             self.dip = np.random.uniform(*type_params['dip'])             # <<<<<<<<<<<<<<
  *             sin_dip = sin(self.dip*np.pi/180)
  *             cos_dip = cos(self.dip*np.pi/180)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 153, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_self->dip = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":151
- *             self.azim = self.alpha + np.random.uniform(*type_params['azimuth'])
+    /* "hyvr/geo/trough.pyx":154
+ *             self.azim = np.random.uniform(*type_params['azimuth'])
  *             self.dip = np.random.uniform(*type_params['dip'])
  *             sin_dip = sin(self.dip*np.pi/180)             # <<<<<<<<<<<<<<
  *             cos_dip = cos(self.dip*np.pi/180)
  *             sin_azim = sin(self.azim*np.pi/180)
  */
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->dip); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 151, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->dip); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 151, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 151, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 154, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_sin_dip = sin(__pyx_t_8);
 
-    /* "hyvr/geo/trough.pyx":152
+    /* "hyvr/geo/trough.pyx":155
  *             self.dip = np.random.uniform(*type_params['dip'])
  *             sin_dip = sin(self.dip*np.pi/180)
  *             cos_dip = cos(self.dip*np.pi/180)             # <<<<<<<<<<<<<<
  *             sin_azim = sin(self.azim*np.pi/180)
  *             cos_azim = cos(self.azim*np.pi/180)
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_self->dip); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_self->dip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_cos_dip = cos(__pyx_t_8);
 
-    /* "hyvr/geo/trough.pyx":153
+    /* "hyvr/geo/trough.pyx":156
  *             sin_dip = sin(self.dip*np.pi/180)
  *             cos_dip = cos(self.dip*np.pi/180)
  *             sin_azim = sin(self.azim*np.pi/180)             # <<<<<<<<<<<<<<
  *             cos_azim = cos(self.azim*np.pi/180)
  *             self.normvec_x = -sin_dip*cos_azim
  */
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 156, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_sin_azim = sin(__pyx_t_8);
 
-    /* "hyvr/geo/trough.pyx":154
+    /* "hyvr/geo/trough.pyx":157
  *             cos_dip = cos(self.dip*np.pi/180)
  *             sin_azim = sin(self.azim*np.pi/180)
  *             cos_azim = cos(self.azim*np.pi/180)             # <<<<<<<<<<<<<<
  *             self.normvec_x = -sin_dip*cos_azim
  *             self.normvec_y = sin_dip*sin_azim
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 157, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 157, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_5, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 157, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_cos_azim = cos(__pyx_t_8);
 
-    /* "hyvr/geo/trough.pyx":155
+    /* "hyvr/geo/trough.pyx":158
  *             sin_azim = sin(self.azim*np.pi/180)
  *             cos_azim = cos(self.azim*np.pi/180)
  *             self.normvec_x = -sin_dip*cos_azim             # <<<<<<<<<<<<<<
@@ -3472,7 +3466,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  */
     __pyx_v_self->normvec_x = ((-__pyx_v_sin_dip) * __pyx_v_cos_azim);
 
-    /* "hyvr/geo/trough.pyx":156
+    /* "hyvr/geo/trough.pyx":159
  *             cos_azim = cos(self.azim*np.pi/180)
  *             self.normvec_x = -sin_dip*cos_azim
  *             self.normvec_y = sin_dip*sin_azim             # <<<<<<<<<<<<<<
@@ -3481,7 +3475,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  */
     __pyx_v_self->normvec_y = (__pyx_v_sin_dip * __pyx_v_sin_azim);
 
-    /* "hyvr/geo/trough.pyx":157
+    /* "hyvr/geo/trough.pyx":160
  *             self.normvec_x = -sin_dip*cos_azim
  *             self.normvec_y = sin_dip*sin_azim
  *             self.normvec_z = cos_dip             # <<<<<<<<<<<<<<
@@ -3490,30 +3484,30 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  */
     __pyx_v_self->normvec_z = __pyx_v_cos_dip;
 
-    /* "hyvr/geo/trough.pyx":162
+    /* "hyvr/geo/trough.pyx":165
  *             # (self.x, self.y, self.z).
  *             # To move the planes a bit we add a random component
  *             self.shift = np.random.uniform(0, self.layer_dist)             # <<<<<<<<<<<<<<
  * 
  *             # The facies changes with every distance `layer_dist` to the zero
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 162, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 162, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 162, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 165, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 162, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = NULL;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = NULL;
     __pyx_t_9 = 0;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_5);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_3)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_5, function);
         __pyx_t_9 = 1;
@@ -3521,102 +3515,102 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     }
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_int_0, __pyx_t_3};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_int_0, __pyx_t_4};
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_int_0, __pyx_t_3};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_int_0, __pyx_t_4};
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 162, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 165, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      if (__pyx_t_4) {
-        __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_4); __pyx_t_4 = NULL;
+      if (__pyx_t_3) {
+        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_3); __pyx_t_3 = NULL;
       }
       __Pyx_INCREF(__pyx_int_0);
       __Pyx_GIVEREF(__pyx_int_0);
       PyTuple_SET_ITEM(__pyx_t_10, 0+__pyx_t_9, __pyx_int_0);
-      __Pyx_GIVEREF(__pyx_t_3);
-      PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_t_3);
-      __pyx_t_3 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+      __Pyx_GIVEREF(__pyx_t_4);
+      PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_t_4);
+      __pyx_t_4 = 0;
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 162, __pyx_L1_error)
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_self->shift = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":166
+    /* "hyvr/geo/trough.pyx":169
  *             # The facies changes with every distance `layer_dist` to the zero
  *             # plane. The maximum number of different facies is:
  *             self.num_facies = int(np.ceil((2*max(a, b, c) + self.shift)/self.layer_dist)) + 2             # <<<<<<<<<<<<<<
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *         elif self.structure == 2: # bulb
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_ceil); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_ceil); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_v_b);
     __pyx_t_5 = __pyx_v_b;
     __Pyx_INCREF(__pyx_v_c);
-    __pyx_t_3 = __pyx_v_c;
+    __pyx_t_4 = __pyx_v_c;
     __Pyx_INCREF(__pyx_v_a);
-    __pyx_t_4 = __pyx_v_a;
-    __pyx_t_12 = PyObject_RichCompare(__pyx_t_5, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 166, __pyx_L1_error)
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_3 = __pyx_v_a;
+    __pyx_t_12 = PyObject_RichCompare(__pyx_t_5, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     if (__pyx_t_6) {
       __Pyx_INCREF(__pyx_t_5);
       __pyx_t_11 = __pyx_t_5;
     } else {
-      __Pyx_INCREF(__pyx_t_4);
-      __pyx_t_11 = __pyx_t_4;
-    }
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_INCREF(__pyx_t_11);
-    __pyx_t_4 = __pyx_t_11;
-    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_12 = PyObject_RichCompare(__pyx_t_3, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 166, __pyx_L1_error)
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 166, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    if (__pyx_t_6) {
       __Pyx_INCREF(__pyx_t_3);
       __pyx_t_11 = __pyx_t_3;
-    } else {
+    }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_INCREF(__pyx_t_11);
+    __pyx_t_3 = __pyx_t_11;
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __pyx_t_12 = PyObject_RichCompare(__pyx_t_4, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    if (__pyx_t_6) {
       __Pyx_INCREF(__pyx_t_4);
       __pyx_t_11 = __pyx_t_4;
+    } else {
+      __Pyx_INCREF(__pyx_t_3);
+      __pyx_t_11 = __pyx_t_3;
     }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyNumber_Multiply(__pyx_int_2, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_int_2, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_self->shift); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_self->shift); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_11); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = PyNumber_Add(__pyx_t_5, __pyx_t_11); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_t_11 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_10))) {
@@ -3631,32 +3625,32 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     __pyx_t_2 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_11, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_5);
     __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 166, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = __Pyx_PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_10, __pyx_int_2, 2, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_10, __pyx_int_2, 2, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_2); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_2); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_self->num_facies = __pyx_t_7;
 
-    /* "hyvr/geo/trough.pyx":167
+    /* "hyvr/geo/trough.pyx":170
  *             # plane. The maximum number of different facies is:
  *             self.num_facies = int(np.ceil((2*max(a, b, c) + self.shift)/self.layer_dist)) + 2
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)             # <<<<<<<<<<<<<<
  *         elif self.structure == 2: # bulb
  *             self.facies = np.random.choice(type_params['facies'])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_hu); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_hu); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_get_alternating_facies); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_get_alternating_facies); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 170, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_facies); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_facies); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __pyx_t_11 = NULL;
     __pyx_t_9 = 0;
@@ -3673,7 +3667,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[3] = {__pyx_t_11, __pyx_t_10, __pyx_v_type_params};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -3682,37 +3676,37 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[3] = {__pyx_t_11, __pyx_t_10, __pyx_v_type_params};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 167, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 170, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       if (__pyx_t_11) {
-        __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_11); __pyx_t_11 = NULL;
+        __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_11); __pyx_t_11 = NULL;
       }
       __Pyx_GIVEREF(__pyx_t_10);
-      PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_9, __pyx_t_10);
+      PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_9, __pyx_t_10);
       __Pyx_INCREF(__pyx_v_type_params);
       __Pyx_GIVEREF(__pyx_v_type_params);
-      PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_9, __pyx_v_type_params);
+      PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_9, __pyx_v_type_params);
       __pyx_t_10 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 167, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 170, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __PYX_XDEC_MEMVIEW(&__pyx_v_self->facies_array, 0);
     __pyx_v_self->facies_array = __pyx_t_13;
     __pyx_t_13.memview = NULL;
     __pyx_t_13.data = NULL;
 
-    /* "hyvr/geo/trough.pyx":115
+    /* "hyvr/geo/trough.pyx":118
  *             self.azim = np.random.uniform(*type_params['azimuth'])
  *             self.dip = np.random.uniform(*type_params['dip'])
  *         elif self.structure == 1: # dip             # <<<<<<<<<<<<<<
@@ -3722,23 +3716,23 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     break;
     case 2:
 
-    /* "hyvr/geo/trough.pyx":169
+    /* "hyvr/geo/trough.pyx":172
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *         elif self.structure == 2: # bulb
  *             self.facies = np.random.choice(type_params['facies'])             # <<<<<<<<<<<<<<
  *             # maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 172, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_choice); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_choice); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_facies); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_facies); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 172, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_10 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
       __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_5);
@@ -3749,45 +3743,45 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
         __Pyx_DECREF_SET(__pyx_t_5, function);
       }
     }
-    __pyx_t_2 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_10, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3);
+    __pyx_t_2 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_10, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_2); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_2); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_self->facies = __pyx_t_7;
 
-    /* "hyvr/geo/trough.pyx":171
+    /* "hyvr/geo/trough.pyx":174
  *             self.facies = np.random.choice(type_params['facies'])
  *             # maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])             # <<<<<<<<<<<<<<
  *         elif self.structure == 3: # bulb_sets
  *             # The facies thickness is 'bulbset_dist', and is measured along the
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_random); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_uniform); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_uniform); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PySequence_Tuple(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 174, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_self->dip = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":168
+    /* "hyvr/geo/trough.pyx":171
  *             self.num_facies = int(np.ceil((2*max(a, b, c) + self.shift)/self.layer_dist)) + 2
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *         elif self.structure == 2: # bulb             # <<<<<<<<<<<<<<
@@ -3797,128 +3791,128 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     break;
     case 3:
 
-    /* "hyvr/geo/trough.pyx":177
+    /* "hyvr/geo/trough.pyx":180
  *             # deformed a bit. We add again a random shift, but this time in the
  *             # normalized domain.
  *             self.layer_dist = type_params['bulbset_dist']             # <<<<<<<<<<<<<<
  *             self.shift = np.random.uniform()
  *             self.num_facies = int(ceil((1 + self.shift)*c/self.layer_dist)) + 1
  */
-    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_bulbset_dist); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 177, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_bulbset_dist); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 177, __pyx_L1_error)
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_self->layer_dist = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":178
+    /* "hyvr/geo/trough.pyx":181
  *             # normalized domain.
  *             self.layer_dist = type_params['bulbset_dist']
  *             self.shift = np.random.uniform()             # <<<<<<<<<<<<<<
  *             self.num_facies = int(ceil((1 + self.shift)*c/self.layer_dist)) + 1
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 178, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 178, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 181, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_random); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 178, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uniform); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 181, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
       if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
         __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+    __pyx_t_5 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 178, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 178, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_self->shift = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":179
+    /* "hyvr/geo/trough.pyx":182
  *             self.layer_dist = type_params['bulbset_dist']
  *             self.shift = np.random.uniform()
  *             self.num_facies = int(ceil((1 + self.shift)*c/self.layer_dist)) + 1             # <<<<<<<<<<<<<<
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *             # maximum possible dip
  */
-    __pyx_t_5 = PyFloat_FromDouble((1.0 + __pyx_v_self->shift)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble((1.0 + __pyx_v_self->shift)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_t_5, __pyx_v_c); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 179, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = PyNumber_Multiply(__pyx_t_5, __pyx_v_c); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_FromDouble(ceil(__pyx_t_8)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_FromDouble(ceil(__pyx_t_8)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_5); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_npy_int32(__pyx_t_5); if (unlikely((__pyx_t_7 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_self->num_facies = __pyx_t_7;
 
-    /* "hyvr/geo/trough.pyx":180
+    /* "hyvr/geo/trough.pyx":183
  *             self.shift = np.random.uniform()
  *             self.num_facies = int(ceil((1 + self.shift)*c/self.layer_dist)) + 1
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)             # <<<<<<<<<<<<<<
  *             # maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_hu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_hu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_get_alternating_facies); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_get_alternating_facies); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 183, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_facies); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_facies); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_10 = NULL;
     __pyx_t_9 = 0;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-      __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_3);
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_4);
       if (likely(__pyx_t_10)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
         __Pyx_INCREF(__pyx_t_10);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
         __pyx_t_9 = 1;
       }
     }
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_3)) {
+    if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_2, __pyx_v_type_params};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_2, __pyx_v_type_params};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     {
-      __pyx_t_11 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       if (__pyx_t_10) {
         __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -3929,47 +3923,47 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
       __Pyx_GIVEREF(__pyx_v_type_params);
       PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_9, __pyx_v_type_params);
       __pyx_t_2 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 180, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __PYX_XDEC_MEMVIEW(&__pyx_v_self->facies_array, 0);
     __pyx_v_self->facies_array = __pyx_t_13;
     __pyx_t_13.memview = NULL;
     __pyx_t_13.data = NULL;
 
-    /* "hyvr/geo/trough.pyx":182
+    /* "hyvr/geo/trough.pyx":185
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *             # maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])             # <<<<<<<<<<<<<<
  *         else:
  *             print("Structure number:", self.structure)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = __Pyx_PySequence_Tuple(__pyx_t_3); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_Dict_GetItem(__pyx_v_type_params, __pyx_n_u_dip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_11 = __Pyx_PySequence_Tuple(__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_11, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 185, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_self->dip = __pyx_t_1;
 
-    /* "hyvr/geo/trough.pyx":172
+    /* "hyvr/geo/trough.pyx":175
  *             # maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])
  *         elif self.structure == 3: # bulb_sets             # <<<<<<<<<<<<<<
@@ -3979,41 +3973,41 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     break;
     default:
 
-    /* "hyvr/geo/trough.pyx":184
+    /* "hyvr/geo/trough.pyx":187
  *             self.dip = np.random.uniform(*type_params['dip'])
  *         else:
  *             print("Structure number:", self.structure)             # <<<<<<<<<<<<<<
  *             raise NotImplementedError('This structure is not implemented yet')
  */
-    __pyx_t_3 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->structure); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = PyTuple_New(2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->structure); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_11 = PyTuple_New(2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 187, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_INCREF(__pyx_kp_u_Structure_number);
     __Pyx_GIVEREF(__pyx_kp_u_Structure_number);
     PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_kp_u_Structure_number);
-    __Pyx_GIVEREF(__pyx_t_3);
-    PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_t_3);
-    __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_t_4);
+    __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_11, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 187, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "hyvr/geo/trough.pyx":185
+    /* "hyvr/geo/trough.pyx":188
  *         else:
  *             print("Structure number:", self.structure)
  *             raise NotImplementedError('This structure is not implemented yet')             # <<<<<<<<<<<<<<
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_Raise(__pyx_t_3, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 185, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 188, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_Raise(__pyx_t_4, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __PYX_ERR(0, 188, __pyx_L1_error)
     break;
   }
 
-  /* "hyvr/geo/trough.pyx":34
+  /* "hyvr/geo/trough.pyx":37
  *         np.int32_t [:] facies_array
  * 
  *     def __init__(self, type_params, *, x, y, z, a, b, c, alpha):             # <<<<<<<<<<<<<<
@@ -4040,7 +4034,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":18
+/* "hyvr/geo/trough.pyx":21
  *     """
  *     cdef public:
  *         np.float_t x, y, z             # <<<<<<<<<<<<<<
@@ -4067,7 +4061,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_1x___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4102,7 +4096,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1x_2__set__(struct __pyx_obj_4hyv
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_v_self->x = __pyx_t_1;
 
   /* function exit code */
@@ -4135,7 +4129,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_1y___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4170,7 +4164,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1y_2__set__(struct __pyx_obj_4hyv
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_v_self->y = __pyx_t_1;
 
   /* function exit code */
@@ -4203,7 +4197,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_1z___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4238,7 +4232,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1z_2__set__(struct __pyx_obj_4hyv
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_v_self->z = __pyx_t_1;
 
   /* function exit code */
@@ -4252,7 +4246,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1z_2__set__(struct __pyx_obj_4hyv
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":19
+/* "hyvr/geo/trough.pyx":22
  *     cdef public:
  *         np.float_t x, y, z
  *         np.float_t a, b, c             # <<<<<<<<<<<<<<
@@ -4279,7 +4273,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_1a___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4314,7 +4308,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1a_2__set__(struct __pyx_obj_4hyv
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
   __pyx_v_self->a = __pyx_t_1;
 
   /* function exit code */
@@ -4347,7 +4341,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_1b___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4382,7 +4376,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1b_2__set__(struct __pyx_obj_4hyv
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
   __pyx_v_self->b = __pyx_t_1;
 
   /* function exit code */
@@ -4415,7 +4409,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_1c___get__(struct __pyx_obj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4450,7 +4444,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1c_2__set__(struct __pyx_obj_4hyv
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
   __pyx_v_self->c = __pyx_t_1;
 
   /* function exit code */
@@ -4464,7 +4458,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_1c_2__set__(struct __pyx_obj_4hyv
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":20
+/* "hyvr/geo/trough.pyx":23
  *         np.float_t x, y, z
  *         np.float_t a, b, c
  *         np.float_t max_ab             # <<<<<<<<<<<<<<
@@ -4491,7 +4485,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_6max_ab___get__(struct __py
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->max_ab); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->max_ab); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4526,7 +4520,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6max_ab_2__set__(struct __pyx_obj
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L1_error)
   __pyx_v_self->max_ab = __pyx_t_1;
 
   /* function exit code */
@@ -4540,7 +4534,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6max_ab_2__set__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":21
+/* "hyvr/geo/trough.pyx":24
  *         np.float_t a, b, c
  *         np.float_t max_ab
  *         np.float_t zmin, zmax             # <<<<<<<<<<<<<<
@@ -4567,7 +4561,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_4zmin___get__(struct __pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->zmin); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->zmin); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4602,7 +4596,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_4zmin_2__set__(struct __pyx_obj_4
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
   __pyx_v_self->zmin = __pyx_t_1;
 
   /* function exit code */
@@ -4635,7 +4629,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_4zmax___get__(struct __pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->zmax); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->zmax); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4670,7 +4664,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_4zmax_2__set__(struct __pyx_obj_4
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
   __pyx_v_self->zmax = __pyx_t_1;
 
   /* function exit code */
@@ -4684,7 +4678,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_4zmax_2__set__(struct __pyx_obj_4
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":22
+/* "hyvr/geo/trough.pyx":25
  *         np.float_t max_ab
  *         np.float_t zmin, zmax
  *         np.float_t alpha             # <<<<<<<<<<<<<<
@@ -4711,7 +4705,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_5alpha___get__(struct __pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->alpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->alpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4746,7 +4740,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_5alpha_2__set__(struct __pyx_obj_
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L1_error)
   __pyx_v_self->alpha = __pyx_t_1;
 
   /* function exit code */
@@ -4760,7 +4754,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_5alpha_2__set__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":23
+/* "hyvr/geo/trough.pyx":26
  *         np.float_t zmin, zmax
  *         np.float_t alpha
  *         np.float_t sinalpha, cosalpha             # <<<<<<<<<<<<<<
@@ -4787,7 +4781,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_8sinalpha___get__(struct __
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->sinalpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->sinalpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4822,7 +4816,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_8sinalpha_2__set__(struct __pyx_o
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L1_error)
   __pyx_v_self->sinalpha = __pyx_t_1;
 
   /* function exit code */
@@ -4855,7 +4849,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_8cosalpha___get__(struct __
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->cosalpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->cosalpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4890,7 +4884,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_8cosalpha_2__set__(struct __pyx_o
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L1_error)
   __pyx_v_self->cosalpha = __pyx_t_1;
 
   /* function exit code */
@@ -4904,7 +4898,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_8cosalpha_2__set__(struct __pyx_o
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":24
+/* "hyvr/geo/trough.pyx":27
  *         np.float_t alpha
  *         np.float_t sinalpha, cosalpha
  *         np.float_t lag, shift             # <<<<<<<<<<<<<<
@@ -4931,7 +4925,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_3lag___get__(struct __pyx_o
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->lag); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->lag); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4966,7 +4960,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_3lag_2__set__(struct __pyx_obj_4h
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
   __pyx_v_self->lag = __pyx_t_1;
 
   /* function exit code */
@@ -4999,7 +4993,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_5shift___get__(struct __pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->shift); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->shift); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5034,7 +5028,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_5shift_2__set__(struct __pyx_obj_
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
   __pyx_v_self->shift = __pyx_t_1;
 
   /* function exit code */
@@ -5048,7 +5042,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_5shift_2__set__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":25
+/* "hyvr/geo/trough.pyx":28
  *         np.float_t sinalpha, cosalpha
  *         np.float_t lag, shift
  *         np.int32_t structure             # <<<<<<<<<<<<<<
@@ -5075,7 +5069,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_9structure___get__(struct _
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->structure); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->structure); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5110,7 +5104,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_9structure_2__set__(struct __pyx_
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_int32_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
   __pyx_v_self->structure = __pyx_t_1;
 
   /* function exit code */
@@ -5124,7 +5118,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_9structure_2__set__(struct __pyx_
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":26
+/* "hyvr/geo/trough.pyx":29
  *         np.float_t lag, shift
  *         np.int32_t structure
  *         np.float_t layer_dist             # <<<<<<<<<<<<<<
@@ -5151,7 +5145,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_10layer_dist___get__(struct
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->layer_dist); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5186,7 +5180,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_10layer_dist_2__set__(struct __py
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L1_error)
   __pyx_v_self->layer_dist = __pyx_t_1;
 
   /* function exit code */
@@ -5200,7 +5194,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_10layer_dist_2__set__(struct __py
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":27
+/* "hyvr/geo/trough.pyx":30
  *         np.int32_t structure
  *         np.float_t layer_dist
  *         np.float_t dip, azim             # <<<<<<<<<<<<<<
@@ -5227,7 +5221,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_3dip___get__(struct __pyx_o
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->dip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->dip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5262,7 +5256,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_3dip_2__set__(struct __pyx_obj_4h
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
   __pyx_v_self->dip = __pyx_t_1;
 
   /* function exit code */
@@ -5295,7 +5289,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_4azim___get__(struct __pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5330,7 +5324,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_4azim_2__set__(struct __pyx_obj_4
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
   __pyx_v_self->azim = __pyx_t_1;
 
   /* function exit code */
@@ -5344,7 +5338,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_4azim_2__set__(struct __pyx_obj_4
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":28
+/* "hyvr/geo/trough.pyx":31
  *         np.float_t layer_dist
  *         np.float_t dip, azim
  *         np.int32_t facies, lag_facies, num_ha             # <<<<<<<<<<<<<<
@@ -5371,7 +5365,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_6facies___get__(struct __py
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5406,7 +5400,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6facies_2__set__(struct __pyx_obj
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_int32_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
   __pyx_v_self->facies = __pyx_t_1;
 
   /* function exit code */
@@ -5439,7 +5433,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_10lag_facies___get__(struct
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->lag_facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->lag_facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5474,7 +5468,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_10lag_facies_2__set__(struct __py
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_int32_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
   __pyx_v_self->lag_facies = __pyx_t_1;
 
   /* function exit code */
@@ -5507,7 +5501,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_6num_ha___get__(struct __py
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_ha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_ha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5542,7 +5536,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6num_ha_2__set__(struct __pyx_obj
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_int32_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
   __pyx_v_self->num_ha = __pyx_t_1;
 
   /* function exit code */
@@ -5556,7 +5550,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6num_ha_2__set__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":29
+/* "hyvr/geo/trough.pyx":32
  *         np.float_t dip, azim
  *         np.int32_t facies, lag_facies, num_ha
  *         np.float_t cosdip             # <<<<<<<<<<<<<<
@@ -5583,7 +5577,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_6cosdip___get__(struct __py
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->cosdip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->cosdip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5618,7 +5612,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6cosdip_2__set__(struct __pyx_obj
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L1_error)
   __pyx_v_self->cosdip = __pyx_t_1;
 
   /* function exit code */
@@ -5632,7 +5626,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_6cosdip_2__set__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":30
+/* "hyvr/geo/trough.pyx":33
  *         np.int32_t facies, lag_facies, num_ha
  *         np.float_t cosdip
  *         np.float_t normvec_x, normvec_y, normvec_z             # <<<<<<<<<<<<<<
@@ -5659,7 +5653,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_x___get__(struct _
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->normvec_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->normvec_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5694,7 +5688,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_x_2__set__(struct __pyx_
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
   __pyx_v_self->normvec_x = __pyx_t_1;
 
   /* function exit code */
@@ -5727,7 +5721,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_y___get__(struct _
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->normvec_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->normvec_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5762,7 +5756,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_y_2__set__(struct __pyx_
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
   __pyx_v_self->normvec_y = __pyx_t_1;
 
   /* function exit code */
@@ -5795,7 +5789,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_z___get__(struct _
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->normvec_z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->normvec_z); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5830,7 +5824,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_z_2__set__(struct __pyx_
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_float_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
   __pyx_v_self->normvec_z = __pyx_t_1;
 
   /* function exit code */
@@ -5844,7 +5838,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_9normvec_z_2__set__(struct __pyx_
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":31
+/* "hyvr/geo/trough.pyx":34
  *         np.float_t cosdip
  *         np.float_t normvec_x, normvec_y, normvec_z
  *         np.int32_t num_facies             # <<<<<<<<<<<<<<
@@ -5871,7 +5865,7 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_10num_facies___get__(struct
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_npy_int32(__pyx_v_self->num_facies); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5906,7 +5900,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_10num_facies_2__set__(struct __py
   __Pyx_RefNannyDeclarations
   __pyx_t_5numpy_int32_t __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_npy_int32(__pyx_v_value); if (unlikely((__pyx_t_1 == ((npy_int32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L1_error)
   __pyx_v_self->num_facies = __pyx_t_1;
 
   /* function exit code */
@@ -5920,7 +5914,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_10num_facies_2__set__(struct __py
   return __pyx_r;
 }
 
-/* "hyvr/geo/trough.pyx":32
+/* "hyvr/geo/trough.pyx":35
  *         np.float_t normvec_x, normvec_y, normvec_z
  *         np.int32_t num_facies
  *         np.int32_t [:] facies_array             # <<<<<<<<<<<<<<
@@ -5947,8 +5941,8 @@ static PyObject *__pyx_pf_4hyvr_3geo_6trough_6Trough_12facies_array___get__(stru
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_self->facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 32, __pyx_L1_error)}
-  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_self->facies_array, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  if (unlikely(!__pyx_v_self->facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 35, __pyx_L1_error)}
+  __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_self->facies_array, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_int32_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_int32_t, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5983,7 +5977,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough_12facies_array_2__set__(struct __
   __Pyx_RefNannyDeclarations
   __Pyx_memviewslice __pyx_t_1 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_v_value, PyBUF_WRITABLE); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_int32_t(__pyx_v_value, PyBUF_WRITABLE); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 35, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->facies_array, 0);
   __pyx_v_self->facies_array = __pyx_t_1;
   __pyx_t_1.memview = NULL;
@@ -22810,7 +22804,7 @@ static PyTypeObject __pyx_type_4hyvr_3geo_6trough_Trough = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  "\n    This class holds all parameters of a geometrical trough object.\n\n    It has two methods: a constructor, that sets all parameters, e.g. dip set\n    facies, etc., and a ``maybe_assign_facies_azim_dip`` method, that checks\n    whether a given cell is inside the trough and returns its properties.\n    ", /*tp_doc*/
+  "\n    This class holds all parameters of a geometrical trough object.\n    \n    The only method of this class is __init__, as after creating all trough\n    objects, the list of troughs in TroughAE will be converted to multiple lists\n    containing of attribute values for easier access from Cython.\n    \n    In principle this could also be implemented in pure Python, anyone\n    interested in rewriting this class (and Channel and Sheet) can do so.\n    ", /*tp_doc*/
   0, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -23670,7 +23664,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_error, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 1},
   {&__pyx_n_u_facies, __pyx_k_facies, sizeof(__pyx_k_facies), 0, 1, 0, 1},
   {&__pyx_n_s_flags, __pyx_k_flags, sizeof(__pyx_k_flags), 0, 0, 1, 1},
-  {&__pyx_n_u_flat, __pyx_k_flat, sizeof(__pyx_k_flat), 0, 1, 0, 1},
   {&__pyx_n_s_format, __pyx_k_format, sizeof(__pyx_k_format), 0, 0, 1, 1},
   {&__pyx_n_s_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 0, 1, 1},
   {&__pyx_n_u_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 1, 0, 1},
@@ -23688,6 +23681,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_lag_facies, __pyx_k_lag_facies, sizeof(__pyx_k_lag_facies), 0, 1, 0, 1},
   {&__pyx_n_u_lag_height, __pyx_k_lag_height, sizeof(__pyx_k_lag_height), 0, 1, 0, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
+  {&__pyx_n_u_massive, __pyx_k_massive, sizeof(__pyx_k_massive), 0, 1, 0, 1},
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
@@ -23750,8 +23744,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 184, __pyx_L1_error)
-  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 188, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(2, 272, __pyx_L1_error)
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(2, 285, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(2, 856, __pyx_L1_error)
@@ -23771,12 +23765,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hyvr/geo/trough.pyx":185
+  /* "hyvr/geo/trough.pyx":188
  *         else:
  *             print("Structure number:", self.structure)
  *             raise NotImplementedError('This structure is not implemented yet')             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_This_structure_is_not_implemente); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_This_structure_is_not_implemente); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
