@@ -3412,7 +3412,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  *             cos_dip = cos(self.dip*np.pi/180)
  *             sin_azim = sin(self.azim*np.pi/180)             # <<<<<<<<<<<<<<
  *             cos_azim = cos(self.azim*np.pi/180)
- *             self.normvec_x = -sin_dip*cos_azim
+ *             self.normvec_x = sin_dip*cos_azim
  */
     __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -3436,8 +3436,8 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  *             cos_dip = cos(self.dip*np.pi/180)
  *             sin_azim = sin(self.azim*np.pi/180)
  *             cos_azim = cos(self.azim*np.pi/180)             # <<<<<<<<<<<<<<
- *             self.normvec_x = -sin_dip*cos_azim
- *             self.normvec_y = sin_dip*sin_azim
+ *             self.normvec_x = sin_dip*cos_azim
+ *             self.normvec_y = -sin_dip*sin_azim
  */
     __pyx_t_4 = PyFloat_FromDouble(__pyx_v_self->azim); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -3460,24 +3460,24 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     /* "hyvr/geo/trough.pyx":158
  *             sin_azim = sin(self.azim*np.pi/180)
  *             cos_azim = cos(self.azim*np.pi/180)
- *             self.normvec_x = -sin_dip*cos_azim             # <<<<<<<<<<<<<<
- *             self.normvec_y = sin_dip*sin_azim
+ *             self.normvec_x = sin_dip*cos_azim             # <<<<<<<<<<<<<<
+ *             self.normvec_y = -sin_dip*sin_azim
  *             self.normvec_z = cos_dip
  */
-    __pyx_v_self->normvec_x = ((-__pyx_v_sin_dip) * __pyx_v_cos_azim);
+    __pyx_v_self->normvec_x = (__pyx_v_sin_dip * __pyx_v_cos_azim);
 
     /* "hyvr/geo/trough.pyx":159
  *             cos_azim = cos(self.azim*np.pi/180)
- *             self.normvec_x = -sin_dip*cos_azim
- *             self.normvec_y = sin_dip*sin_azim             # <<<<<<<<<<<<<<
+ *             self.normvec_x = sin_dip*cos_azim
+ *             self.normvec_y = -sin_dip*sin_azim             # <<<<<<<<<<<<<<
  *             self.normvec_z = cos_dip
  * 
  */
-    __pyx_v_self->normvec_y = (__pyx_v_sin_dip * __pyx_v_sin_azim);
+    __pyx_v_self->normvec_y = ((-__pyx_v_sin_dip) * __pyx_v_sin_azim);
 
     /* "hyvr/geo/trough.pyx":160
- *             self.normvec_x = -sin_dip*cos_azim
- *             self.normvec_y = sin_dip*sin_azim
+ *             self.normvec_x = sin_dip*cos_azim
+ *             self.normvec_y = -sin_dip*sin_azim
  *             self.normvec_z = cos_dip             # <<<<<<<<<<<<<<
  * 
  *             # The 'starting point' will be the center of the trough, i.e.
@@ -3720,7 +3720,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *         elif self.structure == 2: # bulb
  *             self.facies = np.random.choice(type_params['facies'])             # <<<<<<<<<<<<<<
- *             # maximum possible dip
+ *             # only used as maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])
  */
     __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 172, __pyx_L1_error)
@@ -3755,7 +3755,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
 
     /* "hyvr/geo/trough.pyx":174
  *             self.facies = np.random.choice(type_params['facies'])
- *             # maximum possible dip
+ *             # only used as maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])             # <<<<<<<<<<<<<<
  *         elif self.structure == 3: # bulb_sets
  *             # The facies thickness is 'bulbset_dist', and is measured along the
@@ -3786,7 +3786,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
  *             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
  *         elif self.structure == 2: # bulb             # <<<<<<<<<<<<<<
  *             self.facies = np.random.choice(type_params['facies'])
- *             # maximum possible dip
+ *             # only used as maximum possible dip
  */
     break;
     case 3:
@@ -3964,7 +3964,7 @@ static int __pyx_pf_4hyvr_3geo_6trough_6Trough___init__(struct __pyx_obj_4hyvr_3
     __pyx_v_self->dip = __pyx_t_1;
 
     /* "hyvr/geo/trough.pyx":175
- *             # maximum possible dip
+ *             # only used as maximum possible dip
  *             self.dip = np.random.uniform(*type_params['dip'])
  *         elif self.structure == 3: # bulb_sets             # <<<<<<<<<<<<<<
  *             # The facies thickness is 'bulbset_dist', and is measured along the

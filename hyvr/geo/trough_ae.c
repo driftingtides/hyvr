@@ -4557,14 +4557,13 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
   __pyx_t_5numpy_float_t __pyx_v_aaa;
   __pyx_t_5numpy_float_t __pyx_v_bbb;
   __pyx_t_5numpy_float_t __pyx_v_ccc;
-  __pyx_t_5numpy_float_t __pyx_v_len_tanvec;
-  __pyx_t_5numpy_float_t __pyx_v_tanvec_x;
-  __pyx_t_5numpy_float_t __pyx_v_tanvec_y;
-  __pyx_t_5numpy_float_t __pyx_v_tanvec_z;
+  __pyx_t_5numpy_float_t __pyx_v_len_normvec;
+  __pyx_t_5numpy_float_t __pyx_v_normvec_x;
+  __pyx_t_5numpy_float_t __pyx_v_normvec_y;
+  __pyx_t_5numpy_float_t __pyx_v_normvec_z;
   __pyx_t_5numpy_int32_t __pyx_v_n;
   __pyx_t_5numpy_int32_t __pyx_v_structure;
   __pyx_t_5numpy_float_t __pyx_v_dip;
-  __pyx_t_5numpy_float_t __pyx_v_cos_azim;
   __pyx_t_5numpy_float_t __pyx_v_azim;
   __pyx_t_5numpy_float_t __pyx_v_object_x;
   __pyx_t_5numpy_float_t __pyx_v_object_y;
@@ -4572,7 +4571,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
   __pyx_t_5numpy_float_t __pyx_v_max_ab;
   __pyx_t_5numpy_float_t __pyx_v_cosalpha;
   __pyx_t_5numpy_float_t __pyx_v_sinalpha;
-  double __pyx_v_len_tanvec_xy;
+  double __pyx_v_len_normvec_xy;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4660,6 +4659,8 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
   Py_ssize_t __pyx_t_83;
   Py_ssize_t __pyx_t_84;
   Py_ssize_t __pyx_t_85;
+  Py_ssize_t __pyx_t_86;
+  Py_ssize_t __pyx_t_87;
   __Pyx_RefNannySetupContext("maybe_assign_points_to_object", 0);
   /* Check if called by wrapper */
   if (unlikely(__pyx_skip_dispatch)) ;
@@ -5484,213 +5485,232 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
  *             return
  *         elif structure == 2 or structure == 3: # bulb or bulb_sets             # <<<<<<<<<<<<<<
  *             # Since ellipsoids are isosurfaces of quadratic functions, we can
- *             # get the tangential vector by taking the (negative) gradient of
+ *             # get the normal vector by taking the gradient of the quadratic
  */
     case 3:
 
-    /* "hyvr/geo/trough_ae.pyx":213
- *             # tangential plane.
- *             # The full derivation is a bit lengthy.
+    /* "hyvr/geo/trough_ae.pyx":225
+ *             # The azimuth is the angle between the projection of the normal
+ *             # vector onto the x-y-plane and the unit x-vector.
  *             aaa = normalized_dx/self.object_a[oi]             # <<<<<<<<<<<<<<
  *             bbb = normalized_dy/self.object_b[oi]
  *             ccc = normalized_dz/self.object_c[oi]
  */
-    if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 213, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_a.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 225, __pyx_L1_error)}
     __pyx_t_61 = __pyx_v_oi;
     __pyx_v_aaa = (__pyx_v_normalized_dx / (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_a.data + __pyx_t_61 * __pyx_v_self->object_a.strides[0]) ))));
 
-    /* "hyvr/geo/trough_ae.pyx":214
- *             # The full derivation is a bit lengthy.
+    /* "hyvr/geo/trough_ae.pyx":226
+ *             # vector onto the x-y-plane and the unit x-vector.
  *             aaa = normalized_dx/self.object_a[oi]
  *             bbb = normalized_dy/self.object_b[oi]             # <<<<<<<<<<<<<<
  *             ccc = normalized_dz/self.object_c[oi]
- *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
+ *             len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)
  */
-    if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 214, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_b.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 226, __pyx_L1_error)}
     __pyx_t_62 = __pyx_v_oi;
     __pyx_v_bbb = (__pyx_v_normalized_dy / (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_b.data + __pyx_t_62 * __pyx_v_self->object_b.strides[0]) ))));
 
-    /* "hyvr/geo/trough_ae.pyx":215
+    /* "hyvr/geo/trough_ae.pyx":227
  *             aaa = normalized_dx/self.object_a[oi]
  *             bbb = normalized_dy/self.object_b[oi]
  *             ccc = normalized_dz/self.object_c[oi]             # <<<<<<<<<<<<<<
- *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
- *             if len_tanvec != 0:
+ *             len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)
+ *             if len_normvec != 0:
  */
-    if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 215, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 227, __pyx_L1_error)}
     __pyx_t_63 = __pyx_v_oi;
     __pyx_v_ccc = (__pyx_v_normalized_dz / (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_63 * __pyx_v_self->object_c.strides[0]) ))));
 
-    /* "hyvr/geo/trough_ae.pyx":216
+    /* "hyvr/geo/trough_ae.pyx":228
  *             bbb = normalized_dy/self.object_b[oi]
  *             ccc = normalized_dz/self.object_c[oi]
- *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)             # <<<<<<<<<<<<<<
- *             if len_tanvec != 0:
- *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
+ *             len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)             # <<<<<<<<<<<<<<
+ *             if len_normvec != 0:
+ *                 normvec_x = (aaa*self.object_cosalpha[oi]
  */
-    __pyx_v_len_tanvec = sqrt(((pow(__pyx_v_aaa, 2.0) + pow(__pyx_v_bbb, 2.0)) + pow(__pyx_v_ccc, 2.0)));
+    __pyx_v_len_normvec = sqrt(((pow(__pyx_v_aaa, 2.0) + pow(__pyx_v_bbb, 2.0)) + pow(__pyx_v_ccc, 2.0)));
 
-    /* "hyvr/geo/trough_ae.pyx":217
+    /* "hyvr/geo/trough_ae.pyx":229
  *             ccc = normalized_dz/self.object_c[oi]
- *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
- *             if len_tanvec != 0:             # <<<<<<<<<<<<<<
- *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
- *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
+ *             len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)
+ *             if len_normvec != 0:             # <<<<<<<<<<<<<<
+ *                 normvec_x = (aaa*self.object_cosalpha[oi]
+ *                              + bbb*self.object_sinalpha[oi])/len_normvec
  */
-    __pyx_t_18 = ((__pyx_v_len_tanvec != 0.0) != 0);
+    __pyx_t_18 = ((__pyx_v_len_normvec != 0.0) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/geo/trough_ae.pyx":218
- *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
- *             if len_tanvec != 0:
- *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec             # <<<<<<<<<<<<<<
- *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
- *                 tanvec_z = ccc/len_tanvec
- */
-      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 218, __pyx_L1_error)}
-      __pyx_t_64 = __pyx_v_oi;
-      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 218, __pyx_L1_error)}
-      __pyx_t_65 = __pyx_v_oi;
-      __pyx_v_tanvec_x = (((__pyx_v_aaa * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_64 * __pyx_v_self->object_cosalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_65 * __pyx_v_self->object_sinalpha.strides[0]) ))))) / __pyx_v_len_tanvec);
-
-      /* "hyvr/geo/trough_ae.pyx":219
- *             if len_tanvec != 0:
- *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
- *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec             # <<<<<<<<<<<<<<
- *                 tanvec_z = ccc/len_tanvec
- *                 # The dip is the angle between the normal vector of the tangential
- */
-      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 219, __pyx_L1_error)}
-      __pyx_t_66 = __pyx_v_oi;
-      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 219, __pyx_L1_error)}
-      __pyx_t_67 = __pyx_v_oi;
-      __pyx_v_tanvec_y = ((((-__pyx_v_aaa) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_66 * __pyx_v_self->object_sinalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_67 * __pyx_v_self->object_cosalpha.strides[0]) ))))) / __pyx_v_len_tanvec);
-
-      /* "hyvr/geo/trough_ae.pyx":220
- *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
- *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
- *                 tanvec_z = ccc/len_tanvec             # <<<<<<<<<<<<<<
- *                 # The dip is the angle between the normal vector of the tangential
- *                 # plane and the normal vector of the x-y-plane.
- */
-      __pyx_v_tanvec_z = (__pyx_v_ccc / __pyx_v_len_tanvec);
-
-      /* "hyvr/geo/trough_ae.pyx":225
- *                 # this means the cosine of the dip is dot(tanvec, [0, 0, 1]),
- *                 # i.e. the third component of norm_vec
- *                 dip = acos(tanvec_z)/pi*180             # <<<<<<<<<<<<<<
- *                 # The angle is positive if the x-component of the normal vector is
- *                 # positive
- */
-      __pyx_v_dip = ((acos(__pyx_v_tanvec_z) / ((double)M_PI)) * 180.0);
-
       /* "hyvr/geo/trough_ae.pyx":230
- *                 # the normal vector projected and normalized to the x-y-plane,
- *                 # multiplied with [0,1,0] is:
- *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)             # <<<<<<<<<<<<<<
- *                 if len_tanvec_xy == 0:
- *                     azim = 0
+ *             len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)
+ *             if len_normvec != 0:
+ *                 normvec_x = (aaa*self.object_cosalpha[oi]             # <<<<<<<<<<<<<<
+ *                              + bbb*self.object_sinalpha[oi])/len_normvec
+ *                 normvec_y = (-aaa*self.object_sinalpha[oi]
  */
-      __pyx_v_len_tanvec_xy = sqrt((pow(__pyx_v_tanvec_x, 2.0) + pow(__pyx_v_tanvec_y, 2.0)));
+      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 230, __pyx_L1_error)}
+      __pyx_t_64 = __pyx_v_oi;
 
       /* "hyvr/geo/trough_ae.pyx":231
- *                 # multiplied with [0,1,0] is:
- *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
- *                 if len_tanvec_xy == 0:             # <<<<<<<<<<<<<<
- *                     azim = 0
- *                 else:
+ *             if len_normvec != 0:
+ *                 normvec_x = (aaa*self.object_cosalpha[oi]
+ *                              + bbb*self.object_sinalpha[oi])/len_normvec             # <<<<<<<<<<<<<<
+ *                 normvec_y = (-aaa*self.object_sinalpha[oi]
+ *                              + bbb*self.object_cosalpha[oi])/len_normvec
  */
-      __pyx_t_18 = ((__pyx_v_len_tanvec_xy == 0.0) != 0);
+      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 231, __pyx_L1_error)}
+      __pyx_t_65 = __pyx_v_oi;
+      __pyx_v_normvec_x = (((__pyx_v_aaa * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_64 * __pyx_v_self->object_cosalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_65 * __pyx_v_self->object_sinalpha.strides[0]) ))))) / __pyx_v_len_normvec);
+
+      /* "hyvr/geo/trough_ae.pyx":232
+ *                 normvec_x = (aaa*self.object_cosalpha[oi]
+ *                              + bbb*self.object_sinalpha[oi])/len_normvec
+ *                 normvec_y = (-aaa*self.object_sinalpha[oi]             # <<<<<<<<<<<<<<
+ *                              + bbb*self.object_cosalpha[oi])/len_normvec
+ *                 normvec_z = ccc/len_normvec
+ */
+      if (unlikely(!__pyx_v_self->object_sinalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 232, __pyx_L1_error)}
+      __pyx_t_66 = __pyx_v_oi;
+
+      /* "hyvr/geo/trough_ae.pyx":233
+ *                              + bbb*self.object_sinalpha[oi])/len_normvec
+ *                 normvec_y = (-aaa*self.object_sinalpha[oi]
+ *                              + bbb*self.object_cosalpha[oi])/len_normvec             # <<<<<<<<<<<<<<
+ *                 normvec_z = ccc/len_normvec
+ *                 len_normvec_xy = sqrt(normvec_x**2 + normvec_y**2)
+ */
+      if (unlikely(!__pyx_v_self->object_cosalpha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 233, __pyx_L1_error)}
+      __pyx_t_67 = __pyx_v_oi;
+      __pyx_v_normvec_y = ((((-__pyx_v_aaa) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_sinalpha.data + __pyx_t_66 * __pyx_v_self->object_sinalpha.strides[0]) )))) + (__pyx_v_bbb * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_cosalpha.data + __pyx_t_67 * __pyx_v_self->object_cosalpha.strides[0]) ))))) / __pyx_v_len_normvec);
+
+      /* "hyvr/geo/trough_ae.pyx":234
+ *                 normvec_y = (-aaa*self.object_sinalpha[oi]
+ *                              + bbb*self.object_cosalpha[oi])/len_normvec
+ *                 normvec_z = ccc/len_normvec             # <<<<<<<<<<<<<<
+ *                 len_normvec_xy = sqrt(normvec_x**2 + normvec_y**2)
+ *                 if len_normvec_xy == 0:
+ */
+      __pyx_v_normvec_z = (__pyx_v_ccc / __pyx_v_len_normvec);
+
+      /* "hyvr/geo/trough_ae.pyx":235
+ *                              + bbb*self.object_cosalpha[oi])/len_normvec
+ *                 normvec_z = ccc/len_normvec
+ *                 len_normvec_xy = sqrt(normvec_x**2 + normvec_y**2)             # <<<<<<<<<<<<<<
+ *                 if len_normvec_xy == 0:
+ *                     # normal vector points in z-direction -> dip = 0, azim = 0
+ */
+      __pyx_v_len_normvec_xy = sqrt((pow(__pyx_v_normvec_x, 2.0) + pow(__pyx_v_normvec_y, 2.0)));
+
+      /* "hyvr/geo/trough_ae.pyx":236
+ *                 normvec_z = ccc/len_normvec
+ *                 len_normvec_xy = sqrt(normvec_x**2 + normvec_y**2)
+ *                 if len_normvec_xy == 0:             # <<<<<<<<<<<<<<
+ *                     # normal vector points in z-direction -> dip = 0, azim = 0
+ *                     dip = 0.
+ */
+      __pyx_t_18 = ((__pyx_v_len_normvec_xy == 0.0) != 0);
       if (__pyx_t_18) {
 
-        /* "hyvr/geo/trough_ae.pyx":232
- *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
- *                 if len_tanvec_xy == 0:
- *                     azim = 0             # <<<<<<<<<<<<<<
+        /* "hyvr/geo/trough_ae.pyx":238
+ *                 if len_normvec_xy == 0:
+ *                     # normal vector points in z-direction -> dip = 0, azim = 0
+ *                     dip = 0.             # <<<<<<<<<<<<<<
+ *                     azim = 0.
  *                 else:
- *                     cos_azim = tanvec_y/len_tanvec_xy
  */
-        __pyx_v_azim = 0.0;
+        __pyx_v_dip = 0.;
 
-        /* "hyvr/geo/trough_ae.pyx":231
- *                 # multiplied with [0,1,0] is:
- *                 len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
- *                 if len_tanvec_xy == 0:             # <<<<<<<<<<<<<<
- *                     azim = 0
+        /* "hyvr/geo/trough_ae.pyx":239
+ *                     # normal vector points in z-direction -> dip = 0, azim = 0
+ *                     dip = 0.
+ *                     azim = 0.             # <<<<<<<<<<<<<<
  *                 else:
+ *                     # The dip angle can be found as acos of the normalized
+ */
+        __pyx_v_azim = 0.;
+
+        /* "hyvr/geo/trough_ae.pyx":236
+ *                 normvec_z = ccc/len_normvec
+ *                 len_normvec_xy = sqrt(normvec_x**2 + normvec_y**2)
+ *                 if len_normvec_xy == 0:             # <<<<<<<<<<<<<<
+ *                     # normal vector points in z-direction -> dip = 0, azim = 0
+ *                     dip = 0.
  */
         goto __pyx_L15;
       }
 
-      /* "hyvr/geo/trough_ae.pyx":234
- *                     azim = 0
- *                 else:
- *                     cos_azim = tanvec_y/len_tanvec_xy             # <<<<<<<<<<<<<<
- *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/pi*180
- *                 if dip > 90:
+      /* "hyvr/geo/trough_ae.pyx":247
+ *                     # in negative x and z direction.
+ *                     # direction.
+ *                     if normvec_z == 0:             # <<<<<<<<<<<<<<
+ *                         # in this case only the sign of x is relevant
+ *                         dip = -acos(fabs(normvec_z))*ho.sign(normvec_x)/pi*180
  */
       /*else*/ {
-        __pyx_v_cos_azim = (__pyx_v_tanvec_y / ((__pyx_t_5numpy_float_t)__pyx_v_len_tanvec_xy));
+        __pyx_t_18 = ((__pyx_v_normvec_z == 0.0) != 0);
+        if (__pyx_t_18) {
 
-        /* "hyvr/geo/trough_ae.pyx":235
- *                 else:
- *                     cos_azim = tanvec_y/len_tanvec_xy
- *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/pi*180             # <<<<<<<<<<<<<<
- *                 if dip > 90:
- *                     # if the dip is bigger than 90 we can also just rotate the azimuth
+          /* "hyvr/geo/trough_ae.pyx":249
+ *                     if normvec_z == 0:
+ *                         # in this case only the sign of x is relevant
+ *                         dip = -acos(fabs(normvec_z))*ho.sign(normvec_x)/pi*180             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         dip = -acos(fabs(normvec_z))\
  */
-        __pyx_v_azim = (((__pyx_f_4hyvr_9optimized_sign(__pyx_v_tanvec_x) * acos(__pyx_v_cos_azim)) / ((double)M_PI)) * 180.0);
-      }
-      __pyx_L15:;
+          __pyx_v_dip = ((((-acos(fabs(__pyx_v_normvec_z))) * __pyx_f_4hyvr_9optimized_sign(__pyx_v_normvec_x)) / ((double)M_PI)) * 180.0);
 
-      /* "hyvr/geo/trough_ae.pyx":236
- *                     cos_azim = tanvec_y/len_tanvec_xy
- *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/pi*180
- *                 if dip > 90:             # <<<<<<<<<<<<<<
- *                     # if the dip is bigger than 90 we can also just rotate the azimuth
- *                     dip = 180 - dip
+          /* "hyvr/geo/trough_ae.pyx":247
+ *                     # in negative x and z direction.
+ *                     # direction.
+ *                     if normvec_z == 0:             # <<<<<<<<<<<<<<
+ *                         # in this case only the sign of x is relevant
+ *                         dip = -acos(fabs(normvec_z))*ho.sign(normvec_x)/pi*180
  */
-      __pyx_t_18 = ((__pyx_v_dip > 90.0) != 0);
-      if (__pyx_t_18) {
+          goto __pyx_L16;
+        }
 
-        /* "hyvr/geo/trough_ae.pyx":238
- *                 if dip > 90:
- *                     # if the dip is bigger than 90 we can also just rotate the azimuth
- *                     dip = 180 - dip             # <<<<<<<<<<<<<<
- *                     # add 180 to azimuth and shift such that it's between -180 and 180
- *                     azim = (azim + 180 + 180) % 360 - 180
+        /* "hyvr/geo/trough_ae.pyx":252
+ *                     else:
+ *                         dip = -acos(fabs(normvec_z))\
+ *                               * ho.sign(normvec_x*normvec_z)/ pi*180             # <<<<<<<<<<<<<<
+ * 
+ *                     # The azimuth angle should also be between -90 and 90. It is
  */
-        __pyx_v_dip = (180.0 - __pyx_v_dip);
+        /*else*/ {
 
-        /* "hyvr/geo/trough_ae.pyx":240
- *                     dip = 180 - dip
- *                     # add 180 to azimuth and shift such that it's between -180 and 180
- *                     azim = (azim + 180 + 180) % 360 - 180             # <<<<<<<<<<<<<<
+          /* "hyvr/geo/trough_ae.pyx":251
+ *                         dip = -acos(fabs(normvec_z))*ho.sign(normvec_x)/pi*180
+ *                     else:
+ *                         dip = -acos(fabs(normvec_z))\             # <<<<<<<<<<<<<<
+ *                               * ho.sign(normvec_x*normvec_z)/ pi*180
+ * 
+ */
+          __pyx_v_dip = ((((-acos(fabs(__pyx_v_normvec_z))) * __pyx_f_4hyvr_9optimized_sign((__pyx_v_normvec_x * __pyx_v_normvec_z))) / ((double)M_PI)) * 180.0);
+        }
+        __pyx_L16:;
+
+        /* "hyvr/geo/trough_ae.pyx":264
+ *                     # sign of the x component
+ *                     azim = -atan(ho.sign(normvec_x)*normvec_y/fabs(normvec_x))\
+ *                            / pi*180             # <<<<<<<<<<<<<<
  *             else:
  *                 # the point is exactly at the center of the trough, this means
  */
-        __pyx_v_azim = (fmod(((__pyx_v_azim + 180.0) + 180.0), 360.0) - 180.0);
-
-        /* "hyvr/geo/trough_ae.pyx":236
- *                     cos_azim = tanvec_y/len_tanvec_xy
- *                     azim = ho.sign(tanvec_x)*acos(cos_azim)/pi*180
- *                 if dip > 90:             # <<<<<<<<<<<<<<
- *                     # if the dip is bigger than 90 we can also just rotate the azimuth
- *                     dip = 180 - dip
- */
+        __pyx_v_azim = (((-atan(((__pyx_f_4hyvr_9optimized_sign(__pyx_v_normvec_x) * __pyx_v_normvec_y) / ((__pyx_t_5numpy_float_t)fabs(__pyx_v_normvec_x))))) / ((double)M_PI)) * 180.0);
       }
+      __pyx_L15:;
 
-      /* "hyvr/geo/trough_ae.pyx":217
+      /* "hyvr/geo/trough_ae.pyx":229
  *             ccc = normalized_dz/self.object_c[oi]
- *             len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
- *             if len_tanvec != 0:             # <<<<<<<<<<<<<<
- *                 tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
- *                 tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
+ *             len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)
+ *             if len_normvec != 0:             # <<<<<<<<<<<<<<
+ *                 normvec_x = (aaa*self.object_cosalpha[oi]
+ *                              + bbb*self.object_sinalpha[oi])/len_normvec
  */
       goto __pyx_L14;
     }
 
-    /* "hyvr/geo/trough_ae.pyx":244
+    /* "hyvr/geo/trough_ae.pyx":268
  *                 # the point is exactly at the center of the trough, this means
  *                 # there is no azim and dip
  *                 azim = 0             # <<<<<<<<<<<<<<
@@ -5700,7 +5720,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
     /*else*/ {
       __pyx_v_azim = 0.0;
 
-      /* "hyvr/geo/trough_ae.pyx":245
+      /* "hyvr/geo/trough_ae.pyx":269
  *                 # there is no azim and dip
  *                 azim = 0
  *                 dip = 0             # <<<<<<<<<<<<<<
@@ -5711,40 +5731,74 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
     }
     __pyx_L14:;
 
-    /* "hyvr/geo/trough_ae.pyx":248
+    /* "hyvr/geo/trough_ae.pyx":272
  * 
  *             # use self.object_dip[oi] as maximum dip
  *             if dip > self.object_dip[oi]:             # <<<<<<<<<<<<<<
  *                 dip = self.object_dip[oi]
- * 
+ *             elif dip < -self.object_dip[oi]:
  */
-    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 248, __pyx_L1_error)}
+    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 272, __pyx_L1_error)}
     __pyx_t_68 = __pyx_v_oi;
     __pyx_t_18 = ((__pyx_v_dip > (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_68 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )))) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/geo/trough_ae.pyx":249
+      /* "hyvr/geo/trough_ae.pyx":273
  *             # use self.object_dip[oi] as maximum dip
  *             if dip > self.object_dip[oi]:
  *                 dip = self.object_dip[oi]             # <<<<<<<<<<<<<<
- * 
- *             if structure == 2: # bulb
+ *             elif dip < -self.object_dip[oi]:
+ *                 dip = -self.object_dip[oi]
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 249, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 273, __pyx_L1_error)}
       __pyx_t_69 = __pyx_v_oi;
       __pyx_v_dip = (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_69 * __pyx_v_self->__pyx_base.object_dip.strides[0]) )));
 
-      /* "hyvr/geo/trough_ae.pyx":248
+      /* "hyvr/geo/trough_ae.pyx":272
  * 
  *             # use self.object_dip[oi] as maximum dip
  *             if dip > self.object_dip[oi]:             # <<<<<<<<<<<<<<
  *                 dip = self.object_dip[oi]
+ *             elif dip < -self.object_dip[oi]:
+ */
+      goto __pyx_L17;
+    }
+
+    /* "hyvr/geo/trough_ae.pyx":274
+ *             if dip > self.object_dip[oi]:
+ *                 dip = self.object_dip[oi]
+ *             elif dip < -self.object_dip[oi]:             # <<<<<<<<<<<<<<
+ *                 dip = -self.object_dip[oi]
+ * 
+ */
+    if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 274, __pyx_L1_error)}
+    __pyx_t_70 = __pyx_v_oi;
+    __pyx_t_18 = ((__pyx_v_dip < (-(*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_70 * __pyx_v_self->__pyx_base.object_dip.strides[0]) ))))) != 0);
+    if (__pyx_t_18) {
+
+      /* "hyvr/geo/trough_ae.pyx":275
+ *                 dip = self.object_dip[oi]
+ *             elif dip < -self.object_dip[oi]:
+ *                 dip = -self.object_dip[oi]             # <<<<<<<<<<<<<<
+ * 
+ *             if structure == 2: # bulb
+ */
+      if (unlikely(!__pyx_v_self->__pyx_base.object_dip.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 275, __pyx_L1_error)}
+      __pyx_t_71 = __pyx_v_oi;
+      __pyx_v_dip = (-(*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_dip.data + __pyx_t_71 * __pyx_v_self->__pyx_base.object_dip.strides[0]) ))));
+
+      /* "hyvr/geo/trough_ae.pyx":274
+ *             if dip > self.object_dip[oi]:
+ *                 dip = self.object_dip[oi]
+ *             elif dip < -self.object_dip[oi]:             # <<<<<<<<<<<<<<
+ *                 dip = -self.object_dip[oi]
  * 
  */
     }
+    __pyx_L17:;
 
-    /* "hyvr/geo/trough_ae.pyx":251
- *                 dip = self.object_dip[oi]
+    /* "hyvr/geo/trough_ae.pyx":277
+ *                 dip = -self.object_dip[oi]
  * 
  *             if structure == 2: # bulb             # <<<<<<<<<<<<<<
  *                 geo_ids[0] = self.object_facies[oi]
@@ -5753,51 +5807,51 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
     __pyx_t_18 = ((__pyx_v_structure == 2) != 0);
     if (__pyx_t_18) {
 
-      /* "hyvr/geo/trough_ae.pyx":252
+      /* "hyvr/geo/trough_ae.pyx":278
  * 
  *             if structure == 2: # bulb
  *                 geo_ids[0] = self.object_facies[oi]             # <<<<<<<<<<<<<<
  *                 angles[0] = azim
  *                 angles[1] = dip
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 252, __pyx_L1_error)}
-      __pyx_t_70 = __pyx_v_oi;
-      __pyx_t_71 = 0;
-      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_71 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies.data + __pyx_t_70 * __pyx_v_self->__pyx_base.object_facies.strides[0]) )));
+      if (unlikely(!__pyx_v_self->__pyx_base.object_facies.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 278, __pyx_L1_error)}
+      __pyx_t_72 = __pyx_v_oi;
+      __pyx_t_73 = 0;
+      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_73 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies.data + __pyx_t_72 * __pyx_v_self->__pyx_base.object_facies.strides[0]) )));
 
-      /* "hyvr/geo/trough_ae.pyx":253
+      /* "hyvr/geo/trough_ae.pyx":279
  *             if structure == 2: # bulb
  *                 geo_ids[0] = self.object_facies[oi]
  *                 angles[0] = azim             # <<<<<<<<<<<<<<
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  */
-      __pyx_t_72 = 0;
-      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_72 * __pyx_v_angles.strides[0]) )) = __pyx_v_azim;
+      __pyx_t_74 = 0;
+      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_74 * __pyx_v_angles.strides[0]) )) = __pyx_v_azim;
 
-      /* "hyvr/geo/trough_ae.pyx":254
+      /* "hyvr/geo/trough_ae.pyx":280
  *                 geo_ids[0] = self.object_facies[oi]
  *                 angles[0] = azim
  *                 angles[1] = dip             # <<<<<<<<<<<<<<
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return
  */
-      __pyx_t_73 = 1;
-      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_73 * __pyx_v_angles.strides[0]) )) = __pyx_v_dip;
+      __pyx_t_75 = 1;
+      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_75 * __pyx_v_angles.strides[0]) )) = __pyx_v_dip;
 
-      /* "hyvr/geo/trough_ae.pyx":255
+      /* "hyvr/geo/trough_ae.pyx":281
  *                 angles[0] = azim
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *                 return
  *             else:
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 255, __pyx_L1_error)}
-      __pyx_t_74 = __pyx_v_oi;
-      __pyx_t_75 = 2;
-      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_75 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_74 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
+      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 281, __pyx_L1_error)}
+      __pyx_t_76 = __pyx_v_oi;
+      __pyx_t_77 = 2;
+      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_77 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_76 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-      /* "hyvr/geo/trough_ae.pyx":256
+      /* "hyvr/geo/trough_ae.pyx":282
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return             # <<<<<<<<<<<<<<
@@ -5808,8 +5862,8 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
       __pyx_r = Py_None; __Pyx_INCREF(Py_None);
       goto __pyx_L0;
 
-      /* "hyvr/geo/trough_ae.pyx":251
- *                 dip = self.object_dip[oi]
+      /* "hyvr/geo/trough_ae.pyx":277
+ *                 dip = -self.object_dip[oi]
  * 
  *             if structure == 2: # bulb             # <<<<<<<<<<<<<<
  *                 geo_ids[0] = self.object_facies[oi]
@@ -5817,7 +5871,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
  */
     }
 
-    /* "hyvr/geo/trough_ae.pyx":261
+    /* "hyvr/geo/trough_ae.pyx":287
  *                 # The facies can be found by dividing the normalized distance
  *                 # by the normalized bublset_d:
  *                 n = int(ceil((sqrt(l2) + self.object_shift[oi])*self.object_c[oi]/self.object_layer_dist[oi]))             # <<<<<<<<<<<<<<
@@ -5825,60 +5879,60 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
  *                 angles[0] = azim
  */
     /*else*/ {
-      if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 261, __pyx_L1_error)}
-      __pyx_t_76 = __pyx_v_oi;
-      if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 261, __pyx_L1_error)}
-      __pyx_t_77 = __pyx_v_oi;
-      if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 261, __pyx_L1_error)}
+      if (unlikely(!__pyx_v_self->object_shift.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 287, __pyx_L1_error)}
       __pyx_t_78 = __pyx_v_oi;
-      __pyx_v_n = ((__pyx_t_5numpy_int32_t)ceil((((sqrt(__pyx_v_l2) + (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_76 * __pyx_v_self->object_shift.strides[0]) )))) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_77 * __pyx_v_self->object_c.strides[0]) )))) / (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_78 * __pyx_v_self->object_layer_dist.strides[0]) ))))));
+      if (unlikely(!__pyx_v_self->object_c.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 287, __pyx_L1_error)}
+      __pyx_t_79 = __pyx_v_oi;
+      if (unlikely(!__pyx_v_self->object_layer_dist.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 287, __pyx_L1_error)}
+      __pyx_t_80 = __pyx_v_oi;
+      __pyx_v_n = ((__pyx_t_5numpy_int32_t)ceil((((sqrt(__pyx_v_l2) + (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_shift.data + __pyx_t_78 * __pyx_v_self->object_shift.strides[0]) )))) * (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_c.data + __pyx_t_79 * __pyx_v_self->object_c.strides[0]) )))) / (*((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_self->object_layer_dist.data + __pyx_t_80 * __pyx_v_self->object_layer_dist.strides[0]) ))))));
 
-      /* "hyvr/geo/trough_ae.pyx":262
+      /* "hyvr/geo/trough_ae.pyx":288
  *                 # by the normalized bublset_d:
  *                 n = int(ceil((sqrt(l2) + self.object_shift[oi])*self.object_c[oi]/self.object_layer_dist[oi]))
  *                 geo_ids[0] = self.object_facies_array[oi,n]             # <<<<<<<<<<<<<<
  *                 angles[0] = azim
  *                 angles[1] = dip
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 262, __pyx_L1_error)}
-      __pyx_t_79 = __pyx_v_oi;
-      __pyx_t_80 = __pyx_v_n;
-      __pyx_t_81 = 0;
-      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_81 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies_array.data + __pyx_t_79 * __pyx_v_self->__pyx_base.object_facies_array.strides[0]) ) + __pyx_t_80 * __pyx_v_self->__pyx_base.object_facies_array.strides[1]) )));
+      if (unlikely(!__pyx_v_self->__pyx_base.object_facies_array.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 288, __pyx_L1_error)}
+      __pyx_t_81 = __pyx_v_oi;
+      __pyx_t_82 = __pyx_v_n;
+      __pyx_t_83 = 0;
+      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_83 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies_array.data + __pyx_t_81 * __pyx_v_self->__pyx_base.object_facies_array.strides[0]) ) + __pyx_t_82 * __pyx_v_self->__pyx_base.object_facies_array.strides[1]) )));
 
-      /* "hyvr/geo/trough_ae.pyx":263
+      /* "hyvr/geo/trough_ae.pyx":289
  *                 n = int(ceil((sqrt(l2) + self.object_shift[oi])*self.object_c[oi]/self.object_layer_dist[oi]))
  *                 geo_ids[0] = self.object_facies_array[oi,n]
  *                 angles[0] = azim             # <<<<<<<<<<<<<<
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  */
-      __pyx_t_82 = 0;
-      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_82 * __pyx_v_angles.strides[0]) )) = __pyx_v_azim;
+      __pyx_t_84 = 0;
+      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_84 * __pyx_v_angles.strides[0]) )) = __pyx_v_azim;
 
-      /* "hyvr/geo/trough_ae.pyx":264
+      /* "hyvr/geo/trough_ae.pyx":290
  *                 geo_ids[0] = self.object_facies_array[oi,n]
  *                 angles[0] = azim
  *                 angles[1] = dip             # <<<<<<<<<<<<<<
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return
  */
-      __pyx_t_83 = 1;
-      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_83 * __pyx_v_angles.strides[0]) )) = __pyx_v_dip;
+      __pyx_t_85 = 1;
+      *((__pyx_t_5numpy_float_t *) ( /* dim=0 */ (__pyx_v_angles.data + __pyx_t_85 * __pyx_v_angles.strides[0]) )) = __pyx_v_dip;
 
-      /* "hyvr/geo/trough_ae.pyx":265
+      /* "hyvr/geo/trough_ae.pyx":291
  *                 angles[0] = azim
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]             # <<<<<<<<<<<<<<
  *                 return
  *         else:
  */
-      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 265, __pyx_L1_error)}
-      __pyx_t_84 = __pyx_v_oi;
-      __pyx_t_85 = 2;
-      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_85 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_84 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
+      if (unlikely(!__pyx_v_self->__pyx_base.object_num_ha.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 291, __pyx_L1_error)}
+      __pyx_t_86 = __pyx_v_oi;
+      __pyx_t_87 = 2;
+      *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_87 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_num_ha.data + __pyx_t_86 * __pyx_v_self->__pyx_base.object_num_ha.strides[0]) )));
 
-      /* "hyvr/geo/trough_ae.pyx":266
+      /* "hyvr/geo/trough_ae.pyx":292
  *                 angles[1] = dip
  *                 geo_ids[2] = self.object_num_ha[oi]
  *                 return             # <<<<<<<<<<<<<<
@@ -5895,20 +5949,20 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
  *             return
  *         elif structure == 2 or structure == 3: # bulb or bulb_sets             # <<<<<<<<<<<<<<
  *             # Since ellipsoids are isosurfaces of quadratic functions, we can
- *             # get the tangential vector by taking the (negative) gradient of
+ *             # get the normal vector by taking the gradient of the quadratic
  */
     break;
     default:
 
-    /* "hyvr/geo/trough_ae.pyx":268
+    /* "hyvr/geo/trough_ae.pyx":294
  *                 return
  *         else:
  *             print('Structure:', structure)             # <<<<<<<<<<<<<<
  *             raise NotImplementedError('This structure is not implemented yet')
  */
-    __pyx_t_11 = __Pyx_PyInt_From_npy_int32(__pyx_v_structure); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 268, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_From_npy_int32(__pyx_v_structure); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 268, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_kp_u_Structure);
     __Pyx_GIVEREF(__pyx_kp_u_Structure);
@@ -5916,21 +5970,21 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
     __Pyx_GIVEREF(__pyx_t_11);
     PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_11);
     __pyx_t_11 = 0;
-    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_2, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 268, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_2, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-    /* "hyvr/geo/trough_ae.pyx":269
+    /* "hyvr/geo/trough_ae.pyx":295
  *         else:
  *             print('Structure:', structure)
  *             raise NotImplementedError('This structure is not implemented yet')             # <<<<<<<<<<<<<<
  */
-    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 269, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_Call(__pyx_builtin_NotImplementedError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 295, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_Raise(__pyx_t_11, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __PYX_ERR(0, 269, __pyx_L1_error)
+    __PYX_ERR(0, 295, __pyx_L1_error)
     break;
   }
 
@@ -25898,8 +25952,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 40, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 268, __pyx_L1_error)
-  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 269, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 294, __pyx_L1_error)
+  __pyx_builtin_NotImplementedError = __Pyx_GetBuiltinName(__pyx_n_s_NotImplementedError); if (!__pyx_builtin_NotImplementedError) __PYX_ERR(0, 295, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(3, 272, __pyx_L1_error)
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(3, 285, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(3, 856, __pyx_L1_error)
@@ -25918,12 +25972,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hyvr/geo/trough_ae.pyx":269
+  /* "hyvr/geo/trough_ae.pyx":295
  *         else:
  *             print('Structure:', structure)
  *             raise NotImplementedError('This structure is not implemented yet')             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_This_structure_is_not_implemente); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 269, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_This_structure_is_not_implemente); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 295, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 

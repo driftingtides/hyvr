@@ -3251,7 +3251,7 @@ static PyObject *__pyx_pf_4hyvr_9optimized_set_anisotropic_ktensor(CYTHON_UNUSED
  * 
  * 
  * cdef int sign(double x):             # <<<<<<<<<<<<<<
- *     return (x > 0) - (x < 0)
+ *     return (x >= 0) - (x < 0)
  * 
  */
 
@@ -3263,18 +3263,18 @@ static int __pyx_f_4hyvr_9optimized_sign(double __pyx_v_x) {
   /* "hyvr/optimized.pyx":79
  * 
  * cdef int sign(double x):
- *     return (x > 0) - (x < 0)             # <<<<<<<<<<<<<<
+ *     return (x >= 0) - (x < 0)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_r = ((__pyx_v_x > 0.0) - (__pyx_v_x < 0.0));
+  __pyx_r = ((__pyx_v_x >= 0.0) - (__pyx_v_x < 0.0));
   goto __pyx_L0;
 
   /* "hyvr/optimized.pyx":78
  * 
  * 
  * cdef int sign(double x):             # <<<<<<<<<<<<<<
- *     return (x > 0) - (x < 0)
+ *     return (x >= 0) - (x < 0)
  * 
  */
 

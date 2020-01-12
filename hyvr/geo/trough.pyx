@@ -53,9 +53,9 @@ cdef class Trough:
         # the ellipsoid) of a rotated trough or to find the tangential planes
         # to calculate dip and azimuth of bulb sets, we could view our
         # ellipsoid as a deformed and rotated sphere. At first, a deformation
-        # along the x-, y- and z-axes it performed, and then a rotation along
+        # along the x-, y- and z-axes is performed, and then a rotation along
         # the z-axis with angle alpha.
-        # In Matrix form, this operation looks as follows:
+        # In matrix form, this operation looks as follows:
         #
         #     / cos -sin  0 \   / a  0  0 \   / a*cos -b*sin  0 \
         # A = | sin  cos  0 | * | 0  b  0 | = | a*sin  b*cos  0 |
@@ -126,24 +126,24 @@ cdef class Trough:
             # sets and their azimuth. We can again obtain the normal vector by
             # applying rotation matrices to the vector (0, 0, 1) (the upwards
             # pointing unit vector).
-            # First, we apply the dip rotation by rotating around by the dip
+            # First, we apply the dip rotation by rotating by the dip
             # angle along the y-axis to the right (anti-clockwise).
             # Then we rotate around the z-axis by the azimuth angle along the
             # z-axis to the left (clockwise)
             # In matrix notation:
             #
-            #     / cos(azim)  sin(azim)  0 \   / cos(dip)  0  -sin(dip) \   / 0 \
-            # n = |-sin(azim)  cos(azim)  0 | * |    0      1      0     | * | 0 |
-            #     \    0            0     1 /   \ sin(dip)  0   cos(dip) /   \ 1 /
+            #     / cos(azim)  sin(azim)  0 \   /  cos(dip)  0  sin(dip) \   / 0 \
+            # n = |-sin(azim)  cos(azim)  0 | * |     0      1     0     | * | 0 |
+            #     \    0            0     1 /   \ -sin(dip)  0  cos(dip) /   \ 1 /
             #
             #
-            #     / cos(azim)  sin(azim)  0 \   / -sin(dip) \
+            #     / cos(azim)  sin(azim)  0 \   /  sin(dip) \
             # n = |-sin(azim)  cos(azim)  0 | * |    0      |
             #     \    0            0     1 /   \  cos(dip) /
             #
             #
-            #     / -sin(dip)*cos(azim) \
-            # n = |  sin(dip)*sin(azim) |
+            #     /  sin(dip)*cos(azim) \
+            # n = | -sin(dip)*sin(azim) |
             #     \       cos(dip)      /
             #
             #
@@ -155,8 +155,8 @@ cdef class Trough:
             cos_dip = cos(self.dip*np.pi/180)
             sin_azim = sin(self.azim*np.pi/180)
             cos_azim = cos(self.azim*np.pi/180)
-            self.normvec_x = -sin_dip*cos_azim
-            self.normvec_y = sin_dip*sin_azim
+            self.normvec_x = sin_dip*cos_azim
+            self.normvec_y = -sin_dip*sin_azim
             self.normvec_z = cos_dip
 
             # The 'starting point' will be the center of the trough, i.e.
@@ -170,7 +170,7 @@ cdef class Trough:
             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
         elif self.structure == 2: # bulb
             self.facies = np.random.choice(type_params['facies'])
-            # maximum possible dip
+            # only used as maximum possible dip
             self.dip = np.random.uniform(*type_params['dip'])
         elif self.structure == 3: # bulb_sets
             # The facies thickness is 'bulbset_dist', and is measured along the

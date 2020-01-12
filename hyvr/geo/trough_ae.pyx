@@ -5,7 +5,7 @@ from hyvr.geo.trough import Trough
 
 cimport cython
 cimport numpy as np
-from libc.math cimport sqrt, ceil, acos, pi
+from libc.math cimport sqrt, ceil, acos, pi, fabs, atan
 from hyvr.geo.ae_realization cimport AERealization
 cimport hyvr.optimized as ho
 
@@ -118,8 +118,8 @@ cdef class TroughAE(AERealization):
         """
         cdef np.float_t dx, dy, dz
         cdef np.float_t normalized_dx, normalized_dy, normalized_dz
-        cdef np.float_t l2, plane_dist, aaa, bbb, ccc, len_tanvec
-        cdef np.float_t tanvec_x, tanvec_y, tanvec_z
+        cdef np.float_t l2, plane_dist, aaa, bbb, ccc, len_normvec
+        cdef np.float_t normvec_x, normvec_y, normvec_z
         cdef np.int32_t n, structure
         cdef np.float_t dip, cos_azim, azim
 
@@ -200,44 +200,68 @@ cdef class TroughAE(AERealization):
             return
         elif structure == 2 or structure == 3: # bulb or bulb_sets
             # Since ellipsoids are isosurfaces of quadratic functions, we can
-            # get the tangential vector by taking the (negative) gradient of
-            # the quadratic function that has our ellipsoid as iso-surface.
-            # This funciton can be written as:
+            # get the normal vector by taking the gradient of the quadratic
+            # function that has our ellipsoid as iso-surface.
+            # This function can be written as:
             #
-            # f(d(x)) = (Ainv * d(x))**2
+            # f(d(x)) = (x*cos+y*sin)**2/a**2 + (-x*sin+y*cos)**2/b** + z**2/c**2
             #
-            # Since the gradient points outwards for this function, we have to
-            # use the negative gradient as unit normal vector describing the
-            # tangential plane.
-            # The full derivation is a bit lengthy.
+            # The gradient is (up to a scalar)
+            #
+            #             /  nx*cos/a + ny*sin/b  \
+            # grad f(x) = | -nx*sin/a + ny*cos/b  |
+            #             \          nz/c         /
+            #
+            # where nx, ny, nz are the normalized distances.
+            # The gradient points outwards.
+            # The length of the vector is
+            #
+            # |grad f(x)| = (nx/a)**2 + (ny/b)**2 + (nz/c)**2
+            #
+            # The dip angle is the the angle between the normal
+            # vector and the unit z-vector.
+            # The azimuth is the angle between the projection of the normal
+            # vector onto the x-y-plane and the unit x-vector.
             aaa = normalized_dx/self.object_a[oi]
             bbb = normalized_dy/self.object_b[oi]
             ccc = normalized_dz/self.object_c[oi]
-            len_tanvec = sqrt(aaa**2 + bbb**2 + ccc**2)
-            if len_tanvec != 0:
-                tanvec_x = (aaa*self.object_cosalpha[oi] + bbb*self.object_sinalpha[oi])/len_tanvec
-                tanvec_y = (-aaa*self.object_sinalpha[oi] + bbb*self.object_cosalpha[oi])/len_tanvec
-                tanvec_z = ccc/len_tanvec
-                # The dip is the angle between the normal vector of the tangential
-                # plane and the normal vector of the x-y-plane.
-                # this means the cosine of the dip is dot(tanvec, [0, 0, 1]),
-                # i.e. the third component of norm_vec
-                dip = acos(tanvec_z)/pi*180
-                # The angle is positive if the x-component of the normal vector is
-                # positive
-                # the normal vector projected and normalized to the x-y-plane,
-                # multiplied with [0,1,0] is:
-                len_tanvec_xy = sqrt(tanvec_x**2 + tanvec_y**2)
-                if len_tanvec_xy == 0:
-                    azim = 0
+            len_normvec = sqrt(aaa**2 + bbb**2 + ccc**2)
+            if len_normvec != 0:
+                normvec_x = (aaa*self.object_cosalpha[oi]
+                             + bbb*self.object_sinalpha[oi])/len_normvec
+                normvec_y = (-aaa*self.object_sinalpha[oi]
+                             + bbb*self.object_cosalpha[oi])/len_normvec
+                normvec_z = ccc/len_normvec
+                len_normvec_xy = sqrt(normvec_x**2 + normvec_y**2)
+                if len_normvec_xy == 0:
+                    # normal vector points in z-direction -> dip = 0, azim = 0
+                    dip = 0.
+                    azim = 0.
                 else:
-                    cos_azim = tanvec_y/len_tanvec_xy
-                    azim = ho.sign(tanvec_x)*acos(cos_azim)/pi*180
-                if dip > 90:
-                    # if the dip is bigger than 90° we can also just rotate the azimuth
-                    dip = 180 - dip
-                    # add 180° to azimuth and shift such that it's between -180 and 180
-                    azim = (azim + 180 + 180) % 360 - 180
+                    # The dip angle can be found as acos of the normalized
+                    # scalar product of unit z-vector and normal vector
+                    # It should be negative, if the gradient points in positive
+                    # x direction and in positive z direction, or if it points
+                    # in negative x and z direction.
+                    # direction.
+                    if normvec_z == 0:
+                        # in this case only the sign of x is relevant
+                        dip = -acos(fabs(normvec_z))*ho.sign(normvec_x)/pi*180
+                    else:
+                        dip = -acos(fabs(normvec_z))\
+                              * ho.sign(normvec_x*normvec_z)/ pi*180
+
+                    # The azimuth angle should also be between -90 and 90. It is
+                    # the angle between the projection of the normal vector into
+                    # the xy-plane and the x unit vector.
+                    # It can be calculated as negative atan of the y component
+                    # over the x component. To make sure the angle is between
+                    # -90 and 90, we change the sign of both components, if the
+                    # x component is negative. This means the x component is
+                    # always positive, and the y component is multiplied by the
+                    # sign of the x component
+                    azim = -atan(ho.sign(normvec_x)*normvec_y/fabs(normvec_x))\
+                           / pi*180
             else:
                 # the point is exactly at the center of the trough, this means
                 # there is no azim and dip
@@ -247,6 +271,8 @@ cdef class TroughAE(AERealization):
             # use self.object_dip[oi] as maximum dip
             if dip > self.object_dip[oi]:
                 dip = self.object_dip[oi]
+            elif dip < -self.object_dip[oi]:
+                dip = -self.object_dip[oi]
 
             if structure == 2: # bulb
                 geo_ids[0] = self.object_facies[oi]

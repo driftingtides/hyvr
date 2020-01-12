@@ -154,9 +154,10 @@ def test_dip_trough():
     cos_dip = cos(dip*np.pi/180)
     sin_azim = sin(azim*np.pi/180)
     cos_azim = cos(azim*np.pi/180)
-    normvec_x = -sin_dip*cos_azim
-    normvec_y = sin_dip*sin_azim
+    normvec_x = sin_dip*cos_azim
+    normvec_y = -sin_dip*sin_azim
     normvec_z = cos_dip
+    print(normvec_x, normvec_y, normvec_z)
     x = x0+dist*normvec_x
     y = y0+dist*normvec_y
     z = z0+dist*normvec_z
@@ -170,62 +171,109 @@ def test_dip_trough():
     assert fac1 in dip_type_params['facies']
     assert fac2 in dip_type_params['facies']
 
-# def test_bulb_trough():
+def test_bulb_trough():
 
-#     grid = Grid(0.0, 0.0, 0.0, 0.1, 0.1, 0.1, 1.0, 1.0, 1.0, 0)
+    dip = 90 # maximum possible dip
+    azim = 0
+    dist = 0.01
+    type_params = {
+        'te_xyz':[(0.5, 0.5, 0.5)],
+        "structure":'bulb',
+        "dipset_dist":dist,
+        "facies":[5, 2],
+        "altfacies":[[2],[5]],
+        "dip":[dip,dip],
+        "azimuth":[azim,azim],
+        'lag_height':0.0,
+        'lag_facies':-1,
+        'ae_id':0,
+        'bg_facies':-1,
+        'bg_azim': np.nan,
+        'bg_dip': np.nan,
+        'size_ztrend': None,
+    }
 
-#     dip = 90
-#     azim = 0
-#     type_params = {
-#             "structure":'bulb',
-#             "dipset_dist":0.01,
-#             "facies":[5, 2],
-#             "altfacies":[[2],[5]],
-#             "dip":[dip,dip],
-#             "azimuth":[azim,azim],
-#             'lag_height':0.0,
-#             'lag_facies':-1,
-#     }
+    trough_params = (0.2, 0.1, 0.05, 0.0)
+    x0, y0, z0 = 0.5, 0.5, 0.5
 
-#     a = 1.0
-#     b = 0.5
-#     c = 0.1
-#     alpha = 0.0
-#     trough = Trough(type_params, x=0.0, y=0.0, z=0.0, a=a, b=b, c=c, alpha=alpha)
-#     trough.num_ha = 0
-#     facies = np.zeros(1, dtype=np.int32)
-#     angles = np.zeros(2)
-#     ids = np.zeros(3, dtype=np.int32)
+    # in the center of the trough, the dip should be 0
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0, y0, z0), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert dip == 0
 
+    # also at the bottom
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0, y0, z0-0.05), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert dip == 0
 
-#     x = 0.0
-#     y = 0.0
-#     z = 0.0
-#     trough.maybe_assign_facies_azim_dip(facies, angles, ids, x, y, z, 0, 0, grid)
-#     assert facies[0] == 2 or facies[0] == 5
-#     assert angles[1] == 0
+    # at the side in positive x-direction, the dip should be -90° and azim 0°
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0+0.2, y0, z0), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert azim == 0
+    assert dip == -90
 
-#     x = 0.0
-#     y = 0.0
-#     z = -c
-#     trough.maybe_assign_facies_azim_dip(facies, angles, ids, x, y, z, 0, 0, grid)
-#     assert facies[0] == 2 or facies[0] == 5
-#     assert angles[1] == 0
+    # at the side in negative x-direction, the dip should be 90° and azim 0°
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0-0.2, y0, z0), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert azim == 0
+    assert dip == 90
 
-#     x = a
-#     y = 0.0
-#     z = 0.0
-#     trough.maybe_assign_facies_azim_dip(facies, angles, ids, x, y, z, 0, 0, grid)
-#     assert facies[0] == 2 or facies[0] == 5
-#     assert angles[1] == 90
+    # at the side in positive y-direction, the dip should be +-90° and azim -90°
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0, y0+0.1, z0), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert azim == -90
+    assert abs(dip) == 90
 
-#     x = a/2
-#     y = 0.0
-#     z = 0.0
-#     trough.maybe_assign_facies_azim_dip(facies, angles, ids, x, y, z, 0, 0, grid)
-#     assert facies[0] == 2 or facies[0] == 5
-#     assert angles[0] == -90 or angles[0] == 90
+    # at the side in negative y-direction, the dip should be +-90° and azim +90°
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0, y0-0.1, z0), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert azim == 90
+    assert abs(dip) == 90
 
+def test_bulb_trough_limited_dip():
+
+    dip = 45 # maximum possible dip
+    azim = 0
+    dist = 0.01
+    type_params = {
+        'te_xyz':[(0.5, 0.5, 0.5)],
+        "structure":'bulb',
+        "dipset_dist":dist,
+        "facies":[5, 2],
+        "altfacies":[[2],[5]],
+        "dip":[dip,dip],
+        "azimuth":[azim,azim],
+        'lag_height':0.0,
+        'lag_facies':-1,
+        'ae_id':0,
+        'bg_facies':-1,
+        'bg_azim': np.nan,
+        'bg_dip': np.nan,
+        'size_ztrend': None,
+    }
+
+    trough_params = (0.2, 0.1, 0.05, 0.0)
+    x0, y0, z0 = 0.5, 0.5, 0.5
+
+    # at the side in x-direction, the dip should be 45° and azim 0°
+    fac, azim, dip = trough_test(type_params, trough_params,
+                                 (x0+0.2, y0, z0), None,
+                                 check_expected=False)
+    assert fac in [5, 2]
+    assert azim == 0
+    assert abs(dip) == 45
 
 # def test_bulb_sets_trough():
 

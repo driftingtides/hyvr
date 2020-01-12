@@ -76,7 +76,7 @@ cpdef set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
 
 
 cdef int sign(double x):
-    return (x > 0) - (x < 0)
+    return (x >= 0) - (x < 0)
 
 
 
