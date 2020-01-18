@@ -233,7 +233,7 @@ General ``[*element*]`` parameters
   structure is ``massive`` or ``dip``.
 - ``azimuth``: *(optional, default: [0,0])* Range of the uniform distribution
   from which the azimuth will be randomly drawn. This will be used if the
-  internal structure is ``massive`` or ``dip``
+  internal structure is ``massive`` or ``dip``.
 - ``facies``: *(required)* This should be a list of possible hydrofacies
   included in hydrofacies assemblage (the geometrical objects, e.g. the
   troughs). These should be names of facies that are listed in ``[hydraulics].hydrofacies``.
@@ -284,13 +284,16 @@ Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)
 .. _teparams:
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Truncated ellipsoid parameters
+Trough parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- ``trough_density``: *(required)* Number of elements to be simulated per simulation elevation and layer area
-- ``length``, ``width``, ``depth``: *(required)* Mean geometry of truncated ellipsoids
+- ``trough_density``: *(required)* Number of elements to be simulated per
+  simulation elevation and layer area
+- ``length``, ``width``, ``depth``: *(required)* Mean geometry of truncated
+  ellipsoids
 - ``paleoflow``: *(required)* Range of the uniform distribution from which the
   paleoflow orientation will be randomly drawn. This is the direction into which
-  the trough is elongated (i.e. the ``length`` axis).
+  the trough is elongated (i.e. the ``length`` axis). For ``massive`` and
+  ``dip`` troughs, the ``azimuth`` angle will be added to the paleoflow angle.
 - ``bulbset_dist``: *(required only if ``structure`` is ``bulb_sets``)*
   Thickness of nested-bulb structures at the maximum depth of the truncated
   ellipsoid.

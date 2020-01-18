@@ -65,14 +65,6 @@ hyvr.geo.contact\_surface\_utils module
    :undoc-members:
    :show-inheritance:
 
-hyvr.geo.extpar module
-----------------------
-
-.. automodule:: hyvr.geo.extpar
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 hyvr.geo.grid module
 --------------------
 

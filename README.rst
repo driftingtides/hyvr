@@ -25,7 +25,13 @@ I hope you enjoy using HyVR much more than I enjoyed putting it together! I look
 forward to seeing what kind of funky fields you created in the course of your
 work.
 
-*HyVR can be attributed by citing the following journal article: Bennett, J. P., Haslauer, C. P., Ross, M., & Cirpka, O. A. (2018). An open, object-based framework for generating anisotropy in sedimentary subsurface models. Groundwater. DOI:* `10.1111/gwat.12803 <https://onlinelibrary.wiley.com/doi/abs/10.1111/gwat.12803>`_. *A preprint version of the article is available* `here <https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf>`_.
+*HyVR can be attributed by citing the following journal article: Bennett, J. P.,
+ Haslauer, C. P., Ross, M., & Cirpka, O. A. (2018). An open, object-based
+ framework for generating anisotropy in sedimentary subsurface
+ models. Groundwater. DOI:* `10.1111/gwat.12803
+ <https://onlinelibrary.wiley.com/doi/abs/10.1111/gwat.12803>`_. *A preprint
+ version of the article is available* `here
+ <https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf>`_.
 
 Installing the HyVR package
 --------------------------------------
@@ -76,23 +82,46 @@ environment using ``conda install pip``)::
     pip install hyvr
 
 It might be necessary to install numpy separately before installing HyVR.
-The version on PyPI should always be up to date. If it's not, you can also
-install HyVR from github::
+To check whether installation was successful, you can run::
 
-    git clone https://github.com/driftingtides/hyvr.git
-    pip install hyvr
+    python -m hyvr
 
-To install from source you need a C/C++ compiler. On Windows you can get one by
-installing Build Tools for Visual Studio.
+If this runs without error (warnings are ok), ``hyvr`` should be successfully
+installed.
+
+If installing from PyPI doesn't work for you, please let us know (see
+below). You might want to try installing from source instead.
 
 Installation from conda-forge will (hopefully) be coming soon.
+
+Installing from source
+""""""""""""""""""""""
+
+If installation via ``pip`` fails, you can try to install from source by cloning
+or downloading the github repository.
+
+To install from source you need a C/C++ compiler. On Windows you can get one by
+installing "Build Tools for Visual Studio".
+
+If you have ``git`` installed on your machine, you can do::
+
+    git clone https://github.com/driftingtides/hyvr.git
+    pip install ./hyvr
+
+Otherwise you can download the code as a zip file, unzip it, and then install it via::
+
+    pip install <path/to/unzipped/hyvr>
+
+If you are in the same directory as the unzipped ``hyvr`` directory make sure to
+use ``./hyvr`` instead of ``hyvr``, otherwise pip tries to install from PyPI.
+
 
 Dependencies
 ^^^^^^^^^^^^
 
 ``pip`` should normally install all required dependencies. Optional dependencies are::
 
-- ``Cython`` to recreate the C-extensions at installation
+- ``Cython`` to recreate the C-extensions
 - ``h5py`` for HDF5 output
 - ``flopy`` for output of MODFLOW files
 - ``pyevtk`` for VTR output
@@ -116,41 +145,24 @@ If you want to use HyVR in a script, you can import it and use the ``run`` funct
     import hyvr
     hyvr.run('my_configfile.ini')
     
-Examples can be found in the ``testcases`` directory of the `github repository <https://github.com/driftingtides/hyvr/>`_,
-the general setup and possible options of the config-file are described in the
-documentation.  Currently only ``made.ini`` is ported to version 1.0.0.
+Examples can be found in the ``tests/testcases`` directory of the `github
+repository <https://github.com/driftingtides/hyvr/>`_, the general setup and
+possible options of the config-file are described in the
+documentation. Currently only ``tests/testcaes/made.ini`` is ported to version 1.0.0.
 
 Source
 ------
-The most current version of HyVR will be available at this `github repository <https://github.com/driftingtides/hyvr/>`_;
-a version will also be available on the `PyPI index <https://pypi.python.org/pypi/hyvr/>`_ which can be installed using ``pip``.
-
-
-Requirements
-------------
-
-Python
-^^^^^^
-HyVR was developed for use with Python 3.4 or greater. It may be possible to use
-with earlier versions of Python 3, however this has not been tested.
-
-Dependencies
-^^^^^^^^^^^^^^
-
-* `numpy <http://www.numpy.org/>`_ <= 1.13.3
-* `matplotlib <https://matplotlib.org/>`_ <= 2.1.0
-* `scipy <https://www.scipy.org/scipylib/index.html>`_ = 1.0.0
-* `pandas <https://pandas.pydata.org/>`_ = 0.21.0
-* `flopy <https://github.com/modflowpy/flopy>`_ == 3.2.9 (optional for modflow output)
-* `pyevtk <https://pypi.python.org/pypi/PyEVTK>`_ = 1.1.0 (optional for VTK output)
-* `h5py <https://www.h5py.org/>`_ (optional for HDF5 output)
+The most current version of HyVR will be available at this `github repository
+<https://github.com/driftingtides/hyvr/>`_; a version will also be available on
+the `PyPI index <https://pypi.python.org/pypi/hyvr/>`_ which can be installed
+using ``pip``.
 
 
 Development
 -----------
-HyVR has been developed by Jeremy Bennett (`website <https://jeremypaulbennett.weebly.com>`_)
-as part of his doctoral research at the University of Tübingen and by Samuel
-Scherrer as a student assistant.
+HyVR has been developed by Jeremy Bennett (`website
+<https://jeremypaulbennett.weebly.com>`_) as part of his doctoral research at
+the University of Tübingen and by Samuel Scherrer as a student assistant.
 
 You can contact the developer(s) of HyVR by `email <mailto:hyvr.sim@gmail.com>`_
 or via github.
@@ -158,7 +170,9 @@ or via github.
 Problems, Bugs, Unclear Documentation
 -------------------------------------
 
-If you have problems with HyVR have a look at the `troubleshooting <https://driftingtides.github.io/hyvr/troubleshooting.html>`_ section. If this
+If you have problems with HyVR have a look at the `troubleshooting
+<https://driftingtides.github.io/hyvr/troubleshooting.html>`_ section. If this
 doesn't help, don't hesitate to contact us via email or at github.
 
-If you find that the documentation is unclear, lacking, or wrong, please also contact us.
+If you find that the documentation is unclear, lacking, or wrong, please also
+contact us.

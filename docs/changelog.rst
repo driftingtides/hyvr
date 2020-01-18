@@ -12,7 +12,6 @@ Contributors
 
 * Samuel Scherrer
 * Jeremy Bennett
-* Pablo Ortega Tong
 
 Changes
 """""""
@@ -24,6 +23,8 @@ Changes
 * better developers guide
 * 'massive' is now a valid structure for troughs, as described in the documentation
 * changed 'flat' structure in made.ini to 'massive'
+* installation now does not use Cython if it is installed
+* removed some dependencies (matplotlib, pandas)
 * some other minor changes
 
 

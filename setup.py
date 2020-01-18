@@ -1,14 +1,31 @@
+# setup.py for HyVR
+# -----------------
+#
+# The setup.py is a bit more complicated than in pure python packages, as we
+# have to make sure the extensions are built.
+#
+# Normally, running this will use the already pre-generated *.c-files from
+# running Cython during creating a source distribution.
+# If you want to cythonize the extensions yourself, pass the "--cythonize"
+# option to ``setup.py install`` or ``--install-option="--cythonize"`` to ``pip
+# install``.
+# Below, you will find also some options for cythonizing (profiling, annotating,
+# etc.) in the function ``custom_cythonize``.
+
 from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 from setuptools.command.sdist import sdist as _sdist
+from setuptools.command.install import install
+from setuptools.command.develop import develop
 from os import path
 
 
 
 # Numpy stuff
 # ----------
-# To build the extensions, we need numpy headers. This makes sure numpy is correctly installed.
-# See https://stackoverflow.com/questions/27021270/how-to-handle-dependency-on-scipy-in-setup-py
+# To build the extensions, we need numpy headers. This makes sure numpy is
+# correctly installed. See
+# https://stackoverflow.com/questions/27021270/how-to-handle-dependency-on-scipy-in-setup-py
 class build_ext(_build_ext):
 
     def finalize_options(self):
@@ -19,54 +36,80 @@ class build_ext(_build_ext):
         self.include_dirs.append(numpy.get_include())
 
 
-
-
 # Cython stuff
 # ------------
-# Here I'm trying to import cython to recreate the *.c files if possible. If not, I'm using the
-# existing *.c files for creating the extensions. See here for more info:
-# https://stackoverflow.com/questions/4505747/how-should-i-structure-a-python-package-that-contains-cython-code
-try:
+# custom settings for cythonize
+def custom_cythonize():
     from Cython.Build import cythonize
-    use_cython = True
-    ext = ".pyx"
-except ModuleNotFoundError:
-    use_cython = False
-    ext = ".c"
+    cythonize(get_extensions(".pyx"),
+              language_level=3,
+              annotate=False,
+              compiler_directives={'profile':False})
+    
+
+# cythonize when ``--cythonize`` command line option is passed
+class CythonizeMixin(object):
+
+    user_options = [
+        ("cythonize", None, "recreate the c extionsions with cython")
+    ]
+
+    def initialize_options(self):
+        super().initialize_options()
+        self.cythonize = False
+
+    def run(self):
+        if self.cythonize:
+            custom_cythonize()
+        super().run()
+
+class develop_with_cythonize(CythonizeMixin, develop):
+    user_options = getattr(develop, 'user_options', [])\
+                   + CythonizeMixin.user_options
+    
+class install_with_cythonize(CythonizeMixin, install):
+    user_options = getattr(install, 'user_options', [])\
+                   + CythonizeMixin.user_options
 
 # Always run cython before creating a source distribution
 class sdist(_sdist):
     def run(self):
         # Make sure the compiled Cython files in the distribution are up-to-date
-        cythonize(extensions,
-                  language_level=3,
-                  annotate=True,
-                  compiler_directives={'profile':False})
+        custom_cythonize()
         _sdist.run(self)
 
 # Extensions
 # ----------
 here = path.abspath(path.dirname(__file__))
-extensions = [Extension("hyvr.optimized", sources=[path.join(here, "hyvr", "optimized"+ext)]),
-              Extension("hyvr.geo.grid", sources=[path.join(here, "hyvr", "geo", "grid"+ext)]),
-              Extension("hyvr.geo.contact_surface", sources=[path.join(here, "hyvr", "geo", "contact_surface"+ext)]),
-              Extension("hyvr.geo.ae_realization", sources=[path.join(here, "hyvr", "geo", "ae_realization"+ext)]),
-              Extension("hyvr.geo.trough", sources=[path.join(here, "hyvr", "geo", "trough"+ext)]),
-              Extension("hyvr.geo.trough_ae", sources=[path.join(here, "hyvr", "geo", "trough_ae"+ext)]),
-              Extension("hyvr.geo.sheet", sources=[path.join(here, "hyvr", "geo", "sheet"+ext)]),
-              Extension("hyvr.geo.sheet_ae", sources=[path.join(here, "hyvr", "geo", "sheet_ae"+ext)]),
-              Extension("hyvr.geo.channel", sources=[path.join(here, "hyvr", "geo", "channel"+ext)]),
-              Extension("hyvr.geo.channel_ae", sources=[path.join(here, "hyvr", "geo", "channel_ae"+ext)]),
-              Extension("hyvr.assign_points", sources=[path.join(here, "hyvr", "assign_points"+ext)]),
-              ]
-                         # include_dirs=[np.get_include()])]
-if use_cython:
-    ext_modules = cythonize(extensions,
-                            language_level=3,
-                            annotate=True,
-                            compiler_directives={'profile':False})
-else:
-    ext_modules = extensions
+hyvr_path = path.join(here, "hyvr")
+
+
+def get_extensions(ext):
+    extensions = [
+        Extension("hyvr.optimized",
+                  sources=[path.join(hyvr_path, "optimized"+ext)]),
+        Extension("hyvr.geo.grid",
+                  sources=[path.join(hyvr_path, "geo", "grid"+ext)]),
+        Extension("hyvr.geo.contact_surface",
+                  sources=[path.join(hyvr_path, "geo", "contact_surface"+ext)]),
+        Extension("hyvr.geo.ae_realization",
+                  sources=[path.join(hyvr_path, "geo", "ae_realization"+ext)]),
+        Extension("hyvr.geo.trough",
+                  sources=[path.join(hyvr_path, "geo", "trough"+ext)]),
+        Extension("hyvr.geo.trough_ae",
+                  sources=[path.join(hyvr_path, "geo", "trough_ae"+ext)]),
+        Extension("hyvr.geo.sheet",
+                  sources=[path.join(hyvr_path, "geo", "sheet"+ext)]),
+        Extension("hyvr.geo.sheet_ae",
+                  sources=[path.join(hyvr_path, "geo", "sheet_ae"+ext)]),
+        Extension("hyvr.geo.channel",
+                  sources=[path.join(hyvr_path, "geo", "channel"+ext)]),
+        Extension("hyvr.geo.channel_ae",
+                  sources=[path.join(hyvr_path, "geo", "channel_ae"+ext)]),
+        Extension("hyvr.assign_points",
+                  sources=[path.join(hyvr_path, "assign_points"+ext)]),
+    ]
+    return extensions
 
 
 
@@ -106,19 +149,32 @@ setup(
     packages=find_packages(),
     python_requires='>=3.4',
     cmdclass={'build_ext':build_ext,
-              'sdist':sdist},
-    ext_modules=ext_modules,
+              'sdist':sdist,
+              'install':install_with_cythonize,
+              'develop':develop_with_cythonize,
+    },
+    # ext_modules=ext_modules,
+    ext_modules=get_extensions(".c"),
     setup_requires=['numpy'],
     install_requires=[
         'numpy',
         'scipy',
-        'matplotlib',
-        'pandas',
         ],
     extras_require = {
         'HDF5': ['h5py'],
         'MODFLOW': ['flopy'],
         'VTR': ['pyevtk'],
+        'develop': ['Cython',
+                    'pytest',
+                    'twine',
+                    'Sphinx',
+                    'sphinxcontrib-bibtex',
+                    'sphinxcontrib-fulltoc',
+                    'sphinxcontrib-fulltoc',
+                    'h5py',
+                    'flopy',
+                    'pyevtk',
+        ],
         },
 
     # include testcase config file

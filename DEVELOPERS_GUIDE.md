@@ -2,6 +2,7 @@
 # Table of Contents
 
 - [General Coding Guidelines](#general-coding-guidelines)
+- [Installation for development](#installation-for-development)
 - [Version Control](#version-control)
     - [Working on an issue](#working-on-an-issue)
     - [Releasing a new version](#releasing-a-new-version)
@@ -48,6 +49,21 @@ doesn't affect how HyVR works (e.g. it doesn't change ini-file option names).
   functions. A function should typically not be too long, it should fit on one
   or at most two pages in your text editor. If your function is very long,
   consider splitting it into several shorter functions.
+  
+# Installation for development
+
+You can install the package for development by passing the `-e` option to
+`pip`. This makes `pip` symlink the files, so you directly see your changes
+without having to reinstall. For example, if you are in the package root, type
+```
+pip install -e .
+```
+In case you are changing some of the cython code, you have to reinstall
+anyways. In this case you have to use
+```
+pip install -e . --install-option="--cythonize"
+```
+because otherwise the `*.c` files will not be regenerated.
 
 # Version Control
 
@@ -83,6 +99,7 @@ new branch but didn't add/commit any changes yet.
 - `feat` for adding minor features or minor fixes (spelling etc.)
 - `bug` for bugfixes
 - `doc` for documentation changes
+- `test` for adding tests
 `<short issue title>` should normally be one word describing what the issue is about.
 
 Commit messages should always have one header line and then be followed by a

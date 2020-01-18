@@ -12,7 +12,6 @@
 import sys
 import numpy as np
 import time
-import pandas as pd
 import linecache
 import os
 import errno
