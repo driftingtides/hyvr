@@ -147,19 +147,12 @@ repository <https://github.com/driftingtides/hyvr/>`_, the general setup and
 possible options of the config-file are described in the
 documentation. Currently only ``tests/testcaes/made.ini`` is ported to version 1.0.0.
 
-Source
-------
-The most current version of HyVR will be available at this `github repository
-<https://github.com/driftingtides/hyvr/>`_; a version will also be available on
-the `PyPI index <https://pypi.python.org/pypi/hyvr/>`_ which can be installed
-using ``pip``.
-
 
 Development
 -----------
-HyVR has been developed by Jeremy Bennett (`website
-<https://jeremypaulbennett.weebly.com>`_) as part of his doctoral research at
-the University of Tübingen and by Samuel Scherrer as a student assistant.
+HyVR has been developed by Jeremy Bennett (`website <https://jeremypaulbennett.weebly.com>`_)
+as part of his doctoral research at the University of Tübingen and by Samuel
+Scherrer as a student assistant.
 
 You can contact the developer(s) of HyVR by `email <mailto:hyvr.sim@gmail.com>`_
 or via github.

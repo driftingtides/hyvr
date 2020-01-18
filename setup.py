@@ -12,12 +12,14 @@
 # Below, you will find also some options for cythonizing (profiling, annotating,
 # etc.) in the function ``custom_cythonize``.
 
+from os import path
+from shutil import copyfile
+
 from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 from setuptools.command.sdist import sdist as _sdist
 from setuptools.command.install import install
 from setuptools.command.develop import develop
-from os import path
 
 
 
@@ -76,6 +78,8 @@ class sdist(_sdist):
     def run(self):
         # Make sure the compiled Cython files in the distribution are up-to-date
         custom_cythonize()
+        # copy the made.ini test case to the package directory
+        copyfile(path.join(here, 'tests', 'full_testcases', 'made.ini'), path.join(here, 'hyvr', 'made.ini'))
         _sdist.run(self)
 
 # Extensions
@@ -84,32 +88,51 @@ here = path.abspath(path.dirname(__file__))
 hyvr_path = path.join(here, "hyvr")
 
 
+
 def get_extensions(ext):
-    extensions = [
-        Extension("hyvr.optimized",
-                  sources=[path.join(hyvr_path, "optimized"+ext)]),
-        Extension("hyvr.geo.grid",
-                  sources=[path.join(hyvr_path, "geo", "grid"+ext)]),
-        Extension("hyvr.geo.contact_surface",
-                  sources=[path.join(hyvr_path, "geo", "contact_surface"+ext)]),
-        Extension("hyvr.geo.ae_realization",
-                  sources=[path.join(hyvr_path, "geo", "ae_realization"+ext)]),
-        Extension("hyvr.geo.trough",
-                  sources=[path.join(hyvr_path, "geo", "trough"+ext)]),
-        Extension("hyvr.geo.trough_ae",
-                  sources=[path.join(hyvr_path, "geo", "trough_ae"+ext)]),
-        Extension("hyvr.geo.sheet",
-                  sources=[path.join(hyvr_path, "geo", "sheet"+ext)]),
-        Extension("hyvr.geo.sheet_ae",
-                  sources=[path.join(hyvr_path, "geo", "sheet_ae"+ext)]),
-        Extension("hyvr.geo.channel",
-                  sources=[path.join(hyvr_path, "geo", "channel"+ext)]),
-        Extension("hyvr.geo.channel_ae",
-                  sources=[path.join(hyvr_path, "geo", "channel_ae"+ext)]),
-        Extension("hyvr.assign_points",
-                  sources=[path.join(hyvr_path, "assign_points"+ext)]),
-    ]
-    return extensions
+
+    extensions = {
+        "hyvr.optimized": path.join(hyvr_path, "optimized"),
+        "hyvr.geo.grid": path.join(hyvr_path, "geo", "grid"),
+        "hyvr.geo.contact_surface": path.join(hyvr_path, "geo", "contact_surface"),
+        "hyvr.geo.ae_realization": path.join(hyvr_path, "geo", "ae_realization"),
+        "hyvr.geo.trough": path.join(hyvr_path, "geo", "trough"),
+        "hyvr.geo.trough_ae": path.join(hyvr_path, "geo", "trough_ae"),
+        "hyvr.geo.sheet": path.join(hyvr_path, "geo", "sheet"),
+        "hyvr.geo.sheet_ae": path.join(hyvr_path, "geo", "sheet_ae"),
+        "hyvr.geo.channel": path.join(hyvr_path, "geo", "channel"),
+        "hyvr.geo.channel_ae": path.join(hyvr_path, "geo", "channel_ae"),
+        "hyvr.assign_points": path.join(hyvr_path, "assign_points"),
+    }
+
+    return [Extension(name, sources=[extensions[name]+ext]) for name in extensions]
+
+
+    # extensions = [
+    #     Extension("hyvr.optimized",
+    #               sources=[path.join(hyvr_path, "optimized"+ext)]),
+    #     Extension("hyvr.geo.grid",
+    #               sources=[path.join(hyvr_path, "geo", "grid"+ext)]),
+    #     Extension("hyvr.geo.contact_surface",
+    #               sources=[path.join(hyvr_path, "geo", "contact_surface"+ext)]),
+    #     Extension("hyvr.geo.ae_realization",
+    #               sources=[path.join(hyvr_path, "geo", "ae_realization"+ext)]),
+    #     Extension("hyvr.geo.trough",
+    #               sources=[path.join(hyvr_path, "geo", "trough"+ext)]),
+    #     Extension("hyvr.geo.trough_ae",
+    #               sources=[path.join(hyvr_path, "geo", "trough_ae"+ext)]),
+    #     Extension("hyvr.geo.sheet",
+    #               sources=[path.join(hyvr_path, "geo", "sheet"+ext)]),
+    #     Extension("hyvr.geo.sheet_ae",
+    #               sources=[path.join(hyvr_path, "geo", "sheet_ae"+ext)]),
+    #     Extension("hyvr.geo.channel",
+    #               sources=[path.join(hyvr_path, "geo", "channel"+ext)]),
+    #     Extension("hyvr.geo.channel_ae",
+    #               sources=[path.join(hyvr_path, "geo", "channel_ae"+ext)]),
+    #     Extension("hyvr.assign_points",
+    #               sources=[path.join(hyvr_path, "assign_points"+ext)]),
+    # ]
+    # return extensions
 
 
 
@@ -118,13 +141,8 @@ with open(path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 # get version number from file
-with open('versionnumber', 'r') as f:
+with open(path.join(here, "hyvr", 'versionnumber'), 'r') as f:
     version = f.read().strip('\n')
-
-
-# copy the made.ini test case to the package directory
-from shutil import copyfile
-copyfile(path.join(here, 'tests', 'full_testcases', 'made.ini'), path.join(here, 'hyvr', 'made.ini'))
 
 setup(
     name='hyvr',
@@ -146,14 +164,13 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords=['hydrogeology', 'sediment', 'simulator'],
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     python_requires='>=3.4',
     cmdclass={'build_ext':build_ext,
               'sdist':sdist,
               'install':install_with_cythonize,
               'develop':develop_with_cythonize,
     },
-    # ext_modules=ext_modules,
     ext_modules=get_extensions(".c"),
     setup_requires=['numpy'],
     install_requires=[
@@ -174,12 +191,15 @@ setup(
                     'h5py',
                     'flopy',
                     'pyevtk',
+                    'restructuredtext-lint',
         ],
         },
 
     # include testcase config file
     package_data={
-        'hyvr': ['made.ini'],
+        "" : ["LICENCE", "*.c", "*.pyx", "*.pxd"],
+        "hyvr": ["made.ini", "versionnumber"],
     },
+    exclude_package_data={"": ["tests"]},
     zip_safe=False, # Due to the .pxd files
 )

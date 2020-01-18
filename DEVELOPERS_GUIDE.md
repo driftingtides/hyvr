@@ -140,6 +140,7 @@ Then you should run the tests to make sure everything works as
 expected. Documentation for the tests can be found [here](tests/README.md).
 
 In case everything works as expected you should perform the following steps:
+- remove old distributions and egg-info
 - set the correct version number for PyPI-test and create distributions
 - upload the new version to PyPI-test and try installing it from there
 - set the correct version number and rebuild distributions
@@ -147,9 +148,17 @@ In case everything works as expected you should perform the following steps:
 - push to the github master branch
 - update the online documentation
 
+### Remove old distributions
+
+To avoid uploading an old version, and since ``setup.py`` might read from old
+``hyvr.egg-info`` content, remove these:
+```
+rm -r dist hyvr.egg-info
+```
+
 ### PyPI-test
 
-The versionnumber should be in the file `versionnumber`. It follows the format
+The versionnumber should be in the file `hyvr/versionnumber`. It follows the format
 `<major version number>.<minor version number>.<number of fixes>`.
 As PyPI and PyPI-test don't allow reuploading the same version again, we append
 a further number to the version number for PyPI-test, e.g. the <n>-th try on
@@ -160,7 +169,7 @@ package by running `setup.py`:
 ```
 python setup.py sdist bdist_wheel
 ```
-(Note: On linux you cannot create wheels.)
+(Note: On linux you cannot create wheels.) 
 
 Then you can upload the distributions first to PyPI-test using `twine`:
 ```
@@ -171,6 +180,7 @@ and then install the package from PyPI test:
 ```
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple hyvr
 ```
+If you run into issues with parsing of `README.rst` you can try `rst-lint`.
 
 If everything worked, move on, otherwise try to fix the issues first.
 
