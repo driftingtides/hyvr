@@ -180,7 +180,7 @@ cdef class TroughAE(AERealization):
             return
 
         structure = self.object_structure[oi]
-        if structure == 0: # flat
+        if structure == 0: # massive
             geo_ids[0] = self.object_facies[oi]
             angles[0] = self.object_azim[oi]
             angles[1] = self.object_dip[oi]

@@ -5252,7 +5252,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
  *             return
  * 
  *         structure = self.object_structure[oi]             # <<<<<<<<<<<<<<
- *         if structure == 0: # flat
+ *         if structure == 0: # massive
  *             geo_ids[0] = self.object_facies[oi]
  */
   if (unlikely(!__pyx_v_self->object_structure.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 182, __pyx_L1_error)}
@@ -5262,7 +5262,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
   /* "hyvr/geo/trough_ae.pyx":183
  * 
  *         structure = self.object_structure[oi]
- *         if structure == 0: # flat             # <<<<<<<<<<<<<<
+ *         if structure == 0: # massive             # <<<<<<<<<<<<<<
  *             geo_ids[0] = self.object_facies[oi]
  *             angles[0] = self.object_azim[oi]
  */
@@ -5271,7 +5271,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
 
     /* "hyvr/geo/trough_ae.pyx":184
  *         structure = self.object_structure[oi]
- *         if structure == 0: # flat
+ *         if structure == 0: # massive
  *             geo_ids[0] = self.object_facies[oi]             # <<<<<<<<<<<<<<
  *             angles[0] = self.object_azim[oi]
  *             angles[1] = self.object_dip[oi]
@@ -5282,7 +5282,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
     *((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_geo_ids.data + __pyx_t_38 * __pyx_v_geo_ids.strides[0]) )) = (*((__pyx_t_5numpy_int32_t *) ( /* dim=0 */ (__pyx_v_self->__pyx_base.object_facies.data + __pyx_t_37 * __pyx_v_self->__pyx_base.object_facies.strides[0]) )));
 
     /* "hyvr/geo/trough_ae.pyx":185
- *         if structure == 0: # flat
+ *         if structure == 0: # massive
  *             geo_ids[0] = self.object_facies[oi]
  *             angles[0] = self.object_azim[oi]             # <<<<<<<<<<<<<<
  *             angles[1] = self.object_dip[oi]
@@ -5331,7 +5331,7 @@ static PyObject *__pyx_f_4hyvr_3geo_9trough_ae_8TroughAE_maybe_assign_points_to_
     /* "hyvr/geo/trough_ae.pyx":183
  * 
  *         structure = self.object_structure[oi]
- *         if structure == 0: # flat             # <<<<<<<<<<<<<<
+ *         if structure == 0: # massive             # <<<<<<<<<<<<<<
  *             geo_ids[0] = self.object_facies[oi]
  *             angles[0] = self.object_azim[oi]
  */

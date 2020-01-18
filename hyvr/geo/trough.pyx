@@ -112,8 +112,10 @@ cdef class Trough:
         if self.structure == 4: # random
             self.structure = np.random.randint(4)
         if self.structure == 0:  # massive
+            # everything has the same facies, azim, and dip
+            # alpha (rotation angle of trough) is added to azimuth
             self.facies = np.random.choice(type_params['facies'])
-            self.azim = np.random.uniform(*type_params['azimuth'])
+            self.azim = np.random.uniform(*type_params['azimuth']) + self.alpha
             self.dip = np.random.uniform(*type_params['dip'])
         elif self.structure == 1: # dip
             # In this case the internal structure consists of parallel dipping layers.
@@ -147,9 +149,9 @@ cdef class Trough:
             #     \       cos(dip)      /
             #
             #
-            # The azimuth is the given azimuth **without** the rotation of the
+            # The azimuth is the given azimuth **with** the rotation of the
             # trough, all angles are in degree
-            self.azim = np.random.uniform(*type_params['azimuth'])
+            self.azim = np.random.uniform(*type_params['azimuth']) + self.alpha
             self.dip = np.random.uniform(*type_params['dip'])
             sin_dip = sin(self.dip*np.pi/180)
             cos_dip = cos(self.dip*np.pi/180)
