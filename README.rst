@@ -30,8 +30,7 @@ Haslauer, C. P., Ross, M., & Cirpka, O. A. (2018). An open, object-based
 framework for generating anisotropy in sedimentary subsurface
 models. Groundwater.
 DOI:* `10.1111/gwat.12803 <https://onlinelibrary.wiley.com/doi/abs/10.1111/gwat.12803>`_.
-*A preprint version of the article is available* `here
- <https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf>`_.
+*A preprint version of the article is available* `here <https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf>`_.
 
 Installing the HyVR package
 --------------------------------------
