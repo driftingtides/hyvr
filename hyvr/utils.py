@@ -181,126 +181,126 @@ import errno
 
 
 
-def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
-    """ Perform 'virtual' borehole sampling of parameter field
+# def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):
+#     """ Perform 'virtual' borehole sampling of parameter field
 
-    Arguments:
-        data_dict (dict):
-            Data to sample
-        d (list):
-            3-tuple of model grid cell dimensions
-        l (list):
-            3-tuple of total model dimensions/lengths
-        file_out (list: basefile path, list of file types):
-            Output filename and path
-        vals (list):
-            Parameter fields to include
-        opts (dict):
-            Sampling options
-            opts['noBH'] (int):             Random sampling
-            opts['grid_spacing']:           float, or list of floats [x spacing, y spacing] Grid sample spacing
-            opts['grid_n']:                 int, or list of ints [n in x, n in y] Number of grid nodes per x,y dimensions
-            opt['lnK'] (bool):              Natural logarithm of isotropic hydraulic conductivity
+#     Arguments:
+#         data_dict (dict):
+#             Data to sample
+#         d (list):
+#             3-tuple of model grid cell dimensions
+#         l (list):
+#             3-tuple of total model dimensions/lengths
+#         file_out (list: basefile path, list of file types):
+#             Output filename and path
+#         vals (list):
+#             Parameter fields to include
+#         opts (dict):
+#             Sampling options
+#             opts['noBH'] (int):             Random sampling
+#             opts['grid_spacing']:           float, or list of floats [x spacing, y spacing] Grid sample spacing
+#             opts['grid_n']:                 int, or list of ints [n in x, n in y] Number of grid nodes per x,y dimensions
+#             opt['lnK'] (bool):              Natural logarithm of isotropic hydraulic conductivity
 
-    Returns:
-        bh_df : Pandas DataFrame class
+#     Returns:
+#         bh_df : Pandas DataFrame class
 
-    """
+#     """
 
-    nx, ny, nz = np.shape(data_dict['fac'])
+#     nx, ny, nz = np.shape(data_dict['fac'])
 
-    # Set up column names
-    cols = ['x', 'y', 'z']
-    if len(vals) == 0:
-        vals = data_dict.keys()
-    cols.extend(vals)
+#     # Set up column names
+#     cols = ['x', 'y', 'z']
+#     if len(vals) == 0:
+#         vals = data_dict.keys()
+#     cols.extend(vals)
 
-    # Create dataframe
-    bh_df = pd.DataFrame(columns=cols)
+#     # Create dataframe
+#     bh_df = pd.DataFrame(columns=cols)
 
-    # Sampling of grid
-    xy_grid = []
-    xv = np.arange(0.5 * d[0], l[0], d[0])
-    yv = np.arange(0.5 * d[1], l[1], d[1])
-    zv = np.arange(0.5 * d[2], l[2], d[2])
+#     # Sampling of grid
+#     xy_grid = []
+#     xv = np.arange(0.5 * d[0], l[0], d[0])
+#     yv = np.arange(0.5 * d[1], l[1], d[1])
+#     zv = np.arange(0.5 * d[2], l[2], d[2])
 
-    if 'grid_spacing' in opts.keys():
-        """ Uniform grid with set spacing """
+#     if 'grid_spacing' in opts.keys():
+#         """ Uniform grid with set spacing """
 
-        # Get cartesian coordinates in 2D (x,y)
-        if len(opts['grid_spacing']) == 2:
-            range_x = np.arange((opts['grid_spacing'][0] * 0.5), l[0], opts['grid_spacing'][0])
-            range_y = np.arange((opts['grid_spacing'][1] * 0.5), l[1], opts['grid_spacing'][1])
-        else:
-            range_x = np.arange((opts['grid_spacing'] * 0.5), l[0], opts['grid_spacing'])
-            range_y = np.arange((opts['grid_spacing'] * 0.5), l[1], opts['grid_spacing'])
+#         # Get cartesian coordinates in 2D (x,y)
+#         if len(opts['grid_spacing']) == 2:
+#             range_x = np.arange((opts['grid_spacing'][0] * 0.5), l[0], opts['grid_spacing'][0])
+#             range_y = np.arange((opts['grid_spacing'][1] * 0.5), l[1], opts['grid_spacing'][1])
+#         else:
+#             range_x = np.arange((opts['grid_spacing'] * 0.5), l[0], opts['grid_spacing'])
+#             range_y = np.arange((opts['grid_spacing'] * 0.5), l[1], opts['grid_spacing'])
 
-        x_locs, y_locs = np.meshgrid(range_x, range_y)
+#         x_locs, y_locs = np.meshgrid(range_x, range_y)
 
-        # Convert to array indices
-        x_locs = np.floor(x_locs.flatten()/d[0]).astype(int)
-        y_locs = np.floor(y_locs.flatten()/d[1]).astype(int)
+#         # Convert to array indices
+#         x_locs = np.floor(x_locs.flatten()/d[0]).astype(int)
+#         y_locs = np.floor(y_locs.flatten()/d[1]).astype(int)
 
-    elif 'grid_n' in opts.keys():
-        """ Sample over uniform grid """
-        # Get cartesian coordinates in 2D (x,y)
-        range_x = np.linspace(0, l[0]/d[0] - 1, opts['grid_n'][0])
-        range_y = np.linspace(0, l[1]/d[1] - 1, opts['grid_n'][1]+2)[1:-1]
-        x_locs, y_locs = np.meshgrid(range_x, range_y)
+#     elif 'grid_n' in opts.keys():
+#         """ Sample over uniform grid """
+#         # Get cartesian coordinates in 2D (x,y)
+#         range_x = np.linspace(0, l[0]/d[0] - 1, opts['grid_n'][0])
+#         range_y = np.linspace(0, l[1]/d[1] - 1, opts['grid_n'][1]+2)[1:-1]
+#         x_locs, y_locs = np.meshgrid(range_x, range_y)
 
-        # Convert to array indices
-        x_locs = np.floor(x_locs.flatten()).astype(int)
-        y_locs = np.floor(y_locs.flatten()).astype(int)
+#         # Convert to array indices
+#         x_locs = np.floor(x_locs.flatten()).astype(int)
+#         y_locs = np.floor(y_locs.flatten()).astype(int)
 
-    elif 'noBH' in opts.keys():
-        """ Randomly sample the xy plane """
-        x_locs = np.random.choice(range(0, nx), opts['noBH'])    # Borehole location indices
-        y_locs = np.random.choice(range(0, ny), opts['noBH'])    # Borehole location indices
+#     elif 'noBH' in opts.keys():
+#         """ Randomly sample the xy plane """
+#         x_locs = np.random.choice(range(0, nx), opts['noBH'])    # Borehole location indices
+#         y_locs = np.random.choice(range(0, ny), opts['noBH'])    # Borehole location indices
 
-    # Put data into dataframe
-    for idx in range(len(x_locs)):
-        # Get indices of location
-        i = x_locs[idx]
-        j = y_locs[idx]
+#     # Put data into dataframe
+#     for idx in range(len(x_locs)):
+#         # Get indices of location
+#         i = x_locs[idx]
+#         j = y_locs[idx]
 
-        # Get vectors of Cartesian coordinates
-        ibh = np.zeros((nz, 3 + len(vals)))
-        ibh[:, 0] = np.ones((nz,)) * xv[i]          # x coordinates
-        ibh[:, 1] = np.ones((nz,)) * yv[j]          # y coordinates
-        ibh[:, 2] = zv                              # z coordinates
+#         # Get vectors of Cartesian coordinates
+#         ibh = np.zeros((nz, 3 + len(vals)))
+#         ibh[:, 0] = np.ones((nz,)) * xv[i]          # x coordinates
+#         ibh[:, 1] = np.ones((nz,)) * yv[j]          # y coordinates
+#         ibh[:, 2] = zv                              # z coordinates
 
-        for iv, v in enumerate(vals):
-            # Append to list to be appended to dataframe
-            ibh[:, iv+3] = data_dict[v][i, j, 0:nz]
-        bh_df = bh_df.append(pd.DataFrame(ibh, columns=cols), ignore_index=True)
+#         for iv, v in enumerate(vals):
+#             # Append to list to be appended to dataframe
+#             ibh[:, iv+3] = data_dict[v][i, j, 0:nz]
+#         bh_df = bh_df.append(pd.DataFrame(ibh, columns=cols), ignore_index=True)
 
-    if 'lnK' in opts and opts['lnK'] is True:
-        vals.extend(['lnK'])
-        bh_df['lnK'] = pd.Series(np.log(bh_df['k_iso']), index=bh_df.index)
+#     if 'lnK' in opts and opts['lnK'] is True:
+#         vals.extend(['lnK'])
+#         bh_df['lnK'] = pd.Series(np.log(bh_df['k_iso']), index=bh_df.index)
 
-    # Save borehole data
-    fmtd = {'k_iso': '%.5e',
-            'lnK': '%.5f',
-            'poros': '%.5f',
-            'fac': '%u',
-            'dip': '%.2f',
-            'azim': '%.2f'}
-    if file_out is not None:
-        if 'csv' in file_out[1]:
-            bh_df.to_csv(file_out[0]+'.csv', index=False)
-        if 'gslib' in file_out[1]:
-            n_conddata = bh_df.shape[0]
-            colsout = ['x', 'y', 'z']
-            colsout.extend(vals)
-            to_write = bh_df.as_matrix(columns=colsout)
-            header = [str(n_conddata), str(3 + len(vals)), 'x', 'y', 'z']
-            header.extend(vals)
-            header = '\n'.join(header)
+#     # Save borehole data
+#     fmtd = {'k_iso': '%.5e',
+#             'lnK': '%.5f',
+#             'poros': '%.5f',
+#             'fac': '%u',
+#             'dip': '%.2f',
+#             'azim': '%.2f'}
+#     if file_out is not None:
+#         if 'csv' in file_out[1]:
+#             bh_df.to_csv(file_out[0]+'.csv', index=False)
+#         if 'gslib' in file_out[1]:
+#             n_conddata = bh_df.shape[0]
+#             colsout = ['x', 'y', 'z']
+#             colsout.extend(vals)
+#             to_write = bh_df.as_matrix(columns=colsout)
+#             header = [str(n_conddata), str(3 + len(vals)), 'x', 'y', 'z']
+#             header.extend(vals)
+#             header = '\n'.join(header)
 
-            fmts = '%.3f %.3f %.3f {}'.format(' '.join([fmtd[i] for i in vals]))
-            np.savetxt(file_out[0] + '.gslib', to_write, delimiter=' ', header=header, comments='', fmt=fmts)
+#             fmts = '%.3f %.3f %.3f {}'.format(' '.join([fmtd[i] for i in vals]))
+#             np.savetxt(file_out[0] + '.gslib', to_write, delimiter=' ', header=header, comments='', fmt=fmts)
 
-    return bh_df
+#     return bh_df
 
 
 def print_to_stdout(*args):
