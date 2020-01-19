@@ -19,6 +19,8 @@
 #
 import os
 import sys
+import pathlib
+import re
 sys.path.insert(0, os.path.abspath('..'))
 
 # -- General configuration ------------------------------------------------
@@ -65,12 +67,14 @@ author = 'Jeremy Bennett'
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'versionnumber'))
-with open(path, 'r') as f:
-    version = f.read().strip('\n')
-#
+path = pathlib.Path(__file__).parent.parent / "setup.py"
+with open(path.resolve(), 'r') as f:
+    string = f.read()
+    m = re.search('version="([0-9.]+)"', string)
+    version = m.group(1)
+
 # The short X.Y version.
-version = version
+# version = "1.1.0"
 # The full version, including alpha/beta/rc tags.
 release = version
 
