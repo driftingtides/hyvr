@@ -28,12 +28,6 @@ def run(inifile, flag_ow=None):
     flag_ow : bool
         Whether to overwrite existing run directories.
     """
-    # TODO: implement a seed option to get the same model
-    # np.random.seed(84)
-
-    # Load parameter file
-    # run, model, hydraulics = hp.model_setup(param_file)
-    # hp.set_up_directories(run, param_file, flag_ow)
 
     run_settings, model, hydraulics = hp.setup_from_inifile(inifile, flag_ow=flag_ow)
 
@@ -56,20 +50,17 @@ def run(inifile, flag_ow=None):
 
         # Save data
         if run_settings['numsim'] > 1:
-            realname = 'real_{:03d}'.format(sim)
-            realdir = run_settings['rundir'] / realname
+            realdir = run_settings['rundir'] / 'real_{:03d}'.format(sim)
         else:
-            realname = run_settings['runname']
             realdir = run_settings['rundir']
         realdir.mkdir(parents=True, exist_ok=True)
-        create_outputs(model, realdir, realname, run_settings['outputs'])
+        create_outputs(model, realdir, run_settings["runname"],
+                       run_settings['outputs'])
 
 
     if inifile == 0:
         # this is just the testcase, so we remove the output
-        from pkg_resources import cleanup_resources
-        cleanup_resources()
         import shutil
-        runpath = os.path.abspath(run_settings['rundir'])
-        if os.path.exists(runpath):
+        runpath = run_settings['rundir']
+        if runpath.exists():
             shutil.rmtree(runpath)

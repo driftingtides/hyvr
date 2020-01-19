@@ -22,7 +22,6 @@ from setuptools.command.install import install
 from setuptools.command.develop import develop
 
 
-
 # Numpy stuff
 # ----------
 # To build the extensions, we need numpy headers. This makes sure numpy is
@@ -106,34 +105,6 @@ def get_extensions(ext):
     }
 
     return [Extension(name, sources=[extensions[name]+ext]) for name in extensions]
-
-
-    # extensions = [
-    #     Extension("hyvr.optimized",
-    #               sources=[path.join(hyvr_path, "optimized"+ext)]),
-    #     Extension("hyvr.geo.grid",
-    #               sources=[path.join(hyvr_path, "geo", "grid"+ext)]),
-    #     Extension("hyvr.geo.contact_surface",
-    #               sources=[path.join(hyvr_path, "geo", "contact_surface"+ext)]),
-    #     Extension("hyvr.geo.ae_realization",
-    #               sources=[path.join(hyvr_path, "geo", "ae_realization"+ext)]),
-    #     Extension("hyvr.geo.trough",
-    #               sources=[path.join(hyvr_path, "geo", "trough"+ext)]),
-    #     Extension("hyvr.geo.trough_ae",
-    #               sources=[path.join(hyvr_path, "geo", "trough_ae"+ext)]),
-    #     Extension("hyvr.geo.sheet",
-    #               sources=[path.join(hyvr_path, "geo", "sheet"+ext)]),
-    #     Extension("hyvr.geo.sheet_ae",
-    #               sources=[path.join(hyvr_path, "geo", "sheet_ae"+ext)]),
-    #     Extension("hyvr.geo.channel",
-    #               sources=[path.join(hyvr_path, "geo", "channel"+ext)]),
-    #     Extension("hyvr.geo.channel_ae",
-    #               sources=[path.join(hyvr_path, "geo", "channel_ae"+ext)]),
-    #     Extension("hyvr.assign_points",
-    #               sources=[path.join(hyvr_path, "assign_points"+ext)]),
-    # ]
-    # return extensions
-
 
 
 # Get the long description from the README file
