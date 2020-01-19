@@ -12,6 +12,7 @@
 # Below, you will find also some options for cythonizing (profiling, annotating,
 # etc.) in the function ``custom_cythonize``.
 
+import re
 from os import path
 from shutil import copyfile
 
@@ -111,9 +112,14 @@ def get_extensions(ext):
 with open(path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
     long_description = f.read()
 
+# get version number
+with open(path.join(here, 'hyvr', '__init__.py'), 'r') as f:
+    m = re.search('__version__\s*=\s*[\'"]([0-9.]+)[\'"]', f.read())
+    version = m.group(1)
+
 setup(
     name='hyvr',
-    version="1.1.0",
+    version=version,
     description='A python package for simulating hydrogeological virtual realities',
     long_description=long_description,
     long_description_content_type='text/x-rst',

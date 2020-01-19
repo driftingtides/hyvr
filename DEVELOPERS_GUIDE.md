@@ -158,7 +158,7 @@ rm -r dist hyvr.egg-info
 
 ### PyPI-test
 
-The versionnumber should be set in `setup.py`. It has the format
+The versionnumber should be set in `hyvr/__init__.py`. It has the format
 `<major version number>.<minor version number>.<number of fixes>`.
 As PyPI and PyPI-test don't allow reuploading the same version again, we append
 a further number to the version number for PyPI-test, e.g. the <n>-th try on
@@ -229,7 +229,7 @@ To push the new documentation to github pages, you have to check out the branch
 ```
 git checkout gh-pages
 rm _sources _static
-git checkout master --
+git checkout master -- hyvr docs README.rst
 git reset HEAD
 cd docs
 sphinx-apidoc -fM -H 'Module Reference' -o modules ../hyvr

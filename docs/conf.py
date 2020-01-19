@@ -67,10 +67,10 @@ author = 'Jeremy Bennett'
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-path = pathlib.Path(__file__).parent.parent / "setup.py"
-with open(path.resolve(), 'r') as f:
-    string = f.read()
-    m = re.search('version="([0-9.]+)"', string)
+path = pathlib.Path(__file__).parent.parent / "hyvr" / "__init__.py"
+# get version number
+with open(path, 'r') as f:
+    m = re.search('__version__\s*=\s*[\'"]([0-9.]+)[\'"]', f.read())
     version = m.group(1)
 
 # The short X.Y version.
