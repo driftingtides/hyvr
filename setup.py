@@ -113,7 +113,7 @@ with open(path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
 
 setup(
     name='hyvr',
-    version="1.1.0.5",
+    version="1.1.0",
     description='A python package for simulating hydrogeological virtual realities',
     long_description=long_description,
     long_description_content_type='text/x-rst',

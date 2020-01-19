@@ -5,7 +5,7 @@ Changelog/Bug Fixes
 HyVR 1.1.0
 ----------
 
-Release Date: 
+Release Date: 19 January 2020
 
 Contributors
 """"""""""""
