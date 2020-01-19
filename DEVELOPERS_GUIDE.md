@@ -225,10 +225,11 @@ make html
 ```
 
 To push the new documentation to github pages, you have to check out the branch
-`gh-pages` and recreate the documentation:
+`gh-pages` and recreate the documentation (starting from the main project 
+directory):
 ```
 git checkout gh-pages
-rm _sources _static
+rm -r _sources _static
 git checkout master -- hyvr docs README.rst
 git reset HEAD
 cd docs
@@ -236,7 +237,7 @@ sphinx-apidoc -fM -H 'Module Reference' -o modules ../hyvr
 make html
 cd ..
 cp docs/_build/html/* .
-rm -rf hyvr docs README.rst testcases versionnumber
+rm -rf hyvr docs README.rst tests  # and everything else that's not necessary
 git add -A
 git commit -m <commit message>
 git push origin gh-pages
