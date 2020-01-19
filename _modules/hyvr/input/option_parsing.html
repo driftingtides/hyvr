@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.input.option_parsing &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.input.option_parsing &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -37,8 +37,19 @@
             
   <h1>Source code for hyvr.input.option_parsing</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module contains the classes Section and Option to simplify parsing and</span>
-<span class="sd">validating ini-files.</span>
+<span class="sd">This module contains the classes :class:`hyvr.input.option_parsing.Section` and</span>
+<span class="sd">:class:`hyvr.input.option_parsing.Option` to simplify parsing and validating</span>
+<span class="sd">input-files (``*.ini``).</span>
+
+<span class="sd">Every HyVR option should have a corresponding instance of an</span>
+<span class="sd">:class:`~hyvr.input.option_parsing.Option`, which is defined in</span>
+<span class="sd">:mod:`hyvr.input.options` in the options lists. These option lists</span>
+<span class="sd">are then assigned to :class:`~hyvr.input.option_parsing.Section` instances in</span>
+<span class="sd">:func:`hyvr.input.parameters.parse_inifile`.</span>
+
+<span class="sd">If you add functionality to HyVR, you most likely only have to add an option to</span>
+<span class="sd">the option lists, normally you don&#39;t have to change anything in here (at least</span>
+<span class="sd">if you&#39;re lucky, since this is a very recursive mess).</span>
 
 <span class="sd">:Author: Samuel Scherrer</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -50,6 +61,15 @@
 
 
 <div class="viewcode-block" id="Section"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Section">[docs]</a><span class="k">class</span> <span class="nc">Section</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ``Section`` instance corresponds to a section in an ini-file. </span>
+
+<span class="sd">    A section is mainly a wrapper for a list of options, and therefore only has</span>
+<span class="sd">    a name and a list of options. Upon parsing a section, it checks whether all</span>
+<span class="sd">    given options in the inifile are actually expected, and then delegates the</span>
+<span class="sd">    parsing of single options to the :class:`~hyvr.input.option_parsing.Option`</span>
+<span class="sd">    class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -105,6 +125,17 @@
 
 <div class="viewcode-block" id="Option"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Option">[docs]</a><span class="k">class</span> <span class="nc">Option</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An ``Option`` instance is basically a parser for a specific option in a</span>
+<span class="sd">    ini-file.</span>
+<span class="sd">    </span>
+<span class="sd">    An ``Option`` is typically part of a ``Section``, and normally</span>
+<span class="sd">    :func:`~hyvr.input.option_parsing.Option.parse` is called by the ``Section``</span>
+<span class="sd">    it belongs to.</span>
+<span class="sd">    The main tasks of an ``Option`` instance is to parse an option and make sure</span>
+<span class="sd">    it has the right type, and in the case of lists, the right shape.</span>
+<span class="sd">    Below is a description of its capabilities, note especially the ``shape``</span>
+<span class="sd">    parameter.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    name : string</span>
@@ -192,6 +223,23 @@
 <div class="viewcode-block" id="Option.parse"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.option_parsing.Option.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parses the option based on it&#39;s attributes.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        section : ``Section`` instance</span>
+<span class="sd">            The section it belongs to.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        value : self.type</span>
+<span class="sd">            The parsed value.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ShapeError</span>
+<span class="sd">            If the parsed list does not have the right shape.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Other errors, description in text.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># try to find alternatives if they exist</span>
         <span class="n">alternatives</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alternatives</span><span class="p">)</span>
@@ -240,7 +288,6 @@
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; in &#39;</span> <span class="o">+</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has an invalid &#39;</span> <span class="o">+</span>\
                                          <span class="s1">&#39;shape because the options whose shape it should have &#39;</span> <span class="o">+</span>\
                                          <span class="s1">&#39;does not exist. Check your option definitions!&#39;</span><span class="p">)</span>
-                        <span class="k">raise</span> <span class="n">ShapeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                     <span class="n">shape</span> <span class="o">=</span> <span class="n">get_shape</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">dict</span><span class="p">[</span><span class="n">shape</span><span class="p">])</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                     <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape</span><span class="p">]</span>
@@ -547,7 +594,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

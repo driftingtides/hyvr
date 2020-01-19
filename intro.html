@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Introduction &#8212; HyVR 1.0.3 documentation</title>
+    <title>Introduction &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="index.html" title="Contents"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.1.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -63,7 +63,12 @@ online <a class="reference external" href="https://driftingtides.github.io/hyvr/
 <p>I hope you enjoy using HyVR much more than I enjoyed putting it together! I look
 forward to seeing what kind of funky fields you created in the course of your
 work.</p>
-<p><em>HyVR can be attributed by citing the following journal article: Bennett, J. P., Haslauer, C. P., Ross, M., &amp; Cirpka, O. A. (2018). An open, object-based framework for generating anisotropy in sedimentary subsurface models. Groundwater. DOI:</em> <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/gwat.12803">10.1111/gwat.12803</a>. <em>A preprint version of the article is available</em> <a class="reference external" href="https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf">here</a>.</p>
+<p><em>HyVR can be attributed by citing the following journal article: Bennett, J. P.,
+Haslauer, C. P., Ross, M., &amp; Cirpka, O. A. (2018). An open, object-based
+framework for generating anisotropy in sedimentary subsurface
+models. Groundwater.
+DOI:</em> <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/gwat.12803">10.1111/gwat.12803</a>.
+<em>A preprint version of the article is available</em> <a class="reference external" href="https://github.com/driftingtides/hyvr/blob/master/docs/Bennett_GW_2018.pdf">here</a>.</p>
 <div class="section" id="installing-the-hyvr-package">
 <h2>Installing the HyVR package<a class="headerlink" href="#installing-the-hyvr-package" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="installing-python">
@@ -96,20 +101,49 @@ example <a class="reference external" href="https://virtualenvwrapper.readthedoc
 <div class="section" id="installing-hyvr">
 <h3>Installing HyVR<a class="headerlink" href="#installing-hyvr" title="Permalink to this headline">¶</a></h3>
 <p>Once you have activated your virtual environment, you can install HyVR from PyPI
-using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+using <code class="docutils literal notranslate"><span class="pre">pip</span></code> (with Anaconda you might have to install pip first into your
+environment using <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pip</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hyvr</span>
 </pre></div>
 </div>
 <p>It might be necessary to install numpy separately before installing HyVR.
-The version on PyPI should always be up to date. If it’s not, you can also
-install HyVR from github:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">driftingtides</span><span class="o">/</span><span class="n">hyvr</span><span class="o">.</span><span class="n">git</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">hyvr</span>
+To check whether installation was successful, you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">hyvr</span>
 </pre></div>
 </div>
-<p>To install from source you need a C/C++ compiler. On Windows you can get one by
-installing Build Tools for Visual Studio.</p>
+<p>If this runs without error (warnings are ok), <code class="docutils literal notranslate"><span class="pre">hyvr</span></code> should be successfully
+installed.</p>
+<p>If installing from PyPI doesn’t work for you, please let us know (see
+below). You might want to try installing from source instead.</p>
 <p>Installation from conda-forge will (hopefully) be coming soon.</p>
+<div class="section" id="installing-from-source">
+<h4>Installing from source<a class="headerlink" href="#installing-from-source" title="Permalink to this headline">¶</a></h4>
+<p>If installation via <code class="docutils literal notranslate"><span class="pre">pip</span></code> fails, you can try to install from source by cloning
+or downloading the github repository.
+To install from source you need a C/C++ compiler. On Windows you can get one by
+installing “Build Tools for Visual Studio”.
+If you have <code class="docutils literal notranslate"><span class="pre">git</span></code> installed on your machine, you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">driftingtides</span><span class="o">/</span><span class="n">hyvr</span><span class="o">.</span><span class="n">git</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">./</span><span class="n">hyvr</span>
+</pre></div>
+</div>
+<p>Otherwise you can download the code as a zip file, unzip it, and then install it via:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">unzipped</span><span class="o">/</span><span class="n">hyvr</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If you are in the same directory as the unzipped <code class="docutils literal notranslate"><span class="pre">hyvr</span></code> directory make sure to
+use <code class="docutils literal notranslate"><span class="pre">./hyvr</span></code> instead of <code class="docutils literal notranslate"><span class="pre">hyvr</span></code>, otherwise pip tries to install from PyPI.</p>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span></code> should normally install all required dependencies. Optional dependencies are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Cython</span></code> to recreate the C-extensions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">h5py</span></code> for HDF5 output</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flopy</span></code> for output of MODFLOW files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyevtk</span></code> for VTR output</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="usage">
@@ -129,34 +163,10 @@ given, it will run a test case instead:</p>
 <span class="n">hyvr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;my_configfile.ini&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Examples can be found in the <code class="docutils literal notranslate"><span class="pre">testcases</span></code> directory of the <a class="reference external" href="https://github.com/driftingtides/hyvr/">github repository</a>,
-the general setup and possible options of the config-file are described in the
-documentation.  Currently only <code class="docutils literal notranslate"><span class="pre">made.ini</span></code> is ported to version 1.0.0.</p>
-</div>
-<div class="section" id="source">
-<h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
-<p>The most current version of HyVR will be available at this <a class="reference external" href="https://github.com/driftingtides/hyvr/">github repository</a>;
-a version will also be available on the <a class="reference external" href="https://pypi.python.org/pypi/hyvr/">PyPI index</a> which can be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
-</div>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="python">
-<h3>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
-<p>HyVR was developed for use with Python 3.4 or greater. It may be possible to use
-with earlier versions of Python 3, however this has not been tested.</p>
-</div>
-<div class="section" id="dependencies">
-<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><a class="reference external" href="http://www.numpy.org/">numpy</a> &lt;= 1.13.3</p></li>
-<li><p><a class="reference external" href="https://matplotlib.org/">matplotlib</a> &lt;= 2.1.0</p></li>
-<li><p><a class="reference external" href="https://www.scipy.org/scipylib/index.html">scipy</a> = 1.0.0</p></li>
-<li><p><a class="reference external" href="https://pandas.pydata.org/">pandas</a> = 0.21.0</p></li>
-<li><p><a class="reference external" href="https://github.com/modflowpy/flopy">flopy</a> == 3.2.9 (optional for modflow output)</p></li>
-<li><p><a class="reference external" href="https://pypi.python.org/pypi/PyEVTK">pyevtk</a> = 1.1.0 (optional for VTK output)</p></li>
-<li><p><a class="reference external" href="https://www.h5py.org/">h5py</a> (optional for HDF5 output)</p></li>
-</ul>
-</div>
+<p>Examples can be found in the <code class="docutils literal notranslate"><span class="pre">tests/testcases</span></code> directory of the <a class="reference external" href="https://github.com/driftingtides/hyvr/">github
+repository</a>, the general setup and
+possible options of the config-file are described in the
+documentation. Currently only <code class="docutils literal notranslate"><span class="pre">tests/testcaes/made.ini</span></code> is ported to version 1.0.0.</p>
 </div>
 <div class="section" id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
@@ -170,7 +180,8 @@ or via github.</p>
 <h2>Problems, Bugs, Unclear Documentation<a class="headerlink" href="#problems-bugs-unclear-documentation" title="Permalink to this headline">¶</a></h2>
 <p>If you have problems with HyVR have a look at the <a class="reference external" href="https://driftingtides.github.io/hyvr/troubleshooting.html">troubleshooting</a> section. If this
 doesn’t help, don’t hesitate to contact us via email or at github.</p>
-<p>If you find that the documentation is unclear, lacking, or wrong, please also contact us.</p>
+<p>If you find that the documentation is unclear, lacking, or wrong, please also
+contact us.</p>
 </div>
 </div>
 
@@ -189,16 +200,14 @@ doesn’t help, don’t hesitate to contact us via email or at github.</p>
 <li class="toctree-l4"><a class="reference internal" href="#linux">Linux</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-hyvr">Installing HyVR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-hyvr">Installing HyVR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installing-from-source">Installing from source</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#source">Source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#python">Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#development">Development</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#problems-bugs-unclear-documentation">Problems, Bugs, Unclear Documentation</a></li>
 </ul>
@@ -255,7 +264,7 @@ doesn’t help, don’t hesitate to contact us via email or at github.</p>
         <li class="right" >
           <a href="index.html" title="Contents"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.sim &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.sim &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -42,90 +42,65 @@
 <span class="sd">    Hydrogeological virtual reality (HYVR) simulator for object-based modelling</span>
 <span class="sd">    of sedimentary structures</span>
 
-<span class="sd">    :Author: Jeremy P. Bennett</span>
-
-<span class="sd">    :Notes:</span>
-<span class="sd">         Grid nodes are cell-centred!</span>
-
-
+<span class="sd">    :Author: Jeremy P. Bennett, Samuel Scherrer</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">import</span> <span class="nn">hyvr.utils</span> <span class="k">as</span> <span class="nn">hu</span>
 <span class="kn">import</span> <span class="nn">hyvr.optimized</span> <span class="k">as</span> <span class="nn">ho</span>
 <span class="kn">import</span> <span class="nn">hyvr.input.parameters</span> <span class="k">as</span> <span class="nn">hp</span>
 <span class="kn">from</span> <span class="nn">hyvr.postprocess.output</span> <span class="k">import</span> <span class="n">create_outputs</span>
-<span class="kn">from</span> <span class="nn">hyvr.classes.model</span> <span class="k">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">hyvr.assign_facies</span> <span class="k">import</span> <span class="n">assign_facies_azim_dip</span>
+<span class="kn">from</span> <span class="nn">hyvr.assign_points</span> <span class="k">import</span> <span class="n">assign_points</span>
 
 
-<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.sim.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">flag_ow</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.sim.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">inifile</span><span class="p">,</span> <span class="n">flag_ow</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main function for HYVR generation</span>
+<span class="sd">    Runs HyVR based on a given ini-file.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        param_file (str): 	Parameter file location</span>
-<span class="sd">        flag_ow : bool</span>
-<span class="sd">            If True, an existing run directory is overwritten.</span>
-
-<span class="sd">    Returns:</span>
-
-<span class="sd">        Save data outputs as parameter file</span>
-
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inifile : path</span>
+<span class="sd">        Path to inifile. If ``inifile`` is set to 0, the ini-file for the MADE</span>
+<span class="sd">        test case is used.</span>
+<span class="sd">    flag_ow : bool</span>
+<span class="sd">        Whether to overwrite existing run directories.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO: implement a seed option to get the same model</span>
-    <span class="c1"># np.random.seed(84)</span>
 
-    <span class="c1"># Load parameter file</span>
-    <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">hydraulics</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">model_setup</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span>
-    <span class="n">hp</span><span class="o">.</span><span class="n">set_up_directories</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">param_file</span><span class="p">,</span> <span class="n">flag_ow</span><span class="p">)</span>
+    <span class="n">run_settings</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">hydraulics</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">setup_from_inifile</span><span class="p">(</span><span class="n">inifile</span><span class="p">,</span> <span class="n">flag_ow</span><span class="o">=</span><span class="n">flag_ow</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;numsim&#39;</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">run_settings</span><span class="p">[</span><span class="s1">&#39;numsim&#39;</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
         <span class="c1"># Generate facies</span>
         <span class="n">model</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
-        <span class="c1"># model.assign_facies_azim_dip()</span>
-        <span class="n">assign_facies_azim_dip</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-        <span class="c1"># return</span>
+        <span class="n">assign_points</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
+        <span class="c1"># Generate internal heterogeneity</span>
         <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">generate_hydraulics</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Generate internal heterogeneity</span>
             <span class="n">model</span><span class="o">.</span><span class="n">generate_hydraulic_parameters</span><span class="p">(</span><span class="n">hydraulics</span><span class="p">)</span>
+
+        <span class="c1"># plots, only for development purposes</span>
         <span class="c1"># from hyvr.postprocess.plotting import cross_section_pcolor</span>
-        <span class="c1"># cross_section_pcolor(model, &#39;k_iso&#39;, log=True, y=10, xlim=[15.5, 16.4], ylim=[7.1, 7.7]</span>
-        <span class="c1"># cross_section_pcolor(model, &#39;facies&#39;, log=False, y=10, xlim=[15.5, 16.4], ylim=[7.1, 7.7])</span>
-        <span class="c1"># cross_section_pcolor(model, &#39;ha&#39;, log=False, y=10, xlim=[15.5, 16.4], ylim=[7.1, 7.7])</span>
-        <span class="c1"># cross_section_pcolor(model, &#39;hat&#39;, log=False, y=10, xlim=[15.5, 16.4], ylim=[7.1, 7.7])</span>
-        <span class="c1"># cross_section_pcolor(model, &#39;ae&#39;, log=False, y=10, xlim=[15.5, 16.4], ylim=[7.1, 7.7])</span>
-        <span class="c1"># cross_section_pcolor(model, &#39;strata&#39;, log=False, y=10, xlim=[15.5, 16.4], ylim=[7.1, 7.7])</span>
+        <span class="c1"># cross_section_pcolor(model, &#39;k_iso&#39;, log=True)</span>
+        <span class="c1"># cross_section_pcolor(model, &#39;facies&#39;)</span>
+        <span class="c1"># cross_section_pcolor(model, &#39;strata&#39;)</span>
         <span class="c1"># cross_section_pcolor(model, &#39;dip&#39;)</span>
         <span class="c1"># cross_section_pcolor(model, &#39;azim&#39;)</span>
 
         <span class="c1"># Save data</span>
-        <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;numsim&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">realname</span> <span class="o">=</span> <span class="s1">&#39;real_</span><span class="si">{:03d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
-            <span class="n">realdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">],</span> <span class="n">realname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">run_settings</span><span class="p">[</span><span class="s1">&#39;numsim&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">realdir</span> <span class="o">=</span> <span class="n">run_settings</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="s1">&#39;real_</span><span class="si">{:03d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">realname</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span>
-            <span class="n">realdir</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span>
-        <span class="n">hu</span><span class="o">.</span><span class="n">try_makefolder</span><span class="p">(</span><span class="n">realdir</span><span class="p">)</span>
-        <span class="n">create_outputs</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">realdir</span><span class="p">,</span> <span class="n">realname</span><span class="p">,</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;outputs&#39;</span><span class="p">])</span>
+            <span class="n">realdir</span> <span class="o">=</span> <span class="n">run_settings</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span>
+        <span class="n">realdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">create_outputs</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">realdir</span><span class="p">,</span> <span class="n">run_settings</span><span class="p">[</span><span class="s2">&quot;runname&quot;</span><span class="p">],</span>
+                       <span class="n">run_settings</span><span class="p">[</span><span class="s1">&#39;outputs&#39;</span><span class="p">])</span>
 
 
-    <span class="k">if</span> <span class="n">param_file</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">inifile</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># this is just the testcase, so we remove the output</span>
-        <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="k">import</span> <span class="n">cleanup_resources</span>
-        <span class="n">cleanup_resources</span><span class="p">()</span>
         <span class="kn">import</span> <span class="nn">shutil</span>
-        <span class="n">runpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">runpath</span><span class="p">):</span>
+        <span class="n">runpath</span> <span class="o">=</span> <span class="n">run_settings</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">runpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">runpath</span><span class="p">)</span></div>
 </pre></div>
 
@@ -170,7 +145,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

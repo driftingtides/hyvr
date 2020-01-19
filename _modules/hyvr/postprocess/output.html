@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.postprocess.output &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.postprocess.output &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -52,11 +52,22 @@
 <span class="sd">``create_outputs`` function below (in the dictionary ``output_desc``).</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
 <span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">hyvr.utils</span> <span class="k">import</span> <span class="n">print_to_stdout</span><span class="p">,</span> <span class="n">try_makefolder</span>
+
+<span class="kn">from</span> <span class="nn">hyvr.utils</span> <span class="k">import</span> <span class="n">print_to_stdout</span>
+
+<span class="c1"># monkeypath warnings.formatwarning to only show the text</span>
+<span class="c1"># this makes the output nicer for the user, but still allows to &quot;catch&quot; the</span>
+<span class="c1"># warnings programmatically</span>
+<span class="k">def</span> <span class="nf">_custom_formatwarning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="n">_custom_formatwarning</span>
 
 
 <div class="viewcode-block" id="create_outputs"><a class="viewcode-back" href="../../../modules/hyvr.postprocess.html#hyvr.postprocess.output.create_outputs">[docs]</a><span class="k">def</span> <span class="nf">create_outputs</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">realization_dir</span><span class="p">,</span> <span class="n">runname</span><span class="p">,</span> <span class="n">formats</span><span class="p">):</span>
@@ -95,8 +106,13 @@
     <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output_desc</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No such output format: &#39;</span> <span class="o">+</span> <span class="n">fmt</span><span class="p">)</span>
-        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">realization_dir</span><span class="p">),</span> <span class="n">runname</span><span class="p">)</span>
-        <span class="n">output_desc</span><span class="p">[</span><span class="n">fmt</span><span class="p">](</span><span class="n">model</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">realization_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">runname</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output_desc</span><span class="p">[</span><span class="n">fmt</span><span class="p">](</span><span class="n">model</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">fname</span><span class="o">.</span><span class="n">resolve</span><span class="p">()))</span>
+        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># in case of an import error, only warn the user instead of raising</span>
+            <span class="c1"># an error</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="n">print_to_stdout</span><span class="p">(</span><span class="s1">&#39;Saved&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="s1">&#39;output to&#39;</span><span class="p">,</span> <span class="n">realization_dir</span><span class="p">)</span></div>
 
 
@@ -158,8 +174,8 @@
         <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s1">&#39;.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hf</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
                 <span class="n">hf</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">compression</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;h5 output not possible: h5py not found.&#39;</span><span class="p">)</span></div>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, h5 output not possible!&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="to_vtr"><a class="viewcode-back" href="../../../modules/hyvr.postprocess.html#hyvr.postprocess.output.to_vtr">[docs]</a><span class="k">def</span> <span class="nf">to_vtr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
@@ -181,8 +197,8 @@
         <span class="n">yv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">ymax</span><span class="o">+</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
         <span class="n">zv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">z0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">zmax</span><span class="o">+</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dz</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dz</span><span class="p">)</span>
         <span class="n">gridToVTK</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="n">cellData</span><span class="o">=</span><span class="n">data_dict</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;VTR output not possible: pyevtk not found. Remove the vtr output in the *.ini file or install pyevtk.&#39;</span><span class="p">)</span></div>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, vtr output not possible!&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="to_modflow"><a class="viewcode-back" href="../../../modules/hyvr.postprocess.html#hyvr.postprocess.output.to_modflow">[docs]</a><span class="k">def</span> <span class="nf">to_modflow</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -197,15 +213,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">flopy</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;modflow output not possible: flopy not found.&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, modflow output not possible!&quot;</span><span class="p">)</span>
     <span class="c1"># For modflow we want to create a new folder instead of only a file. The folder name is the base</span>
     <span class="c1"># name of the passed filename</span>
-    <span class="n">realization_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">runname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">mfdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">realization_dir</span><span class="p">,</span> <span class="s1">&#39;MODFLOW&#39;</span><span class="p">)</span>
-    <span class="n">mfname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">runname</span><span class="p">)</span>
-    <span class="n">try_makefolder</span><span class="p">(</span><span class="n">mfdir</span><span class="p">)</span>
+    <span class="n">realization_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">runname</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">mfdir</span> <span class="o">=</span> <span class="n">realization_dir</span> <span class="o">/</span> <span class="s1">&#39;MODFLOW&#39;</span>
+    <span class="n">mfdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">mfname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mfdir</span> <span class="o">/</span> <span class="n">runname</span><span class="p">)</span>
 
     <span class="c1"># Assign name and create modflow model object</span>
     <span class="n">mf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">Modflow</span><span class="p">(</span><span class="n">mfname</span><span class="p">,</span> <span class="n">exe_name</span><span class="o">=</span><span class="s1">&#39;mf2005&#39;</span><span class="p">)</span>
@@ -266,16 +282,16 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">flopy</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;mf6 output not possible: Flopy not installed.&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, mf6 output not possible!&quot;</span><span class="p">)</span>
 
     <span class="c1"># For modflow we want to create a new folder instead of only a file. The folder name is the base</span>
     <span class="c1"># name of the passed filename</span>
-    <span class="n">realization_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">runname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">mfdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">realization_dir</span><span class="p">,</span> <span class="s1">&#39;mf6&#39;</span><span class="p">)</span>
-    <span class="n">mfname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mfdir</span><span class="p">,</span> <span class="n">runname</span><span class="p">)</span>
-    <span class="n">try_makefolder</span><span class="p">(</span><span class="n">mfdir</span><span class="p">)</span>
+    <span class="n">realization_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">runname</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">mfdir</span> <span class="o">=</span> <span class="n">realization_dir</span> <span class="o">/</span> <span class="s1">&#39;mf6&#39;</span>
+    <span class="n">mfdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">mfname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mfdir</span> <span class="o">/</span> <span class="n">runname</span><span class="p">)</span>
 
     <span class="c1"># Transpose HyVR arrays for MF6 input</span>
     <span class="n">transpose_order</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -292,7 +308,7 @@
     <span class="n">sim</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">mf6</span><span class="o">.</span><span class="n">MFSimulation</span><span class="p">(</span><span class="n">sim_name</span><span class="o">=</span><span class="n">runname</span><span class="p">,</span>
                                  <span class="n">version</span><span class="o">=</span><span class="s1">&#39;mf6&#39;</span><span class="p">,</span>
                                  <span class="n">exe_name</span><span class="o">=</span><span class="s1">&#39;mf6&#39;</span><span class="p">,</span>
-                                 <span class="n">sim_ws</span><span class="o">=</span><span class="n">mfdir</span><span class="p">)</span>
+                                 <span class="n">sim_ws</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">mfdir</span><span class="p">))</span>
                                  <span class="c1"># sim_tdis_file=&#39;simulation.tdis&#39;)</span>
 
     <span class="sd">&quot;&quot;&quot; Create the Flopy temporal discretization object - STEADY-STATE &quot;&quot;&quot;</span>
@@ -330,7 +346,7 @@
                                                    <span class="n">delc</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span>
                                                    <span class="n">top</span><span class="o">=</span><span class="n">ztop</span><span class="p">,</span>
                                                    <span class="n">botm</span><span class="o">=</span><span class="n">botm</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
-                                                   <span class="n">fname</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.dis&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">))</span>
+                                                   <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.dis&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">runname</span><span class="p">))</span>
 
     <span class="sd">&quot;&quot;&quot; Create Node Property Flow package object &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">xt3d</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -447,10 +463,10 @@
 <span class="sd">    fname : str</span>
 <span class="sd">        Where to save the file (without file format extension)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">realization_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">runname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">hgsdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">realization_dir</span><span class="p">,</span> <span class="s1">&#39;HGS&#39;</span><span class="p">)</span>
-    <span class="n">try_makefolder</span><span class="p">(</span><span class="n">hgsdir</span><span class="p">)</span>
+    <span class="n">realization_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">runname</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">hgsdir</span> <span class="o">=</span> <span class="n">realization_dir</span> <span class="o">/</span> <span class="s1">&#39;HGS&#39;</span>
+    <span class="n">hgsdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">uid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ktensors&#39;</span><span class="p">][:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>    <span class="c1"># Create list of IDs</span>
     <span class="n">vals_to_write</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ktensors&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">uid</span><span class="p">,</span>
@@ -467,7 +483,7 @@
 
     <span class="c1"># Loop over properties to write</span>
     <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">vals_to_write</span><span class="p">:</span>
-        <span class="n">val_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hgsdir</span><span class="p">,</span> <span class="n">val</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">)</span>       <span class="c1"># File name of HGS output file</span>
+        <span class="n">val_filepath</span> <span class="o">=</span> <span class="n">hgsdir</span> <span class="o">/</span> <span class="p">(</span><span class="n">val</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">)</span>       <span class="c1"># File name of HGS output file</span>
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">val_filepath</span><span class="p">,</span> <span class="n">vals_to_write</span><span class="p">[</span><span class="n">val</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="n">val_fmts</span><span class="p">[</span><span class="n">val</span><span class="p">])</span></div>
 </pre></div>
 
@@ -512,7 +528,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

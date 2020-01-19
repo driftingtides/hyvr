@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.input.parameters &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.input.parameters &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -41,65 +41,87 @@
 <span class="sd">modules strongly linked ot this one:</span>
 
 <span class="sd">* options: contains definitions of the possible options of a parameter file</span>
-<span class="sd">* option_parsing: provides the classes Section and Option for simpler parsing and validation.</span>
+<span class="sd">* option_parsing: provides the classes Section and Option for simpler parsing</span>
+<span class="sd">  and validation.</span>
 
 <span class="sd">:Authors: Jeremy P. Bennett, Samuel Scherrer</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-
-<span class="kn">import</span> <span class="nn">configparser</span> <span class="k">as</span> <span class="nn">cp</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">hyvr.utils</span> <span class="k">import</span> <span class="n">try_makefolder</span><span class="p">,</span> <span class="n">print_to_stdout</span>
+<span class="kn">import</span> <span class="nn">configparser</span> <span class="k">as</span> <span class="nn">cp</span>
+
+<span class="kn">from</span> <span class="nn">hyvr.utils</span> <span class="k">import</span> <span class="n">print_to_stdout</span>
 <span class="kn">from</span> <span class="nn">hyvr.input.options</span> <span class="k">import</span> <span class="n">options</span>
 <span class="kn">from</span> <span class="nn">hyvr.input.options_deprecated</span> <span class="k">import</span> <span class="n">options</span> <span class="k">as</span> <span class="n">old_options</span>
 <span class="kn">from</span> <span class="nn">hyvr.input.option_parsing</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">hyvr.classes.model</span> <span class="k">import</span> <span class="n">Model</span>
-<span class="kn">from</span> <span class="nn">hyvr.classes.contact_surface_utils</span> <span class="k">import</span> <span class="n">parse_contact_model</span>
+<span class="kn">from</span> <span class="nn">hyvr.geo.model</span> <span class="k">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">hyvr.geo.contact_surface_utils</span> <span class="k">import</span> <span class="n">parse_contact_model</span>
 
 
-<div class="viewcode-block" id="model_setup"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.parameters.model_setup">[docs]</a><span class="k">def</span> <span class="nf">model_setup</span><span class="p">(</span><span class="n">pf</span><span class="p">):</span>
+<div class="viewcode-block" id="setup_from_inifile"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.parameters.setup_from_inifile">[docs]</a><span class="k">def</span> <span class="nf">setup_from_inifile</span><span class="p">(</span><span class="n">inifile</span><span class="p">,</span> <span class="n">flag_ow</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set up model using grid.Grid() class and assign parameters</span>
+<span class="sd">    Parses the input file and sets up the directory structure for a HyVR run.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pf (str):   					Parameter file path</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - run *(dict)* - Model run parameters</span>
-<span class="sd">        - mod *(dict)* - Model domain parameters</span>
-<span class="sd">        - sequences *(dict)* - Sequence parameters</span>
-<span class="sd">        - hydraulics *(dict)* - Hydraulic properties parameters</span>
-<span class="sd">        - flowtrans *(dict)* - Flow &amp; transport simulation parameters</span>
-<span class="sd">        - elements *(dict)* - Architectural elements and parameters</span>
-<span class="sd">        - model_grid *(object class)* - Grid object class</span>
-
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inifile : path</span>
+<span class="sd">        Path to inifile. If ``inifile`` is set to 0, the ini-file for the MADE</span>
+<span class="sd">        test case is used.</span>
+<span class="sd">    flag_ow : bool</span>
+<span class="sd">        Whether to overwrite existing run directories.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    run : dict</span>
+<span class="sd">        HyVR run parameters (number of simulations, where to store results)</span>
+<span class="sd">    model : Model object</span>
+<span class="sd">        A HyVR model object created from the ini-file.</span>
+<span class="sd">    hydraulics : dict</span>
+<span class="sd">        Parsed hydraulics section of the ini-file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">run</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">,</span> <span class="n">strata_dict</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">,</span> <span class="n">model_dict</span><span class="p">,</span> <span class="n">strata_dict</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">(</span><span class="n">inifile</span><span class="p">)</span>
+
     <span class="c1"># Assign architectural element identifiers</span>
     <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">elements</span><span class="p">[</span><span class="n">element</span><span class="p">][</span><span class="s1">&#39;ae_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strata_dict</span><span class="p">[</span><span class="s1">&#39;ae&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
 
     <span class="c1"># create model object</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">model_dict</span><span class="p">,</span> <span class="n">strata_dict</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">)</span>
+
+    <span class="c1"># set up directories</span>
+    <span class="n">set_up_directories</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">inifile</span><span class="p">,</span> <span class="n">flag_ow</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">hydraulics</span></div>
 
 
 <div class="viewcode-block" id="parameters"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.parameters.parameters">[docs]</a><span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="n">inifile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get parameters for hierarchical facies modelling from a .ini-file</span>
+<span class="sd">    Parses the inifile and returns all sections as dictionaries. Furthermore it</span>
+<span class="sd">    sets to correct directory names for the run settings.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        inifile (str):  		Parameter file path</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        - run *(dict)* - Model run parameters</span>
-<span class="sd">        - model *(dict)* - Model domain parameters</span>
-<span class="sd">        - sequences *(dict)* - Sequence parameters</span>
-<span class="sd">        - hydraulics *(dict)* - Hydraulic properties parameters</span>
-<span class="sd">        - flowtrans *(dict)* - Flow &amp; transport simulation parameters</span>
-<span class="sd">        - elements *(dict)* - Architectural elements and parameters</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inifile : path</span>
+<span class="sd">        Path to inifile. If ``inifile`` is set to 0, the ini-file for the MADE</span>
+<span class="sd">        test case is used.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    run : dict</span>
+<span class="sd">        HyVR run settings (number of simulations, where to store results)</span>
+<span class="sd">    model_dict : dict</span>
+<span class="sd">        model setup parameters</span>
+<span class="sd">    strata_dict : dict</span>
+<span class="sd">        strata setup parameters</span>
+<span class="sd">    hydraulics : dict</span>
+<span class="sd">        Parsed hydraulics section of the ini-file</span>
+<span class="sd">    flowtrans : dict</span>
+<span class="sd">        Flow and transport settings for output</span>
+<span class="sd">    elements : list of dicts</span>
+<span class="sd">        List of dictionaries of settings for :class:`hyvr.model.ae_types.AEType`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">print_to_stdout</span><span class="p">(</span><span class="s2">&quot;Reading parameter file&quot;</span><span class="p">)</span>
@@ -107,7 +129,7 @@
     <span class="c1"># test case</span>
     <span class="k">if</span> <span class="n">inifile</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="k">import</span> <span class="n">resource_filename</span>
-        <span class="n">inifile</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">,</span> <span class="s1">&#39;made.ini&#39;</span><span class="p">))</span>
+        <span class="n">inifile</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;../made.ini&#39;</span><span class="p">)))</span>
 
     <span class="c1"># read file</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
@@ -129,17 +151,21 @@
 
     <span class="c1"># Runname and Modeldir</span>
     <span class="c1"># ====================</span>
+    <span class="c1"># The following code sets</span>
+    <span class="c1"># - runname: based on this, the output directory is named</span>
+    <span class="c1"># - modeldir: the directory where to create the output directory</span>
+    <span class="c1"># - rundir: the output directory</span>
 
     <span class="c1"># if runname is not given, it&#39;s the part of the ini-file before</span>
     <span class="c1"># &quot;_parameters.ini&quot; or &quot;.ini&quot;</span>
     <span class="c1"># in the test case runname is given</span>
-    <span class="n">ini_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inifile</span><span class="p">))</span>
-    <span class="n">ini_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inifile</span><span class="p">))</span>
+    <span class="n">ini_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">inifile</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">ini_name</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">inifile</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
     <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ini_name</span><span class="p">[</span><span class="o">-</span><span class="mi">25</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">&quot;autogenerated_backup.ini&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ini_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;autogenerated_backup.ini&quot;</span><span class="p">):</span>
             <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">25</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ini_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
 
     <span class="c1"># separate task: find modeldir</span>
@@ -150,37 +176,58 @@
     <span class="c1"># If the .ini-filename ends with &quot;autogenerated_backup.ini&quot;, the directory of the</span>
     <span class="c1"># ini-file is the rundir and modeldir is the directory above.</span>
     <span class="c1"># This should overwrite all other settings (except overwrite_old_output)</span>
-    <span class="k">if</span> <span class="n">ini_name</span><span class="p">[</span><span class="o">-</span><span class="mi">25</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">&quot;_autogenerated_backup.ini&quot;</span><span class="p">:</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ini_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ini_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ini_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_autogenerated_backup.ini&quot;</span><span class="p">):</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_path</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># either inipath or the chosen modeldir</span>
         <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ini_path</span>
         <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;select&#39;</span><span class="p">:</span>
-            <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+            <span class="n">directory</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
                 <span class="s1">&#39;Please input the model directory save path, or press &lt;enter&gt; to&#39;</span>
                 <span class="s1">&#39;save in default directory:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inipath</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span>
-        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">],</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">])</span>
-
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span></div>
 
 
 <div class="viewcode-block" id="parse_inifile"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.parameters.parse_inifile">[docs]</a><span class="k">def</span> <span class="nf">parse_inifile</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function does the main work of parsing the input file.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    p : ConfigParser</span>
+<span class="sd">       A config parser that already read in the inifile.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    run : dict</span>
+<span class="sd">        HyVR run parameters (number of simulations, where to store results)</span>
+<span class="sd">    model_dict : dict</span>
+<span class="sd">        model setup parameters</span>
+<span class="sd">    strata_dict : dict</span>
+<span class="sd">        strata setup parameters</span>
+<span class="sd">    hydraulics : dict</span>
+<span class="sd">        Parsed hydraulics section of the ini-file</span>
+<span class="sd">    flowtrans : dict</span>
+<span class="sd">        Flow and transport settings for output</span>
+<span class="sd">    elements : list of dicts</span>
+<span class="sd">        List of dictionaries of settings for :class:`hyvr.model.ae_types.AEType`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># TODO: these names were at some time keywords for hyvr, but I don&#39;t know what they describe and</span>
-    <span class="c1"># they are not implemented anymore</span>
+    <span class="c1"># TODO: these names were at some time keywords for hyvr, but I don&#39;t know</span>
+    <span class="c1"># what they describe and they are not implemented anymore</span>
     <span class="n">str_values</span> <span class="o">=</span> <span class="s1">&#39;k_trend&#39;</span><span class="p">,</span> <span class="s1">&#39;linear_acceleration&#39;</span>
 
     <span class="n">sections</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
     <span class="n">section_parser</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="c1"># The following code is not very nice, with lots of repetitions. This could</span>
-    <span class="c1"># be much nicer if the strata section had only one possible name.</span>
     <span class="n">must_haves</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;run&#39;</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;strata&#39;</span><span class="p">,</span> <span class="s1">&#39;hydraulics&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">must_haves</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">section</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
@@ -433,8 +480,9 @@
     <span class="n">strata</span> <span class="o">=</span> <span class="n">Section</span><span class="p">(</span><span class="s1">&#39;strata&#39;</span><span class="p">,</span> <span class="n">old_options</span><span class="p">[</span><span class="s1">&#39;strata&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;strata&#39;</span><span class="p">]))</span>
     <span class="k">del</span> <span class="n">sections</span><span class="p">[</span><span class="n">sections</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;strata&#39;</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_table&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">inifile</span><span class="p">),</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_table&#39;</span><span class="p">])):</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;ae_table-file </span><span class="si">{:s}</span><span class="s1"> not found!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_table&#39;</span><span class="p">]))</span>
+        <span class="n">ae_table</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">inifile</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="n">strata</span><span class="p">[</span><span class="s1">&#39;ae_table&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ae_table</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;ae_table-file </span><span class="si">{:s}</span><span class="s1"> not found!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ae_table</span><span class="p">))</span>
 
     <span class="n">hydraulics</span> <span class="o">=</span> <span class="n">Section</span><span class="p">(</span><span class="s1">&#39;hydraulics&#39;</span><span class="p">,</span> <span class="n">old_options</span><span class="p">[</span><span class="s1">&#39;hydraulics&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;hydraulics&#39;</span><span class="p">]))</span>
     <span class="k">del</span> <span class="n">sections</span><span class="p">[</span><span class="n">sections</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;hydraulics&#39;</span><span class="p">)]</span>
@@ -453,57 +501,62 @@
 
     <span class="k">return</span> <span class="n">run</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">strata</span><span class="p">,</span> <span class="n">hydraulics</span><span class="p">,</span> <span class="n">flowtrans</span><span class="p">,</span> <span class="n">elements</span></div>
 
-<div class="viewcode-block" id="set_up_directories"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.parameters.set_up_directories">[docs]</a><span class="k">def</span> <span class="nf">set_up_directories</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">overwrite_old_output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="set_up_directories"><a class="viewcode-back" href="../../../modules/hyvr.input.html#hyvr.input.parameters.set_up_directories">[docs]</a><span class="k">def</span> <span class="nf">set_up_directories</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">inifile</span><span class="p">,</span> <span class="n">overwrite_old_output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This functions creates the necessary directories (modeldir, rundir). It also stores the used</span>
 <span class="sd">    ini-file in the rundir.</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        run (dict):        parsed run-section of the config file</span>
-<span class="sd">        configfile (str):  path to config file</span>
+<span class="sd">        inifile (str):  path to config file</span>
 <span class="sd">        overwrite_old_output (bool):    Whether to overwrite the old run directory. If it is None, the option</span>
-<span class="sd">                           from the config file will be chosen instead (default in configfile: False)</span>
+<span class="sd">                           from the config file will be chosen instead (default in inifile: False)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># test case</span>
-    <span class="k">if</span> <span class="n">configfile</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="k">import</span> <span class="n">resource_filename</span>
-        <span class="n">configfile</span> <span class="o">=</span> <span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;made.ini&#39;</span><span class="p">)</span>
+    <span class="c1"># for the test case we just create a temporary run directory/output</span>
+    <span class="c1"># directory</span>
+    <span class="k">if</span> <span class="n">inifile</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">tempfile</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+        <span class="k">return</span>
 
     <span class="n">p</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">configfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">inifile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">cp</span><span class="o">.</span><span class="n">MissingSectionHeaderError</span><span class="p">:</span>
         <span class="c1"># this is probably caused by a wrong encoding</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">configfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">inifile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
 
     <span class="c1"># we&#39;re now done with parsing and can create the model directory.</span>
-    <span class="n">try_makefolder</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">])</span>
+    <span class="n">run</span><span class="p">[</span><span class="s1">&#39;modeldir&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># If the run directory already exists, it is overwritten if overwrite_old_output is set to True.</span>
-    <span class="c1"># If it doesn&#39;t exist, it will be created.</span>
+    <span class="c1"># If the run directory already exists, it is overwritten if</span>
+    <span class="c1"># overwrite_old_output is set to True.  If it doesn&#39;t exist, it will be</span>
+    <span class="c1"># created.</span>
     <span class="k">if</span> <span class="n">overwrite_old_output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">overwrite_old_output</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;overwrite_old_output&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;overwrite_old_output&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># If it exists, we just delete everything in it</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]):</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">f</span>
+                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                    <span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
                     <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="s2">&quot;Run directory already exists and overwrite flag is &quot;</span>
-                            <span class="s2">&quot;set to &#39;false&#39;&quot;</span> <span class="s2">&quot;. Either change the runname, or &quot;</span>
-                            <span class="s2">&quot;change the overwrite flag (&#39;overwrite_old_output&#39;) in the config file or run hyvr &quot;</span>
-                            <span class="s2">&quot;with --overwrite.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span>
+                <span class="s2">&quot;Run directory already exists and overwrite flag is &quot;</span>
+                <span class="s2">&quot;set to &#39;false&#39;&quot;</span> <span class="s2">&quot;. Either change the runname, or &quot;</span>
+                <span class="s2">&quot;change the overwrite flag (&#39;overwrite_old_output&#39;) &quot;</span>
+                <span class="s2">&quot;in the config file or run hyvr with --overwrite.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">])</span>
+        <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">file_save</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">],</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_autogenerated_backup.ini&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_save</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span></div>
+    <span class="n">backup_file</span> <span class="o">=</span> <span class="n">run</span><span class="p">[</span><span class="s1">&#39;rundir&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">&#39;runname&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_autogenerated_backup.ini&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">backup_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -547,7 +600,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

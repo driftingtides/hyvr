@@ -2,6 +2,32 @@
 Changelog/Bug Fixes
 ====================
 
+HyVR 1.1.0
+----------
+
+Release Date: 19 January 2020
+
+Contributors
+""""""""""""
+
+* Samuel Scherrer
+* Jeremy Bennett
+
+Changes
+"""""""
+
+* more Cython -> code faster
+* profiling setup
+* coverage.py setup
+* better tests
+* better developers guide
+* 'massive' is now a valid structure for troughs, as described in the documentation
+* changed 'flat' structure in made.ini to 'massive'
+* installation now does not use Cython if it is installed
+* removed some dependencies (matplotlib, pandas)
+* some other minor changes
+
+
 HyVR 1.0.0
 ----------
 
@@ -14,6 +40,7 @@ Contributors
 
 Changes
 """""""
+
 Channels ported to new code (introduced in version 0.9.9).
 
 

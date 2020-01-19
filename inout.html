@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>HyVR inputs and outputs &#8212; HyVR 1.0.3 documentation</title>
+    <title>HyVR inputs and outputs &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="methods.html" title="HyVR Computational methods"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.1.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -259,7 +259,7 @@ which the dip will be randomly drawn. This will be used if the internal
 structure is <code class="docutils literal notranslate"><span class="pre">massive</span></code> or <code class="docutils literal notranslate"><span class="pre">dip</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">azimuth</span></code>: <em>(optional, default: [0,0])</em> Range of the uniform distribution
 from which the azimuth will be randomly drawn. This will be used if the
-internal structure is <code class="docutils literal notranslate"><span class="pre">massive</span></code> or <code class="docutils literal notranslate"><span class="pre">dip</span></code></p></li>
+internal structure is <code class="docutils literal notranslate"><span class="pre">massive</span></code> or <code class="docutils literal notranslate"><span class="pre">dip</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">facies</span></code>: <em>(required)</em> This should be a list of possible hydrofacies
 included in hydrofacies assemblage (the geometrical objects, e.g. the
 troughs). These should be names of facies that are listed in <code class="docutils literal notranslate"><span class="pre">[hydraulics].hydrofacies</span></code>.</p></li>
@@ -308,14 +308,17 @@ instead.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="truncated-ellipsoid-parameters">
-<span id="teparams"></span><h3>Truncated ellipsoid parameters<a class="headerlink" href="#truncated-ellipsoid-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="trough-parameters">
+<span id="teparams"></span><h3>Trough parameters<a class="headerlink" href="#trough-parameters" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">trough_density</span></code>: <em>(required)</em> Number of elements to be simulated per simulation elevation and layer area</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">length</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">depth</span></code>: <em>(required)</em> Mean geometry of truncated ellipsoids</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trough_density</span></code>: <em>(required)</em> Number of elements to be simulated per
+simulation elevation and layer area</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">length</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">depth</span></code>: <em>(required)</em> Mean geometry of truncated
+ellipsoids</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">paleoflow</span></code>: <em>(required)</em> Range of the uniform distribution from which the
 paleoflow orientation will be randomly drawn. This is the direction into which
-the trough is elongated (i.e. the <code class="docutils literal notranslate"><span class="pre">length</span></code> axis).</p></li>
+the trough is elongated (i.e. the <code class="docutils literal notranslate"><span class="pre">length</span></code> axis). For <code class="docutils literal notranslate"><span class="pre">massive</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dip</span></code> troughs, the <code class="docutils literal notranslate"><span class="pre">azimuth</span></code> angle will be added to the paleoflow angle.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bulbset_dist</span></code>: <em>(required only if ``structure`` is ``bulb_sets``)</em>
 Thickness of nested-bulb structures at the maximum depth of the truncated
 ellipsoid.</p></li>
@@ -473,7 +476,7 @@ been tested for use in the above-named packages.</p>
 <li class="toctree-l4"><a class="reference internal" href="#erosive-element-specific-parameters-truncated-ellipsoid-extruded-parabola">Erosive element-specific parameters (truncated_ellipsoid, extruded parabola)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#truncated-ellipsoid-parameters">Truncated ellipsoid parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trough-parameters">Trough parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#extruded-parabola-parameters">Extruded parabola parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sheet-parameters">Sheet parameters</a></li>
 </ul>
@@ -537,7 +540,7 @@ been tested for use in the above-named packages.</p>
         <li class="right" >
           <a href="methods.html" title="HyVR Computational methods"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">HyVR 1.1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

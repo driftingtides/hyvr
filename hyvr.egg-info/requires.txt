@@ -1,6 +1,0 @@
-numpy
-scipy
-matplotlib
-pandas
-pyevtk
-flopy==3.2.9

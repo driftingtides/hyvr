@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.utils &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.utils &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -48,336 +48,297 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">configparser</span> <span class="k">as</span> <span class="nn">cp</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">linecache</span>
-<span class="kn">import</span> <span class="nn">scipy.io</span>
-<span class="kn">import</span> <span class="nn">scipy.spatial</span> <span class="k">as</span> <span class="nn">sp</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">errno</span>
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
-<span class="kn">import</span> <span class="nn">hyvr.optimized</span> <span class="k">as</span> <span class="nn">ho</span>
+
+
+<span class="c1"># def mf6_vtr(fhead, mg, fout):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Convert a MODFLOW 6 Binary head file into vtr suitable for visualisation in ParaView</span>
+
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
 
 
 
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     try:</span>
+<span class="c1">#         import flopy</span>
+<span class="c1">#     except ImportError:</span>
+<span class="c1">#         print(&#39;mf output not possible: Flopy not installed.&#39;)</span>
+<span class="c1">#         return</span>
+<span class="c1">#     hfile = flopy.utils.binaryfile.HeadFile(fhead)          #</span>
+<span class="c1">#     hdata = hfile.get_alldata()                             # Create numpy array with all data</span>
+<span class="c1">#     head_dict = dict()                                      # Initialise dict with the data</span>
+<span class="c1">#     for i in range(0, hdata.shape[0]):</span>
+<span class="c1">#         hf_i = np.squeeze(hdata[i, :, :, :])                # Get heads at individual time steps</span>
+<span class="c1">#         hf_i = np.transpose(hf_i, (2, 1, 0))                # Permute to be consistent with HyVR grids</span>
+<span class="c1">#         head_dict[&#39;head_timestep{}&#39;.format(i)] = hf_i</span>
 
-<div class="viewcode-block" id="mf6_vtr"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.mf6_vtr">[docs]</a><span class="k">def</span> <span class="nf">mf6_vtr</span><span class="p">(</span><span class="n">fhead</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">fout</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Convert a MODFLOW 6 Binary head file into vtr suitable for visualisation in ParaView</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-
-
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">flopy</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mf output not possible: Flopy not installed.&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="n">hfile</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">binaryfile</span><span class="o">.</span><span class="n">HeadFile</span><span class="p">(</span><span class="n">fhead</span><span class="p">)</span>          <span class="c1">#</span>
-    <span class="n">hdata</span> <span class="o">=</span> <span class="n">hfile</span><span class="o">.</span><span class="n">get_alldata</span><span class="p">()</span>                             <span class="c1"># Create numpy array with all data</span>
-    <span class="n">head_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>                                      <span class="c1"># Initialise dict with the data</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-        <span class="n">hf_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">hdata</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:])</span>                <span class="c1"># Get heads at individual time steps</span>
-        <span class="n">hf_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">hf_i</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>                <span class="c1"># Permute to be consistent with HyVR grids</span>
-        <span class="n">head_dict</span><span class="p">[</span><span class="s1">&#39;head_timestep</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">hf_i</span>
-
-    <span class="n">to_vtr</span><span class="p">(</span><span class="n">head_dict</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">mg</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+<span class="c1">#     to_vtr(head_dict, fout, mg, points=True)</span>
 
 
-<div class="viewcode-block" id="dem_load"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.dem_load">[docs]</a><span class="k">def</span> <span class="nf">dem_load</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load data from ESRI-style ASCII-file.</span>
+<span class="c1"># def dem_load(fn):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Load data from ESRI-style ASCII-file.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        fn (str): 				Directory and file name for save</span>
+<span class="c1">#     Parameters:</span>
+<span class="c1">#         fn (str): 				Directory and file name for save</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        - data *(numpy array)* - Data from ERSI-style ASCII-file</span>
-<span class="sd">        - meta *(dict)* - Dict with grid metadata</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         - data *(numpy array)* - Data from ERSI-style ASCII-file</span>
+<span class="c1">#         - meta *(dict)* - Dict with grid metadata</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
 
-    <span class="c1"># Extract header using linecache</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;ncols&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;nrows&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;ox&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;oy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;cell_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;no_Data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1">#     # Extract header using linecache</span>
+<span class="c1">#     meta = {}</span>
+<span class="c1">#     meta[&#39;ncols&#39;] = int(linecache.getline(fn, 1).split()[1])</span>
+<span class="c1">#     meta[&#39;nrows&#39;] = int(linecache.getline(fn, 2).split()[1])</span>
+<span class="c1">#     meta[&#39;ox&#39;] = linecache.getline(fn, 3).split()[1]</span>
+<span class="c1">#     meta[&#39;oy&#39;] = linecache.getline(fn, 4).split()[1]</span>
+<span class="c1">#     meta[&#39;cell_size&#39;] = linecache.getline(fn, 5).split()[1]</span>
+<span class="c1">#     meta[&#39;no_Data&#39;] = linecache.getline(fn, 6).split()[1]</span>
 
-    <span class="c1"># Extract data using pandas</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+<span class="c1">#     # Extract data using pandas</span>
+<span class="c1">#     df = pd.read_csv(fn, header=None, delimiter=&#39; &#39;, skiprows=6, dtype=np.float)</span>
+<span class="c1">#     data = df.as_matrix()</span>
 
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">meta</span></div>
+<span class="c1">#     return data, meta</span>
 
 
-<div class="viewcode-block" id="dem_save"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.dem_save">[docs]</a><span class="k">def</span> <span class="nf">dem_save</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">gro</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Save DEM data to ESRI-style ASCII-file</span>
+<span class="c1"># def dem_save(fn, data, gro):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Save DEM data to ESRI-style ASCII-file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        fn (str):               Directory and file name for save</span>
-<span class="sd">        data (numpy array):     DEM data</span>
-<span class="sd">        gr (object class):      grid.Grid() object class</span>
+<span class="c1">#     Parameters:</span>
+<span class="c1">#         fn (str):               Directory and file name for save</span>
+<span class="c1">#         data (numpy array):     DEM data</span>
+<span class="c1">#         gr (object class):      grid.Grid() object class</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Save DEM data to ESRI-style ASCII-file</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         Save DEM data to ESRI-style ASCII-file</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
 
-    <span class="n">header</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ncols            </span><span class="si">{0.nx}</span><span class="se">\n</span><span class="s2">&quot;</span>
-              <span class="s2">&quot;nrows            </span><span class="si">{0.ny}</span><span class="se">\n</span><span class="s2">&quot;</span>
-              <span class="s2">&quot;xllcorner        </span><span class="si">{0.ox}</span><span class="se">\n</span><span class="s2">&quot;</span>
-              <span class="s2">&quot;yllcorner        </span><span class="si">{0.oy}</span><span class="se">\n</span><span class="s2">&quot;</span>
-              <span class="s2">&quot;cellsize         </span><span class="si">{0.cs2}</span><span class="se">\n</span><span class="s2">&quot;</span>
-              <span class="s2">&quot;NOODATA_value    -9999&quot;</span>
-              <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gro</span><span class="p">)</span>
+<span class="c1">#     header = (&quot;ncols            {0.nx}\n&quot;</span>
+<span class="c1">#               &quot;nrows            {0.ny}\n&quot;</span>
+<span class="c1">#               &quot;xllcorner        {0.ox}\n&quot;</span>
+<span class="c1">#               &quot;yllcorner        {0.oy}\n&quot;</span>
+<span class="c1">#               &quot;cellsize         {0.cs2}\n&quot;</span>
+<span class="c1">#               &quot;NOODATA_value    -9999&quot;</span>
+<span class="c1">#               ).format(gro)</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span>
-                   <span class="n">data</span><span class="p">,</span>
-                   <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span>
-                   <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1">&#39;</span><span class="p">,</span>
-                   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+<span class="c1">#     with open(fn, mode=&#39;wb&#39;) as out_file:</span>
+<span class="c1">#         np.savetxt(out_file,</span>
+<span class="c1">#                    data,</span>
+<span class="c1">#                    header=header,</span>
+<span class="c1">#                    fmt=&#39;%.4f&#39;,</span>
+<span class="c1">#                    comments=&#39;&#39;)</span>
 
 
 
-<div class="viewcode-block" id="load_gslib"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.load_gslib">[docs]</a><span class="k">def</span> <span class="nf">load_gslib</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load .gslib files. This has been appropriated from the HPGL library</span>
-<span class="sd">    https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py</span>
-<span class="sd">    commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa</span>
+<span class="c1"># def load_gslib(fn):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Load .gslib files. This has been appropriated from the HPGL library</span>
+<span class="c1">#     https://github.com/hpgl/hpgl/blob/master/src/geo_bsd/routines.py</span>
+<span class="c1">#     commit b980e15ad9b1f7107fd4fa56ab117f45553be3aa</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        fn (str): 			.gslib file path and name</span>
+<span class="c1">#     Parameters:</span>
+<span class="c1">#         fn (str): 			.gslib file path and name</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        gslib_dict *(dict)* - properties</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         gslib_dict *(dict)* - properties</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">gslib_dict</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">list_prop</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     gslib_dict = {}</span>
+<span class="c1">#     list_prop = []</span>
+<span class="c1">#     points = []</span>
 
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
-    <span class="n">head</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">num_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
-    <span class="c1">#print num_p</span>
+<span class="c1">#     f = open(fn)</span>
+<span class="c1">#     head = f.readline().split(&#39;\t&#39;)</span>
+<span class="c1">#     num_p = int(f.readline())</span>
+<span class="c1">#     #print num_p</span>
 
-    <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">,</span> <span class="n">lz</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">head</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)]</span>
-    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">head</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)]</span>
-    <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">head</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)]</span>
+<span class="c1">#     lx, ly, lz = [int(x) for x in head[0].split(&#39; &#39;)]</span>
+<span class="c1">#     nx, ny, nz = [float(x) for x in head[1].split(&#39; &#39;)]</span>
+<span class="c1">#     ox, oy, oz = [float(x) for x in head[2].split(&#39; &#39;)]</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_p</span><span class="p">):</span>
-        <span class="n">list_prop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
-    <span class="c1">#print list_prop</span>
+<span class="c1">#     for i in range(num_p):</span>
+<span class="c1">#         list_prop.append(str(f.readline().strip()))</span>
+<span class="c1">#     #print list_prop</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_prop</span><span class="p">)):</span>
-        <span class="n">gslib_dict</span><span class="p">[</span><span class="n">list_prop</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lx</span> <span class="o">*</span> <span class="n">ly</span> <span class="o">*</span> <span class="n">lz</span><span class="p">))</span>
+<span class="c1">#     for i in range(len(list_prop)):</span>
+<span class="c1">#         gslib_dict[list_prop[i]] = np.zeros((lx * ly * lz))</span>
 
-    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_prop</span><span class="p">))</span>
+<span class="c1">#     index = np.zeros(len(list_prop))</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">points</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)):</span>
-            <span class="n">gslib_dict</span><span class="p">[</span><span class="n">list_prop</span><span class="p">[</span><span class="n">j</span><span class="p">]][</span><span class="n">index</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
-            <span class="n">index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="c1">#     for line in f:</span>
+<span class="c1">#         points = line.split()</span>
+<span class="c1">#         for j in range(len(points)):</span>
+<span class="c1">#             gslib_dict[list_prop[j]][index[j]] = float(points[j])</span>
+<span class="c1">#             index[j] += 1</span>
 
-    <span class="k">for</span> <span class="n">dkey</span> <span class="ow">in</span> <span class="n">gslib_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">gslib_dict</span><span class="p">[</span><span class="n">dkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">gslib_dict</span><span class="p">[</span><span class="n">dkey</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ly</span><span class="p">,</span> <span class="n">lx</span><span class="p">,</span> <span class="n">lz</span><span class="p">))</span>
+<span class="c1">#     for dkey in gslib_dict.keys():</span>
+<span class="c1">#         gslib_dict[dkey] = gslib_dict[dkey].reshape((ly, lx, lz))</span>
 
-    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c1">#     f.close()</span>
 
-    <span class="k">return</span> <span class="n">gslib_dict</span></div>
+<span class="c1">#     return gslib_dict</span>
 
 
 <span class="sd">&#39;&#39;&#39; HYVR-specific utilities&#39;&#39;&#39;</span>
 
 
-<div class="viewcode-block" id="read_lu"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.read_lu">[docs]</a><span class="k">def</span> <span class="nf">read_lu</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load user-defined strata (architectural element lookup table),</span>
-<span class="sd">    split the data based on a delimiter and return it as a new list</span>
+<span class="c1"># def read_lu(sq_fp):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Load user-defined strata (architectural element lookup table),</span>
+<span class="c1">#     split the data based on a delimiter and return it as a new list</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        sq_fp:			Load user-defined strata (architectural element lookup table)</span>
+<span class="c1">#     Parameters:</span>
+<span class="c1">#         sq_fp:			Load user-defined strata (architectural element lookup table)</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        ssm_lu *(list)*: -Values of architectural element lookup table</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         ssm_lu *(list)*: -Values of architectural element lookup table</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Load user-defined systems / architectural element lookup table</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s1">&#39;: Reading strata data from &#39;</span> <span class="o">+</span> <span class="n">sq_fp</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sq_fp</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     # Load user-defined systems / architectural element lookup table</span>
+<span class="c1">#     print(time.strftime(&quot;%d-%m %H:%M:%S&quot;, time.localtime(time.time())) + &#39;: Reading strata data from &#39; + sq_fp)</span>
+<span class="c1">#     with open(sq_fp) as f:</span>
+<span class="c1">#         lines = f.read().splitlines()</span>
 
-    <span class="n">ssm_lu</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="n">temp</span> <span class="o">=</span> <span class="n">li</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="n">ssm_lu</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
+<span class="c1">#     ssm_lu = []</span>
+<span class="c1">#     for li in lines[1:]:</span>
+<span class="c1">#         temp = li.split(&#39;,&#39;)</span>
+<span class="c1">#         ssm_lu.append([int(temp[0]), float(temp[1]), float(temp[2]), str(temp[3]), int(temp[4])])</span>
 
-    <span class="k">return</span> <span class="n">ssm_lu</span></div>
-
-
-
-<div class="viewcode-block" id="virtual_boreholes"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.virtual_boreholes">[docs]</a><span class="k">def</span> <span class="nf">virtual_boreholes</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">file_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">opts</span><span class="o">=</span><span class="p">[]):</span>
-    <span class="sd">&quot;&quot;&quot; Perform &#39;virtual&#39; borehole sampling of parameter field</span>
-
-<span class="sd">    Arguments:</span>
-<span class="sd">        data_dict (dict):</span>
-<span class="sd">            Data to sample</span>
-<span class="sd">        d (list):</span>
-<span class="sd">            3-tuple of model grid cell dimensions</span>
-<span class="sd">        l (list):</span>
-<span class="sd">            3-tuple of total model dimensions/lengths</span>
-<span class="sd">        file_out (list: basefile path, list of file types):</span>
-<span class="sd">            Output filename and path</span>
-<span class="sd">        vals (list):</span>
-<span class="sd">            Parameter fields to include</span>
-<span class="sd">        opts (dict):</span>
-<span class="sd">            Sampling options</span>
-<span class="sd">            opts[&#39;noBH&#39;] (int):             Random sampling</span>
-<span class="sd">            opts[&#39;grid_spacing&#39;]:           float, or list of floats [x spacing, y spacing] Grid sample spacing</span>
-<span class="sd">            opts[&#39;grid_n&#39;]:                 int, or list of ints [n in x, n in y] Number of grid nodes per x,y dimensions</span>
-<span class="sd">            opt[&#39;lnK&#39;] (bool):              Natural logarithm of isotropic hydraulic conductivity</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        bh_df : Pandas DataFrame class</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data_dict</span><span class="p">[</span><span class="s1">&#39;fac&#39;</span><span class="p">])</span>
-
-    <span class="c1"># Set up column names</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">vals</span> <span class="o">=</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-    <span class="n">cols</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
-
-    <span class="c1"># Create dataframe</span>
-    <span class="n">bh_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
-
-    <span class="c1"># Sampling of grid</span>
-    <span class="n">xy_grid</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">xv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">yv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">zv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-
-    <span class="k">if</span> <span class="s1">&#39;grid_spacing&#39;</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot; Uniform grid with set spacing &quot;&quot;&quot;</span>
-
-        <span class="c1"># Get cartesian coordinates in 2D (x,y)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">range_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">((</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">range_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">((</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">range_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">((</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">])</span>
-            <span class="n">range_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">((</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_spacing&#39;</span><span class="p">])</span>
-
-        <span class="n">x_locs</span><span class="p">,</span> <span class="n">y_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">range_x</span><span class="p">,</span> <span class="n">range_y</span><span class="p">)</span>
-
-        <span class="c1"># Convert to array indices</span>
-        <span class="n">x_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_locs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">/</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">y_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y_locs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">/</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-    <span class="k">elif</span> <span class="s1">&#39;grid_n&#39;</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot; Sample over uniform grid &quot;&quot;&quot;</span>
-        <span class="c1"># Get cartesian coordinates in 2D (x,y)</span>
-        <span class="n">range_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_n&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">range_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;grid_n&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">x_locs</span><span class="p">,</span> <span class="n">y_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">range_x</span><span class="p">,</span> <span class="n">range_y</span><span class="p">)</span>
-
-        <span class="c1"># Convert to array indices</span>
-        <span class="n">x_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_locs</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">y_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y_locs</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-    <span class="k">elif</span> <span class="s1">&#39;noBH&#39;</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot; Randomly sample the xy plane &quot;&quot;&quot;</span>
-        <span class="n">x_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;noBH&#39;</span><span class="p">])</span>    <span class="c1"># Borehole location indices</span>
-        <span class="n">y_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ny</span><span class="p">),</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;noBH&#39;</span><span class="p">])</span>    <span class="c1"># Borehole location indices</span>
-
-    <span class="c1"># Put data into dataframe</span>
-    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_locs</span><span class="p">)):</span>
-        <span class="c1"># Get indices of location</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">x_locs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="n">y_locs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-
-        <span class="c1"># Get vectors of Cartesian coordinates</span>
-        <span class="n">ibh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nz</span><span class="p">,</span> <span class="mi">3</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)))</span>
-        <span class="n">ibh</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">nz</span><span class="p">,))</span> <span class="o">*</span> <span class="n">xv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>          <span class="c1"># x coordinates</span>
-        <span class="n">ibh</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">nz</span><span class="p">,))</span> <span class="o">*</span> <span class="n">yv</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>          <span class="c1"># y coordinates</span>
-        <span class="n">ibh</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">zv</span>                              <span class="c1"># z coordinates</span>
-
-        <span class="k">for</span> <span class="n">iv</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
-            <span class="c1"># Append to list to be appended to dataframe</span>
-            <span class="n">ibh</span><span class="p">[:,</span> <span class="n">iv</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_dict</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">nz</span><span class="p">]</span>
-        <span class="n">bh_df</span> <span class="o">=</span> <span class="n">bh_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ibh</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="s1">&#39;lnK&#39;</span> <span class="ow">in</span> <span class="n">opts</span> <span class="ow">and</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;lnK&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">vals</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;lnK&#39;</span><span class="p">])</span>
-        <span class="n">bh_df</span><span class="p">[</span><span class="s1">&#39;lnK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">bh_df</span><span class="p">[</span><span class="s1">&#39;k_iso&#39;</span><span class="p">]),</span> <span class="n">index</span><span class="o">=</span><span class="n">bh_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-    <span class="c1"># Save borehole data</span>
-    <span class="n">fmtd</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;k_iso&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%.5e</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;lnK&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%.5f</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;poros&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%.5f</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;fac&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%u</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;dip&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;azim&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">}</span>
-    <span class="k">if</span> <span class="n">file_out</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s1">&#39;csv&#39;</span> <span class="ow">in</span> <span class="n">file_out</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">bh_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file_out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;gslib&#39;</span> <span class="ow">in</span> <span class="n">file_out</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">n_conddata</span> <span class="o">=</span> <span class="n">bh_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">colsout</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
-            <span class="n">colsout</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
-            <span class="n">to_write</span> <span class="o">=</span> <span class="n">bh_df</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">colsout</span><span class="p">)</span>
-            <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">n_conddata</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="mi">3</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)),</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
-            <span class="n">header</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
-            <span class="n">header</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
-
-            <span class="n">fmts</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1"> </span><span class="si">%.3f</span><span class="s1"> </span><span class="si">%.3f</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fmtd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">]))</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">file_out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.gslib&#39;</span><span class="p">,</span> <span class="n">to_write</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">bh_df</span></div>
+<span class="c1">#     return ssm_lu</span>
 
 
-<div class="viewcode-block" id="calc_norm"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.calc_norm">[docs]</a><span class="k">def</span> <span class="nf">calc_norm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate norm (compute the complex conjugate from &#39;x&#39;)</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        x:	Input parameter</span>
+<span class="c1"># def virtual_boreholes(data_dict, d, l, file_out=None, vals=[], opts=[]):</span>
+<span class="c1">#     &quot;&quot;&quot; Perform &#39;virtual&#39; borehole sampling of parameter field</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Complex conjugate of x</span>
+<span class="c1">#     Arguments:</span>
+<span class="c1">#         data_dict (dict):</span>
+<span class="c1">#             Data to sample</span>
+<span class="c1">#         d (list):</span>
+<span class="c1">#             3-tuple of model grid cell dimensions</span>
+<span class="c1">#         l (list):</span>
+<span class="c1">#             3-tuple of total model dimensions/lengths</span>
+<span class="c1">#         file_out (list: basefile path, list of file types):</span>
+<span class="c1">#             Output filename and path</span>
+<span class="c1">#         vals (list):</span>
+<span class="c1">#             Parameter fields to include</span>
+<span class="c1">#         opts (dict):</span>
+<span class="c1">#             Sampling options</span>
+<span class="c1">#             opts[&#39;noBH&#39;] (int):             Random sampling</span>
+<span class="c1">#             opts[&#39;grid_spacing&#39;]:           float, or list of floats [x spacing, y spacing] Grid sample spacing</span>
+<span class="c1">#             opts[&#39;grid_n&#39;]:                 int, or list of ints [n in x, n in y] Number of grid nodes per x,y dimensions</span>
+<span class="c1">#             opt[&#39;lnK&#39;] (bool):              Natural logarithm of isotropic hydraulic conductivity</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         bh_df : Pandas DataFrame class</span>
 
+<span class="c1">#     &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="try_makefolder"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.try_makefolder">[docs]</a><span class="k">def</span> <span class="nf">try_makefolder</span><span class="p">(</span><span class="n">makedir</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create modflow output folder</span>
+<span class="c1">#     nx, ny, nz = np.shape(data_dict[&#39;fac&#39;])</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Create modflow output folder</span>
+<span class="c1">#     # Set up column names</span>
+<span class="c1">#     cols = [&#39;x&#39;, &#39;y&#39;, &#39;z&#39;]</span>
+<span class="c1">#     if len(vals) == 0:</span>
+<span class="c1">#         vals = data_dict.keys()</span>
+<span class="c1">#     cols.extend(vals)</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">makedir</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
-            <span class="k">raise</span></div>
+<span class="c1">#     # Create dataframe</span>
+<span class="c1">#     bh_df = pd.DataFrame(columns=cols)</span>
+
+<span class="c1">#     # Sampling of grid</span>
+<span class="c1">#     xy_grid = []</span>
+<span class="c1">#     xv = np.arange(0.5 * d[0], l[0], d[0])</span>
+<span class="c1">#     yv = np.arange(0.5 * d[1], l[1], d[1])</span>
+<span class="c1">#     zv = np.arange(0.5 * d[2], l[2], d[2])</span>
+
+<span class="c1">#     if &#39;grid_spacing&#39; in opts.keys():</span>
+<span class="c1">#         &quot;&quot;&quot; Uniform grid with set spacing &quot;&quot;&quot;</span>
+
+<span class="c1">#         # Get cartesian coordinates in 2D (x,y)</span>
+<span class="c1">#         if len(opts[&#39;grid_spacing&#39;]) == 2:</span>
+<span class="c1">#             range_x = np.arange((opts[&#39;grid_spacing&#39;][0] * 0.5), l[0], opts[&#39;grid_spacing&#39;][0])</span>
+<span class="c1">#             range_y = np.arange((opts[&#39;grid_spacing&#39;][1] * 0.5), l[1], opts[&#39;grid_spacing&#39;][1])</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             range_x = np.arange((opts[&#39;grid_spacing&#39;] * 0.5), l[0], opts[&#39;grid_spacing&#39;])</span>
+<span class="c1">#             range_y = np.arange((opts[&#39;grid_spacing&#39;] * 0.5), l[1], opts[&#39;grid_spacing&#39;])</span>
+
+<span class="c1">#         x_locs, y_locs = np.meshgrid(range_x, range_y)</span>
+
+<span class="c1">#         # Convert to array indices</span>
+<span class="c1">#         x_locs = np.floor(x_locs.flatten()/d[0]).astype(int)</span>
+<span class="c1">#         y_locs = np.floor(y_locs.flatten()/d[1]).astype(int)</span>
+
+<span class="c1">#     elif &#39;grid_n&#39; in opts.keys():</span>
+<span class="c1">#         &quot;&quot;&quot; Sample over uniform grid &quot;&quot;&quot;</span>
+<span class="c1">#         # Get cartesian coordinates in 2D (x,y)</span>
+<span class="c1">#         range_x = np.linspace(0, l[0]/d[0] - 1, opts[&#39;grid_n&#39;][0])</span>
+<span class="c1">#         range_y = np.linspace(0, l[1]/d[1] - 1, opts[&#39;grid_n&#39;][1]+2)[1:-1]</span>
+<span class="c1">#         x_locs, y_locs = np.meshgrid(range_x, range_y)</span>
+
+<span class="c1">#         # Convert to array indices</span>
+<span class="c1">#         x_locs = np.floor(x_locs.flatten()).astype(int)</span>
+<span class="c1">#         y_locs = np.floor(y_locs.flatten()).astype(int)</span>
+
+<span class="c1">#     elif &#39;noBH&#39; in opts.keys():</span>
+<span class="c1">#         &quot;&quot;&quot; Randomly sample the xy plane &quot;&quot;&quot;</span>
+<span class="c1">#         x_locs = np.random.choice(range(0, nx), opts[&#39;noBH&#39;])    # Borehole location indices</span>
+<span class="c1">#         y_locs = np.random.choice(range(0, ny), opts[&#39;noBH&#39;])    # Borehole location indices</span>
+
+<span class="c1">#     # Put data into dataframe</span>
+<span class="c1">#     for idx in range(len(x_locs)):</span>
+<span class="c1">#         # Get indices of location</span>
+<span class="c1">#         i = x_locs[idx]</span>
+<span class="c1">#         j = y_locs[idx]</span>
+
+<span class="c1">#         # Get vectors of Cartesian coordinates</span>
+<span class="c1">#         ibh = np.zeros((nz, 3 + len(vals)))</span>
+<span class="c1">#         ibh[:, 0] = np.ones((nz,)) * xv[i]          # x coordinates</span>
+<span class="c1">#         ibh[:, 1] = np.ones((nz,)) * yv[j]          # y coordinates</span>
+<span class="c1">#         ibh[:, 2] = zv                              # z coordinates</span>
+
+<span class="c1">#         for iv, v in enumerate(vals):</span>
+<span class="c1">#             # Append to list to be appended to dataframe</span>
+<span class="c1">#             ibh[:, iv+3] = data_dict[v][i, j, 0:nz]</span>
+<span class="c1">#         bh_df = bh_df.append(pd.DataFrame(ibh, columns=cols), ignore_index=True)</span>
+
+<span class="c1">#     if &#39;lnK&#39; in opts and opts[&#39;lnK&#39;] is True:</span>
+<span class="c1">#         vals.extend([&#39;lnK&#39;])</span>
+<span class="c1">#         bh_df[&#39;lnK&#39;] = pd.Series(np.log(bh_df[&#39;k_iso&#39;]), index=bh_df.index)</span>
+
+<span class="c1">#     # Save borehole data</span>
+<span class="c1">#     fmtd = {&#39;k_iso&#39;: &#39;%.5e&#39;,</span>
+<span class="c1">#             &#39;lnK&#39;: &#39;%.5f&#39;,</span>
+<span class="c1">#             &#39;poros&#39;: &#39;%.5f&#39;,</span>
+<span class="c1">#             &#39;fac&#39;: &#39;%u&#39;,</span>
+<span class="c1">#             &#39;dip&#39;: &#39;%.2f&#39;,</span>
+<span class="c1">#             &#39;azim&#39;: &#39;%.2f&#39;}</span>
+<span class="c1">#     if file_out is not None:</span>
+<span class="c1">#         if &#39;csv&#39; in file_out[1]:</span>
+<span class="c1">#             bh_df.to_csv(file_out[0]+&#39;.csv&#39;, index=False)</span>
+<span class="c1">#         if &#39;gslib&#39; in file_out[1]:</span>
+<span class="c1">#             n_conddata = bh_df.shape[0]</span>
+<span class="c1">#             colsout = [&#39;x&#39;, &#39;y&#39;, &#39;z&#39;]</span>
+<span class="c1">#             colsout.extend(vals)</span>
+<span class="c1">#             to_write = bh_df.as_matrix(columns=colsout)</span>
+<span class="c1">#             header = [str(n_conddata), str(3 + len(vals)), &#39;x&#39;, &#39;y&#39;, &#39;z&#39;]</span>
+<span class="c1">#             header.extend(vals)</span>
+<span class="c1">#             header = &#39;\n&#39;.join(header)</span>
+
+<span class="c1">#             fmts = &#39;%.3f %.3f %.3f {}&#39;.format(&#39; &#39;.join([fmtd[i] for i in vals]))</span>
+<span class="c1">#             np.savetxt(file_out[0] + &#39;.gslib&#39;, to_write, delimiter=&#39; &#39;, header=header, comments=&#39;&#39;, fmt=fmts)</span>
+
+<span class="c1">#     return bh_df</span>
 
 
 <div class="viewcode-block" id="print_to_stdout"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.print_to_stdout">[docs]</a><span class="k">def</span> <span class="nf">print_to_stdout</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -391,79 +352,78 @@
 <span class="c1"># Some utilities for generating shapes</span>
 <span class="c1">####################################################################################################################</span>
 
-<div class="viewcode-block" id="planepoint"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.planepoint">[docs]</a><span class="k">def</span> <span class="nf">planepoint</span><span class="p">(</span><span class="n">dip_norm</span><span class="p">,</span> <span class="n">x_dip</span><span class="p">,</span> <span class="n">y_dip</span><span class="p">,</span> <span class="n">znow</span><span class="p">,</span> <span class="n">xtemp</span><span class="p">,</span> <span class="n">ytemp</span><span class="p">,</span> <span class="n">ztemp</span><span class="p">,</span> <span class="n">select</span><span class="o">=</span><span class="p">[]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Compute number of planes</span>
+<span class="c1"># def planepoint(dip_norm, x_dip, y_dip, znow, xtemp, ytemp, ztemp, select=[]):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Compute number of planes</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        dip_norm:</span>
-<span class="sd">        x_dip:			X coordinates of points on dip planes</span>
-<span class="sd">        y_dip:			Y coordinates of points on dip planes</span>
-<span class="sd">        znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes</span>
-<span class="sd">        xtemp:			X dimension of model grid nodes</span>
-<span class="sd">        ytemp:			Y dimension of model grid nodes</span>
-<span class="sd">        ztemp:			Z dimension of model grid nodes</span>
-<span class="sd">        select:         Model grid nodes to consider</span>
+<span class="c1">#     Parameters:</span>
+<span class="c1">#         dip_norm:</span>
+<span class="c1">#         x_dip:			X coordinates of points on dip planes</span>
+<span class="c1">#         y_dip:			Y coordinates of points on dip planes</span>
+<span class="c1">#         znow:			Current coordinates of Z, needed to compute Z coordinates of points on dip planes</span>
+<span class="c1">#         xtemp:			X dimension of model grid nodes</span>
+<span class="c1">#         ytemp:			Y dimension of model grid nodes</span>
+<span class="c1">#         ztemp:			Z dimension of model grid nodes</span>
+<span class="c1">#         select:         Model grid nodes to consider</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        set_no - Number of planes with selected model grid nodes</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         set_no - Number of planes with selected model grid nodes</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Get closest plane to points</span>
-    <span class="n">n_sets</span> <span class="o">=</span> <span class="n">dip_norm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>                   <span class="c1"># Number of planes</span>
-    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="n">xtemp</span><span class="o">.</span><span class="n">shape</span>                       <span class="c1"># Get number of model cells</span>
-    <span class="n">set_no</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>  <span class="c1"># Initialise set number array</span>
-    <span class="n">z_dip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_dip</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">znow</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     # Get closest plane to points</span>
+<span class="c1">#     n_sets = dip_norm.shape[1]                   # Number of planes</span>
+<span class="c1">#     nx, ny, nz = xtemp.shape                       # Get number of model cells</span>
+<span class="c1">#     set_no = np.zeros((nx, ny, nz), dtype=np.int)  # Initialise set number array</span>
+<span class="c1">#     z_dip = np.ones(x_dip.shape) * znow</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>                                               <span class="c1"># Get indices of selected model nodes</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">select</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xtemp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-        <span class="n">select_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>
+<span class="c1">#     if len(select) &gt; 0:</span>
+<span class="c1">#         select_idx = np.where(select)                                               # Get indices of selected model nodes</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         select = np.ones_like(xtemp, dtype=bool)</span>
+<span class="c1">#         select_idx = np.where(select)</span>
 
-    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">xtemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ytemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ztemp</span><span class="p">[</span><span class="n">select</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>      <span class="c1"># Cartesian coordinates of model grid nodes</span>
-    <span class="n">plp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x_dip</span><span class="p">,</span> <span class="n">y_dip</span><span class="p">,</span> <span class="n">z_dip</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>                                     <span class="c1"># Cartesian coordinates of points on dip planes</span>
-    <span class="n">pd</span> <span class="o">=</span> <span class="n">plp</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">points</span><span class="o">.</span><span class="n">T</span>                                                <span class="c1"># subtract grid nodes from plane points</span>
+<span class="c1">#     points = np.array((xtemp[select].flatten(), ytemp[select].flatten(), ztemp[select].flatten()))      # Cartesian coordinates of model grid nodes</span>
+<span class="c1">#     plp = np.array((x_dip, y_dip, z_dip)).T                                     # Cartesian coordinates of points on dip planes</span>
+<span class="c1">#     pd = plp[:, None] - points.T                                                # subtract grid nodes from plane points</span>
 
-    <span class="c1"># Loop over set planes</span>
-    <span class="k">for</span> <span class="n">iset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_sets</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">iset</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">pd_1</span> <span class="o">=</span> <span class="n">pd_2</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">abc_1</span> <span class="o">=</span> <span class="n">dip_norm</span><span class="p">[:,</span> <span class="n">iset</span><span class="p">]</span>                                                           <span class="c1"># Plane normal equation</span>
-            <span class="n">pd_1</span> <span class="o">=</span> <span class="n">abc_1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pd</span><span class="p">[</span><span class="n">iset</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">abc_1</span> <span class="o">*</span> <span class="n">abc_1</span><span class="p">))</span>          <span class="c1"># Distance to plane</span>
-        <span class="n">pd1_c1</span> <span class="o">=</span> <span class="n">pd_1</span> <span class="o">&lt;=</span> <span class="mi">0</span>                                                                  <span class="c1"># pd_1 meeting condition 1</span>
-        <span class="n">pd1_c1_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pd1_c1</span><span class="p">)</span>
+<span class="c1">#     # Loop over set planes</span>
+<span class="c1">#     for iset in range(n_sets-1):</span>
+<span class="c1">#         if iset &gt; 1:</span>
+<span class="c1">#             pd_1 = pd_2</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             abc_1 = dip_norm[:, iset]                                                           # Plane normal equation</span>
+<span class="c1">#             pd_1 = abc_1.dot(pd[iset, :, :].squeeze().T) / np.sqrt(sum(abc_1 * abc_1))          # Distance to plane</span>
+<span class="c1">#         pd1_c1 = pd_1 &lt;= 0                                                                  # pd_1 meeting condition 1</span>
+<span class="c1">#         pd1_c1_idx = np.where(pd1_c1)</span>
 
-        <span class="k">if</span> <span class="n">iset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">set_no</span><span class="p">[</span><span class="n">select_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">pd1_c1_idx</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">pd1_c1_idx</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">pd1_c1_idx</span><span class="p">]]</span> <span class="o">=</span> <span class="n">iset</span><span class="o">+</span><span class="mi">1</span>
-        <span class="c1"># elif iset == n_sets: # this never happens</span>
-        <span class="c1">#     pd1_c2_idx = np.where(pd_1 &gt; 0)                     # index of pd_2 meeting condition 1</span>
-        <span class="c1">#     set_no[select_idx[0][pd1_c2_idx], select_idx[1][pd1_c2_idx], select_idx[2][pd1_c2_idx]] = iset+1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">abc_2</span> <span class="o">=</span> <span class="n">dip_norm</span><span class="p">[:,</span> <span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-            <span class="c1"># Points on plane</span>
-            <span class="n">pd_2</span> <span class="o">=</span> <span class="n">abc_2</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pd</span><span class="p">[</span><span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">abc_2</span> <span class="o">*</span> <span class="n">abc_2</span><span class="p">))</span>  <span class="c1"># Distance to plane</span>
-            <span class="n">inset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pd_1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pd_2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>                                   <span class="c1"># grid cell between planes</span>
-            <span class="n">set_no</span><span class="p">[</span><span class="n">select_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">inset</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">inset</span><span class="p">],</span> <span class="n">select_idx</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">inset</span><span class="p">]]</span> <span class="o">=</span> <span class="n">iset</span><span class="o">+</span><span class="mi">1</span>
+<span class="c1">#         if iset == 0:</span>
+<span class="c1">#             set_no[select_idx[0][pd1_c1_idx], select_idx[1][pd1_c1_idx], select_idx[2][pd1_c1_idx]] = iset+1</span>
+<span class="c1">#         # elif iset == n_sets: # this never happens</span>
+<span class="c1">#         #     pd1_c2_idx = np.where(pd_1 &gt; 0)                     # index of pd_2 meeting condition 1</span>
+<span class="c1">#         #     set_no[select_idx[0][pd1_c2_idx], select_idx[1][pd1_c2_idx], select_idx[2][pd1_c2_idx]] = iset+1</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             abc_2 = dip_norm[:, iset+1]</span>
+<span class="c1">#             # Points on plane</span>
+<span class="c1">#             pd_2 = abc_2.dot(pd[iset+1, :, :].squeeze().T) / np.sqrt(sum(abc_2 * abc_2))  # Distance to plane</span>
+<span class="c1">#             inset = np.logical_and(pd_1 &lt;= 0, pd_2 &gt; 0)                                   # grid cell between planes</span>
+<span class="c1">#             set_no[select_idx[0][inset], select_idx[1][inset], select_idx[2][inset]] = iset+1</span>
 
-    <span class="k">return</span> <span class="n">set_no</span></div>
+<span class="c1">#     return set_no</span>
 
+<span class="c1"># def angle(v1, v2):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Return angle between two vectors in [°] between 0° and 180°</span>
 
-<div class="viewcode-block" id="angle"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.angle">[docs]</a><span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return angle between two vectors in [°] between 0° and 180°</span>
+<span class="c1">#     Parameters:</span>
+<span class="c1">#         v1:	Vector 1</span>
+<span class="c1">#         v2:	Vector 2</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        v1:	Vector 1</span>
-<span class="sd">        v2:	Vector 2</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        angle value *(float)* - Angle between v1 and v2</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
-    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">cos</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">180</span>
-    <span class="k">return</span> <span class="n">angle</span></div>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         angle value *(float)* - Angle between v1 and v2</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     cos = np.dot(v1, v2) / np.sqrt(np.dot(v1, v1) * np.dot(v2, v2))</span>
+<span class="c1">#     angle = np.arccos(cos)/np.pi*180</span>
+<span class="c1">#     return angle</span>
 
 <div class="viewcode-block" id="get_alternating_facies"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.get_alternating_facies">[docs]</a><span class="k">def</span> <span class="nf">get_alternating_facies</span><span class="p">(</span><span class="n">num_facies</span><span class="p">,</span> <span class="n">type_params</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -482,8 +442,8 @@
             <span class="n">facies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">type_params</span><span class="p">[</span><span class="s1">&#39;facies&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">facies</span></div>
 
-<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.norm">[docs]</a><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">v</span><span class="p">))</span></div>
+<span class="c1"># def norm(v):</span>
+<span class="c1">#     return np.sqrt(np.dot(v,v))</span>
 
 
 <div class="viewcode-block" id="specsim"><a class="viewcode-back" href="../../modules/hyvr.html#hyvr.utils.specsim">[docs]</a><span class="k">def</span> <span class="nf">specsim</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">corl</span><span class="p">,</span> <span class="n">selection_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">two_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">covmod</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">):</span>
@@ -525,10 +485,10 @@
         <span class="c1"># rectangular selection that contains all selected cells</span>
         <span class="k">if</span> <span class="n">two_dim</span><span class="p">:</span>
             <span class="n">x_idx</span><span class="p">,</span> <span class="n">y_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
-            <span class="n">min_x_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
-            <span class="n">max_x_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
-            <span class="n">min_y_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
-            <span class="n">max_y_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">min_x_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="n">max_x_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="n">min_y_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">max_y_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
             <span class="n">rectangular_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
             <span class="n">rectangular_mask</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">selected_X</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
@@ -546,11 +506,11 @@
                 <span class="n">min_x_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
-            <span class="n">max_x_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
-            <span class="n">min_y_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
-            <span class="n">max_y_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
-            <span class="n">max_z_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">z_idx</span><span class="p">)</span>
-            <span class="n">min_z_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">z_idx</span><span class="p">)</span>
+            <span class="n">max_x_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_idx</span><span class="p">)</span>
+            <span class="n">min_y_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">max_y_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y_idx</span><span class="p">)</span>
+            <span class="n">max_z_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">z_idx</span><span class="p">)</span>
+            <span class="n">min_z_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">z_idx</span><span class="p">)</span>
             <span class="n">rectangular_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">selection_mask</span><span class="p">)</span>
             <span class="n">rectangular_mask</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">selected_X</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">min_x_idx</span><span class="p">:</span><span class="n">max_x_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_y_idx</span><span class="p">:</span><span class="n">max_y_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">min_z_idx</span><span class="p">:</span><span class="n">max_z_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
@@ -645,7 +605,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

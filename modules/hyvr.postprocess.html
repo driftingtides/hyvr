@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.postprocess package &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.postprocess package &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,7 +29,7 @@
         <li class="right" >
           <a href="hyvr.input.html" title="hyvr.input package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" accesskey="U">hyvr package</a> &#187;</li> 
       </ul>
@@ -42,8 +42,11 @@
             
   <div class="section" id="module-hyvr.postprocess">
 <span id="hyvr-postprocess-package"></span><h1>hyvr.postprocess package<a class="headerlink" href="#module-hyvr.postprocess" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="module-hyvr.postprocess.output">
-<span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-hyvr.postprocess.output" title="Permalink to this headline">¶</a></h2>
+<span id="hyvr-postprocess-output-module"></span><h2>hyvr.postprocess.output module<a class="headerlink" href="#module-hyvr.postprocess.output" title="Permalink to this headline">¶</a></h2>
 <p>This file contains functions to convert the internal representation of a HyVR
 model output (a dictionary of arrays) to common data or model input formats.</p>
 <p>The functions should be named <cite>to_&lt;format&gt;</cite> and take the following parameters:</p>
@@ -186,7 +189,11 @@ current run directory.</p>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-hyvr.postprocess.plotting"></span><dl class="function">
+</div>
+<div class="section" id="module-hyvr.postprocess.plotting">
+<span id="hyvr-postprocess-plotting-module"></span><h2>hyvr.postprocess.plotting module<a class="headerlink" href="#module-hyvr.postprocess.plotting" title="Permalink to this headline">¶</a></h2>
+<p>Some functions to plot hyvr output. This module is for testing purposes only.</p>
+<dl class="function">
 <dt id="hyvr.postprocess.plotting.cross_section_pcolor">
 <code class="sig-prename descclassname">hyvr.postprocess.plotting.</code><code class="sig-name descname">cross_section_pcolor</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">field</em>, <em class="sig-param">y=None</em>, <em class="sig-param">x=None</em>, <em class="sig-param">log=False</em>, <em class="sig-param">xlim_y=None</em>, <em class="sig-param">ylim_y=None</em>, <em class="sig-param">xlim_x=None</em>, <em class="sig-param">ylim_x=None</em>, <em class="sig-param">cmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/postprocess/plotting.html#cross_section_pcolor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.postprocess.plotting.cross_section_pcolor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a pcolor plot of a cross section of the specified field.</p>
@@ -234,15 +241,21 @@ If it is an empty list, no x-cross section will be plotted.</p></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Module Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyvr.html">hyvr package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="hyvr.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="hyvr.classes.html">hyvr.classes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyvr.geo.html">hyvr.geo package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hyvr.input.html">hyvr.input package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">hyvr.postprocess package</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.postprocess.output">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.postprocess.output">hyvr.postprocess.output module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.postprocess.plotting">hyvr.postprocess.plotting module</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.assign_facies">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.assign_points">hyvr.assign_points module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.optimized">hyvr.optimized module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.sim">hyvr.sim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.utils">hyvr.utils module</a></li>
 </ul>
 </li>
 </ul>
@@ -285,7 +298,7 @@ If it is an empty list, no x-cross section will be plotted.</p></li>
         <li class="right" >
           <a href="hyvr.input.html" title="hyvr.input package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" >hyvr package</a> &#187;</li> 
       </ul>

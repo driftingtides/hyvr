@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>hyvr.input package &#8212; HyVR 1.0.3 documentation</title>
+    <title>hyvr.input package &#8212; HyVR 1.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hyvr.postprocess package" href="hyvr.postprocess.html" />
-    <link rel="prev" title="hyvr.classes package" href="hyvr.classes.html" /> 
+    <link rel="prev" title="hyvr.geo package" href="hyvr.geo.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -31,9 +31,9 @@
           <a href="hyvr.postprocess.html" title="hyvr.postprocess package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="hyvr.classes.html" title="hyvr.classes package"
+          <a href="hyvr.geo.html" title="hyvr.geo package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" accesskey="U">hyvr package</a> &#187;</li> 
       </ul>
@@ -46,10 +46,22 @@
             
   <div class="section" id="module-hyvr.input">
 <span id="hyvr-input-package"></span><h1>hyvr.input package<a class="headerlink" href="#module-hyvr.input" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="module-hyvr.input.option_parsing">
-<span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-hyvr.input.option_parsing" title="Permalink to this headline">¶</a></h2>
-<p>This module contains the classes Section and Option to simplify parsing and
-validating ini-files.</p>
+<span id="hyvr-input-option-parsing-module"></span><h2>hyvr.input.option_parsing module<a class="headerlink" href="#module-hyvr.input.option_parsing" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the classes <a class="reference internal" href="#hyvr.input.option_parsing.Section" title="hyvr.input.option_parsing.Section"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.input.option_parsing.Section</span></code></a> and
+<a class="reference internal" href="#hyvr.input.option_parsing.Option" title="hyvr.input.option_parsing.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.input.option_parsing.Option</span></code></a> to simplify parsing and validating
+input-files (<code class="docutils literal notranslate"><span class="pre">*.ini</span></code>).</p>
+<p>Every HyVR option should have a corresponding instance of an
+<a class="reference internal" href="#hyvr.input.option_parsing.Option" title="hyvr.input.option_parsing.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">Option</span></code></a>, which is defined in
+<a class="reference internal" href="#module-hyvr.input.options" title="hyvr.input.options"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hyvr.input.options</span></code></a> in the options lists. These option lists
+are then assigned to <a class="reference internal" href="#hyvr.input.option_parsing.Section" title="hyvr.input.option_parsing.Section"><code class="xref py py-class docutils literal notranslate"><span class="pre">Section</span></code></a> instances in
+<a class="reference internal" href="#hyvr.input.parameters.parse_inifile" title="hyvr.input.parameters.parse_inifile"><code class="xref py py-func docutils literal notranslate"><span class="pre">hyvr.input.parameters.parse_inifile()</span></code></a>.</p>
+<p>If you add functionality to HyVR, you most likely only have to add an option to
+the option lists, normally you don’t have to change anything in here (at least
+if you’re lucky, since this is a very recursive mess).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Author</dt>
 <dd class="field-odd"><p>Samuel Scherrer</p>
@@ -59,6 +71,12 @@ validating ini-files.</p>
 <dt id="hyvr.input.option_parsing.Section">
 <em class="property">class </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">Section</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Section" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Section</span></code> instance corresponds to a section in an ini-file.</p>
+<p>A section is mainly a wrapper for a list of options, and therefore only has
+a name and a list of options. Upon parsing a section, it checks whether all
+given options in the inifile are actually expected, and then delegates the
+parsing of single options to the <a class="reference internal" href="#hyvr.input.option_parsing.Option" title="hyvr.input.option_parsing.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">Option</span></code></a>
+class.</p>
 <dl class="method">
 <dt id="hyvr.input.option_parsing.Section.parse">
 <code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">section_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Section.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Section.parse" title="Permalink to this definition">¶</a></dt>
@@ -91,6 +109,15 @@ using <code class="docutils literal notranslate"><span class="pre">configparser<
 <dt id="hyvr.input.option_parsing.Option">
 <em class="property">class </em><code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">Option</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">dtype</em>, <em class="sig-param">optional=False</em>, <em class="sig-param">default=None</em>, <em class="sig-param">shape=-1</em>, <em class="sig-param">datatype=None</em>, <em class="sig-param">validation_func=&lt;function Option.&lt;lambda&gt;&gt;</em>, <em class="sig-param">alternatives=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Option" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An <code class="docutils literal notranslate"><span class="pre">Option</span></code> instance is basically a parser for a specific option in a
+ini-file.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">Option</span></code> is typically part of a <code class="docutils literal notranslate"><span class="pre">Section</span></code>, and normally
+<a class="reference internal" href="#hyvr.input.option_parsing.Option.parse" title="hyvr.input.option_parsing.Option.parse"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse()</span></code></a> is called by the <code class="docutils literal notranslate"><span class="pre">Section</span></code>
+it belongs to.
+The main tasks of an <code class="docutils literal notranslate"><span class="pre">Option</span></code> instance is to parse an option and make sure
+it has the right type, and in the case of lists, the right shape.
+Below is a description of its capabilities, note especially the <code class="docutils literal notranslate"><span class="pre">shape</span></code>
+parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -149,6 +176,23 @@ supplied order), the option is stored under it’s standard name.</p></li>
 <dt id="hyvr.input.option_parsing.Option.parse">
 <code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param">section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#Option.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.Option.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses the option based on it’s attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>section</strong> (<code class="docutils literal notranslate"><span class="pre">Section</span></code> instance) – The section it belongs to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>value</strong> – The parsed value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>self.type</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#hyvr.input.option_parsing.ShapeError" title="hyvr.input.option_parsing.ShapeError"><strong>ShapeError</strong></a> – If the parsed list does not have the right shape.</p></li>
+<li><p><strong>ValueError</strong> – Other errors, description in text.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -176,23 +220,47 @@ supplied order), the option is stored under it’s standard name.</p></li>
 <code class="sig-prename descclassname">hyvr.input.option_parsing.</code><code class="sig-name descname">assert_exists</code><span class="sig-paren">(</span><em class="sig-param">option</em>, <em class="sig-param">dictionary</em>, <em class="sig-param">section_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/option_parsing.html#assert_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.option_parsing.assert_exists" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<span class="target" id="module-hyvr.input.options"></span><p>This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.</p>
+</div>
+<div class="section" id="module-hyvr.input.options">
+<span id="hyvr-input-options-module"></span><h2>hyvr.input.options module<a class="headerlink" href="#module-hyvr.input.options" title="Permalink to this headline">¶</a></h2>
+<p>This module contains all options for the ini-files. If you want to add an
+option, add it here.</p>
+<p>The options are instances of <a class="reference internal" href="#hyvr.input.option_parsing.Option" title="hyvr.input.option_parsing.Option"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.input.option_parsing.Option</span></code></a>, where
+you will find more documentation on how to create an option. They should be
+added to one of the lists in here, if you want to add them to an existing
+section. For creating a new section, create a new list, and also make sure this
+section is added in <a class="reference internal" href="#hyvr.input.parameters.parse_inifile" title="hyvr.input.parameters.parse_inifile"><code class="xref py py-func docutils literal notranslate"><span class="pre">hyvr.input.parameters.parse_inifile()</span></code></a>.</p>
+<p>The element options are currently spread out over multiple
+lists. <code class="docutils literal notranslate"><span class="pre">element_options</span></code> contains general options that all architectural
+elements have. <code class="docutils literal notranslate"><span class="pre">erosive_element_options</span></code> contains options that all erosive
+architectural elements (trough, channel) have, and the
+<code class="docutils literal notranslate"><span class="pre">options['&lt;element_name&gt;']</span></code> lists are specific for a single architectural
+element type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Authors</dt>
 <dd class="field-odd"><p>Samuel Scherrer, Jeremy P. Bennett</p>
 </dd>
 </dl>
-<span class="target" id="module-hyvr.input.options_deprecated"></span><p>This module contains all options for the ini-files. If you want to add an option, add it here and potentially do some post-processing in parameters.</p>
+</div>
+<div class="section" id="module-hyvr.input.options_deprecated">
+<span id="hyvr-input-options-deprecated-module"></span><h2>hyvr.input.options_deprecated module<a class="headerlink" href="#module-hyvr.input.options_deprecated" title="Permalink to this headline">¶</a></h2>
+<p>This module contains all options for the ini-files.</p>
+<p>This module is only for parsing deprecated ini files, it might be removed in the
+future.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Authors</dt>
 <dd class="field-odd"><p>Samuel Scherrer, Jeremy P. Bennett</p>
 </dd>
 </dl>
-<span class="target" id="module-hyvr.input.parameters"></span><p>This is the main module for parsing the parameter file. There are two other
+</div>
+<div class="section" id="module-hyvr.input.parameters">
+<span id="hyvr-input-parameters-module"></span><h2>hyvr.input.parameters module<a class="headerlink" href="#module-hyvr.input.parameters" title="Permalink to this headline">¶</a></h2>
+<p>This is the main module for parsing the parameter file. There are two other
 modules strongly linked ot this one:</p>
 <ul class="simple">
 <li><p>options: contains definitions of the possible options of a parameter file</p></li>
-<li><p>option_parsing: provides the classes Section and Option for simpler parsing and validation.</p></li>
+<li><p>option_parsing: provides the classes Section and Option for simpler parsing
+and validation.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Authors</dt>
@@ -211,44 +279,23 @@ modules strongly linked ot this one:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hyvr.input.parameters.model_setup">
-<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">model_setup</code><span class="sig-paren">(</span><em class="sig-param">pf</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#model_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.model_setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set up model using grid.Grid() class and assign parameters</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pf</strong> (<em>str</em>) – Parameter file path</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>run <em>(dict)</em> - Model run parameters</p></li>
-<li><p>mod <em>(dict)</em> - Model domain parameters</p></li>
-<li><p>sequences <em>(dict)</em> - Sequence parameters</p></li>
-<li><p>hydraulics <em>(dict)</em> - Hydraulic properties parameters</p></li>
-<li><p>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</p></li>
-<li><p>elements <em>(dict)</em> - Architectural elements and parameters</p></li>
-<li><p>model_grid <em>(object class)</em> - Grid object class</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
 <dt id="hyvr.input.parameters.parameters">
 <code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parameters</code><span class="sig-paren">(</span><em class="sig-param">inifile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get parameters for hierarchical facies modelling from a .ini-file</p>
+<dd><p>Parses the inifile and returns all sections as dictionaries. Furthermore it
+sets to correct directory names for the run settings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>inifile</strong> (<em>str</em>) – Parameter file path</p>
+<dd class="field-odd"><p><strong>inifile</strong> (<em>path</em>) – Path to inifile. If <code class="docutils literal notranslate"><span class="pre">inifile</span></code> is set to 0, the ini-file for the MADE
+test case is used.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p>run <em>(dict)</em> - Model run parameters</p></li>
-<li><p>model <em>(dict)</em> - Model domain parameters</p></li>
-<li><p>sequences <em>(dict)</em> - Sequence parameters</p></li>
-<li><p>hydraulics <em>(dict)</em> - Hydraulic properties parameters</p></li>
-<li><p>flowtrans <em>(dict)</em> - Flow &amp; transport simulation parameters</p></li>
-<li><p>elements <em>(dict)</em> - Architectural elements and parameters</p></li>
+<li><p><strong>run</strong> (<em>dict</em>) – HyVR run settings (number of simulations, where to store results)</p></li>
+<li><p><strong>model_dict</strong> (<em>dict</em>) – model setup parameters</p></li>
+<li><p><strong>strata_dict</strong> (<em>dict</em>) – strata setup parameters</p></li>
+<li><p><strong>hydraulics</strong> (<em>dict</em>) – Parsed hydraulics section of the ini-file</p></li>
+<li><p><strong>flowtrans</strong> (<em>dict</em>) – Flow and transport settings for output</p></li>
+<li><p><strong>elements</strong> (<em>list of dicts</em>) – List of dictionaries of settings for <code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.model.ae_types.AEType</span></code>.</p></li>
 </ul>
 </p>
 </dd>
@@ -270,7 +317,24 @@ indices in the hydrofacies list.</p>
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_inifile">
 <code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">parse_inifile</code><span class="sig-paren">(</span><em class="sig-param">p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#parse_inifile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.parse_inifile" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This function does the main work of parsing the input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p</strong> (<em>ConfigParser</em>) – A config parser that already read in the inifile.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>run</strong> (<em>dict</em>) – HyVR run parameters (number of simulations, where to store results)</p></li>
+<li><p><strong>model_dict</strong> (<em>dict</em>) – model setup parameters</p></li>
+<li><p><strong>strata_dict</strong> (<em>dict</em>) – strata setup parameters</p></li>
+<li><p><strong>hydraulics</strong> (<em>dict</em>) – Parsed hydraulics section of the ini-file</p></li>
+<li><p><strong>flowtrans</strong> (<em>dict</em>) – Flow and transport settings for output</p></li>
+<li><p><strong>elements</strong> (<em>list of dicts</em>) – List of dictionaries of settings for <code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.model.ae_types.AEType</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.parse_old_elem_contact_model">
@@ -284,17 +348,40 @@ indices in the hydrofacies list.</p>
 
 <dl class="function">
 <dt id="hyvr.input.parameters.set_up_directories">
-<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">set_up_directories</code><span class="sig-paren">(</span><em class="sig-param">run</em>, <em class="sig-param">configfile</em>, <em class="sig-param">overwrite_old_output=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#set_up_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.set_up_directories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">set_up_directories</code><span class="sig-paren">(</span><em class="sig-param">run</em>, <em class="sig-param">inifile</em>, <em class="sig-param">overwrite_old_output=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#set_up_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.set_up_directories" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions creates the necessary directories (modeldir, rundir). It also stores the used
 ini-file in the rundir.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>run</strong> (<em>dict</em>) – parsed run-section of the config file</p></li>
-<li><p><strong>configfile</strong> (<em>str</em>) – path to config file</p></li>
+<li><p><strong>inifile</strong> (<em>str</em>) – path to config file</p></li>
 <li><p><strong>overwrite_old_output</strong> (<em>bool</em>) – Whether to overwrite the old run directory. If it is None, the option
-from the config file will be chosen instead (default in configfile: False)</p></li>
+from the config file will be chosen instead (default in inifile: False)</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.input.parameters.setup_from_inifile">
+<code class="sig-prename descclassname">hyvr.input.parameters.</code><code class="sig-name descname">setup_from_inifile</code><span class="sig-paren">(</span><em class="sig-param">inifile</em>, <em class="sig-param">flag_ow</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/input/parameters.html#setup_from_inifile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.input.parameters.setup_from_inifile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the input file and sets up the directory structure for a HyVR run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inifile</strong> (<em>path</em>) – Path to inifile. If <code class="docutils literal notranslate"><span class="pre">inifile</span></code> is set to 0, the ini-file for the MADE
+test case is used.</p></li>
+<li><p><strong>flag_ow</strong> (<em>bool</em>) – Whether to overwrite existing run directories.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>run</strong> (<em>dict</em>) – HyVR run parameters (number of simulations, where to store results)</p></li>
+<li><p><strong>model</strong> (<em>Model object</em>) – A HyVR model object created from the ini-file.</p></li>
+<li><p><strong>hydraulics</strong> (<em>dict</em>) – Parsed hydraulics section of the ini-file</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -321,15 +408,23 @@ from the config file will be chosen instead (default in configfile: False)</p></
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Module Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hyvr.html">hyvr package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="hyvr.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="hyvr.classes.html">hyvr.classes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyvr.geo.html">hyvr.geo package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">hyvr.input package</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.input.option_parsing">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.input.option_parsing">hyvr.input.option_parsing module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.input.options">hyvr.input.options module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.input.options_deprecated">hyvr.input.options_deprecated module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.input.parameters">hyvr.input.parameters module</a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="hyvr.postprocess.html">hyvr.postprocess package</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.assign_facies">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.assign_points">hyvr.assign_points module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.optimized">hyvr.optimized module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.sim">hyvr.sim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.utils">hyvr.utils module</a></li>
 </ul>
 </li>
 </ul>
@@ -337,8 +432,8 @@ from the config file will be chosen instead (default in configfile: False)</p></
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="hyvr.classes.html"
-                        title="previous chapter">hyvr.classes package</a></p>
+  <p class="topless"><a href="hyvr.geo.html"
+                        title="previous chapter">hyvr.geo package</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="hyvr.postprocess.html"
                         title="next chapter">hyvr.postprocess package</a></p>
@@ -376,9 +471,9 @@ from the config file will be chosen instead (default in configfile: False)</p></
           <a href="hyvr.postprocess.html" title="hyvr.postprocess package"
              >next</a> |</li>
         <li class="right" >
-          <a href="hyvr.classes.html" title="hyvr.classes package"
+          <a href="hyvr.geo.html" title="hyvr.geo package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="hyvr.html" >hyvr package</a> &#187;</li> 
       </ul>

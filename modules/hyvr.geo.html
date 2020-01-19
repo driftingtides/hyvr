@@ -1,0 +1,1385 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>hyvr.geo package &#8212; HyVR 1.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hyvr.input package" href="hyvr.input.html" />
+    <link rel="prev" title="hyvr package" href="hyvr.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hyvr.input.html" title="hyvr.input package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="hyvr.html" title="hyvr package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="hyvr.html" accesskey="U">hyvr package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-hyvr.geo">
+<span id="hyvr-geo-package"></span><h1>hyvr.geo package<a class="headerlink" href="#module-hyvr.geo" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hyvr.geo.ae_realization">
+<span id="hyvr-geo-ae-realization-module"></span><h2>hyvr.geo.ae_realization module<a class="headerlink" href="#module-hyvr.geo.ae_realization" title="Permalink to this headline">¶</a></h2>
+<p>Base class for AE realizations</p>
+<dl class="class">
+<dt id="hyvr.geo.ae_realization.AERealization">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.ae_realization.</code><code class="sig-name descname">AERealization</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>AE realizations are the realization of a certain AE type in a HyVR
+simulation. For example, in the ‘made.ini’ test case, the lowest stratum
+consists of ‘clay_sheet’ architectural elements. While ‘clay_sheet’ is an AE
+type, each of these sheets is an AE realization.</p>
+<p>This is the base class for AE realizations. Any instantiated object should
+be an instance of one of the (currently) three subtypes: <code class="docutils literal notranslate"><span class="pre">TroughAE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ChannelAE</span></code>, and <code class="docutils literal notranslate"><span class="pre">SheetAE</span></code>.</p>
+<p>Typically these objects should not be created directly, but via the
+<code class="docutils literal notranslate"><span class="pre">generate_realization</span></code> method of the respective <code class="docutils literal notranslate"><span class="pre">AEType</span></code> object.</p>
+<p>An AE realization contains a list of geometrical objects that are typical
+for this AE. For example, a TroughAE contains a list of Trough objects.
+These objects should be implemented in separate files as cython cdef
+classes, similar to the Trough class.</p>
+<p>AERealizations are designed to be used from Python and from Cython code.
+Therefore, after construction the object list is converted to multiple
+arrays of object properties.</p>
+<p>For example, a TroughAE has a list of Trough objects, and each Trough object
+has a property <code class="docutils literal notranslate"><span class="pre">a</span></code> of type float (lenth of semi-major axis of ellipsoid).
+Therefore, the TroughAE object also has a float array called <code class="docutils literal notranslate"><span class="pre">object_a</span></code> as
+property.
+This makes access from Cyton code faster, because we can then iterate over
+float arrays, instead of iterating over Python lists.</p>
+<p>The derived AERealization types must provide the methods
+<code class="docutils literal notranslate"><span class="pre">generate_object</span></code>, <code class="docutils literal notranslate"><span class="pre">maybe_assign_points_to_objects</span></code> and
+<code class="docutils literal notranslate"><span class="pre">maybe_assign_points_to_object</span></code>.</p>
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.bg_azim">
+<code class="sig-name descname">bg_azim</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.bg_azim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.bg_dip">
+<code class="sig-name descname">bg_dip</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.bg_dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.bg_facies">
+<code class="sig-name descname">bg_facies</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.bg_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.bottom_surface">
+<code class="sig-name descname">bottom_surface</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.bottom_surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.ae_realization.AERealization.create_object_arrays">
+<code class="sig-name descname">create_object_arrays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.create_object_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called after the object list has been created, so after
+all objects have been generated.</p>
+<p>Its main purpose is to create fixed size arrays of object attributes as
+members of the AERealization subtype, so that they can be accessed
+without needing to access the python list of objects.</p>
+<p>All subclasses of AERealization must override this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.ae_realization.AERealization.generate_objects">
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.generate_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the method that should be used for generating geometrical
+objects of the right type. Override this in all of your subclasses.</p>
+<p>It’s very important that the objects are stored in the order such that
+the object with the highest zmax is the first one, i.e. such that we
+can go from top to bottom by iterating over the list of objects.</p>
+<p>To add the objects to the object list, use the _add_object function below</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.ae_realization.AERealization.maybe_assign_points_to_object">
+<code class="sig-name descname">maybe_assign_points_to_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.maybe_assign_points_to_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks whether the current grid cell with given
+coordinates is inside the trough and assigns facies, azimuth and dip by
+altering the passed arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oi</strong> (<em>int</em>) – object index</p></li>
+<li><p><strong>geo_ids</strong> (<em>np.int32 array of size 4</em>) – This holds the geological indices, i.e. facies number, architectural
+element number, hydrofacies assemblage (ha) and hydrofacies assemblage
+type (hat).</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.n_objects">
+<code class="sig-name descname">n_objects</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.n_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.num">
+<code class="sig-name descname">num</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_azim">
+<code class="sig-name descname">object_azim</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_azim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_dip">
+<code class="sig-name descname">object_dip</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_facies">
+<code class="sig-name descname">object_facies</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_facies_array">
+<code class="sig-name descname">object_facies_array</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_facies_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_list">
+<code class="sig-name descname">object_list</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_num_facies">
+<code class="sig-name descname">object_num_facies</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_num_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_num_ha">
+<code class="sig-name descname">object_num_ha</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_num_ha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_zmax_list">
+<code class="sig-name descname">object_zmax_list</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_zmax_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_zmaxs">
+<code class="sig-name descname">object_zmaxs</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_zmaxs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_zmin_list">
+<code class="sig-name descname">object_zmin_list</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_zmin_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.object_zmins">
+<code class="sig-name descname">object_zmins</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.object_zmins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.top_surface">
+<code class="sig-name descname">top_surface</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.top_surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.type_id">
+<code class="sig-name descname">type_id</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.type_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.type_name">
+<code class="sig-name descname">type_name</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.type_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.type_params">
+<code class="sig-name descname">type_params</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.type_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.zmax">
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.zmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.ae_realization.AERealization.zmin">
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.geo.ae_realization.AERealization.zmin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.ae_types">
+<span id="hyvr-geo-ae-types-module"></span><h2>hyvr.geo.ae_types module<a class="headerlink" href="#module-hyvr.geo.ae_types" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the architectural element types.</p>
+<dl class="class">
+<dt id="hyvr.geo.ae_types.AEType">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.ae_types.</code><code class="sig-name descname">AEType</code><span class="sig-paren">(</span><em class="sig-param">ae_section</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/ae_types.html#AEType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.ae_types.AEType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Architectural element types are the kind of things that are read from the
+supplied ini-file. For example, in the <code class="docutils literal notranslate"><span class="pre">made.ini</span></code> testcase, there are the
+architectural element types “clay_sheet”, “sand_sheet”, “clay_lens”,
+“crossbedded_scour”, …
+In HyVR, these are instances of the <code class="docutils literal notranslate"><span class="pre">AEType</span></code> class.</p>
+<p>The actual AEs that are realized in a HyVR simulation are instances of
+<code class="docutils literal notranslate"><span class="pre">AERealization</span></code> and are implemented in ‘ae_realization.py’.</p>
+<p>To generate a realization, you should normally call the
+<code class="docutils literal notranslate"><span class="pre">generate_realization</span></code> method of a type instance.</p>
+<dl class="method">
+<dt id="hyvr.geo.ae_types.AEType.generate_realization">
+<code class="sig-name descname">generate_realization</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">stratum</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/ae_types.html#AEType.generate_realization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.ae_types.AEType.generate_realization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a realization of the AE type.</p>
+<p>For example, if the AE geometry is ‘trunc_ellip’, this generates a
+<code class="docutils literal notranslate"><span class="pre">TruncEllip</span></code> object, i.e. a sub-layer containing trough features
+within a stratum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bottom_surface</strong> (<em>ContactSurface object</em>) – The bottom surface of the AE.</p></li>
+<li><p><strong>top_surface</strong> (<em>ContactSurface object</em>) – The top surface of the AE.</p></li>
+<li><p><strong>model</strong> (<em>Model object</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.channel">
+<span id="hyvr-geo-channel-module"></span><h2>hyvr.geo.channel module<a class="headerlink" href="#module-hyvr.geo.channel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.channel.Channel">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.channel.</code><code class="sig-name descname">Channel</code><a class="headerlink" href="#hyvr.geo.channel.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Channel implementation.</p>
+<p>This is work in progress, as we currently lack a centerline construction method.</p>
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.a">
+<code class="sig-name descname">a</code><a class="headerlink" href="#hyvr.geo.channel.Channel.a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.azim">
+<code class="sig-name descname">azim</code><a class="headerlink" href="#hyvr.geo.channel.Channel.azim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.cos_dip">
+<code class="sig-name descname">cos_dip</code><a class="headerlink" href="#hyvr.geo.channel.Channel.cos_dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.depth">
+<code class="sig-name descname">depth</code><a class="headerlink" href="#hyvr.geo.channel.Channel.depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.dip">
+<code class="sig-name descname">dip</code><a class="headerlink" href="#hyvr.geo.channel.Channel.dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.dipsets">
+<code class="sig-name descname">dipsets</code><a class="headerlink" href="#hyvr.geo.channel.Channel.dipsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.dont_check">
+<code class="sig-name descname">dont_check</code><a class="headerlink" href="#hyvr.geo.channel.Channel.dont_check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.facies">
+<code class="sig-name descname">facies</code><a class="headerlink" href="#hyvr.geo.channel.Channel.facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.facies_array">
+<code class="sig-name descname">facies_array</code><a class="headerlink" href="#hyvr.geo.channel.Channel.facies_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.lag_facies">
+<code class="sig-name descname">lag_facies</code><a class="headerlink" href="#hyvr.geo.channel.Channel.lag_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.lag_height">
+<code class="sig-name descname">lag_height</code><a class="headerlink" href="#hyvr.geo.channel.Channel.lag_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.layer_dist">
+<code class="sig-name descname">layer_dist</code><a class="headerlink" href="#hyvr.geo.channel.Channel.layer_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.len_centerline">
+<code class="sig-name descname">len_centerline</code><a class="headerlink" href="#hyvr.geo.channel.Channel.len_centerline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.min_dx_dy">
+<code class="sig-name descname">min_dx_dy</code><a class="headerlink" href="#hyvr.geo.channel.Channel.min_dx_dy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.num_facies">
+<code class="sig-name descname">num_facies</code><a class="headerlink" href="#hyvr.geo.channel.Channel.num_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.num_ha">
+<code class="sig-name descname">num_ha</code><a class="headerlink" href="#hyvr.geo.channel.Channel.num_ha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.shift">
+<code class="sig-name descname">shift</code><a class="headerlink" href="#hyvr.geo.channel.Channel.shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.sin_dip">
+<code class="sig-name descname">sin_dip</code><a class="headerlink" href="#hyvr.geo.channel.Channel.sin_dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.vx">
+<code class="sig-name descname">vx</code><a class="headerlink" href="#hyvr.geo.channel.Channel.vx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.vy">
+<code class="sig-name descname">vy</code><a class="headerlink" href="#hyvr.geo.channel.Channel.vy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.width">
+<code class="sig-name descname">width</code><a class="headerlink" href="#hyvr.geo.channel.Channel.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.x_center">
+<code class="sig-name descname">x_center</code><a class="headerlink" href="#hyvr.geo.channel.Channel.x_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.y_center">
+<code class="sig-name descname">y_center</code><a class="headerlink" href="#hyvr.geo.channel.Channel.y_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.zmax">
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.geo.channel.Channel.zmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.zmin">
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.geo.channel.Channel.zmin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel.Channel.ztop">
+<code class="sig-name descname">ztop</code><a class="headerlink" href="#hyvr.geo.channel.Channel.ztop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.channel_ae">
+<span id="hyvr-geo-channel-ae-module"></span><h2>hyvr.geo.channel_ae module<a class="headerlink" href="#module-hyvr.geo.channel_ae" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.channel_ae.ChannelAE">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.channel_ae.</code><code class="sig-name descname">ChannelAE</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyvr.geo.ae_realization.AERealization" title="hyvr.geo.ae_realization.AERealization"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.geo.ae_realization.AERealization</span></code></a></p>
+<dl class="method">
+<dt id="hyvr.geo.channel_ae.ChannelAE.create_object_arrays">
+<code class="sig-name descname">create_object_arrays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.create_object_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called after the object list has been created, so after
+all objects have been generated.</p>
+<p>Its main purpose is to create fixed size arrays of object attributes as
+members of the AERealization subtype, so that they can be accessed
+without needing to access the python list of objects.</p>
+<p>All subclasses of AERealization must override this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.channel_ae.ChannelAE.generate_objects">
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.generate_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate channel objects and place them in the domain.</p>
+<p>The following was just an idea I had, ignore it.</p>
+<p>The channels follow a mean flow angle that is given in the parameter
+file. From this angle, a flow axis is constructed as the “center axis”
+in direction of the flow angle. (This means the flow axis is chosen such
+that the projection of the (x-y-)domain onto the axis perpendicular to
+the flow axis is cut in half by the flow axis.)</p>
+<p>The channels are then created as random 1-d functions of the position
+on the flow axis, with random starting points (within the projection of
+the domain onto the axis perpendicular to the flow axis).
+This can then be rotated to get an approximation of the channel curve
+(a set of points which lie on the curve).</p>
+<p>On every level, ‘channel_no’ channels are constructed. They share the
+same flow angle but are shifted w.r.t. the flow axis.</p>
+<p>Its also possible to let the channels migrate in time, i.e. slightly
+change the flow angle and the distance between the channels (by
+changing their starting points).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.channel_ae.ChannelAE.maybe_assign_points_to_object">
+<code class="sig-name descname">maybe_assign_points_to_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.maybe_assign_points_to_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks whether the current grid cell with given
+coordinates is inside the trough and assigns facies, azimuth and dip by
+altering the passed arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oi</strong> (<em>int</em>) – object index</p></li>
+<li><p><strong>geo_ids</strong> (<em>np.int32 array of size 4</em>) – This holds the geological indices, i.e. facies number, architectural
+element number, hydrofacies assemblage (ha) and hydrofacies assemblage
+type (hat).</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_a">
+<code class="sig-name descname">object_a</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_cos_dip">
+<code class="sig-name descname">object_cos_dip</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_cos_dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_depth">
+<code class="sig-name descname">object_depth</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_dipsets">
+<code class="sig-name descname">object_dipsets</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_dipsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_dont_check">
+<code class="sig-name descname">object_dont_check</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_dont_check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_lag_facies">
+<code class="sig-name descname">object_lag_facies</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_lag_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_lag_height">
+<code class="sig-name descname">object_lag_height</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_lag_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_layer_dist">
+<code class="sig-name descname">object_layer_dist</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_layer_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_len_centerline">
+<code class="sig-name descname">object_len_centerline</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_len_centerline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_min_dx_dy">
+<code class="sig-name descname">object_min_dx_dy</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_min_dx_dy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_shift">
+<code class="sig-name descname">object_shift</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_sin_dip">
+<code class="sig-name descname">object_sin_dip</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_sin_dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_vx">
+<code class="sig-name descname">object_vx</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_vx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_vy">
+<code class="sig-name descname">object_vy</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_vy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_width">
+<code class="sig-name descname">object_width</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_x_center">
+<code class="sig-name descname">object_x_center</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_x_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_y_center">
+<code class="sig-name descname">object_y_center</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_y_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.channel_ae.ChannelAE.object_ztop">
+<code class="sig-name descname">object_ztop</code><a class="headerlink" href="#hyvr.geo.channel_ae.ChannelAE.object_ztop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.channel_utils">
+<span id="hyvr-geo-channel-utils-module"></span><h2>hyvr.geo.channel_utils module<a class="headerlink" href="#module-hyvr.geo.channel_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyvr.geo.channel_utils.ferguson_curve">
+<code class="sig-prename descclassname">hyvr.geo.channel_utils.</code><code class="sig-name descname">ferguson_curve</code><span class="sig-paren">(</span><em class="sig-param">grid</em>, <em class="sig-param">h</em>, <em class="sig-param">k</em>, <em class="sig-param">ds</em>, <em class="sig-param">eps_factor</em>, <em class="sig-param">flow_angle</em>, <em class="sig-param">domain_length</em>, <em class="sig-param">xstart</em>, <em class="sig-param">ystart</em>, <em class="sig-param">width</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/channel_utils.html#ferguson_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.channel_utils.ferguson_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate extruded parabola centrelines using the Ferguson (1976) disturbed meander model
+Implementation of AR2 autoregressive model
+<a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Height (Ferguson model parameter)</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – Wave number (Ferguson model parameter)</p></li>
+<li><p><strong>ds</strong> (<em>float</em>) – Curve distance for calculations (Ferguson model parameter)</p></li>
+<li><p><strong>eps_factor</strong> (<em>float</em>) – Random background noise (Ferguson model parameter)</p></li>
+<li><p><strong>flow_angle</strong> (<em>float</em>) – Angle of mean flow direction, in radians</p></li>
+<li><p><strong>domain_length</strong> (<em>float</em>) – Length of the domain in mean flow direction</p></li>
+<li><p><strong>ystart</strong> (<em>xstart</em><em>,</em>) – Starting coordinates of the channel centerline</p></li>
+<li><p><strong>width</strong> (<em>float</em>) – Width of the channel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>outputs</strong> – Simulated extruded parabola centerlines: storage array containing values for x coordinate, y
+coordinate, vx and vy</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.geo.channel_utils.ferguson_theta">
+<code class="sig-prename descclassname">hyvr.geo.channel_utils.</code><code class="sig-name descname">ferguson_theta</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">eps_factor</em>, <em class="sig-param">k</em>, <em class="sig-param">h</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/channel_utils.html#ferguson_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.channel_utils.ferguson_theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate curve direction angle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – Steps within generated curve distance</p></li>
+<li><p><strong>eps_factor</strong> – Random background noise</p></li>
+<li><p><strong>k</strong> – Wave number</p></li>
+<li><p><strong>h</strong> – Height</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>th_store <em>(array)</em> - Curve direction angle</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.geo.channel_utils.thetaAR2">
+<code class="sig-prename descclassname">hyvr.geo.channel_utils.</code><code class="sig-name descname">thetaAR2</code><span class="sig-paren">(</span><em class="sig-param">t1</em>, <em class="sig-param">t2</em>, <em class="sig-param">k</em>, <em class="sig-param">h</em>, <em class="sig-param">eps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/channel_utils.html#thetaAR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.channel_utils.thetaAR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)
+<a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full">http://onlinelibrary.wiley.com/doi/10.1002/esp.3290010403/full</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t1</strong> – theta(i-1)</p></li>
+<li><p><strong>t2</strong> – theta(i-2)</p></li>
+<li><p><strong>k</strong> – Wavenumber</p></li>
+<li><p><strong>h</strong> – Height</p></li>
+<li><p><strong>eps</strong> – Random background noise</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2nd-order autoregression (AR2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.contact_surface">
+<span id="hyvr-geo-contact-surface-module"></span><h2>hyvr.geo.contact_surface module<a class="headerlink" href="#module-hyvr.geo.contact_surface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.contact_surface.ContactSurface">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.contact_surface.</code><code class="sig-name descname">ContactSurface</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.nx">
+<code class="sig-name descname">nx</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.nx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.ny">
+<code class="sig-name descname">ny</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.ny" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.surface">
+<code class="sig-name descname">surface</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.contact_surface.ContactSurface.use_higher_surface_value">
+<code class="sig-name descname">use_higher_surface_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.use_higher_surface_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.contact_surface.ContactSurface.use_lower_surface_value">
+<code class="sig-name descname">use_lower_surface_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.use_lower_surface_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.z">
+<code class="sig-name descname">z</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.zmax">
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.zmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.zmean">
+<code class="sig-name descname">zmean</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.zmean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.contact_surface.ContactSurface.zmin">
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.geo.contact_surface.ContactSurface.zmin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.contact_surface_utils">
+<span id="hyvr-geo-contact-surface-utils-module"></span><h2>hyvr.geo.contact_surface_utils module<a class="headerlink" href="#module-hyvr.geo.contact_surface_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyvr.geo.contact_surface_utils.parse_contact_model">
+<code class="sig-prename descclassname">hyvr.geo.contact_surface_utils.</code><code class="sig-name descname">parse_contact_model</code><span class="sig-paren">(</span><em class="sig-param">param_list</em>, <em class="sig-param">depth=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/contact_surface_utils.html#parse_contact_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.contact_surface_utils.parse_contact_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.grid">
+<span id="hyvr-geo-grid-module"></span><h2>hyvr.geo.grid module<a class="headerlink" href="#module-hyvr.geo.grid" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hyvr.geo.model">
+<span id="hyvr-geo-model-module"></span><h2>hyvr.geo.model module<a class="headerlink" href="#module-hyvr.geo.model" title="Permalink to this headline">¶</a></h2>
+<p>This class holds the abstraction of a HyVR model.
+It can be broadly structured in two parts:</p>
+<ul class="simple">
+<li><p><strong>Model description</strong>: This consists of all info about the model that is read
+from the ini-file.</p></li>
+<li><dl class="simple">
+<dt><strong>Model realization</strong>: This consists of several 3-d arrays which hold the</dt><dd><p>data for the different variables on the grid. This is what get’s put out in
+the end. The data is stored in a dictionary of arrays.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="class">
+<dt id="hyvr.geo.model.Model">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.model.</code><code class="sig-name descname">Model</code><span class="sig-paren">(</span><em class="sig-param">model_dict</em>, <em class="sig-param">strata_dict</em>, <em class="sig-param">elements</em>, <em class="sig-param">flowtrans_section</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hyvr.geo.model.Model.generate_ae_types">
+<code class="sig-name descname">generate_ae_types</code><span class="sig-paren">(</span><em class="sig-param">elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/model.html#Model.generate_ae_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.model.Model.generate_ae_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in elements sections and generate type objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.model.Model.generate_hydraulic_parameters">
+<code class="sig-name descname">generate_hydraulic_parameters</code><span class="sig-paren">(</span><em class="sig-param">hydraulics</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/model.html#Model.generate_hydraulic_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.model.Model.generate_hydraulic_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates (heterogeneous) hydraulic parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hydraulics</strong> (<em>dictionary</em>) – parsed hydraulics section of the ini-file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.model.Model.generate_model">
+<code class="sig-name descname">generate_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/model.html#Model.generate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.model.Model.generate_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the model.</p>
+<p>This function generates the full model by creating all strata, the AEs
+within the strata and the geometrical objects within these.</p>
+<p>The method starts from the domain top and calls the strata generation
+function for each stratum, which handles the generation of
+architectural elements.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.model.Model.print_model">
+<code class="sig-name descname">print_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/model.html#Model.print_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.model.Model.print_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a long description of the model. This is mainly for debugging.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.sheet">
+<span id="hyvr-geo-sheet-module"></span><h2>hyvr.geo.sheet module<a class="headerlink" href="#module-hyvr.geo.sheet" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.sheet.Sheet">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.sheet.</code><code class="sig-name descname">Sheet</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class holds parameters for single sheet objects.</p>
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.azim">
+<code class="sig-name descname">azim</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.azim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.bottom_surface">
+<code class="sig-name descname">bottom_surface</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.bottom_surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.dip">
+<code class="sig-name descname">dip</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.dipsets">
+<code class="sig-name descname">dipsets</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.dipsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.facies">
+<code class="sig-name descname">facies</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.facies_array">
+<code class="sig-name descname">facies_array</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.facies_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.layer_dist">
+<code class="sig-name descname">layer_dist</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.layer_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.normvec_x">
+<code class="sig-name descname">normvec_x</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.normvec_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.normvec_y">
+<code class="sig-name descname">normvec_y</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.normvec_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.normvec_z">
+<code class="sig-name descname">normvec_z</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.normvec_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.num_facies">
+<code class="sig-name descname">num_facies</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.num_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.num_ha">
+<code class="sig-name descname">num_ha</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.num_ha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.shift">
+<code class="sig-name descname">shift</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.top_surface">
+<code class="sig-name descname">top_surface</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.top_surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.zmax">
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.zmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet.Sheet.zmin">
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.geo.sheet.Sheet.zmin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.sheet_ae">
+<span id="hyvr-geo-sheet-ae-module"></span><h2>hyvr.geo.sheet_ae module<a class="headerlink" href="#module-hyvr.geo.sheet_ae" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.sheet_ae.SheetAE">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.sheet_ae.</code><code class="sig-name descname">SheetAE</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyvr.geo.ae_realization.AERealization" title="hyvr.geo.ae_realization.AERealization"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.geo.ae_realization.AERealization</span></code></a></p>
+<dl class="method">
+<dt id="hyvr.geo.sheet_ae.SheetAE.create_object_arrays">
+<code class="sig-name descname">create_object_arrays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.create_object_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called after the object list has been created, so after
+all objects have been generated.</p>
+<p>Its main purpose is to create fixed size arrays of object attributes as
+members of the AERealization subtype, so that they can be accessed
+without needing to access the python list of objects.</p>
+<p>All subclasses of AERealization must override this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.sheet_ae.SheetAE.generate_objects">
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.generate_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate sheet objects and place them in the domain.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.sheet_ae.SheetAE.maybe_assign_points_to_object">
+<code class="sig-name descname">maybe_assign_points_to_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.maybe_assign_points_to_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks whether the current grid cell with given
+coordinates is inside the trough and assigns facies, azimuth and dip by
+altering the passed arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oi</strong> (<em>int</em>) – object index</p></li>
+<li><p><strong>geo_ids</strong> (<em>np.int32 array of size 4</em>) – This holds the geological indices, i.e. facies number, architectural
+element number, hydrofacies assemblage (ha) and hydrofacies assemblage
+type (hat).</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_bottom_surface">
+<code class="sig-name descname">object_bottom_surface</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_bottom_surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_bottom_surface_zmean">
+<code class="sig-name descname">object_bottom_surface_zmean</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_bottom_surface_zmean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_dipsets">
+<code class="sig-name descname">object_dipsets</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_dipsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_layer_dist">
+<code class="sig-name descname">object_layer_dist</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_layer_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_normvec_x">
+<code class="sig-name descname">object_normvec_x</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_normvec_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_normvec_y">
+<code class="sig-name descname">object_normvec_y</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_normvec_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_normvec_z">
+<code class="sig-name descname">object_normvec_z</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_normvec_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_shift">
+<code class="sig-name descname">object_shift</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.sheet_ae.SheetAE.object_top_surface">
+<code class="sig-name descname">object_top_surface</code><a class="headerlink" href="#hyvr.geo.sheet_ae.SheetAE.object_top_surface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.stratum">
+<span id="hyvr-geo-stratum-module"></span><h2>hyvr.geo.stratum module<a class="headerlink" href="#module-hyvr.geo.stratum" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.stratum.Stratum">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.stratum.</code><code class="sig-name descname">Stratum</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">params</em>, <em class="sig-param">ae_types</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/stratum.html#Stratum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.stratum.Stratum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hyvr.geo.stratum.prob_choose">
+<code class="sig-prename descclassname">hyvr.geo.stratum.</code><code class="sig-name descname">prob_choose</code><span class="sig-paren">(</span><em class="sig-param">types</em>, <em class="sig-param">probs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/stratum.html#prob_choose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.stratum.prob_choose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.trough">
+<span id="hyvr-geo-trough-module"></span><h2>hyvr.geo.trough module<a class="headerlink" href="#module-hyvr.geo.trough" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.trough.Trough">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.trough.</code><code class="sig-name descname">Trough</code><a class="headerlink" href="#hyvr.geo.trough.Trough" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class holds all parameters of a geometrical trough object.</p>
+<p>The only method of this class is __init__, as after creating all trough
+objects, the list of troughs in TroughAE will be converted to multiple lists
+containing of attribute values for easier access from Cython.</p>
+<p>In principle this could also be implemented in pure Python, anyone
+interested in rewriting this class (and Channel and Sheet) can do so.</p>
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.a">
+<code class="sig-name descname">a</code><a class="headerlink" href="#hyvr.geo.trough.Trough.a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.alpha">
+<code class="sig-name descname">alpha</code><a class="headerlink" href="#hyvr.geo.trough.Trough.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.azim">
+<code class="sig-name descname">azim</code><a class="headerlink" href="#hyvr.geo.trough.Trough.azim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.b">
+<code class="sig-name descname">b</code><a class="headerlink" href="#hyvr.geo.trough.Trough.b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.c">
+<code class="sig-name descname">c</code><a class="headerlink" href="#hyvr.geo.trough.Trough.c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.cosalpha">
+<code class="sig-name descname">cosalpha</code><a class="headerlink" href="#hyvr.geo.trough.Trough.cosalpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.cosdip">
+<code class="sig-name descname">cosdip</code><a class="headerlink" href="#hyvr.geo.trough.Trough.cosdip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.dip">
+<code class="sig-name descname">dip</code><a class="headerlink" href="#hyvr.geo.trough.Trough.dip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.facies">
+<code class="sig-name descname">facies</code><a class="headerlink" href="#hyvr.geo.trough.Trough.facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.facies_array">
+<code class="sig-name descname">facies_array</code><a class="headerlink" href="#hyvr.geo.trough.Trough.facies_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.lag">
+<code class="sig-name descname">lag</code><a class="headerlink" href="#hyvr.geo.trough.Trough.lag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.lag_facies">
+<code class="sig-name descname">lag_facies</code><a class="headerlink" href="#hyvr.geo.trough.Trough.lag_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.layer_dist">
+<code class="sig-name descname">layer_dist</code><a class="headerlink" href="#hyvr.geo.trough.Trough.layer_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.max_ab">
+<code class="sig-name descname">max_ab</code><a class="headerlink" href="#hyvr.geo.trough.Trough.max_ab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.normvec_x">
+<code class="sig-name descname">normvec_x</code><a class="headerlink" href="#hyvr.geo.trough.Trough.normvec_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.normvec_y">
+<code class="sig-name descname">normvec_y</code><a class="headerlink" href="#hyvr.geo.trough.Trough.normvec_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.normvec_z">
+<code class="sig-name descname">normvec_z</code><a class="headerlink" href="#hyvr.geo.trough.Trough.normvec_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.num_facies">
+<code class="sig-name descname">num_facies</code><a class="headerlink" href="#hyvr.geo.trough.Trough.num_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.num_ha">
+<code class="sig-name descname">num_ha</code><a class="headerlink" href="#hyvr.geo.trough.Trough.num_ha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.shift">
+<code class="sig-name descname">shift</code><a class="headerlink" href="#hyvr.geo.trough.Trough.shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.sinalpha">
+<code class="sig-name descname">sinalpha</code><a class="headerlink" href="#hyvr.geo.trough.Trough.sinalpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.structure">
+<code class="sig-name descname">structure</code><a class="headerlink" href="#hyvr.geo.trough.Trough.structure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.x">
+<code class="sig-name descname">x</code><a class="headerlink" href="#hyvr.geo.trough.Trough.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.y">
+<code class="sig-name descname">y</code><a class="headerlink" href="#hyvr.geo.trough.Trough.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.z">
+<code class="sig-name descname">z</code><a class="headerlink" href="#hyvr.geo.trough.Trough.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.zmax">
+<code class="sig-name descname">zmax</code><a class="headerlink" href="#hyvr.geo.trough.Trough.zmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough.Trough.zmin">
+<code class="sig-name descname">zmin</code><a class="headerlink" href="#hyvr.geo.trough.Trough.zmin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.trough_ae">
+<span id="hyvr-geo-trough-ae-module"></span><h2>hyvr.geo.trough_ae module<a class="headerlink" href="#module-hyvr.geo.trough_ae" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hyvr.geo.trough_ae.TroughAE">
+<em class="property">class </em><code class="sig-prename descclassname">hyvr.geo.trough_ae.</code><code class="sig-name descname">TroughAE</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hyvr.geo.ae_realization.AERealization" title="hyvr.geo.ae_realization.AERealization"><code class="xref py py-class docutils literal notranslate"><span class="pre">hyvr.geo.ae_realization.AERealization</span></code></a></p>
+<dl class="method">
+<dt id="hyvr.geo.trough_ae.TroughAE.create_object_arrays">
+<code class="sig-name descname">create_object_arrays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.create_object_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called after the object list has been created, so after
+all objects have been generated.</p>
+<p>Its main purpose is to create fixed size arrays of object attributes as
+members of the AERealization subtype, so that they can be accessed
+without needing to access the python list of objects.</p>
+<p>All subclasses of AERealization must override this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.trough_ae.TroughAE.generate_objects">
+<code class="sig-name descname">generate_objects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.generate_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate trough objects and place them in the domain.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hyvr.geo.trough_ae.TroughAE.maybe_assign_points_to_object">
+<code class="sig-name descname">maybe_assign_points_to_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.maybe_assign_points_to_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks whether the current grid cell with given
+coordinates is inside the trough and assigns facies, azimuth and dip by
+altering the passed arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oi</strong> (<em>int</em>) – object index</p></li>
+<li><p><strong>geo_ids</strong> (<em>np.int32 array of size 4</em>) – This holds the geological indices, i.e. facies number, architectural
+element number, hydrofacies assemblage (ha) and hydrofacies assemblage
+type (hat).</p></li>
+<li><p><strong>angles</strong> (<em>double array</em>) – array of size 2 that holds the azimuth and dip of the cell. This
+will also be altered.</p></li>
+<li><p><strong>y</strong><strong>, </strong><strong>z</strong> (<em>x</em><em>,</em>) – cell coordinates</p></li>
+<li><p><strong>y_idx</strong> (<em>x_idx</em><em>,</em>) – indices of x and y position in grid.</p></li>
+<li><p><strong>grid</strong> (<em>Grid object</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_a">
+<code class="sig-name descname">object_a</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_alpha">
+<code class="sig-name descname">object_alpha</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_b">
+<code class="sig-name descname">object_b</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_c">
+<code class="sig-name descname">object_c</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_cosalpha">
+<code class="sig-name descname">object_cosalpha</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_cosalpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_cosdip">
+<code class="sig-name descname">object_cosdip</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_cosdip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_lag">
+<code class="sig-name descname">object_lag</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_lag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_lag_facies">
+<code class="sig-name descname">object_lag_facies</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_lag_facies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_layer_dist">
+<code class="sig-name descname">object_layer_dist</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_layer_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_max_ab">
+<code class="sig-name descname">object_max_ab</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_max_ab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_normvec_x">
+<code class="sig-name descname">object_normvec_x</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_normvec_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_normvec_y">
+<code class="sig-name descname">object_normvec_y</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_normvec_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_normvec_z">
+<code class="sig-name descname">object_normvec_z</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_normvec_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_shift">
+<code class="sig-name descname">object_shift</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_shift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_sinalpha">
+<code class="sig-name descname">object_sinalpha</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_sinalpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_structure">
+<code class="sig-name descname">object_structure</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_structure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_x">
+<code class="sig-name descname">object_x</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_y">
+<code class="sig-name descname">object_y</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hyvr.geo.trough_ae.TroughAE.object_z">
+<code class="sig-name descname">object_z</code><a class="headerlink" href="#hyvr.geo.trough_ae.TroughAE.object_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hyvr.geo.trough_utils">
+<span id="hyvr-geo-trough-utils-module"></span><h2>hyvr.geo.trough_utils module<a class="headerlink" href="#module-hyvr.geo.trough_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hyvr.geo.trough_utils.generate_trough_positions">
+<code class="sig-prename descclassname">hyvr.geo.trough_utils.</code><code class="sig-name descname">generate_trough_positions</code><span class="sig-paren">(</span><em class="sig-param">bottom_surface</em>, <em class="sig-param">top_surface</em>, <em class="sig-param">type_params</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/trough_utils.html#generate_trough_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.trough_utils.generate_trough_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="hyvr.geo.trough_utils.rand_trough_params">
+<code class="sig-prename descclassname">hyvr.geo.trough_utils.</code><code class="sig-name descname">rand_trough_params</code><span class="sig-paren">(</span><em class="sig-param">type_params</em>, <em class="sig-param">z</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hyvr/geo/trough_utils.html#rand_trough_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hyvr.geo.trough_utils.rand_trough_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../methods.html">HyVR Computational methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inout.html">HyVR inputs and outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html">HyVR Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../more.html">Extending HyVR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog/Bug Fixes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Module Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hyvr.html">hyvr package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hyvr.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hyvr.geo package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.ae_realization">hyvr.geo.ae_realization module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.ae_types">hyvr.geo.ae_types module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.channel">hyvr.geo.channel module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.channel_ae">hyvr.geo.channel_ae module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.channel_utils">hyvr.geo.channel_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.contact_surface">hyvr.geo.contact_surface module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.contact_surface_utils">hyvr.geo.contact_surface_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.grid">hyvr.geo.grid module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.model">hyvr.geo.model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.sheet">hyvr.geo.sheet module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.sheet_ae">hyvr.geo.sheet_ae module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.stratum">hyvr.geo.stratum module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.trough">hyvr.geo.trough module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.trough_ae">hyvr.geo.trough_ae module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-hyvr.geo.trough_utils">hyvr.geo.trough_utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="hyvr.input.html">hyvr.input package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hyvr.postprocess.html">hyvr.postprocess package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.assign_points">hyvr.assign_points module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.optimized">hyvr.optimized module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.sim">hyvr.sim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyvr.html#module-hyvr.utils">hyvr.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="hyvr.html"
+                        title="previous chapter">hyvr package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hyvr.input.html"
+                        title="next chapter">hyvr.input package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/modules/hyvr.geo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hyvr.input.html" title="hyvr.input package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="hyvr.html" title="hyvr package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HyVR 1.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Module Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="hyvr.html" >hyvr package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017-2018, Jeremy Bennett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>
