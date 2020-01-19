@@ -78,7 +78,7 @@ class sdist(_sdist):
     def run(self):
         # Make sure the compiled Cython files in the distribution are up-to-date
         custom_cythonize()
-        # copy the made.ini test case to the package directory
+        # copy the made.ini test case to the package directory as default test
         copyfile(path.join(here, 'tests', 'full_testcases', 'made.ini'), path.join(here, 'hyvr', 'made.ini'))
         _sdist.run(self)
 
@@ -140,13 +140,9 @@ def get_extensions(ext):
 with open(path.join(here, 'README.rst'), 'r', encoding='utf-8') as f:
     long_description = f.read()
 
-# get version number from file
-with open(path.join(here, "hyvr", 'versionnumber'), 'r') as f:
-    version = f.read().strip('\n')
-
 setup(
     name='hyvr',
-    version=version,
+    version="1.1.0.5",
     description='A python package for simulating hydrogeological virtual realities',
     long_description=long_description,
     long_description_content_type='text/x-rst',
@@ -198,7 +194,7 @@ setup(
     # include testcase config file
     package_data={
         "" : ["LICENCE", "*.c", "*.pyx", "*.pxd"],
-        "hyvr": ["made.ini", "versionnumber"],
+        "hyvr": ["made.ini"],
     },
     exclude_package_data={"": ["tests"]},
     zip_safe=False, # Due to the .pxd files

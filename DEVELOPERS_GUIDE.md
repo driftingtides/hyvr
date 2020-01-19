@@ -158,7 +158,7 @@ rm -r dist hyvr.egg-info
 
 ### PyPI-test
 
-The versionnumber should be in the file `hyvr/versionnumber`. It follows the format
+The versionnumber should be set in `setup.py`. It has the format
 `<major version number>.<minor version number>.<number of fixes>`.
 As PyPI and PyPI-test don't allow reuploading the same version again, we append
 a further number to the version number for PyPI-test, e.g. the <n>-th try on

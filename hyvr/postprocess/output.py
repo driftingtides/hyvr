@@ -23,6 +23,14 @@ import numpy as np
 
 from hyvr.utils import print_to_stdout
 
+# monkeypath warnings.formatwarning to only show the text
+# this makes the output nicer for the user, but still allows to "catch" the
+# warnings programmatically
+def _custom_formatwarning(msg, *args, **kwargs):
+    return str(msg) + "\n"
+
+warnings.formatwarning = _custom_formatwarning
+
 
 def create_outputs(model, realization_dir, runname, formats):
     """
@@ -66,7 +74,7 @@ def create_outputs(model, realization_dir, runname, formats):
         except ImportError as e:
             # in case of an import error, only warn the user instead of raising
             # an error
-            warning.warn(str(e))
+            warnings.warn(str(e))
         print_to_stdout('Saved', fmt, 'output to', realization_dir)
 
 
@@ -129,8 +137,7 @@ def to_hdf5(model, fname):
             for key in model.data:
                 hf.create_dataset(key, data=model.data[key], compression=True)
     except ImportError as e:
-        e += "Additional info: h5 output not possible: h5py not found!"
-        raise
+        raise type(e)(str(e) + ", h5 output not possible!")
 
 
 def to_vtr(model, fname):
@@ -153,8 +160,7 @@ def to_vtr(model, fname):
         zv = np.arange(model.grid.z0, model.grid.zmax+model.grid.dz, model.grid.dz)
         gridToVTK(fname, xv, yv, zv, cellData=data_dict)
     except ImportError as e:
-        e += "Additional info: vtr output not possible: pyevtk not found!"
-        raise
+        raise type(e)(str(e) + ", vtr output not possible!")
 
 def to_modflow(model, fname):
     """
@@ -170,8 +176,7 @@ def to_modflow(model, fname):
     try:
         import flopy
     except ImportError as e:
-        e += "Additional info: modflow output not possible: flopy not found!"
-        raise
+        raise type(e)(str(e) + ", modflow output not possible!")
     # For modflow we want to create a new folder instead of only a file. The folder name is the base
     # name of the passed filename
     realization_dir = pathlib.Path(fname).parent
@@ -240,8 +245,7 @@ def to_mf6(model, fname):
     try:
         import flopy
     except ImportError as e:
-        e += "Additional info: mf6 output not possible: flopy not found!"
-        raise
+        raise type(e)(str(e) + ", mf6 output not possible!")
 
     # For modflow we want to create a new folder instead of only a file. The folder name is the base
     # name of the passed filename
