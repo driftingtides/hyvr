@@ -2,11 +2,8 @@
 import numpy as np
 import hyvr.utils as hu
 
-cimport cython
-cimport numpy as np
 
-
-cdef class ContactSurface:
+class ContactSurface:
 
     def __init__(self, grid, **kwargs):
 
@@ -39,11 +36,9 @@ cdef class ContactSurface:
             raise NotImplementedError("This is not implemented yet!")
 
 
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    cpdef use_lower_surface_value(self, ContactSurface other_surface):
-        cdef int i, j
-        cdef np.float_t [:,:] other_surf = other_surface.surface
+
+    def use_lower_surface_value(self, other_surface: ContactSurface ):
+        other_surf = other_surface.surface
         for i in range(self.nx):
             for j in range(self.ny):
                 if self.surface[i,j] > other_surf[i,j]:
@@ -52,11 +47,9 @@ cdef class ContactSurface:
         self.zmin = np.min(self.surface)
 
 
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    cpdef use_higher_surface_value(self, ContactSurface other_surface):
-        cdef int i, j
-        cdef np.float_t [:,:] other_surf = other_surface.surface
+
+    def use_higher_surface_value(self, other_surface: ContactSurface ):
+        other_surf = other_surface.surface
         for i in range(self.nx):
             for j in range(self.ny):
                 if self.surface[i,j] < other_surf[i,j]:

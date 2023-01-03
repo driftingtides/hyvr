@@ -1,9 +1,14 @@
 
 import numpy as np
+import numpy.typing as npt
+
 from hyvr.geo.sheet import Sheet
 
+from hyvr.geo.grid import Grid
+from hyvr.geo.contact_surface import ContactSurface
 
-from hyvr.geo.ae_realization cimport AERealization
+
+from hyvr.geo.ae_realization import AERealization
 
 class SheetAE(AERealization):
 

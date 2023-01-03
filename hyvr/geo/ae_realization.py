@@ -3,12 +3,12 @@ Base class for AE realizations
 """
 
 import numpy as np
+import numpy.typing as npt
 
-cimport cython
-cimport numpy as np
-from hyvr.geo.contact_surface cimport ContactSurface
+from hyvr.geo.contact_surface import ContactSurface
+from hyvr.geo.grid import Grid
 
-cdef class AERealization:
+class AERealization:
     """
     AE realizations are the realization of a certain AE type in a HyVR
     simulation. For example, in the 'made.ini' test case, the lowest stratum
@@ -45,12 +45,12 @@ cdef class AERealization:
     """
 
     def __init__(self,
-                 ContactSurface bottom_surface,
-                 ContactSurface top_surface,
-                 str type_name,
-                 dict type_params,
+                 bottom_surface: ContactSurface ,
+                 top_surface: ContactSurface ,
+                 type_name: str,
+                 type_params: dict ,
                  stratum,
-                 Grid grid):
+                 grid: Grid ):
         """
         Parameters
         ----------
@@ -108,14 +108,12 @@ cdef class AERealization:
         self.create_object_arrays()
 
 
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    cpdef _create_common_object_arrays(self):
+
+    def _create_common_object_arrays(self):
         """
         Creates object property arrays for common element properties.
         """
 
-        cdef int i, max_num_facies, num_facies, j
         self.object_zmins = np.array(self.object_zmin_list)
         self.object_zmaxs = np.array(self.object_zmax_list)
         # get the rest from the object list
@@ -170,7 +168,7 @@ cdef class AERealization:
         if object_.zmax > self.zmax:
             self.zmax = object_.zmax
 
-    cpdef create_object_arrays(self):
+    def create_object_arrays(self):
         """
         This method is called after the object list has been created, so after
         all objects have been generated.
@@ -184,12 +182,15 @@ cdef class AERealization:
         raise NotImplementedError("You must override the method 'create_object_arrays' in subclasses of AERealization!")
 
 
-    cpdef maybe_assign_points_to_object(self, int oi,
-                                        np.int32_t [:] geo_ids,
-                                        np.float_t [:] angles,
-                                        double x, double y, double z,
-                                        int x_idx, int y_idx,
-                                        Grid grid):
+    def maybe_assign_points_to_object(self, oi: int,
+                                        geo_ids: npt.NDArray[np.int32],
+                                        angles: npt.NDArray[np.float64],
+                                        x: float,
+                                        y: float,
+                                        z: float,
+                                        x_idx: int,
+                                        y_idx: int,
+                                        grid: Grid):
         """
         This function checks whether the current grid cell with given
         coordinates is inside the trough and assigns facies, azimuth and dip by
