@@ -164,7 +164,7 @@ class Model:
         hu.print_to_stdout('Generating hydraulic parameters')
 
         het = self.generate_heterogeneity
-        ani = self.generate_anisotropy
+
 
         ha_arr = self.data['ha']
         fac = self.data['facies']

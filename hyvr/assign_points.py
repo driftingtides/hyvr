@@ -1,33 +1,34 @@
 import sys
 import numpy as np
+import numpy.typing as npt
 import hyvr.utils as hu
 
-cimport cython
-cimport numpy as np
-from hyvr.geo.grid cimport Grid
-from hyvr.geo.ae_realization cimport AERealization
-from hyvr.geo.sheet_ae cimport SheetAE
+#cimport cython
+#cimport numpy as np
+from hyvr.geo.grid import Grid
+from hyvr.geo.ae_realization import AERealization
+from hyvr.geo.sheet_ae import SheetAE
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.nonecheck(False)
-@cython.cdivision(True)
-cpdef assign_points(model):
+#@cython.boundscheck(False)
+#@cython.wraparound(False)
+#@cython.nonecheck(False)
+#@cython.cdivision(True)
+def assign_points(model):
     """
     This function does all the dirty work of assigning grid cells to their
     stratum, ae, or geometrical object.
     """
-    cdef int x_idx, y_idx, z_idx, loop_idx, total_n
-    cdef int nx, ny, nz, n_strata
-    cdef int si, aei, oi
-    cdef double x, y, z
-    cdef np.float_t [:] angles
-    cdef np.int32_t [:] geo_ids
-    cdef np.int32_t [:,:,:] facies_array, ha_array, hat_array, ae_array, strata_array
-    cdef np.float_t [:,:,:] azim_array, dip_array
-    cdef np.float_t [:,:,:] gridX, gridY
-    cdef np.float_t [:] gridz
-    cdef np.float_t [:] strata_zmins
+    # cdef int x_idx, y_idx, z_idx, loop_idx, total_n
+    # cdef int nx, ny, nz, n_strata
+    # cdef int si, aei, oi
+    # cdef double x, y, z
+    # cdef np.float_t [:] angles
+    # cdef np.int32_t [:] geo_ids
+    # cdef np.int32_t [:,:,:] facies_array, ha_array, hat_array, ae_array, strata_array
+    # cdef np.float_t [:,:,:] azim_array, dip_array
+    # cdef np.float_t [:,:,:] gridX, gridY
+    # cdef np.float_t [:] gridz
+    # cdef np.float_t [:] strata_zmins
 
     # getting grid information
     nx = model.grid.nx
@@ -155,21 +156,18 @@ cpdef assign_points(model):
     hu.print_to_stdout("Done  ")
 
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.nonecheck(False)
-@cython.cdivision(True)
-cpdef maybe_assign_points_to_stratum(
-    list stratum_aes,
-    int n_ae,
-    np.float_t [:] ae_zmaxs,
-    np.float_t [:] ae_zmins,
-    np.int32_t [:] geo_ids,
-    np.float_t [:] angles,
-    double x, double y, double z,
-    int x_idx, int y_idx,
-    int aei, int oi,
-    Grid grid):
+
+def maybe_assign_points_to_stratum(
+    stratum_aes: list,
+    n_ae: int,
+    ae_zmaxs: npt.NDArray[np.float64],
+    ae_zmins: npt.NDArray[np.float64],
+    geo_ids: npt.NDArray[np.int32],
+    angles: npt.NDArray[np.float64],
+    x: float, y: float, z: float,
+    x_idx: int, y_idx: int,
+    aei: int, oi: int,
+    grid: Grid):
     """
     Tries to assign the point in question to an architectural element in the
     stratum, if it is inside the stratum.
@@ -198,7 +196,6 @@ cpdef maybe_assign_points_to_stratum(
     grid : Grid object
     """
 
-    cdef int oi_orig, aei_orig
     oi_orig = int(oi)
     aei_orig = int(aei)
 
@@ -234,18 +231,15 @@ cpdef maybe_assign_points_to_stratum(
     return 0, 0
 
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.nonecheck(False)
-@cython.cdivision(True)
-cpdef int maybe_assign_points_to_ae(
-    AERealization ae,
-    np.int32_t [:] geo_ids,
-    np.float_t [:] angles,
-    double x, double y, double z,
-    int x_idx, int y_idx,
-    int oi,
-    Grid grid):
+
+def maybe_assign_points_to_ae(
+    ae: AERealization,
+    geo_ids: npt.NDArray[np.int32],
+    angles: npt.NDArray[np.float64],
+    x: float, y: float, z: float,
+    x_idx: int, y_idx: int,
+    oi: int,
+    grid: Grid):
     """
     Return facies, azim and dip if the cell is inside this AE.
     Assigns values to point if point is in current ae
@@ -275,16 +269,15 @@ cpdef int maybe_assign_points_to_ae(
         Object index of the last found object. This can be used as a
         starting point for the next cell.
     """
-    cdef int oi_orig, n_objects
     oi_orig = int(oi)
     n_objects = ae.n_objects
 
-    cdef const np.float_t [:] object_zmaxs = ae.object_zmaxs
-    cdef const np.float_t [:] object_zmins = ae.object_zmins
+    object_zmaxs = ae.object_zmaxs
+    object_zmins = ae.object_zmins
 
-    cdef const np.float_t [:,:] top_surface = ae.top_surface.surface
-    cdef const np.float_t [:,:] bottom_surface = ae.bottom_surface.surface
-    cdef np.float_t z_above, z_below
+    top_surface = ae.top_surface.surface
+    bottom_surface = ae.bottom_surface.surface
+    
 
     # First we check if the current point is already below the current
     # object. If this is the case, we check the next object. We do this

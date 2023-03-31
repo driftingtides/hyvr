@@ -5,20 +5,14 @@ This module contains optimized versions of routines that were once in sim or uti
 """
 
 import numpy as np
-cimport numpy as np
-cimport cython
-from libc.math cimport sin, cos, sqrt
+import numpy.typing as npt
 
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.nonecheck(False)
-@cython.cdivision(True)
-cpdef set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
-            np.ndarray[np.float_t, ndim=3] k_iso,
-            np.ndarray[np.float_t, ndim=3] azim,
-            np.ndarray[np.float_t, ndim=3] dip,
-            np.ndarray[np.float_t, ndim=3] anirat):
+def set_anisotropic_ktensor(ktensors: npt.NDArray[np.float64],
+            k_iso: npt.NDArray[np.float64],
+            azim: npt.NDArray[np.float64],
+            dip: npt.NDArray[np.float64],
+            anirat: npt.NDArray[np.float64] ):
     """
     Calculate and set the anisotropic conductivity tensor for every grid point
 
@@ -39,10 +33,10 @@ cpdef set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
     -------
     None
     """
-    cdef double kappa, psi, a, sink, cosk, sinp, cosp
-    cdef double a11, a12, a13, a22, a23, a33
-    cdef double kiso
-    cdef int imax, jmax, kmax, i, j, k
+    # cdef double kappa, psi, a, sink, cosk, sinp, cosp
+    # cdef double a11, a12, a13, a22, a23, a33
+    # cdef double kiso
+    # cdef int imax, jmax, kmax, i, j, k
     imax = k_iso.shape[0]
     jmax = k_iso.shape[1]
     kmax = k_iso.shape[2]
@@ -52,10 +46,10 @@ cpdef set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
                 kappa = azim[i,j,k]
                 psi = dip[i,j,k]
                 a = 1/anirat[i,j,k]
-                sink = sin(kappa)
-                cosk = cos(kappa)
-                sinp = sin(psi)
-                cosp = cos(psi)
+                sink = np.sin(kappa)
+                cosk = np.cos(kappa)
+                sinp = np.sin(psi)
+                cosp = np.cos(psi)
                 kiso = k_iso[i,j,k]
                 a00 = kiso*(sink**2 + cosk**2*(cosp**2 + a*sinp**2))
                 a01 = kiso*(1-a)*sink*cosk*sinp**2
@@ -75,17 +69,14 @@ cpdef set_anisotropic_ktensor(np.ndarray[np.float_t, ndim=5] ktensors,
                 ktensors[i,j,k,2,2] = a22
 
 
-cdef int sign(double x):
+def sign(x: float):
     return (x >= 0) - (x < 0)
 
 
 
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.nonecheck(False)
-@cython.cdivision(True)
-def curve_interp(double [:] xc, double [:] yc, double spacing):
+
+def curve_interp(xc: npt.NDArray[np.float64], yc: npt.NDArray[np.float64],spacing: float):
     """
     Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by 'Unutbu' on
     http://stackoverflow.com/questions/19117660/how-to-generate-equispaced-interpolating-values (retrieved 17/04/2017)
@@ -100,11 +91,11 @@ def curve_interp(double [:] xc, double [:] yc, double spacing):
         - yn - y coordinates of interpolated points
 
     """
-    cdef int ic, j, i, nc
-    cdef double total_dist, tol
-    cdef double [:] t
-    cdef double [:] xn, yn
-    cdef list idx
+    # cdef int ic, j, i, nc
+    # cdef double total_dist, tol
+    # cdef double [:] t
+    # cdef double [:] xn, yn
+    # cdef list idx
 
     nc = len(xc)
 
