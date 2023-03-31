@@ -12,11 +12,11 @@ args = parser.parse_args()
 
 if args.overwrite == False:
     args.overwrite = None
-try:
-    hyvr.run(args.filename, args.overwrite)
-except Exception as e:
-    print("Something went wrong:", e, file=sys.stderr)
-    if args.filename == 0:
-        raise
-    else:
-        sys.exit(1)
+#try:
+hyvr.run(args.filename, args.overwrite)
+# except Exception as e:
+#     print("Something went wrong:", e, file=sys.stderr)
+#     if args.filename == 0:
+#         raise
+#     else:
+#         sys.exit(1)

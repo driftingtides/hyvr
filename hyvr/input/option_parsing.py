@@ -227,7 +227,7 @@ class Option():
                                     ' in section ' + section.name)
                 return value
             else:
-
+                print(section.dict[self.name])
                 value = parse_list(section.dict[self.name], self.datatype)
 
                 # value validation

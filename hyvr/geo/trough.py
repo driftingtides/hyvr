@@ -1,12 +1,12 @@
 import numpy as np
-cimport hyvr.optimized as ho
+import hyvr.optimized as ho
 import hyvr.utils as hu
-from libc.math cimport sin, cos, ceil, acos, sqrt
-cimport numpy as np
-from hyvr.geo.grid cimport Grid
-cimport cython
+#from libc.math cimport sin, cos, ceil, acos, sqrt
 
-cdef class Trough:
+from hyvr.geo.grid import Grid
+
+
+class Trough:
     """
     This class holds all parameters of a geometrical trough object.
     
@@ -17,25 +17,8 @@ cdef class Trough:
     In principle this could also be implemented in pure Python, anyone
     interested in rewriting this class (and Channel and Sheet) can do so.
     """
-    cdef public:
-        np.float_t x, y, z
-        np.float_t a, b, c
-        np.float_t max_ab
-        np.float_t zmin, zmax
-        np.float_t alpha
-        np.float_t sinalpha, cosalpha
-        np.float_t lag, shift
-        np.int32_t structure
-        np.float_t layer_dist
-        np.float_t dip, azim
-        np.int32_t facies, lag_facies, num_ha
-        np.float_t cosdip
-        np.float_t normvec_x, normvec_y, normvec_z
-        np.int32_t num_facies
-        np.int32_t [:] facies_array
 
-    def __init__(self, type_params, *, x, y, z, a, b, c, alpha):
-        cdef np.float_t sin_dip, cos_dip, sin_azim, cos_azim
+    def __init__(self, type_params, *, x, y, z, a, b, c, alpha, num_ha):
 
         self.x = x
         self.y = y
@@ -47,6 +30,12 @@ cdef class Trough:
         self.zmin = z - c
         self.zmax = z
         self.alpha = alpha
+        self.num_ha = num_ha
+        self.xmin = x - np.sqrt(a**2*np.cos(alpha*np.pi/180)**2+ b**2*np.sin(alpha*np.pi/180)**2)
+        self.xmax = x + np.sqrt(a**2*np.cos(alpha*np.pi/180)**2+ b**2*np.sin(alpha*np.pi/180)**2)
+        self.ymin = y - np.sqrt(a**2*np.sin(alpha*np.pi/180)**2+ b**2*np.cos(alpha*np.pi/180)**2)
+        self.ymax = y + np.sqrt(a**2*np.sin(alpha*np.pi/180)**2+ b**2*np.cos(alpha*np.pi/180)**2)
+        
 
         # To calculate the 'normalized' distance (i.e. the distance normalized
         # by the parameters a, b, and c such that distance > 1 means outside of
@@ -153,10 +142,10 @@ cdef class Trough:
             # trough, all angles are in degree
             self.azim = np.random.uniform(*type_params['azimuth']) + self.alpha
             self.dip = np.random.uniform(*type_params['dip'])
-            sin_dip = sin(self.dip*np.pi/180)
-            cos_dip = cos(self.dip*np.pi/180)
-            sin_azim = sin(self.azim*np.pi/180)
-            cos_azim = cos(self.azim*np.pi/180)
+            sin_dip = np.sin(self.dip*np.pi/180)
+            cos_dip = np.cos(self.dip*np.pi/180)
+            sin_azim = np.sin(self.azim*np.pi/180)
+            cos_azim = np.cos(self.azim*np.pi/180)
             self.normvec_x = sin_dip*cos_azim
             self.normvec_y = -sin_dip*sin_azim
             self.normvec_z = cos_dip
@@ -181,7 +170,7 @@ cdef class Trough:
             # normalized domain.
             self.layer_dist = type_params['bulbset_dist']
             self.shift = np.random.uniform()
-            self.num_facies = int(ceil((1 + self.shift)*c/self.layer_dist)) + 1
+            self.num_facies = int(np.ceil((1 + self.shift)*c/self.layer_dist)) + 1
             self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)
             # maximum possible dip
             self.dip = np.random.uniform(*type_params['dip'])

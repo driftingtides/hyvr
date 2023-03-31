@@ -1,21 +1,16 @@
 
 import numpy as np
+#import numpy.typing as npt
 from hyvr.geo.channel_utils import ferguson_curve
 from hyvr.geo.channel import Channel
-
-cimport cython
-cimport numpy as np
-from libc.math cimport sqrt, atan2
-from hyvr.geo.ae_realization cimport AERealization
+from hyvr.geo.grid import Grid
+from hyvr.geo.ae_realization import AERealization
 
 
-cdef class ChannelAE(AERealization):
+class ChannelAE(AERealization):
 
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    cpdef create_object_arrays(self):
+    def create_object_arrays(self):
         # This is super ugly :(
-        cdef int i, nx, ny, j, k, max_len_centerline
         self.object_a = np.zeros(self.n_objects, dtype=np.float)
         self.object_width = np.zeros(self.n_objects, dtype=np.float)
         self.object_depth = np.zeros(self.n_objects, dtype=np.float)
@@ -29,6 +24,9 @@ cdef class ChannelAE(AERealization):
         self.object_lag_height = np.zeros(self.n_objects, dtype=np.float)
         self.object_lag_facies = np.zeros(self.n_objects, dtype=np.int32)
         self.object_dipsets = np.zeros(self.n_objects, dtype=np.int32)
+        self.object_dip = np.zeros(self.n_objects, dtype=np.float)
+        self.object_azim = np.zeros(self.n_objects, dtype=np.float)
+        self.object_facies = np.zeros(self.n_objects, dtype=np.int32)
 
         if self.n_objects > 0:
             nx, ny = self.object_list[0].dont_check.shape
@@ -53,6 +51,12 @@ cdef class ChannelAE(AERealization):
             for j in range(nx):
                 for k in range(ny):
                     self.object_dont_check[i,j,k] = obj.dont_check[j,k]
+            # if not self.object_dipsets[i]:
+            #     self.object_azim[i] = obj.azim
+            #     self.object_dip[i] = obj.dip
+                #self.object_facies[i] = obj.facies
+                
+                
 
         # find length of centerline discretizations
         if self.n_objects > 0:
@@ -71,7 +75,7 @@ cdef class ChannelAE(AERealization):
                 self.object_vx[i,j] = obj.vx[j]
                 self.object_vy[i,j] = obj.vy[j]
 
-
+    
     def generate_objects(self, grid):
         """
         Generate channel objects and place them in the domain.
@@ -111,16 +115,17 @@ cdef class ChannelAE(AERealization):
         # get number of layers
         dz = self.type_params['agg']
         if self.type_params['size_ztrend'] is not None:
-            z = 0.5*(self.top_surface.zmean + self.bottom_surface.zmean)
+            z = 0.5*(self.zmax + np.mean(self.bottom_surface))
             zfactor = np.interp(z, [grid.z0, grid.zmax], *self.type_params['size_ztrend'])
         else:
             zfactor = 1
         depth = self.type_params['depth'] * zfactor
-        zbottom = self.bottom_surface.zmean + depth*self.type_params['buffer']
-        ztop = self.top_surface.zmean
+        zbottom = np.mean(self.bottom_surface) + depth*self.type_params['buffer']
+        ztop = self.zmax
 
-        z = ztop - dz
-        while z > zbottom:
+        z = zbottom
+        ztop - dz
+        while z < ztop - dz:
 
 
             # get current width and depth
@@ -154,26 +159,27 @@ cdef class ChannelAE(AERealization):
 
 
                 # generate channels
-                channel = Channel(self.type_params, x_center, y_center, vx, vy, z, width, depth, grid)
+                azimuth = self.type_params['azimuth'][i]
+                channel = Channel(self.type_params, x_center, y_center, vx, vy, z, width, depth, azimuth, grid)
                 self._add_object(channel)
 
                 if self.type_params['mig'] is not None:
                     ystart[i] -= np.random.uniform(-self.type_params['mig'], self.type_params['mig'])
 
-            z -= dz
+            z += dz
 
 
 
-    @cython.boundscheck(False)
-    @cython.wraparound(False)
-    @cython.nonecheck(False)
-    @cython.cdivision(True)
-    cpdef maybe_assign_points_to_object(self, int oi,
-                                        np.int32_t [:] geo_ids,
-                                        np.float_t [:] angles,
-                                        np.float_t x, np.float_t y, np.float_t z,
-                                        int x_idx, int y_idx,
-                                        Grid grid):
+    # @jit
+    def maybe_assign_points_to_object(self, oi: int,
+                                        #geo_ids,
+                                        #angles: npt.NDArray[np.int32],
+                                        xs,
+                                        ys,
+                                        zs,
+                                        #x_idx: int,
+                                        #y_idx: int,
+                                        grid: Grid):
         """
         This function checks whether the current grid cell with given
         coordinates is inside the trough and assigns facies, azimuth and dip by
@@ -196,16 +202,15 @@ cdef class ChannelAE(AERealization):
             indices of x and y position in grid.
         grid : Grid object
         """
-        cdef double xy_dist, dz, radius, dist, weight, sum_weights, vx_now, vy_now
-        cdef double dist_along_curve, dist_along_curve_tmp
-        cdef int nx, ny, i, j, n, closest_idx
 
 
         # if the point is above the channel top, don't consider it
-        dz = z - self.object_ztop[oi]
-        if dz > 0:
-            geo_ids[0] = -1
-            return
+        dz = zs - self.object_ztop[oi]
+        
+        logic_z = dz <= 0
+        # if dz > 0:
+        #     geo_ids[0] = -1
+        #     return
 
         # To check whether a point is inside the channel, we have to calculate
         # its distance to the centerline. This is quite costly, as it means we
@@ -216,9 +221,9 @@ cdef class ChannelAE(AERealization):
         # These will then be set to 1 in ``dont_check``, so we can skip the
         # check for these.
 
-        if self.object_dont_check[oi,x_idx, y_idx]:
-            geo_ids[0] = -1
-            return
+        # if self.object_dont_check[oi,x_idx, y_idx]:
+        #     geo_ids[0] = -1
+        #     return
 
 
         # Otherwise, get the distance to the centerline in xy-plane and z-direction
@@ -228,89 +233,97 @@ cdef class ChannelAE(AERealization):
         vx_now = 0
         vy_now = 0
         dist_along_curve_tmp = 0
-        dist_along_curve = 0
+        dist_along_curve = np.zeros(ys.shape)
         xy_dist = 1e100
-        if self.object_dipsets[oi]:
-            for i in range(self.object_len_centerline[oi]):
-                if i > 0:
-                    dist_along_curve_tmp += sqrt((self.object_x_center[oi,i] - self.object_x_center[oi,i-1])**2
-                                                +(self.object_y_center[oi,i] - self.object_y_center[oi,i-1])**2
-                    )
-                dist = sqrt((x - self.object_x_center[oi,i])**2 + (y - self.object_y_center[oi,i])**2)
+        
+        for i in range(self.object_len_centerline[oi]):
+            #if i > 0:
+            dist = np.sqrt((xs - self.object_x_center[oi,i])**2 + (ys - self.object_y_center[oi,i])**2)
+            if self.object_dipsets[oi]:
+                dist_along_curve_tmp += np.sqrt((self.object_x_center[oi,i] - self.object_x_center[oi,i-1])**2
+                                            +(self.object_y_center[oi,i] - self.object_y_center[oi,i-1])**2
+                )
                 weight = 1/(dist + 1e-20)
                 vx_now += self.object_vx[oi,i] * weight
                 vy_now += self.object_vy[oi,i] * weight
                 sum_weights += weight
-                if dist < xy_dist:
-                    dist_along_curve = dist_along_curve_tmp
-                    xy_dist = dist
-                    closest_idx = i
-            vx_now /= sum_weights
-            vy_now /= sum_weights
-        else:
-            # we only need the distance
-            for i in range(self.object_len_centerline[oi]):
-                dist = (x - self.object_x_center[oi,i])**2 + (y - self.object_y_center[oi,i])**2
-                if dist < xy_dist:
-                    xy_dist = dist
-            xy_dist = sqrt(xy_dist)
+                vx_now /= sum_weights
+                vy_now /= sum_weights
+                dist_along_curve = np.where(dist < xy_dist, dist_along_curve_tmp, dist_along_curve)
+                #dist_along_curve = dist_along_curve_tmp
+            xy_dist = np.where(dist < xy_dist, dist, xy_dist)
+                
+                    #closest_idx = i
+            
+        # else:
+        #     # we only need the distance
+        #     for i in range(self.object_len_centerline[oi]):
+        #         dist = (xs - self.object_x_center[oi,i])**2 + (ys - self.object_y_center[oi,i])**2
+        #         if dist < xy_dist:
+        #             xy_dist = dist
+        xy_dist = np.sqrt(xy_dist)
 
 
-        # Find other cells that are also not close enough
-        radius = xy_dist - self.object_width[oi]
-        if radius > self.object_min_dx_dy[oi]:
-            # Idea: find number of cells in x-direction, then loop over these
-            # and find y-directions for those.
-            nx = int(radius/grid.dx)
-            for i in range(nx):
-                if x_idx-i >= 0 and x_idx+i < grid.nx:
-                    # 'height' of the circle at distance x = i*dx from the center:
-                    #
-                    #     y(x) = sqrt(radius**2 - x**2)
-                    #
-                    ny = int(sqrt(radius**2 - (i*grid.dx)**2))
-                    for j in range(ny):
-                        if y_idx-j >= 0 and y_idx+j < grid.ny:
-                            self.object_dont_check[oi,x_idx+i, y_idx+j] = 1
-                            self.object_dont_check[oi,x_idx+i, y_idx-j] = 1
-                            self.object_dont_check[oi,x_idx-i, y_idx+j] = 1
-                            self.object_dont_check[oi,x_idx-i, y_idx-j] = 1
+        # # Find other cells that are also not close enough
+        # radius = xy_dist - self.object_width[oi]
+        # if radius > self.object_min_dx_dy[oi]:
+        #     # Idea: find number of cells in x-direction, then loop over these
+        #     # and find y-directions for those.
+        #     nx = int(radius/grid.dx)
+        #     for i in range(nx):
+        #         if x_idx-i >= 0 and x_idx+i < grid.nx:
+        #             # 'height' of the circle at distance x = i*dx from the center:
+        #             #
+        #             #     y(x) = sqrt(radius**2 - x**2)
+        #             #
+        #             ny = int(np.sqrt(radius**2 - (i*grid.dx)**2))
+        #             for j in range(ny):
+        #                 if y_idx-j >= 0 and y_idx+j < grid.ny:
+        #                     self.object_dont_check[oi,x_idx+i, y_idx+j] = 1
+        #                     self.object_dont_check[oi,x_idx+i, y_idx-j] = 1
+        #                     self.object_dont_check[oi,x_idx-i, y_idx+j] = 1
+        #                     self.object_dont_check[oi,x_idx-i, y_idx-j] = 1
 
         # Now we calculate the value of the shape curve and check whether the
         # point is really inside (i.e. is above the parabola)
-        if dz >= self.object_a[oi]*xy_dist**2 - self.object_depth[oi]:
-            # it's inside: assign stuff
-            geo_ids[2] = self.object_num_ha[oi]
-            if z < self.object_ztop[oi] - self.object_depth[oi] + self.object_lag_height[oi]:
-                angles[0] = 0
-                angles[1] = 0
-                geo_ids[0] = self.object_lag_facies[oi]
-                return
+        logic_inside = dz >= self.object_a[oi]*xy_dist**2 - self.object_depth[oi]
+        
+        num_ha = np.where(logic_inside & logic_z, self.object_num_ha[oi], -1)
+        
+        
+        # if dz >= self.object_a[oi]*xy_dist**2 - self.object_depth[oi]:
+        #     # it's inside: assign stuff
+        #     geo_ids[2] = self.object_num_ha[oi]
 
-            if self.object_dipsets[oi]:
-                # azimuth from inverse distance weighted velocity
-                angles[0] = atan2(vy_now, vx_now)/np.pi*180
-                # dip as assigned
-                angles[1] = self.object_dip[oi]
 
-                # TODO: the distance along the curve is actually a bit
-                # different, as the point is not directly orthogonal to the closest point.
-                # However, if the point density on the centerline is high
-                # enough, it won't really matter.
-                # To correct for the distance in z-direction we subtract |dz| * cos(dip)
-                # note that dz is negative here
-                d = dist_along_curve * self.object_sin_dip[oi] + dz*self.object_cos_dip[oi] + self.object_shift[oi]
-                n = int(d/self.object_layer_dist[oi])
-                geo_ids[0] = self.object_facies_array[oi,n]
-                return
-            else:
-                angles[0] = self.object_azim[oi]
-                angles[1] = self.object_dip[oi]
-                geo_ids[0] = self.object_facies[oi]
-                return
+        if self.object_dipsets[oi]:
+            # azimuth from inverse distance weighted velocity
+            azim = np.where(logic_inside & logic_z, np.atan2(vy_now, vx_now)/np.pi*180, -1)
+            # dip as assigned
+            
 
+            # TODO: the distance along the curve is actually a bit
+            # different, as the point is not directly orthogonal to the closest point.
+            # However, if the point density on the centerline is high
+            # enough, it won't really matter.
+            # To correct for the distance in z-direction we subtract |dz| * cos(dip)
+            # note that dz is negative here
+            d = dist_along_curve * self.object_sin_dip[oi] + dz*self.object_cos_dip[oi] + self.object_shift[oi]
+            n = int(d/self.object_layer_dist[oi])
+            facies = np.where(logic_inside & logic_z, self.object_facies_array[oi,n], -1)
+            #return
         else:
-            # it's not inside. This means lower points will also not be inside
-            self.object_dont_check[oi,x_idx, y_idx] = 1
-            geo_ids[0] = -1
-            return
+            azim = np.where((logic_inside & logic_z), self.object_azim[oi], -1)
+            #angles[1] = self.object_dip[oi]
+            #geo_ids[0] = self.object_facies[oi]
+            facies = np.where(logic_inside & logic_z, self.object_facies[oi], -1)
+            #return
+        
+        dip = np.where(logic_inside & logic_z, self.object_dip[oi], -1)
+
+        logic_lag = zs < (self.object_ztop[oi] - self.object_depth[oi] + self.object_lag_height[oi])
+        azim = np.where(logic_lag & (azim > 0), 0, azim)
+        dip = np.where(logic_lag & (dip > 0), 0, dip)
+        facies = np.where(logic_lag & (facies > 0), self.object_lag_facies[oi], facies)
+                
+        return facies, azim, dip, num_ha

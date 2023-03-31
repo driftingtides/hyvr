@@ -12,7 +12,7 @@ It can be broadly structured in two parts:
 import numpy as np
 import hyvr.utils as hu
 import hyvr.optimized as ho
-from hyvr.geo.contact_surface import ContactSurface
+from hyvr.geo.contact_surface import contact_surface
 from hyvr.geo.stratum import Stratum
 from hyvr.geo.ae_types import AEType
 from hyvr.geo.grid import Grid
@@ -106,19 +106,18 @@ class Model:
             'strata',
         ]
 
-        top_surface = ContactSurface(self.grid, mode='flat', z=self.grid.lz)
+        upper_top_surface = contact_surface(self.grid, mode='flat', z=self.grid.lz)
+        lower_surface_bound = contact_surface(self.grid, mode = 'flat', z = self.grid.z0)
+        bottom_surface = lower_surface_bound.copy()
         for si in range(self.n_strata):
-            # create top surface
-            if si == self.n_strata - 1:
-                bottom_surface = ContactSurface(self.grid, mode='flat', z=self.grid.z0)
+            if (si < self.n_strata-1):
+                top_surface = contact_surface(self.grid,  **strata_dict['contact_models'][si])
             else:
-                bottom_surface = ContactSurface(self.grid, **strata_dict['contact_models'][-1-si])
-            # if the bottom surface is above the top surface, we will assign
-            # the top surface values instead
-            bottom_surface.use_lower_surface_value(top_surface)
+                top_surface = upper_top_surface
+    
 
-            stratum_params = {name:strata_dict[name][-1-si] for name in param_names}
-            ae_types = [self.ae_types[ae_type] for ae_type in strata_dict['ae_in_strata'][-1-si]]
+            stratum_params = {name:strata_dict[name][si] for name in param_names}
+            ae_types = [self.ae_types[ae_type] for ae_type in strata_dict['ae_in_strata'][si]]
 
 
             stratum = Stratum(bottom_surface,
@@ -131,7 +130,7 @@ class Model:
             self.strata.append(stratum)
 
             # use old top as bottom
-            top_surface = bottom_surface
+            bottom_surface = top_surface.copy()
 
         # stratum boundaries as arrays
         self.strata_zmins = np.array([stratum.zmin for stratum in self.strata])

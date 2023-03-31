@@ -6,8 +6,9 @@ This module contains optimized versions of routines that were once in sim or uti
 
 import numpy as np
 import numpy.typing as npt
+from numba import njit, jit, prange
 
-
+#@njit(parallel = True)
 def set_anisotropic_ktensor(ktensors: npt.NDArray[np.float64],
             k_iso: npt.NDArray[np.float64],
             azim: npt.NDArray[np.float64],
@@ -40,9 +41,9 @@ def set_anisotropic_ktensor(ktensors: npt.NDArray[np.float64],
     imax = k_iso.shape[0]
     jmax = k_iso.shape[1]
     kmax = k_iso.shape[2]
-    for i in range(imax):
-        for j in range(jmax):
-            for k in range(kmax):
+    for i in prange(imax):
+        for j in prange(jmax):
+            for k in prange(kmax):
                 kappa = azim[i,j,k]
                 psi = dip[i,j,k]
                 a = 1/anirat[i,j,k]
@@ -53,9 +54,9 @@ def set_anisotropic_ktensor(ktensors: npt.NDArray[np.float64],
                 kiso = k_iso[i,j,k]
                 a00 = kiso*(sink**2 + cosk**2*(cosp**2 + a*sinp**2))
                 a01 = kiso*(1-a)*sink*cosk*sinp**2
-                a02 = kiso*((a-1)*(sin(kappa+2*psi)-sin(kappa-2*psi)))/4
+                a02 = kiso*((a-1)*(np.sin(kappa+2*psi)-np.sin(kappa-2*psi)))/4
                 a11 = kiso*((a-1)*sink**2*sinp**2+1)
-                a12 = kiso*((1-a)*(cos(kappa-2*psi)-cos(kappa+2*psi)))/4
+                a12 = kiso*((1-a)*(np.cos(kappa-2*psi)-np.cos(kappa+2*psi)))/4
                 a22 = kiso*(a*cosp**2+sinp**2)
 
                 ktensors[i,j,k,0,0] = a00
@@ -69,13 +70,14 @@ def set_anisotropic_ktensor(ktensors: npt.NDArray[np.float64],
                 ktensors[i,j,k,2,2] = a22
 
 
+#@njit
 def sign(x: float):
     return (x >= 0) - (x < 0)
 
 
 
 
-
+#@njit(parallel = True)
 def curve_interp(xc: npt.NDArray[np.float64], yc: npt.NDArray[np.float64],spacing: float):
     """
     Interpolate evenly spaced points along a curve. This code is based on code in an answer posted by 'Unutbu' on
@@ -107,8 +109,8 @@ def curve_interp(xc: npt.NDArray[np.float64], yc: npt.NDArray[np.float64],spacin
     while ic < nc:
         total_dist = 0
         j = ic + 1 # this is to make sure j is initialized
-        for j in range(ic+1, nc):
-            total_dist += sqrt((xc[j] - xc[j-1]) ** 2 + (yc[j] - yc[j-1]) ** 2)
+        for j in prange(ic+1, nc):
+            total_dist += np.sqrt((xc[j] - xc[j-1]) ** 2 + (yc[j] - yc[j-1]) ** 2)
             if total_dist > tol:
                 idx.append(j)
                 break

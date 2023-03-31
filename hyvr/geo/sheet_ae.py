@@ -5,7 +5,7 @@ import numpy.typing as npt
 from hyvr.geo.sheet import Sheet
 
 from hyvr.geo.grid import Grid
-from hyvr.geo.contact_surface import ContactSurface
+from hyvr.geo.contact_surface import contact_surface
 
 
 from hyvr.geo.ae_realization import AERealization
@@ -23,26 +23,29 @@ class SheetAE(AERealization):
         self.object_dipsets = np.zeros(self.n_objects, dtype=np.int32)
 
         if self.n_objects > 0:
-            nx, ny = self.object_list[0].bottom_surface.surface.shape
+            nx, ny = self.object_list[0].bottom_surface.shape
         else:
             nx, ny = 0, 0
         self.object_bottom_surface = np.zeros((self.n_objects, nx, ny), dtype=np.float)
         self.object_top_surface = np.zeros((self.n_objects, nx, ny), dtype=np.float)
+        #self.object_num_ha = np.zeros(self.n_objects, dtype=np.int32)
 
         for i, obj in enumerate(self.object_list):
-            self.object_shift[i] = obj.shift
-            self.object_layer_dist[i] = obj.layer_dist
-            self.object_normvec_x[i] = obj.normvec_x
-            self.object_normvec_y[i] = obj.normvec_y
-            self.object_normvec_z[i] = obj.normvec_z
-            self.object_bottom_surface_zmean[i] = obj.bottom_surface.zmean
-            self.object_dipsets[i] = obj.dipsets
-            top_surface = obj.top_surface.surface
-            bottom_surface = obj.bottom_surface.surface
-            for j in range(nx):
-                for k in range(ny):
-                    self.object_top_surface[i,j,k] = top_surface[j,k]
-                    self.object_bottom_surface[i,j,k] = bottom_surface[j,k]
+            if obj.dipsets:
+                self.object_dipsets[i] = obj.dipsets
+                self.object_shift[i] = obj.shift
+                self.object_layer_dist[i] = obj.layer_dist
+                self.object_normvec_x[i] = obj.normvec_x
+                self.object_normvec_y[i] = obj.normvec_y
+                self.object_normvec_z[i] = obj.normvec_z
+            self.object_bottom_surface_zmean[i] = np.mean(obj.bottom_surface)
+            
+            #top_surface = obj.top_surface
+            bottom_surface = obj.bottom_surface
+            self.object_num_ha[i] = obj.num_ha
+
+            #self.object_top_surface[i,:,:] = top_surface
+            self.object_bottom_surface[i,:,:] = bottom_surface
 
 
     def generate_objects(self, grid):
@@ -70,45 +73,30 @@ class SheetAE(AERealization):
         else:
             thickness = self.type_params['lens_thickness']
 
-        zbottom = self.zmax - thickness
-        top_surface = self.top_surface
+        bottom_surface = self.bottom_surface
         # create all sheets except the lowest one
-        last_sheet = False
-        while not last_sheet:
-            # generate bottom surface
-            if zbottom > self.zmin:
-                # normal sheet
-                bottom_surface = ContactSurface(grid, mode='flat', z=zbottom)
-                # it's possible that this bottom surface is above the top
-                # surface if we're close to the AE top. Then we will use the
-                # lower value (i.e. the top surface value)
-                bottom_surface.use_lower_surface_value(top_surface)
-
-                # close to the bottom it might also be possible that the AE
-                # bottom is higher than the current bottom, so we have to use
-                # the higher value
-                top_surface.use_higher_surface_value(self.bottom_surface)
-
-            else:
-                last_sheet = True
-                bottom_surface = self.bottom_surface
-
+        num_ha = 0
+        z_iter = np.mean(bottom_surface)
+        while z_iter < self.zmax:
+            # normal sheet
+            ztop = np.mean(bottom_surface) + thickness
+            
+            
             # generate sheet object
-            sheet = Sheet(self.type_params, bottom_surface, top_surface, grid)
+            sheet = Sheet(self.type_params, bottom_surface, ztop, grid, num_ha)
             self._add_object(sheet)
+            num_ha+=1
 
-            # use current bottom as new top, zbottom decreases
-            zbottom -= thickness
-            top_surface = bottom_surface
+            # use current top as new bottom
+            bottom_surface = contact_surface(grid, mode='flat', z=ztop)
+            z_iter = ztop
+            
 
 
 
 
-    def maybe_assign_points_to_object(self, oi: int,
-                                        geo_ids: npt.NDArray[np.int32],
-                                        angles: npt.NDArray[np.float64],
-                                        x: np.float64, y: np.float64, z: np.float64,
-                                        x_idx: int, y_idx: int,
+    def maybe_assign_points_to_object(self, oi: int,                                     
+                                        x, y, z,
                                         grid: Grid):
         """
         This function checks whether the current grid cell with given
@@ -140,21 +128,18 @@ class SheetAE(AERealization):
         # if we reach this functions, we now that we are within [zmin, zmax]
         # the only way how this could be outside the domain is when the top or
         # bottom surfaces are not flat
-        z_above = self.object_top_surface[oi, x_idx, y_idx]
-        z_below = self.object_bottom_surface[oi, x_idx, y_idx]
-        if z < z_below or z > z_above:
-            geo_ids[0] = -1
-            return
+        #z_above = self.object_zmaxs[oi]
+        #z_below = self.object_bottom_surface[oi, :, :]
 
-        # at this point we now that the point is inside the sheet
-        angles[0] = self.object_azim[oi]
-        angles[1] = self.object_dip[oi]
-        geo_ids[2] = self.object_num_ha[oi]
+        # at this point we know that the point is inside the sheet
+        azim = self.object_azim[oi]
+        dip = self.object_dip[oi]
+        num_ha = self.object_num_ha[oi]
         if self.object_dipsets[oi]:
-            d = self.object_normvec_x[oi]*x + self.object_normvec_y[oi]*y + self.object_normvec_z[oi]*z - self.object_shift[oi]
-            n = int(d/self.object_layer_dist[oi]) + self.object_num_facies[oi]//2
-            geo_ids[0] = self.object_facies_array[oi,n]
-            return
+            d = normvec_x*x + normvec_y*y + normvec_z*z - self.object_shift[oi]
+            ns = np.int(d/self.object_layer_dist[oi] + self.object_num_facies[oi]//2)
+            facies = np.concatenate([self.object_facies_array[oi,n] for n in ns])
         else:
-            geo_ids[0] = self.object_facies[oi]
-            return
+            facies = self.object_facies[oi]
+        
+        return facies, azim, dip, num_ha

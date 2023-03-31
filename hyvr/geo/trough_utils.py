@@ -1,7 +1,7 @@
 import numpy as np
 import hyvr.utils as hu
 
-def generate_trough_positions(bottom_surface, top_surface, type_params, grid):
+def generate_trough_positions(zmin, zmax, type_params, grid):
     # TODO:
     # Idea: Generating the objects on planes between the maximum of the
     # bottom surface and the top surface is not exactly perfect imho.
@@ -25,10 +25,10 @@ def generate_trough_positions(bottom_surface, top_surface, type_params, grid):
     # periodic. Therefore we need a and b
 
     # Randomly generated trough positions
-    bottom_z = bottom_surface.zmax + type_params['depth'] * type_params['buffer']
-    top_z = top_surface.zmean
+    #bottom_z = bottom_surface.zmax + type_params['depth'] * type_params['buffer']
+    #top_z = top_surface.zmean
     # go from top to bottom
-    planes_z = np.arange(top_z, bottom_z, -type_params['agg'])
+    planes_z = np.arange(zmin + type_params['depth'] * type_params['buffer'], zmax, type_params['agg'])
 
     # construct list of random trough centers
     te_xyz = []
