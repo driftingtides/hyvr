@@ -5,7 +5,6 @@ Base class for AE realizations
 import numpy as np
 import numpy.typing as npt
 
-from hyvr.geo.contact_surface import ContactSurface
 from hyvr.geo.grid import Grid
 
 class AERealization:
@@ -45,8 +44,8 @@ class AERealization:
     """
 
     def __init__(self,
-                 bottom_surface: ContactSurface ,
-                 top_surface: ContactSurface ,
+                 bottom_surface ,
+                 zmax ,
                  type_name: str,
                  type_params: dict ,
                  stratum,
@@ -70,9 +69,11 @@ class AERealization:
         grid : Grid object
             The HyVR grid
         """
+        self.zmin = np.min(bottom_surface)
         self.bottom_surface = bottom_surface
-        self.top_surface = top_surface
+        self.zmax = zmax
         self.type_params = type_params
+        print(type_params)
         self.type_name = type_name
         self.type_id = type_params['ae_id']
 
@@ -80,10 +81,6 @@ class AERealization:
         self.object_list = []
         self.object_zmin_list = []
         self.object_zmax_list = []
-
-        # get initial minimum z
-        self.zmin = self.bottom_surface.zmin
-        self.zmax = self.top_surface.zmax
 
         # get background values
         if self.type_params['bg_facies'] != -1:
@@ -123,12 +120,24 @@ class AERealization:
         self.object_num_ha = np.zeros(self.n_objects, dtype=np.int32)
         self.object_num_facies = np.zeros(self.n_objects, dtype=np.int32)
         for i, obj in enumerate(self.object_list):
-            self.object_azim[i] = obj.azim
+            try:
+                self.object_azim[i] = obj.azim
+            except AttributeError:
+                continue
             self.object_dip[i] = obj.dip
-            self.object_facies[i] = obj.facies
-            self.object_num_ha[i] = obj.num_ha
-            self.object_num_facies[i] = obj.num_facies
-
+            try:
+                self.object_facies[i] = obj.facies
+            except AttributeError:
+                continue
+            try:
+                self.object_num_ha[i] = obj.num_ha
+            except AttributeError:
+                continue
+            try:
+                self.object_num_facies[i] = obj.num_facies
+            except AttributeError:
+                continue
+            
         if self.n_objects > 0:
             max_num_facies = np.max(self.object_num_facies)
         else:

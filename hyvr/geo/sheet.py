@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.typing as npt
 from hyvr.geo.grid import Grid
-from hyvr.geo.contact_surface import ContactSurface
+#from hyvr.geo.contact_surface import ContactSurface
 import hyvr.utils as hu
 #from libc.math cimport sin, cos, ceil, acos, sqrt
 
@@ -10,30 +10,15 @@ class Sheet:
     """
     This class holds parameters for single sheet objects.
     """
-    dipsets: npt.NDArray[np.float64]
-    num_facies: npt.NDArray[np.float64]
-    zmin: npt.NDArray[np.float64]
-    zmax: npt.NDArray[np.float64]
-    dip: npt.NDArray[np.float64]
-    azim: npt.NDArray[np.float64]
-    shift: npt.NDArray[np.float64]
-    layer_dist: npt.NDArray[np.float64]
-    normvec_x: npt.NDArray[np.float64]
-    normvec_y: npt.NDArray[np.float64]
-    normvec_z: npt.NDArray[np.float64]
-    facies: npt.NDArray[np.int32]
-    num_ha: npt.NDArray[np.int32]
-    facies_array: npt.NDArray[np.int32]
-    bottom_surface: ContactSurface
-    top_surface: ContactSurface
 
 
-    def __init__(self, type_params, bottom_surface, top_surface, grid):
+    def __init__(self, type_params, bottom_surface, ztop, grid, num_ha):
 
         self.bottom_surface = bottom_surface
-        self.top_surface = top_surface
-        self.zmin = self.bottom_surface.zmin
-        self.zmax = self.top_surface.zmax
+        #self.top_surface = top_surface
+        self.zmin = np.min(self.bottom_surface)
+        self.zmax = ztop
+        self.num_ha = num_ha
         self.dipsets = type_params['structure'] == 'dip'
         if self.dipsets:
             # the dipsets are layers of planes with distance dipset_dist such that
@@ -82,3 +67,5 @@ class Sheet:
             self.azim = np.random.uniform(*type_params['azimuth'])
             self.dip = np.random.uniform(*type_params['dip'])
             self.facies = np.random.choice(type_params['facies'])
+            self.num_facies = 1
+            self.facies_array = hu.get_alternating_facies(self.num_facies, type_params)

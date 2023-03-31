@@ -61,7 +61,7 @@ class Grid:
 
         # create meshgrid
         # The order here is such that the final matrices have shape (nx, ny, nz)
-        self.Y, self.X, self.Z = np.meshgrid(self.y, self.x, self.z)
+        self.Y, self.X, self.Z = np.meshgrid(self.x, self.y, self.z, indexing='ij')
         # centered grids are necessary for specsim
         self.X_centered = self.X - (np.min(self.X) + np.max(self.X))/2
         self.Y_centered = self.Y - (np.min(self.Y) + np.max(self.Y))/2

@@ -1,6 +1,8 @@
 import numpy as np
 from hyvr.optimized import curve_interp
+#from numba import jit,njit
 # import matplotlib.pyplot as plt
+
 
 def ferguson_curve(grid, h, k, ds, eps_factor, flow_angle, domain_length, xstart, ystart, width):
     """
@@ -100,7 +102,7 @@ def ferguson_curve(grid, h, k, ds, eps_factor, flow_angle, domain_length, xstart
 
     return outputs
 
-
+#@jit
 def ferguson_theta(s, eps_factor, k, h):
     """
     Calculate curve direction angle
@@ -136,7 +138,7 @@ def ferguson_theta(s, eps_factor, k, h):
 
     return th_store
 
-
+#@jit
 def thetaAR2(t1, t2, k, h, eps):
     """
     Implementation of AR2 autoregressive model (Ferguson, 1976, Eq.15)

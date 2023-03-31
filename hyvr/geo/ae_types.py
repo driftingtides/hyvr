@@ -2,7 +2,6 @@
 This module contains the architectural element types.
 """
 
-from hyvr.geo.ae_realization import AERealization
 from hyvr.geo.sheet_ae import SheetAE
 from hyvr.geo.channel_ae import ChannelAE
 from hyvr.geo.trough_ae import TroughAE
