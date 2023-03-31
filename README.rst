@@ -1,3 +1,6 @@
+Note: This repository is not actively maintained anymore. A more up-to-date fork is available here: https://github.com/vcantarella/hyvr-no-cython
+
+
 ====================================================================
 Introduction
 ====================================================================
